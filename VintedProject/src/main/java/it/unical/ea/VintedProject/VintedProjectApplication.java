@@ -1,7 +1,7 @@
 package it.unical.ea.VintedProject;
 
-import it.unical.ea.VintedProject.dao.UserDao;
-import it.unical.ea.VintedProject.entities.User;
+import it.unical.ea.VintedProject.data.dao.UserDao;
+import it.unical.ea.VintedProject.data.entities.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
