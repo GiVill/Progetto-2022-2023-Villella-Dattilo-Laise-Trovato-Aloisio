@@ -1,4 +1,4 @@
-package it.unical.ea.Prototype;
+package it.unical.ea.VintedProject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
