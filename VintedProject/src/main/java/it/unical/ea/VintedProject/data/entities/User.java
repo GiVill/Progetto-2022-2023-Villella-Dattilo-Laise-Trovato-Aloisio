@@ -1,13 +1,17 @@
 package it.unical.ea.VintedProject.data.entities;
 
+import it.unical.ea.VintedProject.dto.Gender;
+import it.unical.ea.VintedProject.dto.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Reference;
 
 import java.sql.Blob;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,14 +20,20 @@ import java.time.LocalDate;
 @Table(name = "USER")
 public class User {
 
-    //todo: chiedere al prof dove mettere gli enum
-    public enum Role{
-        ADMIN,USER;
-    }
-
-    public enum Gender{
-        MALE,FEMALE,OTHER;
-    }
+    /*
+    Utente:
+        -ID
+        -email
+        -Nome
+        -Cognome
+        -Ruolo
+        -Password
+        -Indirizzo
+        -Numero
+        -Genere
+        -Img.
+        -(ID-Prodotti)
+     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +62,7 @@ public class User {
     private Role role;
 
     @Column(name = "PHONE_NUMBER")
-    private int phoneNumber;
+    private Integer phoneNumber;
 
     @Column(name = "BIRTH_DATE")
     private LocalDate birthDate;
@@ -63,4 +73,8 @@ public class User {
 
     //todo: chiedere al prof come gestire le foto
     private Blob photo;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Insertion> insertions;
+
 }
