@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Reference;
 
+import javax.management.relation.Role;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.List;
@@ -34,6 +35,7 @@ public class User {
         -Img.
         -(ID-Prodotti)
      */
+    //dio cane
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
