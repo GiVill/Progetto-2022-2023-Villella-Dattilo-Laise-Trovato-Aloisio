@@ -1,10 +1,12 @@
 package it.unical.ea.VintedProject.data.service;
-
+import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
+import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 
 @Service
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
+    private final OrderDao orderDao;
 
     @Override
     public void add(User user) { userDao.save(user); }
@@ -22,6 +25,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long id) {
         return userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Don't exist a user with id: [%s]", id)));
+    }
+
+    public List<Order> getOrdersByUserId(Long userId) {
+        List<Order> orders = orderDao.findByUserOrder(userId);
+        if (orders.isEmpty()) {
+            throw new EntityNotFoundException(String.format("Doesn't exist any order made from user with id: [%s]", userId));
+        }
+        return orders;
     }
 
     @Override
