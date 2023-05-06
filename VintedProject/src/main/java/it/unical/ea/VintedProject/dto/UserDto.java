@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.dto;
 
+import it.unical.ea.VintedProject.dto.enumerated.Gender;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,6 +1,6 @@
 package it.unical.ea.VintedProject.data.entities;
 
-import it.unical.ea.VintedProject.dto.Status;
+import it.unical.ea.VintedProject.dto.enumerated.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Payment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
@@ -22,12 +22,14 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    /*
     //inserzione sulla quale e stata fatto il pagamento
     @OneToOne(mappedBy = "insertion_paymentID")
-    private Insertion insertionP;
+    private BasicInsertion insertionPayment;
+     */
 
     //utente che ha effettuato il pagamento
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_payment")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_ID")
     private User userPayment;
 }

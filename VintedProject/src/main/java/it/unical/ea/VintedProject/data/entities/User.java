@@ -1,15 +1,13 @@
 package it.unical.ea.VintedProject.data.entities;
 
-import it.unical.ea.VintedProject.dto.Gender;
-import it.unical.ea.VintedProject.dto.Role;
+import it.unical.ea.VintedProject.dto.enumerated.Gender;
+import it.unical.ea.VintedProject.dto.enumerated.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Reference;
 
-import javax.management.relation.Role;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,22 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "USER")
 public class User {
-
-    /*
-    Utente:
-        -ID
-        -email
-        -Nome
-        -Cognome
-        -Ruolo
-        -Password
-        -Indirizzo
-        -Numero
-        -Genere
-        -Img.
-        -(ID-Prodotti)
-     */
-    //dio cane
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,7 +49,12 @@ public class User {
     private Integer phoneNumber;
 
     @Column(name = "BIRTH_DATE")
+    @Temporal(TemporalType.DATE)
     private LocalDate birthDate;
+
+    @Column(name = "REGISTRATION_DATE")
+    @Temporal(TemporalType.DATE)
+    private LocalDate registrationDate;
 
     @Column(name = "GENDER")
     @Enumerated(EnumType.STRING)
@@ -76,7 +63,19 @@ public class User {
     //todo: chiedere al prof come gestire le foto
     private Blob photo;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Insertion> insertions;
+    @OneToMany(mappedBy = "userAuthor", cascade = CascadeType.REMOVE)
+    private List<BasicInsertion> basicInsertions;
+
+    @OneToMany(mappedBy = "userFavorite", cascade = CascadeType.REMOVE)
+    private List<Favorite> favorites;
+
+    @OneToMany(mappedBy = "userBuyingOffer", cascade = CascadeType.REMOVE)
+    private List<BuyingOffer> buyingOffers;
+
+    @OneToMany(mappedBy = "userOrder", cascade = CascadeType.REMOVE)
+    private List<Order> orders;
+
+    @OneToMany(mappedBy = "userPayment", cascade = CascadeType.REMOVE)
+    private List<Payment> payments;
 
 }

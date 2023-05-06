@@ -1,0 +1,23 @@
+package it.unical.ea.VintedProject.data.entities;
+
+import it.unical.ea.VintedProject.dto.enumerated.Brand;
+import it.unical.ea.VintedProject.dto.enumerated.Category;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Entity(name = "Dress_Insertion")
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "DRESSINSERTION")
+public class DressInsertion extends BasicInsertion{
+
+    @Column(name = "CATEGORY")
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    @Column(name = "BRAND")
+    private Brand brand;
+}
