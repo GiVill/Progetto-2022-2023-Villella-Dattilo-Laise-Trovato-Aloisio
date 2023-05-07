@@ -2,8 +2,8 @@ package it.unical.ea.VintedProject.data.controller;
 
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
-import it.unical.ea.VintedProject.data.service.OrderService;
-import it.unical.ea.VintedProject.data.service.UserService;
+import it.unical.ea.VintedProject.data.service.interfaces.OrderService;
+import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.OrderDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

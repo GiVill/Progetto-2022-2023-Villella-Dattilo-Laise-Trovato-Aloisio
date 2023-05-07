@@ -1,6 +1,6 @@
 package it.unical.ea.VintedProject.data.controller;
 import it.unical.ea.VintedProject.data.entities.Favorite;
-import it.unical.ea.VintedProject.data.service.FavoriteService;
+import it.unical.ea.VintedProject.data.service.interfaces.FavoriteService;
 import it.unical.ea.VintedProject.dto.FavoriteDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

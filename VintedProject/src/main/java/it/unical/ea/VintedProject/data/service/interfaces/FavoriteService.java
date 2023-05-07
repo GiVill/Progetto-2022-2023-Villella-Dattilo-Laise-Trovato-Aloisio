@@ -1,4 +1,4 @@
-package it.unical.ea.VintedProject.data.service;
+package it.unical.ea.VintedProject.data.service.interfaces;
 import it.unical.ea.VintedProject.data.dao.FavoriteDao;
 import it.unical.ea.VintedProject.data.entities.Favorite;
 import it.unical.ea.VintedProject.dto.FavoriteDto;

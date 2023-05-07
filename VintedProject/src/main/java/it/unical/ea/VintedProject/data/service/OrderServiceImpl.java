@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.data.service;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.entities.Order;
+import it.unical.ea.VintedProject.data.service.interfaces.OrderService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl implements  OrderService{
+public class OrderServiceImpl implements OrderService {
     private final OrderDao orderDao;
 
     @Override

@@ -1,4 +1,4 @@
-package it.unical.ea.VintedProject.data.service;
+package it.unical.ea.VintedProject.data.service.interfaces;
 import it.unical.ea.VintedProject.data.entities.Order;
 
 
