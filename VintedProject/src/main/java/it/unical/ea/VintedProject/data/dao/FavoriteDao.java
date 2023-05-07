@@ -11,8 +11,5 @@ import java.util.List;
 public interface FavoriteDao extends JpaRepository<Favorite,Long> {
     List<Order> findByFavoriteInsertion(Long favoriteInsertion);
 
-    Long favoriteInsertionId();
-
-    Long userFavoriteId();
 
 }

@@ -77,6 +77,4 @@ public class User {
 
     @OneToMany(mappedBy = "userPayment", cascade = CascadeType.REMOVE)
     private List<Payment> payments;
-
-
 }
