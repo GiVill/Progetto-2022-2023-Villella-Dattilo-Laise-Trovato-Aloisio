@@ -13,6 +13,8 @@ public interface UserService {
 
     List<Order> getOrdersByUserId(Long userId);
 
+    List<Order> getFavoritesByUserId(Long userId);
+
     void deleteUserById(Long id);
 
 }

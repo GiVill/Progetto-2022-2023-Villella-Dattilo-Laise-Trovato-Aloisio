@@ -56,4 +56,5 @@ public class BasicInsertion {
     @JoinColumn(name = "USER_ID")
     private User userAuthor;
 
+
 }

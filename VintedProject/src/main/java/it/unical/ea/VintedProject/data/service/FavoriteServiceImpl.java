@@ -24,5 +24,15 @@ public class FavoriteServiceImpl implements  FavoriteService{
     }
 
     @Override
-    public void deleteFavoriteById(Long id) { favoriteDao.deleteById(id); }
+    public Long getFavoriteInsertionId(FavoriteDao favoriteDto) {
+        return favoriteDto.favoriteInsertionId();
+    }
+    @Override
+    public Long getUserFavoriteId(FavoriteDao favoriteDto) {
+        return favoriteDto.userFavoriteId();
+    }
+
+    public void deleteFavoriteById(Long id) { favoriteDao.deleteById(id);
+    }
+
 }
