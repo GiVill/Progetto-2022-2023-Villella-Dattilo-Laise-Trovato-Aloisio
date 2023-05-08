@@ -1,4 +1,4 @@
-package it.unical.ea.VintedProject.data.controller;
+package it.unical.ea.VintedProject.controller;
 import it.unical.ea.VintedProject.data.entities.Favorite;
 import it.unical.ea.VintedProject.data.service.interfaces.FavoriteService;
 import it.unical.ea.VintedProject.dto.FavoriteDto;

@@ -5,11 +5,15 @@ import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
+import it.unical.ea.VintedProject.dto.UserDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -19,6 +23,7 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final OrderDao orderDao;
     private final FavoriteDao favoriteDao;
+    private final ModelMapper modelMapper;
 
 
     @Override
@@ -27,6 +32,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long id) {
         return userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Don't exist a user with id: [%s]", id)));
+    }
+
+    @Override
+    public UserDto getById(Long id) {
+        User user = userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Don't exist a teacher with id: [%s]", id)));
+        return modelMapper.map(user, UserDto.class);
     }
 
     public List<Order> getOrdersByUserId(Long userId) {
@@ -49,6 +60,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userDao.findAll();
+    }
+
+    @Override
+    public List<UserDto> getAllStored() {
+        return userDao.findAll( Sort.by("lastName").ascending()).stream().map(s -> modelMapper.map(s, UserDto.class)).collect(Collectors.toList());
     }
 
     @Override

@@ -1,6 +1,8 @@
 package it.unical.ea.VintedProject.data.service.interfaces;
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
+import it.unical.ea.VintedProject.dto.UserDto;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,11 +14,15 @@ public interface UserService {
 
     User getUserById(Long id);
 
+    UserDto getById(Long id);
+
     List<Order> getOrdersByUserId(Long userId);
 
     List<Order> getFavoritesByUserId(Long userId);
 
     List<User> findAll();
+
+    List<UserDto> getAllStored();
 
     Optional<User> findByNickName(String nickName);
 

@@ -1,4 +1,4 @@
-package it.unical.ea.VintedProject.data.controller;
+package it.unical.ea.VintedProject.controller;
 
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
