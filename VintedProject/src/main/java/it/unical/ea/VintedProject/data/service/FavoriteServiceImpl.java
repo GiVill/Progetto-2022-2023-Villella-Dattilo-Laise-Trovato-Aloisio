@@ -19,9 +19,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public FavoriteDto save(FavoriteDto favoriteDto) {
-        Favorite student = modelMapper.map(favoriteDto, Favorite.class);
-        Favorite s = favoriteDao.save(student);
-        return modelMapper.map(s, FavoriteDto.class);
+        Favorite favorite = modelMapper.map(favoriteDto, Favorite.class);
+        Favorite f = favoriteDao.save(favorite);
+        return modelMapper.map(f, FavoriteDto.class);
     }
     @Override
     public void add(Favorite favorite) { favoriteDao.save(favorite); }

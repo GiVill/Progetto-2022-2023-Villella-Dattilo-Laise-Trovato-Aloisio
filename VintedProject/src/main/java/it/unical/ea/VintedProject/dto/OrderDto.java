@@ -1,4 +1,5 @@
 package it.unical.ea.VintedProject.dto;
+import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.dto.enumerated.PaymentMethod;
 import jakarta.persistence.Enumerated;
 import lombok.Data;
@@ -28,6 +29,6 @@ public class OrderDto {
         private Long userId;
 
 
-    }
+}
 
 
