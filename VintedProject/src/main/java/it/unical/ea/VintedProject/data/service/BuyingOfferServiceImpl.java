@@ -20,8 +20,8 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     private final BuyingOfferDao buyingOfferDao;
 
     @Override
-    public void save(BuyingOffer offer) {
-        buyingOfferDao.save(offer);
+    public BuyingOffer save(BuyingOfferDto offer) {
+       return buyingOfferDao.save(offer).stream().map(s -> modelMapper.map(BuyingOffer.class,s));
     }
 
     @Override

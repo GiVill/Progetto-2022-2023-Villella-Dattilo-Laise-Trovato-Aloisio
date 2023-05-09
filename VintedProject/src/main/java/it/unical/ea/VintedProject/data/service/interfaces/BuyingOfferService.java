@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public interface BuyingOfferService {
 
-    void save(BuyingOffer offer);
+    BuyingOffer save(BuyingOfferDto offer);
 
     void deleteOfferById(Long id);
 
