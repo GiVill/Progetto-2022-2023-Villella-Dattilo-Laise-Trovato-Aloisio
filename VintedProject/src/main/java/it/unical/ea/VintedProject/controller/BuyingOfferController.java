@@ -1,10 +1,10 @@
 package it.unical.ea.VintedProject.controller;
 
-import it.unical.ea.VintedProject.data.entities.BuyingOffer;
 import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
 import it.unical.ea.VintedProject.dto.BuyingOfferDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 public class BuyingOfferController {
 
     private final BuyingOfferService buyingOfferService;
+    private final ModelMapper modelMapper;
 
     @GetMapping("/offers")
     public ResponseEntity<List<BuyingOfferDto>> all() {
@@ -31,7 +32,7 @@ public class BuyingOfferController {
     }
 
     @PostMapping("/offers")
-    public ResponseEntity<BuyingOfferDto> add (@RequestBody @Valid BuyingOfferDto offer){
+    public ResponseEntity<BuyingOfferDto> addBuyingOffer (@RequestBody @Valid BuyingOfferDto offer){
         return ResponseEntity.ok(buyingOfferService.save(offer));
     }
 

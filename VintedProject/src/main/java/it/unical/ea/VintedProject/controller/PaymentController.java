@@ -2,6 +2,7 @@ package it.unical.ea.VintedProject.controller;
 
 import it.unical.ea.VintedProject.data.service.interfaces.PaymentService;
 import it.unical.ea.VintedProject.dto.PaymentDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +18,12 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
-    /*
+
     @PostMapping("/payments")
-    public ResponseEntity<Payment> add (@RequestBody @Valid Payment payment) {
+    public ResponseEntity<PaymentDto> addPayment (@RequestBody @Valid PaymentDto payment) {
         return ResponseEntity.ok(paymentService.save(payment));
     }
-    */
+
 
     @DeleteMapping("payments/{idPayment}")
     public HttpStatus deleteOffer (@PathVariable("idPayment") Long id) {

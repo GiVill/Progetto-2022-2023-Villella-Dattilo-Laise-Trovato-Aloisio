@@ -19,8 +19,10 @@ public class PaymentServiceImpl implements PaymentService {
     private final ModelMapper modelMapper;
 
     @Override
-    public void save(Payment payment) {
-        paymentDao.save(payment);
+    public PaymentDto save(PaymentDto payment) {
+        Payment payment1 = modelMapper.map(payment,Payment.class);
+        Payment o = paymentDao.save(payment1);
+        return modelMapper.map(o,PaymentDto.class);
     }
 
     @Override
