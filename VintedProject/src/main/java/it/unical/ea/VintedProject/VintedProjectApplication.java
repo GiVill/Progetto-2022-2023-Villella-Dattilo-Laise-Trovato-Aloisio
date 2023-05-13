@@ -2,11 +2,9 @@ package it.unical.ea.VintedProject;
 
 import it.unical.ea.VintedProject.data.dao.BuyingOfferDao;
 import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
-import it.unical.ea.VintedProject.data.dao.FavoriteDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.BuyingOffer;
-import it.unical.ea.VintedProject.data.entities.Favorite;
 import it.unical.ea.VintedProject.data.entities.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -40,31 +38,27 @@ public class VintedProjectApplication {
 
 		BuyingOfferDao buyingOfferDao = context.getBean(BuyingOfferDao.class);
 		BuyingOffer buyingOffer = new BuyingOffer();
-		buyingOffer.setBasicInsertionBuyingOffer(basicInsertion);
+		//buyingOffer.setBasicInsertionBuyingOffer(basicInsertion);
+		buyingOffer.setInsertion(basicInsertion);
 		buyingOfferDao.save(buyingOffer);
 
 		//BuyingOfferDao buyingOfferDao2 = context.getBean(BuyingOfferDao.class);
 		BuyingOffer buyingOffer2 = new BuyingOffer();
-		buyingOffer2.setBasicInsertionBuyingOffer(basicInsertion);
+		buyingOffer2.setInsertion(basicInsertion);
 		buyingOfferDao.save(buyingOffer2);
 
 		//BuyingOfferDao buyingOfferDao3 = context.getBean(BuyingOfferDao.class);
 		BuyingOffer buyingOffer3 = new BuyingOffer();
-		buyingOffer3.setBasicInsertionBuyingOffer(basicInsertion);
+		buyingOffer3.setInsertion(basicInsertion);
 		//System.out.println(buyingOffer3.getBasicInsertionId());
 
 		buyingOfferDao.save(buyingOffer3);
 
 		//for(int i = 0; i < 2; i++) {
-			System.out.println(basicInsertion.getBuyingOffer());
+			//System.out.println(basicInsertion.getBuyingOffer());
+			  System.out.println(basicInsertion.getBuyingOffers());
 			//System.out.println(buyingOffer3.getBasicInsertionId());
 		//}
-
-
-		FavoriteDao fDao = context.getBean(FavoriteDao.class);
-		Favorite f = new Favorite();
-		f.setFavoriteInsertion(basicInsertion);
-		fDao.save(f);
 	}
 
 }

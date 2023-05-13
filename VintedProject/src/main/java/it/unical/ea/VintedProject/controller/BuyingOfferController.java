@@ -37,11 +37,12 @@ public class BuyingOfferController {
     }
 
     /*
-          @PostMapping("/students")
-          public ResponseEntity<StudentBasicDto> add(@RequestBody @Valid StudentDto student) {
-                return ResponseEntity.ok(studentService.save(student));
+    @PostMapping("/students")
+    public ResponseEntity<StudentBasicDto> add(@RequestBody @Valid StudentDto student) {
+        return ResponseEntity.ok(studentService.save(student));
       }
-        */
+     */
+
     @DeleteMapping("/offers/{idOffer}")
     public HttpStatus delete (@PathVariable("idOffer") Long id) {
         buyingOfferService.deleteOfferById(id);

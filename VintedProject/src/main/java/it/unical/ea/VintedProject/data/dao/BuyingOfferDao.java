@@ -10,7 +10,6 @@ import java.util.Optional;
 @Repository
 public interface BuyingOfferDao extends JpaRepository<BuyingOffer,Long> {
 
-
     @Override
     Optional<BuyingOffer> findById(Long aLong);
 

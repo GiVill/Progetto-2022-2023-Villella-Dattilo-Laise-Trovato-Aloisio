@@ -9,9 +9,12 @@ import java.util.Optional;
 
 @Repository
 public interface UserDao extends JpaRepository<User,Long> {
+
     List<User> findAllByFirstName(String firstName);
+
     @Override
     Optional<User> findById(Long aLong);
+
     Optional<User> findByNickName(String nickName);
 
 }

@@ -26,9 +26,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void deleteOffer(Long id) {
+    public void deleteInsertion(Long id) {
         paymentDao.deleteById(id);
-
     }
 
     @Override

@@ -26,9 +26,9 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
 
     @Override
     public BuyingOfferDto save(BuyingOfferDto offer) {
-        BuyingOffer buyngOffer = modelMapper.map(offer,BuyingOffer.class);
-        //buyingOfferDao.save(buyngOffer);
-        BuyingOffer o = buyingOfferDao.save(buyngOffer);
+        BuyingOffer buyingOffer = modelMapper.map(offer,BuyingOffer.class);
+        buyingOfferDao.save(buyingOffer);
+        BuyingOffer o = buyingOfferDao.save(buyingOffer);
         return modelMapper.map(o,BuyingOfferDto.class);
     }
 
@@ -47,6 +47,5 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     public List<BuyingOfferDto> findAll() {
         return buyingOfferDao.findAll().stream().map(s -> modelMapper.map(s, BuyingOfferDto.class)).collect(Collectors.toList());
     }
-
 
 }

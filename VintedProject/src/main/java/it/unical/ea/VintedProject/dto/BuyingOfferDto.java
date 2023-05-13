@@ -14,4 +14,5 @@ public class BuyingOfferDto {
     private Long basicInsertionBuyingOffer;
 
     private Long userBuyingOffer;
+
 }

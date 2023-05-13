@@ -18,16 +18,14 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
-
     @PostMapping("/payments")
     public ResponseEntity<PaymentDto> addPayment (@RequestBody @Valid PaymentDto payment) {
         return ResponseEntity.ok(paymentService.save(payment));
     }
 
-
     @DeleteMapping("payments/{idPayment}")
     public HttpStatus deleteOffer (@PathVariable("idPayment") Long id) {
-        paymentService.deleteOffer(id);
+        paymentService.deleteInsertion(id);
         return HttpStatus.OK;
     }
 

@@ -34,9 +34,9 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     }
 
     @Override
-    public Page<BasicInsertionDto> findAllByUserAuthorId(Long uId, int page) {
+    public Page<BasicInsertionDto> findAllByUser(Long uId, int page) {
         PageRequest pageRequest = PageRequest.of(SIZE_FOR_PAGE, page);
-        List<BasicInsertionDto> collect = basicInsertionDao.findAllByUserAuthorId(uId, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        List<BasicInsertionDto> collect = basicInsertionDao.findAllByUserId(uId, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
 

@@ -16,9 +16,7 @@ public interface UserService {
 
     UserDto getById(Long id);
 
-    List<Order> getOrdersByUserId(Long userId);
-
-    List<Order> getFavoritesByUserId(Long userId);
+    List<Order> getOrdersByUser(Long userId);
 
     List<User> findAll();
 

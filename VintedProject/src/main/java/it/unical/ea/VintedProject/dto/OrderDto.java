@@ -14,19 +14,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 public class OrderDto {
+    @Generated
+    private Long id;
 
-        @Generated
-        private Long id;
+    private LocalDate date;
 
-        private LocalDate date;
+    @Enumerated
+    private PaymentMethod paymentMethod;
 
-        @Enumerated
-        private PaymentMethod paymentMethod;
+    private Integer number;
 
-        private Integer number;
+    private Long userId;
 
-        private Long userId;
-
-    }
-
-
+}

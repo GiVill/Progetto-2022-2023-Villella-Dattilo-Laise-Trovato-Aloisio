@@ -1,5 +1,4 @@
 package it.unical.ea.VintedProject.data.service;
-import it.unical.ea.VintedProject.data.dao.FavoriteDao;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.Order;
@@ -22,9 +21,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
     private final OrderDao orderDao;
-    private final FavoriteDao favoriteDao;
     private final ModelMapper modelMapper;
-
 
     @Override
     public void save(User user) { userDao.save(user); }
@@ -40,21 +37,12 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user, UserDto.class);
     }
 
-    public List<Order> getOrdersByUserId(Long userId) {
-        List<Order> orders = orderDao.findByUserOrder(userId);
+    public List<Order> getOrdersByUser(Long userId) {
+        List<Order> orders = orderDao.findByUser(userId);
         if (orders.isEmpty()) {
             throw new EntityNotFoundException(String.format("Doesn't exist any order made from user with id: [%s]", userId));
         }
         return orders;
-    }
-
-
-    public List<Order> getFavoritesByUserId(Long userId) {
-        List<Order> favorites = favoriteDao.findByFavoriteInsertion(userId);
-        if (favorites.isEmpty()) {
-            throw new EntityNotFoundException(String.format("Doesn't exist any favorite for user with id: [%s]", userId));
-        }
-        return favorites;
     }
 
     @Override

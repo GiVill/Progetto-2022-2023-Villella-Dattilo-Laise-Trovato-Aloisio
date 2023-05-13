@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -64,20 +65,26 @@ public class User {
     private Gender gender;
 
     //todo: chiedere al prof come gestire le foto
+    @Lob
     private Blob photo;
 
-    @OneToMany(mappedBy = "userAuthor", cascade = CascadeType.REMOVE)
-    private List<BasicInsertion> basicInsertions;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Payment> payments;
 
-    @OneToMany(mappedBy = "userFavorite", cascade = CascadeType.REMOVE)
-    private List<Favorite> favorites;
-
-    @OneToMany(mappedBy = "userBuyingOffer", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<BuyingOffer> buyingOffers;
 
-    @OneToMany(mappedBy = "userOrder", cascade = CascadeType.REMOVE)
-    private List<Order> orders;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Order> orders ;
 
-    @OneToMany(mappedBy = "userPayment", cascade = CascadeType.REMOVE)
-    private List<Payment> payments;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<BasicInsertion> insertions;
+
+    @ManyToMany
+    @JoinTable(
+            name = "USER_FAVORITE",
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "BASICINSERTION_ID"))
+    Set<BasicInsertion> favorites;
+
 }

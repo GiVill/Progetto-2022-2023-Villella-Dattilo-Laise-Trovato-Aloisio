@@ -22,14 +22,13 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    /*
     //inserzione sulla quale e stata fatto il pagamento
-    @OneToOne(mappedBy = "insertion_paymentID")
-    private BasicInsertion insertionPayment;
-     */
+    @OneToOne
+    @JoinColumn(name = "basicinsertion_id", referencedColumnName = "ID")
+    private BasicInsertion insertion;
 
     //utente che ha effettuato il pagamento
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
-    private User userPayment;
+    private User user;
 }

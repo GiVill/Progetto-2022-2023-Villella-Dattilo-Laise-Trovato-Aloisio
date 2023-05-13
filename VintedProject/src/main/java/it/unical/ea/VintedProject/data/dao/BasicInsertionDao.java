@@ -11,10 +11,12 @@ import java.util.Optional;
 
 @Repository
 public interface BasicInsertionDao extends JpaRepository<BasicInsertion,Long> {
+
     @Override
     Optional<BasicInsertion> findById(Long aLong);
 
-    Page<BasicInsertion> findAllByUserAuthorId(Long uLong, Pageable pageable);
+    Page<BasicInsertion> findAllByUserId(Long uLong, Pageable pageable);
+
     Page<BasicInsertion> findAllByTitleLike(String title,Pageable pageable);
 
     List<BasicInsertion> findByPriceLessThanEqual(int price);

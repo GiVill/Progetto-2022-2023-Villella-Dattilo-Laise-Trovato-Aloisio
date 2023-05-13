@@ -16,21 +16,6 @@ import java.time.LocalDate;
 @ToString
 public class UserDto {
 
-    /*
-    Utente:
-        -ID
-        -email
-        -Nome
-        -Cognome
-        -Ruolo
-        -Password
-        -Indirizzo
-        -Numero
-        -Genere
-        -Img.
-        -(ID-Prodotti)
-     */
-
     private Long id;
 
     @NotNull(message = "{firstname.notempty}")
@@ -46,6 +31,5 @@ public class UserDto {
     private LocalDate birthDate;
 
     private Gender gender;
-
 
 }

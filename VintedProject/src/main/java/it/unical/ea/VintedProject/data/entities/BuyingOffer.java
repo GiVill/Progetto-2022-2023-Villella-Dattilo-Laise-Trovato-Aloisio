@@ -26,14 +26,12 @@ public class BuyingOffer {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "BASIC_INSERTION_ID")
-    private BasicInsertion basicInsertionBuyingOffer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "INSERTION_ID")
+    private BasicInsertion insertion;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
-    private User userBuyingOffer;
-
-
+    private User user;
 
 }

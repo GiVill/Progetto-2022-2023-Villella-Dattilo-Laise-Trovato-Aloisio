@@ -8,9 +8,8 @@ public interface PaymentService {
 
     PaymentDto save(PaymentDto payment);
 
-    void deleteOffer(Long id);
+    void deleteInsertion(Long id);
 
     List<PaymentDto> findAll();
-
 
 }

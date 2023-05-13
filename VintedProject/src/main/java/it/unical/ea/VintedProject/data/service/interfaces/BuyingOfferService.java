@@ -15,6 +15,4 @@ public interface BuyingOfferService {
 
     List<BuyingOfferDto> findAll();
 
-
-
 }

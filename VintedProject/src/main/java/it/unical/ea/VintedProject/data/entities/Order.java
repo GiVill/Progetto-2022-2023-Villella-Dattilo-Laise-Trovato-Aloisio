@@ -31,9 +31,12 @@ public class Order {
     @Column(name = "NUMBER")
     private Integer number;
 
+    @OneToOne
+    @JoinColumn(name = "INSERTION_ID", referencedColumnName = "ID")
+    private BasicInsertion insertion;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
-    private User userOrder;
+    private User user;
 
 }

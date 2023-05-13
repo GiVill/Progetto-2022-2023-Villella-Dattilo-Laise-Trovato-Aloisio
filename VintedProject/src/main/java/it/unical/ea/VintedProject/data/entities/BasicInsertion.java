@@ -9,13 +9,14 @@ import lombok.NoArgsConstructor;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "BASICINSERTION")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class BasicInsertion {
 
     @Id
@@ -41,20 +42,26 @@ public class BasicInsertion {
     private String description;
 
     @Column(name = "IMAGE")
+    @Lob
     private Blob image;
 
     @Column(name = "CONDITION")
     private String condition;
 
-    @OneToMany(mappedBy = "basicInsertionBuyingOffer", cascade = CascadeType.REMOVE)
-    private List<BuyingOffer> buyingOffer;
+    @OneToOne(mappedBy = "insertion")
+    private Payment payment;
 
-    @OneToMany(mappedBy = "favoriteInsertion", cascade = CascadeType.REMOVE)
-    private List<Favorite> favorites;
+    @ManyToMany(mappedBy = "favorites")
+    Set<User> usersFavorites;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "insertion", fetch = FetchType.LAZY)
+    private List<BuyingOffer> buyingOffers;
+
+    @OneToOne(mappedBy = "insertion")
+    private Order order;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
-    private User userAuthor;
-
+    private User user;
 
 }
