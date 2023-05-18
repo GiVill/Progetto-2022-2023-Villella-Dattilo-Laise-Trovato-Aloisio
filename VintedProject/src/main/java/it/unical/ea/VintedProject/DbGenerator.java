@@ -122,7 +122,6 @@ public class DbGenerator implements ApplicationRunner {
 
     private void insertOrder(String localDate, String number, String idInsertion, String idUser) {
         Order order = new Order();
-        order.setPaymentMethod(PaymentMethod.PAYPAL);
         order.setDate(LocalDate.parse(localDate));
         order.setNumber(Integer.valueOf(number));
         order.setInsertion(insertionService.findById(Long.valueOf(idInsertion)));
@@ -135,7 +134,6 @@ public class DbGenerator implements ApplicationRunner {
     private void insertPayment(String idInsertion, String idUser) {
         Payment payment = new Payment();
         payment.setStatus(Status.PENDING);
-        payment.setInsertion(insertionService.findById(Long.valueOf(idInsertion)));
         payment.setUser(userService.getUserById(Long.valueOf(idUser)));
 
         //TODO:Sistemare query su dto o su oggetti normali

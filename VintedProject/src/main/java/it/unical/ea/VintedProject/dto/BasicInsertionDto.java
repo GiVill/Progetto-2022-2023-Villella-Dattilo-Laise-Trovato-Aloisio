@@ -26,7 +26,7 @@ public class BasicInsertionDto {
 
     private LocalDate endDate;
 
-    //TODO: Immagini ?????????
+    private String imagePath;
 
     private Long userId;
 }

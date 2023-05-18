@@ -25,8 +25,8 @@ public class Order {
     @Temporal(TemporalType.DATE)
     private LocalDate date;
 
-    @Column(name = "PAYMENT_METHOD")
-    private PaymentMethod paymentMethod;
+    @OneToOne(mappedBy = "order")
+    private Payment payment;
 
     @Column(name = "NUMBER")
     private Integer number;
