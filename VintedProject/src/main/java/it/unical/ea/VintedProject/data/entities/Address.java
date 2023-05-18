@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Address {
     private String street;
-    private String city;
     private Integer number;
+    private String city;
     private Integer cap;
     private String state;
     private String region;

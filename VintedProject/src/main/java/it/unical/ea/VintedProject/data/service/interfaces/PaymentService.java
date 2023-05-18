@@ -12,4 +12,6 @@ public interface PaymentService {
 
     List<PaymentDto> findAll();
 
+    PaymentDto findById(Long id);
+
 }

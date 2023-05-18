@@ -2,6 +2,7 @@ package it.unical.ea.VintedProject.controller;
 
 import it.unical.ea.VintedProject.data.service.interfaces.PaymentService;
 import it.unical.ea.VintedProject.dto.PaymentDto;
+import it.unical.ea.VintedProject.dto.UserDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,5 +33,11 @@ public class PaymentController {
     @GetMapping("/payments")
     public ResponseEntity<List<PaymentDto>> all() {
         return ResponseEntity.ok(paymentService.findAll());
+    }
+
+    @GetMapping("/payments/{id}")
+    public ResponseEntity<PaymentDto> getById(@PathVariable("idPayment") Long id){
+        PaymentDto paymentDto = paymentService.findById(id);
+        return ResponseEntity.ok(paymentDto);
     }
 }

@@ -1,9 +1,11 @@
 package it.unical.ea.VintedProject.data.service;
 
 import it.unical.ea.VintedProject.data.dao.PaymentDao;
+import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.Payment;
 import it.unical.ea.VintedProject.data.service.interfaces.PaymentService;
 import it.unical.ea.VintedProject.dto.PaymentDto;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,12 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public List<PaymentDto> findAll() {
         return paymentDao.findAll().stream().map(s -> modelMapper.map(s, PaymentDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public PaymentDto findById(Long id) {
+        Payment payment = paymentDao.findById(id).orElseThrow(() -> new EntityNotFoundException("ERRORE!!!!!!!!!!"));
+        return modelMapper.map(payment, PaymentDto.class);
     }
 }
 

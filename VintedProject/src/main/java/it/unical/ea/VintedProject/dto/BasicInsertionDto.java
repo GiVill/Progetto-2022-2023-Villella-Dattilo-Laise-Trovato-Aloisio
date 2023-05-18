@@ -28,5 +28,5 @@ public class BasicInsertionDto {
 
     //TODO: Immagini ?????????
 
-    private Long userAuthorId;
+    private Long userId;
 }

@@ -48,6 +48,7 @@ public class BasicInsertion {
     @Column(name = "CONDITION")
     private String condition;
 
+    //TODO: ORDINE E PAGAMENTO NON SONO STRANI QUI ?
     @OneToOne(mappedBy = "insertion")
     private Payment payment;
 
@@ -57,6 +58,7 @@ public class BasicInsertion {
     @OneToMany(mappedBy = "insertion", fetch = FetchType.LAZY)
     private List<BuyingOffer> buyingOffers;
 
+    //TODO: ORDINE E PAGAMENTO NON SONO STRANI QUI ?
     @OneToOne(mappedBy = "insertion")
     private Order order;
 

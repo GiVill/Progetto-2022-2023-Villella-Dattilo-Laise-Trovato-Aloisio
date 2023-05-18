@@ -6,17 +6,26 @@ import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BasicInsertionService {
 
     void save(BasicInsertion basicInsertion);
 
+    BasicInsertionDto saveDto(BasicInsertionDto basicInsertionDto);
+
     void deleteBasicInsertionById(Long bId);
+
+    void deleteAllBasicInsertionByUserId(Long uId);
 
     Page<BasicInsertionDto> findAllByUser(Long uId,int page);
 
     Page<BasicInsertionDto> getAllPaged(int page);
 
     Page<BasicInsertionDto> getAllByTitleStartWith(String title, int page);
+
+    BasicInsertionDto getInsertionById(Long id);
+
+    BasicInsertion findById(Long id);
 
 }

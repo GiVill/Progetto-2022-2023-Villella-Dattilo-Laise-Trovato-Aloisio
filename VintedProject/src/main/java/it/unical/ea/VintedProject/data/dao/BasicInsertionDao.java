@@ -12,8 +12,10 @@ import java.util.Optional;
 @Repository
 public interface BasicInsertionDao extends JpaRepository<BasicInsertion,Long> {
 
+    void deleteAllByUserId(Long uId);
     @Override
     Optional<BasicInsertion> findById(Long aLong);
+
 
     Page<BasicInsertion> findAllByUserId(Long uLong, Pageable pageable);
 

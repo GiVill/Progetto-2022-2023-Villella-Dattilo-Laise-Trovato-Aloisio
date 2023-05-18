@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 public class BuyingOfferController {
 
     private final BuyingOfferService buyingOfferService;
-    private final ModelMapper modelMapper;
 
     @GetMapping("/offers")
     public ResponseEntity<List<BuyingOfferDto>> all() {

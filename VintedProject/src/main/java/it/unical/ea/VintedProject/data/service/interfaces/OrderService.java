@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.data.service.interfaces;
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.dto.OrderDto;
+import org.springframework.data.domain.Page;
 
 
 public interface OrderService {
@@ -11,9 +12,11 @@ public interface OrderService {
 
     Order save(Order order);
 
-    Order getOrderById(Long id);
+    OrderDto getOrderById(Long id);
 
     void deleteOrderById(Long id);
+
+    Page<OrderDto> getAllPaged(int page);
 
 }
 
