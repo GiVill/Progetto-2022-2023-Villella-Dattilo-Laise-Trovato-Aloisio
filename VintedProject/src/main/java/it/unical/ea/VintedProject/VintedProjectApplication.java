@@ -59,6 +59,9 @@ public class VintedProjectApplication {
 			  System.out.println(basicInsertion.getBuyingOffers());
 			//System.out.println(buyingOffer3.getBasicInsertionId());
 		//}
+
+		System.out.println("Swagger documentation is running at: http://localhost:8010/swagger-ui/index.html");
+
 	}
 
 }
