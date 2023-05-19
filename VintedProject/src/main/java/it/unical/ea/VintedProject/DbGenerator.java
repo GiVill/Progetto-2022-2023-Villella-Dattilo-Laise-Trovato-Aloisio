@@ -75,7 +75,7 @@ public class DbGenerator implements ApplicationRunner {
                 insertOrder(record.get(0), record.get(1), record.get(2), record.get(3));
             }
 
-            /*
+            /* MODEL MAPPER NON VA!!
             CSVParser paymentsCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(paymentsRes.getInputStream()));
             for (CSVRecord record : paymentsCsv) {
@@ -83,7 +83,7 @@ public class DbGenerator implements ApplicationRunner {
             }
              */
 
-            /*
+            /* MODEL MAPPER NON VA!!
             CSVParser buyingoffertsCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(buyingoffertsRes.getInputStream()));
             for (CSVRecord record : buyingoffertsCsv) {
