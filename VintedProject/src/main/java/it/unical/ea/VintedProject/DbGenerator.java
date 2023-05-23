@@ -49,8 +49,6 @@ public class DbGenerator implements ApplicationRunner {
     protected final OrderService orderService;
     protected final BuyingOfferService buyingOfferService;
 
-    private final ModelMapper modelMapper;
-
 
     public void createDb() {
 
@@ -75,22 +73,20 @@ public class DbGenerator implements ApplicationRunner {
                 insertOrder(record.get(0), record.get(1), record.get(2), record.get(3));
             }
 
-            /* MODEL MAPPER NON VA!!
+
             CSVParser paymentsCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(paymentsRes.getInputStream()));
             for (CSVRecord record : paymentsCsv) {
                 insertPayment(record.get(0), record.get(1));
             }
-             */
-
-            /* MODEL MAPPER NON VA!!
+            /*
             CSVParser buyingoffertsCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(buyingoffertsRes.getInputStream()));
             for (CSVRecord record : buyingoffertsCsv) {
                 insertBuyingoffert(record.get(0), record.get(1), record.get(2));
             }
-
              */
+
 
         } catch (IOException e) {
             throw new RuntimeException("ERROR TO GENERATE DB TEST");
@@ -104,7 +100,7 @@ public class DbGenerator implements ApplicationRunner {
         buyingOffer.setInsertion(insertionService.findById(Long.valueOf(idInsertion)));
         buyingOffer.setUser(userService.getUserById(Long.valueOf(idUser)));
 
-        buyingOfferService.save(modelMapper.map(buyingOffer, BuyingOfferDto.class));
+        buyingOfferService.save(buyingOffer);
     }
 
     private void insertInsertion(String title, String price, String creationDate, String description,
@@ -131,13 +127,14 @@ public class DbGenerator implements ApplicationRunner {
 
     }
 
-    private void insertPayment(String idInsertion, String idUser) {
+    private void insertPayment(String idOrder, String idUser) {
         Payment payment = new Payment();
+        payment.setPaymentMethod(PaymentMethod.PAYPAL);
         payment.setStatus(Status.PENDING);
+        payment.setOrder(orderService.findById(Long.valueOf(idOrder)));
         payment.setUser(userService.getUserById(Long.valueOf(idUser)));
 
-        //TODO:Sistemare query su dto o su oggetti normali
-        paymentService.save(modelMapper.map(payment,PaymentDto.class));
+        paymentService.save(payment);
     }
 
     private void insertUser(String nickName, String firstName, String lastName,String email,String password,

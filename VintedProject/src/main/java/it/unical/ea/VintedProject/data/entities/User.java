@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.data.entities;
 
+import it.unical.ea.VintedProject.core.entitiesAuditTrailListener.UserListener;
 import it.unical.ea.VintedProject.dto.enumerated.Gender;
 import it.unical.ea.VintedProject.dto.enumerated.Role;
 import jakarta.persistence.*;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Blob;
 import java.time.LocalDate;
@@ -17,6 +19,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(value = {AuditingEntityListener.class, UserListener.class})
 @Table(name = "USER")
 public class User {
 

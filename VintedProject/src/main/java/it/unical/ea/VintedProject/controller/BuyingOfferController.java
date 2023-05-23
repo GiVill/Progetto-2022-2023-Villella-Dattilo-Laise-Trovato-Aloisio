@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.controller;
 
+import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
 import it.unical.ea.VintedProject.dto.BuyingOfferDto;
 import jakarta.validation.Valid;

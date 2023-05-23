@@ -24,4 +24,5 @@ public interface UserService {
 
     Optional<User> findByNickName(String nickName);
 
+
 }

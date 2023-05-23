@@ -1,6 +1,8 @@
-package it.unical.ea.VintedProject.handler;
+package it.unical.ea.VintedProject.core.handler;
 
+import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.dto.ServiceError;
+import it.unical.ea.VintedProject.exception.UserException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +17,17 @@ import java.util.Date;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ServiceError onResourceNotFoundException(WebRequest req, EntityNotFoundException ex){
         return errorResponse(req, ex.getMessage());
+    }
+
+    @ExceptionHandler(UserException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ServiceError onResourceNotFoundException(WebRequest req, UserException ex){
+        return errorResponse(req, ex.getMessage() );
     }
 
     private ServiceError errorResponse (WebRequest req, String message) {

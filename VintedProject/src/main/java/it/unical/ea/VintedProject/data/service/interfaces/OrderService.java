@@ -3,6 +3,9 @@ import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.dto.OrderDto;
 import org.springframework.data.domain.Page;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 
 public interface OrderService {
 
@@ -17,6 +20,8 @@ public interface OrderService {
     void deleteOrderById(Long id);
 
     Page<OrderDto> getAllPaged(int page);
+
+    Order findById(Long id);
 
 }
 

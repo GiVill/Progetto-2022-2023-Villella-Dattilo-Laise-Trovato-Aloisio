@@ -38,6 +38,11 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     }
 
     @Override
+    public void save(BuyingOffer buyingOffer) {
+        buyingOfferDao.save(buyingOffer);
+    }
+
+    @Override
     public Stream<BuyingOfferDto> getById(Long id) {
         return buyingOfferDao.findById(id).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class));
 

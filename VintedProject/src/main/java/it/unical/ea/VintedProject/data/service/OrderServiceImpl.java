@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -52,5 +53,10 @@ public class OrderServiceImpl implements OrderService {
         Page<Order> orders = orderDao.findAll(PageRequest.of(page, SIZE_FOR_PAGE));
         List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
+    }
+
+    @Override
+    public Order findById(Long id) {
+        return orderDao.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Don't exist a order with id: [%s]", id)));
     }
 }
