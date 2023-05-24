@@ -58,7 +58,7 @@ public class DbGenerator implements ApplicationRunner {
                     .parse(new InputStreamReader(usersRes.getInputStream()));
             for (CSVRecord record : usersCsv) {
                 insertUser(record.get(0), record.get(1), record.get(2),record.get(3),record.get(4),
-                        record.get(5),record.get(6));
+                        record.get(5),record.get(6),record.get(7));
             }
 
             CSVParser insertionsCsv = CSVFormat.DEFAULT.withDelimiter(';')
@@ -137,15 +137,16 @@ public class DbGenerator implements ApplicationRunner {
         paymentService.save(payment);
     }
 
-    private void insertUser(String nickName, String firstName, String lastName,String email,String password,
+    private void insertUser(String nickname,String nickName, String firstName, String lastName,String email,String password,
                             String phoneNumber, String birthDate) {
 
-        Address address = new Address("via boh",666,"Napoli",880434,"Italy","Lombardia");
+        Address address = new Address("via boh","666","Napoli","880434","Italy","Lombardia");
         User user = new User();
         user.setNickName(nickName);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
+        user.setNickName(nickName);
         user.setPassword(password);
         user.setPhoneNumber(Integer.valueOf(phoneNumber));
         user.setBirthDate(LocalDate.parse(birthDate));

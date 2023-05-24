@@ -5,9 +5,17 @@
 
     <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <Pattern>%d{HH:mm:ss.SSS} %blue(%-5level) %magenta(%logger{36}) - %msg %n</Pattern>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %blue(%-5level) %magenta(%logger{36}) - %msg %n</Pattern>
         </encoder>
     </appender>
+
+    <!--
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <encoder>
+            <Pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %blue(%-5level) %magenta(%logger{36}) - %msg %n</Pattern>
+        </encoder>
+    </appender>
+    -->
 
     <root>
         <level value="INFO" />

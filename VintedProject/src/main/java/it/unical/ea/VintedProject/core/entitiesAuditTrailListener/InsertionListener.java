@@ -2,7 +2,6 @@ package it.unical.ea.VintedProject.core.entitiesAuditTrailListener;
 
 
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
-import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import jakarta.persistence.*;
 import lombok.extern.slf4j.Slf4j;
