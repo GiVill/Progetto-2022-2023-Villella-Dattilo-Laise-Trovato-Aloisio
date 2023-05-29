@@ -10,6 +10,9 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatCardModule} from '@angular/material/card';
 
 
 
@@ -26,6 +29,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatFormFieldModule,
     MatIconModule,
     MatButtonModule,
+    MatTreeModule,
+    MatSidenavModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

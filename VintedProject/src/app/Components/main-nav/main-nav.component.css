@@ -1,0 +1,111 @@
+.titleDiv{
+  color: rgb(6, 6, 7);
+  width: 15%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  height: auto;
+}
+
+.mainDiv{
+  display: flex;
+  background-color: rgb(249, 244, 244);
+  justify-content: space-between;
+  height: 70px;
+}
+
+.searchDiv{
+  height: auto;
+  width: 50%;
+}
+
+.searchDiv input{
+  width: 90%;
+}
+
+.secondDiv{
+  justify-content: space-between;
+  background-color: aqua;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.cardOver {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 20%;
+  padding-left: 190px;
+  padding-top: 150px;
+  /*opacity: 0.8; /* Puoi regolare l'opacità a tuo piacimento */
+}
+
+
+.spacer{
+  flex: 1 1 auto;
+}
+
+div#hormenu {
+  width: 100%;
+  float: left;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid black;
+}
+
+div#hormenu ul{
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+div#hormenu li{
+  width:100px;
+  float:left;
+  margin: 0;
+  padding: 0;
+  border-right: 1px solid black;
+  color:black;
+}
+
+div#hormenu a{
+  display: block;
+  padding: 5px;
+  color: #000;
+  text-decoration: none;
+}
+
+div#hormenu a:hover{
+  background-color: #000033;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+div#hormenu li ul{
+  display: none
+}
+
+div#hormenu li:hover ul{
+  display: block;
+  position: absolute;
+  z-index:1;
+  width:150px;
+  padding: 0;
+  margin: 0 0 0 -1px;
+  border:1px solid black;
+  background: white;
+}
+
+div#hormenu li li {
+  border:none;
+  width:150px;
+}
+
+div#hormenu li li a {
+  padding:2px 2px 2px 10px;
+}

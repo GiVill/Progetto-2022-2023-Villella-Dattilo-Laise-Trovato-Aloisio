@@ -1,67 +1,70 @@
-<div style="display: flex; background-color: green;">
-  <div style="color: blue;">
-    OCARINA SHOP
+<div class="mainDiv">
+  <span class="spacer"></span>
+  <div class="titleDiv">
+    <p style="margin-top: 10px;">OCARINA SHOP</p>
   </div>
-  <div> <!--div della ricerca categorie-->
-    <button mat-button [matMenuTriggerFor]="animals">Animal index</button>
-    <mat-menu #animals="matMenu">
-    <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>
-    <button mat-menu-item [matMenuTriggerFor]="invertebrates">Invertebrates</button>
-    </mat-menu>
-
-    <mat-menu #vertebrates="matMenu">
-    <button mat-menu-item [matMenuTriggerFor]="fish">Fishes</button>
-    <button mat-menu-item [matMenuTriggerFor]="amphibians">Amphibians</button>
-    <button mat-menu-item [matMenuTriggerFor]="reptiles">Reptiles</button>
-    <button mat-menu-item>Birds</button>
-    <button mat-menu-item>Mammals</button>
-    </mat-menu>
-
-  <mat-menu #invertebrates="matMenu">
-  <button mat-menu-item>Insects</button>
-  <button mat-menu-item>Molluscs</button>
-  <button mat-menu-item>Crustaceans</button>
-  <button mat-menu-item>Corals</button>
-  <button mat-menu-item>Arachnids</button>
-  <button mat-menu-item>Velvet worms</button>
-  <button mat-menu-item>Horseshoe crabs</button>
-  </mat-menu>
-
-  <mat-menu #fish="matMenu">
-  <button mat-menu-item>Baikal oilfish</button>
-  <button mat-menu-item>Bala shark</button>
-  <button mat-menu-item>Ballan wrasse</button>
-  <button mat-menu-item>Bamboo shark</button>
-  <button mat-menu-item>Banded killifish</button>
-  </mat-menu>
-
-  <mat-menu #amphibians="matMenu">
-  <button mat-menu-item>Sonoran desert toad</button>
-  <button mat-menu-item>Western toad</button>
-  <button mat-menu-item>Arroyo toad</button>
-  <button mat-menu-item>Yosemite toad</button>
-  </mat-menu>
-
-  <mat-menu #reptiles="matMenu">
-  <button mat-menu-item>Banded Day Gecko</button>
-  <button mat-menu-item>Banded Gila Monster</button>
-  <button mat-menu-item>Black Tree Monitor</button>
-  <button mat-menu-item>Blue Spiny Lizard</button>
-  <button mat-menu-item disabled>Velociraptor</button>
-  </mat-menu>
+  <span class="spacer"></span>
+  <div style="height: auto;"> <!--div della ricerca categorie-->
+    <div id="hormenu"><!-- div che contiene il menu -->
+      <ul> <!-- lista principale: definisce il menu nella sua interezza -->
+        <li>
+        <button href="#" (click)="showCategories()">Categorie</button> <!-- primo list-item, prima voce del menu -->
+          <ul *ngIf="!hideMenu"> <!-- Lista annidata: voci del sotto-menu -->
+            <li><a href="#">Elettronica</a></li>
+            <li><a href="#">Collezioni</a></li>
+            <li><a href="#">Abbigliamento</a></li>
+            <li><a href="#">Barche</a></li>
+            <li><a href="#">Sport</a></li>
+          </ul> <!-- Fine del sotto-menu -->
+        </li> <!-- Chiudo il list-item -->
+      <!--qui altri list-item -->
+      </ul>
+    </div>
   </div>
 
-  <div>
-    <mat-form-field>
+  <span class="spacer"></span>
+
+  <div class="searchDiv"> <!--div barra di ricerca-->
       <input matInput placeholder="search">
-        <button mat-icon-button matSuffix>
-          <mat-icon matSuffix>search</mat-icon>
+        <button>
+          <mat-icon>search</mat-icon>
         </button>
-    </mat-form-field>
+  </div>
+
+  <span class="spacer"></span>
+
+  <div style="display: flex; height: auto;"> <!--div bottoni iscrizione/accesso e inserisci inserzione-->
+    <button mat-raised-button style="background-color: lightblue;">Iscriviti/Accedi</button>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-raised-button style="background-color: rgb(116, 116, 247);">Crea inserzione</button>
+    <span style="flex: 1 1 auto;"></span>
+    <mat-icon>help</mat-icon>
+  </div>
+  <span class="spacer"></span>
+</div>
+
+<div class="secondDiv">
+  <div>
+    <button mat-button>Donna</button>
+    <button mat-button>Uomo</button>
+    <button mat-button>Bambini</button>
+    <button mat-button>Casa</button>
+    <button mat-button>Intrattenimento</button>
+    <button mat-button>Animali</button>
+    <button mat-button>Informazioni</button>
+    <button mat-button>La nostra piattaforma</button>
   </div>
 </div>
 
-
+<div class="image-container">
+    <img style="width: 100%; height: 550px;" src="assets/resources/imageProva.jpg">
+    <div class="cardOver">
+      <mat-card>
+        <img mat-card-img src="assets/resources/CardOverlay.png">
+        <button mat-stroked-button style="background-color: lightblue;">CREA INSERZIONE</button>
+      </mat-card>
+    </div>
+</div>
 
 
 

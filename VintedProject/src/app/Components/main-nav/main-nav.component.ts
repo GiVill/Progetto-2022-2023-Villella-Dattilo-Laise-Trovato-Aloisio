@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./main-nav.component.css'],
 })
 export class MainNavComponent {
-  matMenuTriggerFor : any
+  showFiller!: boolean;
+  hideMenu = true;
+
+  showCategories(){
+    this.hideMenu = !this.hideMenu;
+  }
+
 }
