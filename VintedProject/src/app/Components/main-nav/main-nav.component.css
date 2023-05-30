@@ -45,6 +45,11 @@
   /*opacity: 0.8; /* Puoi regolare l'opacità a tuo piacimento */
 }
 
+.insertion-container{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
 
 .spacer{
   flex: 1 1 auto;

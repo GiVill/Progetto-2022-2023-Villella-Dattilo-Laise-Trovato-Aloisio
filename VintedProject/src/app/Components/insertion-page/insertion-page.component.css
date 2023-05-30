@@ -1,0 +1,15 @@
+.main-container{
+    display: flex;
+}
+
+.image-container{
+    width: 50%;
+    height: auto;
+}
+
+.info-container{
+    width: 50%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+}

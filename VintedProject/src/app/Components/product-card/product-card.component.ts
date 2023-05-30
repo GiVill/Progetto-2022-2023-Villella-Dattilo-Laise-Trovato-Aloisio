@@ -8,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class ProductCardComponent {
 
+  price = 7
+  comletePrice = 8.50
+  size = "M"
+  brand = "mercato marocchino"
+  
 }
