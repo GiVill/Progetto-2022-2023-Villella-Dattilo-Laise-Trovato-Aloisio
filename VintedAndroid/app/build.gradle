@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    //se da errore quando aggiungi le dipendenze del DB aggiungere la stringa di sopra
 }
 
 android {
@@ -66,4 +68,11 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.5'
     implementation 'org.modelmapper:modelmapper:2.4.4'
     implementation 'org.springframework:spring-context:5.3.9'
+
+    var room_version = "2.5.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-runtime:2.5.1")
+    kapt("androidx.room:room-compiler:2.5.1")
 }
