@@ -12,8 +12,8 @@ class BasicInsertionDto (
     @ColumnInfo val price : Int,
     @ColumnInfo val description : String,
     @ColumnInfo val condition : String,
-    @ColumnInfo val creationDate : LocalDate,
-    @ColumnInfo val endDate: LocalDate,
+    @ColumnInfo val creationDate : String,
+    @ColumnInfo val endDate: String,
     @ColumnInfo val imagePath : String,
     @ColumnInfo val userId : Long
         ){

@@ -12,7 +12,7 @@ class UserDto (
     @ColumnInfo val firstName : String,
     @ColumnInfo val lastName : String,
     @ColumnInfo val email : String,
-    @ColumnInfo val birthDate: LocalDate,
+    @ColumnInfo val birthDate: String,
     @ColumnInfo val gender : Gender
         ){
 }

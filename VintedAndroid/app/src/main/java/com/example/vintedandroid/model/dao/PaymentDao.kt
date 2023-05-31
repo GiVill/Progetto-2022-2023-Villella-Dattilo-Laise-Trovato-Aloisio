@@ -2,12 +2,13 @@ package com.example.vintedandroid.model.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import com.example.vintedandroid.dto.PaymentDto
 
 @Dao
-interface PaymentDao {
+public interface PaymentDao {
     @Query("select * from paymentDto")
-    fun getAll(): List<PaymentDao>
+    fun getAll(): List<PaymentDto>
 
     @Query("select * from paymentDto where id = :paymentId")
-    fun getById(paymentId : Long) : PaymentDao
+    fun getById(paymentId : Long) : PaymentDto
 }

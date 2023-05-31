@@ -8,7 +8,7 @@ import java.time.LocalDate
 @Entity(tableName = "orderDto")
 class OrderDto (
     @PrimaryKey val id : Long,
-    @ColumnInfo val date: LocalDate,
+    @ColumnInfo val date: String,
     @ColumnInfo val paymentid : Long,
     @ColumnInfo val number : Int,
     @ColumnInfo val inserionId : Long,

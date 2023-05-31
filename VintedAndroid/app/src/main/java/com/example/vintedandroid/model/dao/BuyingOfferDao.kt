@@ -10,6 +10,6 @@ interface BuyingOfferDao {
     @Query("select * from buyingOfferDto")
     fun getAll(): List<BuyingOfferDto>
 
-    @Query("select * from orderDto where id = :buyingId")
+    @Query("select * from buyingOfferDto where id = :buyingId")
     fun getById(buyingId : Long) : BuyingOfferDto
 }

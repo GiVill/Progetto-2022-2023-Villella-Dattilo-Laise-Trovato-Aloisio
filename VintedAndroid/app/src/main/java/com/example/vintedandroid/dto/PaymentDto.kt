@@ -8,10 +8,11 @@ import com.example.vintedandroid.dto.enumerated.Status
 
 @Entity(tableName = "paymentDto")
 class PaymentDto(
-    @PrimaryKey val id : Long,
-    @ColumnInfo val paymentMethod: PaymentMethod,
-    @ColumnInfo val status: Status,
-    @ColumnInfo val userId : Long,
-    @ColumnInfo val orderId : Long
+    @PrimaryKey val id : Long?,
+    @ColumnInfo val paymentMethod: PaymentMethod?,
+    @ColumnInfo val status: Status?,
+    @ColumnInfo val userId : Long?,
+    @ColumnInfo val orderId : Long?
 ) {
+    constructor() : this(null, null, null, null, null)
 }
