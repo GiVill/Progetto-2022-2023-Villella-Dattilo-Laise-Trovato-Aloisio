@@ -1,15 +1,30 @@
 .main-container{
-    display: flex;
+  display: flex;
 }
 
 .image-container{
-    width: 50%;
-    height: auto;
+  display: flex;
+  width: 70%;
+  height: auto;
+  justify-content: center; /* Centra orizzontalmente */
+  align-items: center; /* Centra verticalmente */
 }
 
 .info-container{
-    width: 50%;
-    height: auto;
-    display: flex;
-    flex-direction: row;
+  width: 30%;
+  height: auto;
+}
+
+.productImage{
+  width: 50%;
+  height: auto;
+}
+
+.priceContainer{
+  height: 25%;
+}
+
+.infoContainer{
+  display: flex;
+  height: 75%;
 }

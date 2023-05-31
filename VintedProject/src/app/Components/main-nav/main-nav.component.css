@@ -28,29 +28,6 @@
   background-color: aqua;
 }
 
-.image-container {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-
-.cardOver {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 20%;
-  height: 20%;
-  padding-left: 190px;
-  padding-top: 150px;
-  /*opacity: 0.8; /* Puoi regolare l'opacità a tuo piacimento */
-}
-
-.insertion-container{
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
 .spacer{
   flex: 1 1 auto;
 }
