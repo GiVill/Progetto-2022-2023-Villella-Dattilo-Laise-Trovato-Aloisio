@@ -16,6 +16,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from "@angular/material/input";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 
@@ -27,17 +29,20 @@ import {MatCardModule} from '@angular/material/card';
     InsertionPageComponent,
     HomePageComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatMenuModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTreeModule,
-    MatSidenavModule,
-    MatCardModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatMenuModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatButtonModule,
+        MatTreeModule,
+        MatSidenavModule,
+        MatCardModule,
+        MatInputModule,
+        BrowserAnimationsModule
+
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

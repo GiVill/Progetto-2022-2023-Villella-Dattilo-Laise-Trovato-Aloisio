@@ -9,10 +9,17 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 
 export class MainNavComponent {
   showFiller!: boolean;
-  hideMenu = true;
 
-  showCategories(){
-    this.hideMenu = !this.hideMenu;
+  showSubMenu: boolean = false;
+
+  showMenu() {
+    this.showSubMenu = true;
   }
+
+  hideMenu() {
+    this.showSubMenu = false;
+  }
+
+
 
 }
