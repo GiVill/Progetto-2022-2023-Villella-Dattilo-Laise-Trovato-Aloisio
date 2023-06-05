@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { Router } from '@angular/router';
+import {BasicInsertion} from "../../Model/basic-insertion.model";
+
 
 @Component({
   selector: 'app-product-card',
@@ -7,20 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./product-card.component.css']
 })
 export class ProductCardComponent {
+  @Input() item: BasicInsertion | undefined;
+  isHovered = false;
 
-  constructor(private router: Router) {
-
-  }
+  constructor(private router: Router) { }
 
   onImageClick(): void {
     this.router.navigate(['insertion']);
   }
-
-  price = 7
-  comletePrice = 8.50
-  size = "M"
-  brand = "mercato marocchino"
-
-  isHovered = false;
-
 }

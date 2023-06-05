@@ -18,6 +18,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 
 
@@ -40,7 +41,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         MatSidenavModule,
         MatCardModule,
         MatInputModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        HttpClientModule
 
     ],
   providers: [],
