@@ -11,7 +11,7 @@ import {Page} from "../../Model/page.model";
 })
 export class HomePageComponent implements OnInit {
   insertion: Page<BasicInsertion> | undefined;
-  page = 0;
+  page = 1;
 
   constructor(private insertionService: InsertionService) { }
 

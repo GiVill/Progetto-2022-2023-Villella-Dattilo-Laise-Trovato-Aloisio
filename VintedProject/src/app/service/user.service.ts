@@ -8,7 +8,7 @@ import {User} from "../Model/user.model";
 })
 export class UserService {
 
-  private apiUrl = '/vintedProject-api/v1/users';
+  private apiUrl = 'http://localhost:8010/vintedProject-api/v1/insertions';
 
   constructor(private http: HttpClient) { }
 

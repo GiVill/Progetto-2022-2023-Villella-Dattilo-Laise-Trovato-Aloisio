@@ -7,7 +7,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class PaymentService {
-  private apiUrl = '/vintedProject-api/v1/payments';
+  private apiUrl = 'http://localhost:8010/vintedProject-api/v1/insertions';
 
   constructor(private http: HttpClient) { }
 

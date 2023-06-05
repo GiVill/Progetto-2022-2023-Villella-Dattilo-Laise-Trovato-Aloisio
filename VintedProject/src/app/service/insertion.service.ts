@@ -8,7 +8,7 @@ import {Page} from "../Model/page.model";
   providedIn: 'root'
 })
 export class InsertionService {
-  private apiUrl = '/vintedProject-api/v1/insertions';
+  private apiUrl = 'http://localhost:8010/vintedProject-api/v1/insertions';
 
   constructor(private http: HttpClient) { }
 

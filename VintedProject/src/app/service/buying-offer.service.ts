@@ -8,7 +8,7 @@ import {BuyingOffer} from "../Model/buying-offer.model";
 })
 export class BuyingOfferService {
 
-  private apiUrl = '/vintedProject-api/v1/offers';
+  private apiUrl = 'http://localhost:8010/vintedProject-api/v1/insertions';
 
   constructor(private http: HttpClient) { }
 
