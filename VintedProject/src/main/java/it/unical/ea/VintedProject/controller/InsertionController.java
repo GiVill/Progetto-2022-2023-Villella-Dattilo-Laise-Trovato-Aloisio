@@ -22,6 +22,7 @@ public class InsertionController {
     @GetMapping("/insertions")
     public ResponseEntity<Page<BasicInsertionDto>> all(@RequestParam("page") int page){
         return ResponseEntity.ok(basicInsertionService.getAllPaged(page));
+
     }
 
     @PostMapping("/insertions")
