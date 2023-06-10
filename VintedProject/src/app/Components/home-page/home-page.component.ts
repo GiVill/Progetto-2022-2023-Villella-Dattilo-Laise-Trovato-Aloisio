@@ -10,14 +10,14 @@ import {Page} from "../../Model/page.model";
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-  insertion: Page<BasicInsertion> | undefined;
+  mostRequested: Page<BasicInsertion> | undefined;
   page = 1;
 
   constructor(private insertionService: InsertionService) { }
 
   ngOnInit(): void {
     this.insertionService.getAllInsertions(this.page).subscribe((insertions: Page<BasicInsertion>) => {
-      this.insertion = insertions;
+      this.mostRequested = insertions;
     });
   }
 }

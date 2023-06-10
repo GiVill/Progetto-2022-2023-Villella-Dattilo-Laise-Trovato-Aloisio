@@ -19,6 +19,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { BrandComponent } from './Components/brand/brand.component';
 
 
 
@@ -29,6 +30,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     ProductCardComponent,
     InsertionPageComponent,
     HomePageComponent,
+    BrandComponent,
   ],
     imports: [
         BrowserModule,

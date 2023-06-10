@@ -15,12 +15,97 @@
   /*opacity: 0.8; /* Puoi regolare l'opacità a tuo piacimento */
 }
 
-.insertion-container{
+.insertion-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-.spacer{
+.spacer {
   flex: 1 1 auto;
 }
+
+.siteContainer {
+  display: flex;
+}
+
+.font {
+  font-family: Maison Neue;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.siteText {
+  margin: 20px;
+  display: block;
+  width: 100%;
+}
+
+.insertion-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.body-content {
+  margin: auto;
+  width: 85%;
+  padding: 10px;
+  position: relative;
+  min-height: 450px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.showAll-button {
+  background-color: lightblue;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-family: Maison Neue;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.card-container {
+  overflow-x: auto;
+  padding: 0 20px;
+  margin: 2px;
+}
+
+.card-row {
+  display: flex;
+  gap: 20px;
+}
+
+.card-item {
+  flex: 0 0 auto;
+}
+
+.button {
+  text-align: center;
+  font-weight: bold;
+  height: 50px;
+  min-width: 80px;
+  margin: 20px;
+  border: 1px solid #262626;
+  border-radius: 4px;
+  vertical-align: top;
+  padding-right: 8px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+

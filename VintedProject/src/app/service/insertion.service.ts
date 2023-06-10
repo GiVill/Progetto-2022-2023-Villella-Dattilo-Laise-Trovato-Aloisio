@@ -17,6 +17,12 @@ export class InsertionService {
     return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}`, { params });
   }
 
+
+  getInsertionByBrand(brand: string | undefined, page: number): Observable<Page<BasicInsertion>> {
+    const params = new HttpParams().set('page', page.toString());
+    return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}/${brand}`);
+  }
+
   addInsertion(basicInsertion: BasicInsertion): Observable<BasicInsertion> {
     return this.http.post<BasicInsertion>(`${this.apiUrl}`, basicInsertion);
   }

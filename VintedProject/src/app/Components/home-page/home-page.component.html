@@ -7,8 +7,65 @@
     </mat-card>
   </div>
 </div>
-<div class="insertion-container" *ngIf="insertion">
-  <div *ngFor="let item of insertion.content" style="max-width: 300px; margin-top: 20px">
-    <app-product-card [item]="item"></app-product-card>
+<div class="insertion-container" *ngIf="mostRequested">
+  <div class="body-content" style="margin-top: 30px">
+    <div style="max-height: 700px;">
+      <div class="header">
+        <h2 class="font">Articoli più richiesti</h2>
+        <button class="showAll-button">Vedi tutti</button>
+      </div>
+      <div class="card-container">
+        <div class="card-row">
+          <div *ngFor="let item of mostRequested.content" class="card-item">
+            <app-product-card [item]="item"></app-product-card>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+<div style="height: 30px; min-width: 30px"></div>
+
+<div class="body-content" style="min-height: 250px !important;">
+<h2 class="font">Ricerca per brand</h2>
+<div style="height: 20px; min-width: 20px"></div>
+<div style="flex-wrap: wrap; display: flex;">
+  <button class="button btn" [routerLink]="['/brand' , 'adidas']" >Adidas</button>
+  <button class="button btn" [routerLink]="['/brand' , 'puma']" >Puma</button>
+  <button class="button btn" [routerLink]="['/brand' , 'nike']" >Nike</button>
+  <button class="button btn" [routerLink]="['/brand' , 'microsoft']" >Microsoft</button>
+  <button class="button btn" [routerLink]="['/brand' , 'xiaomi']" >Xiaomi</button>
+  <button class="button btn" [routerLink]="['/brand' , 'nothing']" >Nothing</button>
+  <button class="button btn" [routerLink]="['/brand' , 'guess']" >Guess</button>
+  <button class="button btn" [routerLink]="['/brand' , 'adidas']" >Pumpling</button>
+  <button class="button btn" [routerLink]="['/brand' , 'fila']" >Fila</button>
+  <button class="button btn" [routerLink]="['/brand' , 'onze']" >Onze</button>
+  <button class="button btn" [routerLink]="['/brand' , 'gojiang']" >Gojiang</button>
+  <button class="button btn" [routerLink]="['/brand' , 'rebook']" >Rebook</button>
+  <button class="button btn" [routerLink]="['/brand' , 'new_balance']" >New Balance</button>
+  <button class="button btn" [routerLink]="['/brand' , 'asix']" >Asix</button>
+  <button class="button btn" [routerLink]="['/brand' , 'sony']" >Sony</button>
+</div>
+</div>
+
+
+
+<div class="insertion-container" *ngIf="mostRequested">
+  <div class="body-content">
+    <div style="background-color: #c3d0cd; max-height: 700px;">
+      <div class="header">
+        <h2 class="font">Feed</h2>
+        <button class="showAll-button">Vedi tutti</button>
+      </div>
+      <div class="card-container">
+        <div class="card-row">
+          <div *ngFor="let item of mostRequested.content" class="card-item">
+            <app-product-card [item]="item"></app-product-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
