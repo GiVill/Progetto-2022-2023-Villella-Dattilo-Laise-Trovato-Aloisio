@@ -1,16 +1,18 @@
 .main-container{
+  margin:50px;
   display: flex;
 }
 
 .image-container{
   display: flex;
-  width: 70%;
-  height: auto;
+  width: 1000px;
+  max-height: 1000px;
   justify-content: center; /* Centra orizzontalmente */
   align-items: center; /* Centra verticalmente */
 }
 
 .info-container{
+  margin:50px;
   width: 30%;
   height: auto;
 }

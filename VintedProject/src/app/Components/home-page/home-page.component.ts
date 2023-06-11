@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ProductCardComponent} from "../product-card/product-card.component";
 import {BasicInsertion} from "../../Model/basic-insertion.model";
 import {InsertionService} from "../../service/insertion.service";
 import {Page} from "../../Model/page.model";
+import {ImageService} from "../../service/image.service";
 
 @Component({
   selector: 'app-home-page',
@@ -18,6 +18,14 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.insertionService.getAllInsertions(this.page).subscribe((insertions: Page<BasicInsertion>) => {
       this.mostRequested = insertions;
+      this.processImages();
+    });
+  }
+
+
+  processImages(): void {
+    this.mostRequested?.content.forEach(async (insertion: BasicInsertion) => {
+      insertion.imageSrc = await ImageService.setProductImageSrc(insertion.image);
     });
   }
 }

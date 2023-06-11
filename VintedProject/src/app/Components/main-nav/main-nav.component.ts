@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ProductCardComponent } from '../product-card/product-card.component';
+import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-main-nav',
@@ -8,9 +10,15 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 })
 
 export class MainNavComponent {
+
   showFiller!: boolean;
 
   showSubMenu: boolean = false;
+
+  constructor(
+              private router: Router,
+              private cookieService: CookieService){}
+
 
   showMenu() {
     this.showSubMenu = true;
@@ -19,6 +27,15 @@ export class MainNavComponent {
   hideMenu() {
     this.showSubMenu = false;
   }
+
+
+  redirectToSearch(searchKeyword: string) {
+
+    const formattedSearch = searchKeyword.toLowerCase();
+    this.router.navigate(['/search', formattedSearch]);
+
+  }
+
 
 
 

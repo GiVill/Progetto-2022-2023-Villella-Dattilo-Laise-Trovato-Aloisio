@@ -1,0 +1,17 @@
+<div class="insertion-container" *ngIf="insertion">
+  <div class="body-content">
+    <div style="background-color: #c3d0cd; max-height: 700px;">
+      <div class="header">
+        <h2 class="font">Feed</h2>
+        <button class="showAll-button">Vedi tutti</button>
+      </div>
+      <div class="card-container">
+        <div class="card-row">
+          <div *ngFor="let item of insertion.content" class="card-item">
+            <app-product-card [item]="item"></app-product-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

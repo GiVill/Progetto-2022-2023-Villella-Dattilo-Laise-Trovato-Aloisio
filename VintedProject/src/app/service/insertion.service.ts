@@ -39,4 +39,14 @@ export class InsertionService {
     const params = new HttpParams().set('userId', userId.toString());
     return this.http.delete(`${this.apiUrl}`, { params, responseType: 'text' });
   }
+
+
+  findAllByTitleLike(pageNumber: number, search: string) {
+    return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}/search/${search}?page=${pageNumber}`);
+  }
+
+  findAllByCategory(pageNumber: number, category: string) {
+      return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}/category/${category}?page=${pageNumber}`);
+
+  }
 }

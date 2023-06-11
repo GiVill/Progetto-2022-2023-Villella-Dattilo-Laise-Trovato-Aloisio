@@ -18,8 +18,11 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { HttpClientModule} from "@angular/common/http";
 import { BrandComponent } from './Components/brand/brand.component';
+import { CookieService } from 'ngx-cookie-service';
+import { SearchComponent } from './Components/search/search.component';
+import { CategoryComponent } from './Components/category/category.component';
 
 
 
@@ -31,6 +34,8 @@ import { BrandComponent } from './Components/brand/brand.component';
     InsertionPageComponent,
     HomePageComponent,
     BrandComponent,
+    SearchComponent,
+    CategoryComponent,
   ],
     imports: [
         BrowserModule,
@@ -47,7 +52,7 @@ import { BrandComponent } from './Components/brand/brand.component';
         HttpClientModule
 
     ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

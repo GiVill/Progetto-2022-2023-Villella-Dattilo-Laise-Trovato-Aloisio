@@ -15,4 +15,5 @@ export interface BasicInsertion {
   buyingOffers : BuyingOffer[];
   order : Order;
   user : User
+  imageSrc?: string;
 }

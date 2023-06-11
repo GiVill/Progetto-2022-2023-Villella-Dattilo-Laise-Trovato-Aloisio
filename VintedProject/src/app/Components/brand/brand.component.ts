@@ -3,6 +3,7 @@ import {Page} from "../../Model/page.model";
 import {BasicInsertion} from "../../Model/basic-insertion.model";
 import {InsertionService} from "../../service/insertion.service";
 import {ActivatedRoute} from "@angular/router";
+import {ImageService} from "../../service/image.service";
 
 @Component({
   selector: 'app-brand',
@@ -23,6 +24,14 @@ export class BrandComponent implements OnInit{
 
     this.insertionService.getInsertionByBrand(this.brandName,this.page).subscribe((insertions: Page<BasicInsertion>) => {
       this.BrandedInserction = insertions;
+      this.processImages();
+    });
+  }
+
+
+  processImages(): void {
+    this.BrandedInserction?.content.forEach(async (insertion: BasicInsertion) => {
+      insertion.imageSrc = await ImageService.setProductImageSrc(insertion.image);
     });
   }
 

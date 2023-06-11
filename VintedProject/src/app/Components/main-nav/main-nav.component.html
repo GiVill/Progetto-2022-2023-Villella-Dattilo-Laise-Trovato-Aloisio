@@ -13,11 +13,11 @@
               <li>
                 <button mat-raised-button href="#" style="height: 55px" (click)="showMenu()" (mouseover)="showMenu()" >Categorie</button> <!-- primo list-item, prima voce del menu -->
                 <ul *ngIf="showSubMenu" style="width: 300px; background-color: white"> <!-- Lista annidata: voci del sotto-menu -->
-                  <li><a href="#">Elettronica</a></li>
-                  <li><a href="#">Collezioni</a></li>
-                  <li><a href="#">Abbigliamento</a></li>
-                  <li><a href="#">Barche</a></li>
-                  <li><a href="#">Sport</a></li>
+                  <li><a  [routerLink]="['/category' , 'Elettronica']">Elettronica</a></li>
+                  <li><a  [routerLink]="['/category' , 'Collezioni']">Collezioni</a></li>
+                  <li><a  [routerLink]="['/category' , 'Abbigliamento']">Abbigliamento</a></li>
+                  <li><a  [routerLink]="['/category' , 'Barche']">Barche</a></li>
+                  <li><a  [routerLink]="['/category' , 'Sport']">Sport</a></li>
                 </ul> <!-- Fine del sotto-menu -->
               </li> <!-- Chiudo il list-item -->
               <!--qui altri list-item -->
@@ -26,8 +26,9 @@
         </div>
 
         <mat-form-field style="margin-top:8px; margin-right: 10px; flex-grow: 1; width: 50%;">
-          <input #searchkeyword matInput name="Ricerca" id="searchKey" placeholder="Ricerca prodotto">
-          <button mat-button matSuffix>
+          <input #searchkeyword matInput name="Ricerca" id="searchKey" placeholder="Ricerca prodotto" (keyup)="redirectToSearch(searchkeyword.value)">
+          <button mat-button matSuffix (click)="redirectToSearch(searchkeyword.value)">
+
             <mat-icon>search</mat-icon>
           </button>
         </mat-form-field>
@@ -48,14 +49,14 @@
 
 <div class="secondDiv">
   <div>
-    <button mat-button>Donna</button>
-    <button mat-button>Uomo</button>
-    <button mat-button>Bambini</button>
-    <button mat-button>Casa</button>
-    <button mat-button>Intrattenimento</button>
-    <button mat-button>Animali</button>
-    <button mat-button>Informazioni</button>
-    <button mat-button>La nostra piattaforma</button>
+    <button mat-button [routerLink]="['/category' , 'donna']">Donna</button>
+    <button mat-button [routerLink]="['/category' , 'uomo']">Uomo</button>
+    <button mat-button [routerLink]="['/category' , 'bamini']">Bambini</button>
+    <button mat-button [routerLink]="['/category' , 'casa']">Casa</button>
+    <button mat-button [routerLink]="['/category' , 'intrattenimento']">Intrattenimento</button>
+    <button mat-button [routerLink]="['/category' , 'animali']">Animali</button>
+    <button mat-button [routerLink]="['/informazioni']">Informazioni</button>
+    <button mat-button [routerLink]="['/cose_boooh']">La nostra piattaforma</button>
   </div>
 </div>
 
