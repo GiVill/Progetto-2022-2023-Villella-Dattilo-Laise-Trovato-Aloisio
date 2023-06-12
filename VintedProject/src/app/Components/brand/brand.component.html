@@ -1,16 +1,11 @@
 <div class="insertion-container" *ngIf="BrandedInserction">
-  <div class="body-content">
-    <div style="background-color: #c3d0cd; max-height: 700px;">
-      <div class="header">
-        <h2 class="font">Feed</h2>
-        <button class="showAll-button">Vedi tutti</button>
-      </div>
-      <div class="card-container">
-        <div class="card-row">
-          <div *ngFor="let item of BrandedInserction.content" class="card-item">
-            <app-product-card [item]="item"></app-product-card>
-          </div>
-        </div>
+  <div class="body-content" style="margin-top: 30px">
+    <div class="card-container">
+      <div class="card-row">
+        <ng-container *ngFor="let item of BrandedInserction?.content; let i = index;">
+          <app-product-card [item]="item" class="card-item"></app-product-card>
+          <ng-container *ngIf="(i + 1) % 6 === 0" class="clearfix"></ng-container>
+        </ng-container>
       </div>
     </div>
   </div>

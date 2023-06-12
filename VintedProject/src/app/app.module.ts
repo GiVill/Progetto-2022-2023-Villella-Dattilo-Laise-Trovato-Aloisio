@@ -23,6 +23,7 @@ import { BrandComponent } from './Components/brand/brand.component';
 import { CookieService } from 'ngx-cookie-service';
 import { SearchComponent } from './Components/search/search.component';
 import { CategoryComponent } from './Components/category/category.component';
+import { CatalogComponent } from './Components/catalog/catalog.component';
 
 
 
@@ -36,6 +37,7 @@ import { CategoryComponent } from './Components/category/category.component';
     BrandComponent,
     SearchComponent,
     CategoryComponent,
+    CatalogComponent,
   ],
     imports: [
         BrowserModule,

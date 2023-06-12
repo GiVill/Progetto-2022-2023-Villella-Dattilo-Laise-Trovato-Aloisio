@@ -12,13 +12,14 @@
     <div style="max-height: 700px;">
       <div class="header">
         <h2 class="font">Articoli più richiesti</h2>
-        <button class="showAll-button">Vedi tutti</button>
+        <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutti</button>
       </div>
       <div class="card-container">
         <div class="card-row">
           <div *ngFor="let item of mostRequested.content" class="card-item">
             <app-product-card [item]="item"></app-product-card>
           </div>
+          <button type="button" class="btn btn-secondary" style="width: 300px; min-width: 200px"  [routerLink]="['/catalog']">Vedi tutti i prodotti</button>
         </div>
       </div>
     </div>
@@ -62,6 +63,7 @@
           <div *ngFor="let item of mostRequested.content" class="card-item">
             <app-product-card [item]="item"></app-product-card>
           </div>
+
         </div>
       </div>
     </div>

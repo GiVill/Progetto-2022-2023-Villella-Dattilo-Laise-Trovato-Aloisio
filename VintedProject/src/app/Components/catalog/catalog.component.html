@@ -1,8 +1,8 @@
-<div class="insertion-container" *ngIf="insertion">
+<div class="insertion-container" *ngIf="catalog">
   <div class="body-content" style="margin-top: 30px">
     <div class="card-container">
       <div class="card-row">
-        <ng-container *ngFor="let item of insertion?.content; let i = index;">
+        <ng-container *ngFor="let item of catalog?.content; let i = index;">
           <app-product-card [item]="item" class="card-item"></app-product-card>
           <ng-container *ngIf="(i + 1) % 6 === 0" class="clearfix"></ng-container>
         </ng-container>
