@@ -9,7 +9,7 @@ import {CatalogComponent} from "./Components/catalog/catalog.component";
 
 const routes: Routes = [
   {path : '', component: HomePageComponent},
-  {path : 'insertion', component:InsertionPageComponent},
+  {path : 'insertion/:id', component:InsertionPageComponent},
   {path : 'brand/:brandName', component: BrandComponent },
   {path : 'search/:searchstring', component: SearchComponent },
   {path : 'category/:categoryName', component: CategoryComponent },

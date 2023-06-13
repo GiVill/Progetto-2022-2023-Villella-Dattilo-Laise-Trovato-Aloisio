@@ -10,11 +10,12 @@ import {BasicInsertion} from "../../Model/basic-insertion.model";
 })
 export class ProductCardComponent {
   @Input() item: BasicInsertion | undefined;
+
   isHovered = false;
 
   constructor(private router: Router) { }
 
   onImageClick(): void {
-    this.router.navigate(['insertion']);
+    this.router.navigate(['/insertion', this.item?.id]);
   }
 }

@@ -8,6 +8,7 @@ export class ImageService {
   constructor() { }
 
 
+
   static async setProductImageSrc(image: Blob): Promise<string> {
     if (!image) {
       return 'assets/resources/vestito.jpg';

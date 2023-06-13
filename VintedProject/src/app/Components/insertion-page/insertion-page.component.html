@@ -1,39 +1,55 @@
 <div class="main-container">
-    <div class="image-container">
-      <img class="productImage" src="assets/resources/vestito.jpg">
-    </div>
+  <div class="image-container">
+    <img class="productImage" [src]="insertion?.imageSrc || 'assets/resources/vestito.jpg'" (click)="openModal(insertion?.imageSrc)">
+  </div>
 
-    <div class="info-container">
-
-        <div class="infoContainer">
-            <div style="width: 50%">
-                <p>
-                    <strong>
-                        BRAND <br>
-                        TAGLIA <br>
-                        CONDIZIONI <br>
-                        COLORE <br>
-                    </strong>
-                </p>
-            </div>
-            <div style="width: 50%">
-                <p>
-                    <strong>
-                        ZARA <br>
-                        S <br>
-                        NUOVO <br>
-                        FATTI I CAZZI TUOI <br>
-                    </strong>
-                </p>
-            </div>
-        </div>
-      <div class="priceContainer">
+  <div class="info-container">
+    <div class="infoContainer">
+      <div style="width: 100%">
+        <h1>{{ insertion?.title }}</h1>
         <p>
-          <br>
-          Prezzo: 5€ <br>
-          <br>
-          5,50€ include la Protezione acquisti
+          <strong>
+            BRAND <br>
+            TAGLIA <br>
+            CONDIZIONI <br>
+            COLORE <br>
+          </strong>
         </p>
       </div>
     </div>
+    <div class="priceContainer">
+      <p>
+        <br>
+        Prezzo: {{ insertion?.price }}€ <br>
+        <br>
+        5€ include la Protezione acquisti
+      </p>
+    </div>
+    <div class="button-container">
+      <button class="btn buy-button">Acquista</button>
+      <button class="btn second-button">Fai un'offerta</button>
+      <button class="btn second-button">Contatta il venditore</button>
+    </div>
+    <div class="image-thumbnails">
+      <div *ngFor="let image of insertion?.additionalImages" class="thumbnail" (click)="openModal(image)">
+        <img [src]="image" alt="Thumbnail">
+      </div>
+    </div>
+  </div>
 </div>
+<div class="userContainer">
+  <div style="width: 100%;">
+    <p>qui dentro vanno i post dell'utente</p>
+  </div>
+</div>
+<div style="height: 20px"></div>
+
+<!-- Finestra modale -->
+<div class="modal" *ngIf="modalOpen">
+  <span class="close" (click)="closeModal()">&times;</span>
+  <img [src]="modalImage" alt="Modal Image">
+</div>
+
+
+
+

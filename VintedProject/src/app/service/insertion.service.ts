@@ -27,7 +27,7 @@ export class InsertionService {
     return this.http.post<BasicInsertion>(`${this.apiUrl}`, basicInsertion);
   }
 
-  getInsertionById(id: number): Observable<BasicInsertion> {
+  getInsertionById(id: number | undefined): Observable<BasicInsertion> {
     return this.http.get<BasicInsertion>(`${this.apiUrl}/${id}`);
   }
 
@@ -47,6 +47,5 @@ export class InsertionService {
 
   findAllByCategory(pageNumber: number, category: string) {
       return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}/category/${category}?page=${pageNumber}`);
-
   }
 }

@@ -6,6 +6,7 @@ export interface BasicInsertion {
   id : BigInt;
   title : String;
   price : number;
+  brand: string;
   creationDate : Date;
   endDate : Date;
   description : String;
@@ -15,5 +16,7 @@ export interface BasicInsertion {
   buyingOffers : BuyingOffer[];
   order : Order;
   user : User
+  size: string;
   imageSrc?: string;
+  additionalImages
 }
