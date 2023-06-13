@@ -11,7 +11,7 @@ import {ImageService} from "../../service/image.service";
   styleUrls: ['./brand.component.css']
 })
 export class BrandComponent implements OnInit{
-  BrandedInserction: Page<BasicInsertion> | undefined;
+  Brandedinsertion: Page<BasicInsertion> | undefined;
   page = 1;
   brandName: string | undefined;
 
@@ -23,14 +23,14 @@ export class BrandComponent implements OnInit{
       this.brandName = String(params.get('brandName'));});
 
     this.insertionService.getInsertionByBrand(this.brandName,this.page).subscribe((insertions: Page<BasicInsertion>) => {
-      this.BrandedInserction = insertions;
+      this.Brandedinsertion = insertions;
       this.processImages();
     });
   }
 
 
   processImages(): void {
-    this.BrandedInserction?.content.forEach(async (insertion: BasicInsertion) => {
+    this.Brandedinsertion?.content.forEach(async (insertion: BasicInsertion) => {
       insertion.imageSrc = await ImageService.setProductImageSrc(insertion.image);
     });
   }

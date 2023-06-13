@@ -24,6 +24,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { SearchComponent } from './Components/search/search.component';
 import { CategoryComponent } from './Components/category/category.component';
 import { CatalogComponent } from './Components/catalog/catalog.component';
+import { UserInsertionComponent } from './Components/user-insertion/user-insertion.component';
 
 
 
@@ -38,6 +39,7 @@ import { CatalogComponent } from './Components/catalog/catalog.component';
     SearchComponent,
     CategoryComponent,
     CatalogComponent,
+    UserInsertionComponent,
   ],
     imports: [
         BrowserModule,

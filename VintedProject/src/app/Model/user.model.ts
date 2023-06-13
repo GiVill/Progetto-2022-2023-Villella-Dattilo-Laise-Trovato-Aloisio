@@ -20,6 +20,7 @@ export interface User{
   registrationDate : Date;
   gender : Gender;
   photo : Blob;
+  photoSrc: string;
   payments : Payment[];
   buyingOffers : BuyingOffer[];
   orders : Order[];

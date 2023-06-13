@@ -1,0 +1,9 @@
+<div class="user-insertion-card">
+  <div class="user-image-container">
+    <img class="user-image" [src]="user?.photo ||  'assets/resources/vestito.jpg' " alt="User Image">
+  </div>
+  <img class="insertion-image" [src]="insertion?.image" alt="Insertion Image">
+  <div class="price-container">
+    Prezzo: {{ insertion?.price }}€
+  </div>
+</div>
