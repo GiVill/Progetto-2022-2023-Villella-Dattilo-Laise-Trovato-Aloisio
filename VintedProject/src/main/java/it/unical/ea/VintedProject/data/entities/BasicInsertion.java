@@ -1,6 +1,8 @@
 package it.unical.ea.VintedProject.data.entities;
 
 
+import it.unical.ea.VintedProject.dto.enumerated.Brand;
+import it.unical.ea.VintedProject.dto.enumerated.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,6 +49,22 @@ public class BasicInsertion {
 
     @Column(name = "CONDITION")
     private String condition;
+
+
+    ///////////////////////////
+
+
+    @Column(name = "CATEGORY")
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    @Column(name = "BRAND")
+    private Brand brand;
+
+
+    ////////////////////////////
+
+
 
     @ManyToMany(mappedBy = "favorites")
     Set<User> usersFavorites;

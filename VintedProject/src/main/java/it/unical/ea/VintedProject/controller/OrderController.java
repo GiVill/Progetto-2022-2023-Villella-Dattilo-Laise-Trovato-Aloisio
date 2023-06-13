@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,22 +19,26 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/orders")
+    @PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<OrderDto> addOrder(@RequestBody @Valid OrderDto orderDto) {
         return ResponseEntity.ok(orderService.save(orderDto));
     }
 
 
     @GetMapping("/orders/{id}")
+    @PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<OrderDto> getOrderById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
     @GetMapping("/orders")
+    @PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<Page<OrderDto>> all(@RequestParam("page") int page){
         return ResponseEntity.ok(orderService.getAllPaged(page));
     }
 
     @DeleteMapping("/orders/{id}")
+    @PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<Void> deleteOrderById(@PathVariable Long id) {
         orderService.deleteOrderById(id);
         return ResponseEntity.noContent().build();

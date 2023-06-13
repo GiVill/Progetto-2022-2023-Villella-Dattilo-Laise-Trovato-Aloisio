@@ -8,6 +8,8 @@ import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.OrderDto;
 import it.unical.ea.VintedProject.dto.UserDto;
+import it.unical.ea.VintedProject.dto.enumerated.Brand;
+import it.unical.ea.VintedProject.dto.enumerated.Category;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,6 +26,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class BasicInsertionServiceImpl implements BasicInsertionService {
+
+    //private final DressInsertionDao
 
     private final BasicInsertionDao basicInsertionDao;
     private final ModelMapper modelMapper;
@@ -82,4 +86,19 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     public BasicInsertion findById(Long id) {
         return basicInsertionDao.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Don't exist an insertion with id: [%s]", id)));
     }
+
+    @Override
+    public Page<BasicInsertionDto> getByBrand(Brand brand, int page){
+        PageRequest pageRequest = PageRequest.of(SIZE_FOR_PAGE, page, Sort.by("brand").ascending());
+        List<BasicInsertionDto> collect = basicInsertionDao.findByBrand(brand, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        return new PageImpl<>(collect);
+    }
+
+    @Override
+    public Page<BasicInsertionDto> getByCategory(Category category, int page){
+        PageRequest pageRequest = PageRequest.of(SIZE_FOR_PAGE, page, Sort.by("category").ascending());
+        List<BasicInsertionDto> collect = basicInsertionDao.findByCategory(category,pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        return new PageImpl<>(collect);
+    }
+
 }

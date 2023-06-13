@@ -9,6 +9,7 @@ import it.unical.ea.VintedProject.data.entities.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class VintedProjectApplication {
 		System.out.println("SALVATO");
 		System.out.println("Swagger documentation is running at: http://localhost:8010/swagger-ui/index.html");
 
+//# docker run -p 8090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:21.1.1 start-dev
 	}
 
 }

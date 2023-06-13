@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,22 +21,26 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping("/payments")
+    @PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<PaymentDto> addPayment (@RequestBody @Valid PaymentDto payment) {
         return ResponseEntity.ok(paymentService.save(payment));
     }
 
     @DeleteMapping("payments/{idPayment}")
+    @PreAuthorize("hasAnyRole('user','admin')")
     public HttpStatus deleteOffer (@PathVariable("idPayment") Long id) {
         paymentService.deleteInsertion(id);
         return HttpStatus.OK;
     }
 
     @GetMapping("/payments")
+    @PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<List<PaymentDto>> all() {
         return ResponseEntity.ok(paymentService.findAll());
     }
 
     @GetMapping("/payments/{id}")
+    @PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<PaymentDto> getById(@PathVariable("idPayment") Long id){
         PaymentDto paymentDto = paymentService.findById(id);
         return ResponseEntity.ok(paymentDto);
