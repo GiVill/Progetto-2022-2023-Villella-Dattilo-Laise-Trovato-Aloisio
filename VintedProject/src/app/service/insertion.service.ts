@@ -8,44 +8,47 @@ import {Page} from "../Model/page.model";
   providedIn: 'root'
 })
 export class InsertionService {
-  private apiUrl = 'http://localhost:8010/vintedProject-api/v1/insertions';
+  private apiinsertionUrl = 'http://localhost:8010/vintedProject-api/v1/insertions';
+  private apiuserUrl = 'http://localhost:8010/vintedProject-api/v1/user';
 
   constructor(private http: HttpClient) { }
 
   getAllInsertions(page: number): Observable<Page<BasicInsertion>> {
     const params = new HttpParams().set('page', page.toString());
-    return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}`, { params });
+    return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}`, { params });
   }
 
 
   getInsertionByBrand(brand: string | undefined, page: number): Observable<Page<BasicInsertion>> {
     const params = new HttpParams().set('page', page.toString());
-    return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}/${brand}`);
+    return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}/${brand}`);
   }
 
   addInsertion(basicInsertion: BasicInsertion): Observable<BasicInsertion> {
-    return this.http.post<BasicInsertion>(`${this.apiUrl}`, basicInsertion);
+    return this.http.post<BasicInsertion>(`${this.apiinsertionUrl}`, basicInsertion);
   }
 
   getInsertionById(id: number | undefined): Observable<BasicInsertion> {
-    return this.http.get<BasicInsertion>(`${this.apiUrl}/${id}`);
+    return this.http.get<BasicInsertion>(`${this.apiinsertionUrl}/${id}`);
   }
 
   deleteInsertionById(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
+    return this.http.delete(`${this.apiinsertionUrl}/${id}`, { responseType: 'text' });
   }
 
   deleteAllInsertionsByUserId(userId: number): Observable<any> {
     const params = new HttpParams().set('userId', userId.toString());
-    return this.http.delete(`${this.apiUrl}`, { params, responseType: 'text' });
+    return this.http.delete(`${this.apiinsertionUrl}`, { params, responseType: 'text' });
   }
 
 
   findAllByTitleLike(pageNumber: number, search: string) {
-    return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}/search/${search}?page=${pageNumber}`);
+    return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}${search}?page=${pageNumber}`);
   }
 
   findAllByCategory(pageNumber: number, category: string) {
-      return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}/category/${category}?page=${pageNumber}`);
+      return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}${category}?page=${pageNumber}`);
   }
+
+
 }
