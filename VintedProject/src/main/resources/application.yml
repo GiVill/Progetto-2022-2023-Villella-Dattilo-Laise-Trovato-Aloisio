@@ -5,11 +5,21 @@ spring:
         jwt:
           issuer-uri: http://localhost:8090/realms/vinted2_0
           jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
-server:
-  port: 8091
+  server:
+    port: 8091
 
 jwt:
   auth:
     converter:
       resource-id: vinted-client
       principle-attribute: preferred_username
+
+server:
+  ssl:
+    key-alias: spring-https
+    key-store: classpath:javatechie.jks
+    key-store-type: JKS
+    key-password: vinted
+    key-store-password: vinted
+
+  port: 8010

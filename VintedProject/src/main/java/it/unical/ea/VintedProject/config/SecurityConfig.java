@@ -53,6 +53,11 @@ public class SecurityConfig {
                 .sessionManagement()
                     .sessionCreationPolicy(STATELESS);
 
+        http.headers().httpStrictTransportSecurity()
+                .maxAgeInSeconds(0)
+                .includeSubDomains(true);
+
+
         return http.build();
     }
 }
