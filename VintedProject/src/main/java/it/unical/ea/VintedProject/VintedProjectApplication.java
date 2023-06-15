@@ -20,7 +20,7 @@ public class VintedProjectApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(VintedProjectApplication.class, args);
 
 		System.out.println("SALVATO");
-		System.out.println("Swagger documentation is running at: https://localhost:8010/swagger-ui/index.html");
+		System.out.println("Swagger documentation is running at: http://localhost:8010/swagger-ui/index.html");
 
 //# docker run -p 8090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:21.1.1 start-dev
 	}
