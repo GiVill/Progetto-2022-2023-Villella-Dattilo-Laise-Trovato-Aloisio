@@ -12,7 +12,7 @@ import {ImageService} from "../../service/image.service";
 export class HomePageComponent implements OnInit {
   mostRequested: Page<BasicInsertion> | undefined;
   feed: Page<BasicInsertion> | undefined;
-  page = 1;
+  page = 0;
 
   constructor(private insertionService: InsertionService) { }
 
@@ -24,7 +24,10 @@ export class HomePageComponent implements OnInit {
       };
 
         this.insertionService.getAllInsertions(this.page).subscribe((insertions: Page<BasicInsertion>) => {
-          this.feed = insertions;
+          this.feed  = {
+            ...insertions,
+            content: insertions.content.slice(0, 5)
+          };
         });
 
       this.processImages();

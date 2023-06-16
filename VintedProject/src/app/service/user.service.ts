@@ -10,7 +10,7 @@ import {BasicInsertion} from "../Model/basic-insertion.model";
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:8010/vintedProject-api/v1/insertions';
+  private apiUrl = 'http://localhost:8010/vintedProject-api/v1/users';
 
   constructor(private http: HttpClient) { }
 
@@ -26,7 +26,7 @@ export class UserService {
     return this.http.delete(`${this.apiUrl}/${userId}`, { responseType: 'text' });
   }
 
-  getAllInsertionsByUser(id: number | undefined, page: 1 | undefined): Observable<Page<BasicInsertion>> {
+  getAllInsertionsByUser(id: number | undefined, page: number): Observable<Page<BasicInsertion>> {
     return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}/${id}?page=${page}`);
   }
 

@@ -5,8 +5,10 @@
         <ng-container *ngFor="let item of catalog?.content; let i = index;">
           <app-product-card [item]="item" class="card-item"></app-product-card>
         </ng-container>
-        <button (click)="loadmore()">dsdsd</button>
       </div>
+    </div>
+    <div class="button-container">
+      <button class="button" (click)="loadmore()">Carica altro</button>
     </div>
   </div>
 </div>

@@ -84,11 +84,13 @@
 
 .card-row {
   display: flex;
-  gap: 20px;
+  gap: 2%
+
 }
 
 .card-item {
-  flex: 0 0 auto;
+  flex: 1 1 auto;
+  max-height: 8%;
 }
 
 .button {

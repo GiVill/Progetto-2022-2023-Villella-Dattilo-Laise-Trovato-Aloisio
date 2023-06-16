@@ -18,8 +18,7 @@ import {Observable, switchMap} from "rxjs";
 export class InsertionPageComponent implements OnInit {
   insertion: BasicInsertion | undefined;
   user: User | undefined;
-
-  page: 1 | undefined;
+  page = 1;
   userOtherInsertion: Page<BasicInsertion> | undefined;
   id: number | undefined;
   modalOpen = false;
@@ -32,37 +31,43 @@ export class InsertionPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(
-      switchMap((params) => {
-        this.id = Number(params.get('id'));
-        return this.insertionService.getInsertionById(this.id);
-      })
-    ).subscribe(
-      (data: BasicInsertion) => {
-        this.insertion = data;
-        if (this.insertion?.user) {
-          this.userService.getUserById(this.insertion.user.id).subscribe(
-            (userData: User) => {
-              this.user = userData;
-            },
-            (error) => {
-              console.log('Si è verificato un errore durante il recupero dell\'utente:', error);
-            }
-          );
+    this.route.paramMap
+      .pipe(
+        switchMap((params) => {
+          this.id = Number(params.get('id'));
+          return this.insertionService.getInsertionById(this.id);
+        })
+      )
+      .subscribe(
+        (data: BasicInsertion) => {
+          this.insertion = data;
+          console.log(this.insertion);
+          if (this.insertion?.userId) {
+            this.userService.getUserById(this.insertion.userId).subscribe(
+              (userData: User) => {
+                this.user = userData;
+                console.log(this.user?.id); // Verifica qui
+              },
+              (error) => {
+                console.log('Si è verificato un errore durante il recupero dell\'utente:', error);
+              }
+            );
 
-
-          this.userService.getAllInsertionsByUser(this.id, this.page).subscribe(
-            (data: Page<BasicInsertion>) => {
-              this.userOtherInsertion = data;
-            },
-            (error) => {
-              console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
-            }
-          );
+            this.userService.getAllInsertionsByUser(this.id, this.page).subscribe(
+              (data: Page<BasicInsertion>) => {
+                this.userOtherInsertion = data;
+              },
+              (error) => {
+                console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
+              }
+            );
+          }
+        },
+        (error) => {
+          console.log('Si è verificato un errore durante il recupero dell\'inserzione:', error);
         }
-      })
+      );
   }
-
 
   async processImages(): Promise<void> {
     if (this.insertion) {
@@ -83,6 +88,5 @@ export class InsertionPageComponent implements OnInit {
     this.modalImage = undefined;
   }
 }
-
 
 

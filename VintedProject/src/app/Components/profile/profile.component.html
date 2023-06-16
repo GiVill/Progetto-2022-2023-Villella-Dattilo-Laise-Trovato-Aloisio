@@ -1,0 +1,24 @@
+<div class="profile-page">
+  <div class="profile-header">
+    <div class="profile-picture">
+      <img [src]="user?.photo ||  'assets/resources/vestito.jpg' " alt="Profile Picture" class="round-image">
+    </div>
+    <div class="profile-info">
+      <h1>Nome Utente</h1>
+      <p>Nome: {{ user?.firstName }}</p>
+      <p>Cognome: {{ user?.lastName }}</p>
+      <p>Email: {{ user?.email }}</p>
+      <p>Data di nascita: {{ user?.birthDate }}</p>
+      <!--Altre informazioni utente qui -->
+    </div>
+  </div>
+
+  <div class="other-insertions-container">
+    <h2>Altre inserzioni dell'utente</h2>
+    <div class="insertion-container" *ngIf="userInsertion">
+    <div class="insertion-card" *ngFor="let insertion of userInsertion?.content">
+      <app-product-card [item]="insertion"></app-product-card>
+    </div>
+  </div>
+  </div>
+</div>

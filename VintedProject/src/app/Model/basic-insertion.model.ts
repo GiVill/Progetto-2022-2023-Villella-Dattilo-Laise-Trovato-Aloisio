@@ -15,7 +15,7 @@ export interface BasicInsertion {
   usersFavorites : User[];
   buyingOffers : BuyingOffer[];
   order : Order;
-  user : User
+  userId : number;
   size: string;
   imageSrc?: string;
   additionalImages

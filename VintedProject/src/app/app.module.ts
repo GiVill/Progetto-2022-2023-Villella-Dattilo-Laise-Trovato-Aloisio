@@ -25,6 +25,7 @@ import { SearchComponent } from './Components/search/search.component';
 import { CategoryComponent } from './Components/category/category.component';
 import { CatalogComponent } from './Components/catalog/catalog.component';
 import { UserInsertionComponent } from './Components/user-insertion/user-insertion.component';
+import { ProfileComponent } from './Components/profile/profile.component';
 
 
 
@@ -40,6 +41,7 @@ import { UserInsertionComponent } from './Components/user-insertion/user-inserti
     CategoryComponent,
     CatalogComponent,
     UserInsertionComponent,
+    ProfileComponent,
   ],
     imports: [
         BrowserModule,
