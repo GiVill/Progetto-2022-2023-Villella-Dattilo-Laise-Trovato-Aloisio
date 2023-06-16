@@ -25,53 +25,53 @@ public class InsertionController {
     private final BasicInsertionService basicInsertionService;
 
     @GetMapping("/insertions")
-    @PreAuthorize("hasAnyRole('user','admin')")
+    //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<Page<BasicInsertionDto>> all(@RequestParam("page") int page){
         return ResponseEntity.ok(basicInsertionService.getAllPaged(page));
 
     }
 
     @PostMapping("/insertions")
-    @PreAuthorize("hasAnyRole('user','admin')")
+    //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<BasicInsertionDto> addInsertion(@RequestBody @Valid BasicInsertionDto basicInsertionDto) {
         return ResponseEntity.ok(basicInsertionService.saveDto(basicInsertionDto));
     }
 
     @GetMapping("/insertions/{id}")
-    @PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<BasicInsertionDto> getInsertionById(@PathVariable Long id) {
+    //@PreAuthorize("hasAnyRole('user','admin')")
+    public ResponseEntity<BasicInsertionDto> getInsertionById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(basicInsertionService.getInsertionById(id));
     }
 
     @DeleteMapping("/insertions/{id}")
-    @PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<Void> deleteInsertionById(@PathVariable Long id) {
+    //@PreAuthorize("hasAnyRole('user','admin')")
+    public ResponseEntity<Void> deleteInsertionById(@PathVariable("id") Long id) {
         basicInsertionService.deleteBasicInsertionById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/insertions")
-    @PreAuthorize("hasAnyRole('user','admin')")
+    @DeleteMapping("/insertions/{UserId}")
+    //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<Void> deleteAllInsertionByUserId(@RequestParam("userId") Long userId) {
         basicInsertionService.deleteBasicInsertionById(userId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/insertions/{title}/{page}")
-    @PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<Page<BasicInsertionDto>> getByTitle(@RequestParam("titleInsertion") String title, @RequestParam("page") int page){
+    //@PreAuthorize("hasAnyRole('user','admin')")
+    public ResponseEntity<Page<BasicInsertionDto>> getByTitle(@PathVariable("title") String title, @PathVariable("page") int page){
          return ResponseEntity.ok(basicInsertionService.getAllByTitleStartWith(title,page));
     }
 
     @GetMapping("/insertions/{brand}/{page}")
-    @PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<Page<BasicInsertionDto>> getByBrand(@RequestParam("brandInsertion") Brand brand, @RequestParam("page") int page){
+    //@PreAuthorize("hasAnyRole('user','admin')")
+    public ResponseEntity<Page<BasicInsertionDto>> getByBrand(@PathVariable("brand") Brand brand, @PathVariable("page") int page){
         return ResponseEntity.ok(basicInsertionService.getByBrand(brand,page));
     }
 
     @GetMapping("/insertions/{category}/{page}")
-    @PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<Page<BasicInsertionDto>> getByCategory(@RequestParam("CategoryInsertion") Category category, @RequestParam("page") int page){
+    //@PreAuthorize("hasAnyRole('user','admin')")
+    public ResponseEntity<Page<BasicInsertionDto>> getByCategory(@PathVariable("category") Category category, @PathVariable("page") int page){
         return ResponseEntity.ok(basicInsertionService.getByCategory(category,page));
     }
 

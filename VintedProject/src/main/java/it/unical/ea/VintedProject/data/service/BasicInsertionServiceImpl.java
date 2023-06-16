@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.data.service;
 
 import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
+import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
@@ -30,6 +31,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     //private final DressInsertionDao
 
     private final BasicInsertionDao basicInsertionDao;
+    private final UserDao userDao;
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 10;
 
@@ -59,8 +61,23 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     public Page<BasicInsertionDto> findAllByUser(Long uId, int page) {
         PageRequest pageRequest = PageRequest.of(SIZE_FOR_PAGE, page);
         List<BasicInsertionDto> collect = basicInsertionDao.findAllByUserId(uId, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        System.out.println(collect);
         return new PageImpl<>(collect);
     }
+
+    //questo è di test
+    /*
+    @Override
+    public Page<BasicInsertionDto> findAllByUserId(Long userId, int page) {
+        PageRequest pageRequest = PageRequest.of(SIZE_FOR_PAGE, page);
+        Optional<User> user = userDao.findById(userId);
+
+        //List<BasicInsertionDto> collect = basicInsertionDao.findAllByUser(user, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        System.out.println(basicInsertionDao.findAllByUser(user));
+        return new PageImpl<>(null);
+    }
+
+     */
 
     @Override
     public Page<BasicInsertionDto> getAllPaged(int page) {
@@ -100,5 +117,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
         List<BasicInsertionDto> collect = basicInsertionDao.findByCategory(category,pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
+
+
 
 }

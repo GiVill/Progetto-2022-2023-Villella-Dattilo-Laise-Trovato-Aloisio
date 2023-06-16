@@ -23,19 +23,19 @@ public class BuyingOfferController {
     private final BuyingOfferService buyingOfferService;
 
     @GetMapping("/offers")
-    @PreAuthorize("hasAnyRole('user','admin')")
+    //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<List<BuyingOfferDto>> all() {
         return ResponseEntity.ok(buyingOfferService.findAll());
     }
 
     @GetMapping("/offers/{idUser}")
-    @PreAuthorize("hasAnyRole('user','admin')")
+    //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<Stream<BuyingOfferDto>> allId(@PathVariable("idUser") Long id) {
         return ResponseEntity.ok(buyingOfferService.getById(id));
     }
 
     @PostMapping("/offers")
-    @PreAuthorize("hasAnyRole('user','admin')")
+    //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<BuyingOfferDto> addBuyingOffer (@RequestBody @Valid BuyingOfferDto offer){
         return ResponseEntity.ok(buyingOfferService.save(offer));
     }
@@ -48,7 +48,7 @@ public class BuyingOfferController {
      */
 
     @DeleteMapping("/offers/{idOffer}")
-    @PreAuthorize("hasAnyRole('user','admin')")
+    //@PreAuthorize("hasAnyRole('user','admin')")
     public HttpStatus delete (@PathVariable("idOffer") Long id) {
         buyingOfferService.deleteOfferById(id);
         return HttpStatus.OK;

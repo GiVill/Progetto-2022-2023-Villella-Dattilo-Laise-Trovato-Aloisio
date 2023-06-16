@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.data.dao;
 
+import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,6 @@ public interface UserDao extends JpaRepository<User,Long> {
     Optional<User> findById(Long aLong);
 
     Optional<User> findByNickName(String nickName);
+
 
 }

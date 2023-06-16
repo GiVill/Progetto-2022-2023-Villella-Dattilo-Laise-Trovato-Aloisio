@@ -14,11 +14,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.data.service.UserServiceImpl;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
+import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
@@ -76,8 +78,16 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
+    @GetMapping("/users/insertions/{idUser}")
+    //@PreAuthorize("permitAll()")//hasAnyRole('user','admin')
+    public ResponseEntity<Page<BasicInsertionDto>> getInsertionByUserId(@PathVariable("idUser") Long id, @RequestParam("page") int page){
+        //TODO
+        System.out.println(page);
+        return ResponseEntity.ok(userService.getInsertionByUserId(id, page));
+    }
+
     @DeleteMapping("/users/{idUser}")
-    @PreAuthorize("hasRole('admin')")
+    //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<Void> deleteUserById(@PathVariable("idUser") Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
