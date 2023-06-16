@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainNavComponent } from './Components/main-nav/main-nav.component';
-import { ProductCardComponent } from './Components/product-card/product-card.component';
+import { ProductCardComponent } from './Components/insertion-card/product-card.component';
 import { InsertionPageComponent } from './Components/insertion-page/insertion-page.component';
 import { HomePageComponent } from './Components/home-page/home-page.component';
 import {MatMenuModule} from '@angular/material/menu';

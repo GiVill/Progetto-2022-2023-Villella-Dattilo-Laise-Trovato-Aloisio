@@ -9,7 +9,6 @@ import {Page} from "../Model/page.model";
 })
 export class InsertionService {
   private apiinsertionUrl = 'http://localhost:8010/vintedProject-api/v1/insertions';
-  private apiuserUrl = 'http://localhost:8010/vintedProject-api/v1/user';
 
   constructor(private http: HttpClient) { }
 

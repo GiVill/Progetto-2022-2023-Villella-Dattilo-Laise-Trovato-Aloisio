@@ -6,7 +6,7 @@ import {ImageService} from "../../service/image.service";
 import {ActivatedRoute} from "@angular/router";
 import {User} from "../../Model/user.model";
 import {UserService} from "../../service/user.service";
-import {Observable} from "rxjs";
+import {Observable, switchMap} from "rxjs";
 
 
 @Component({
@@ -17,7 +17,8 @@ import {Observable} from "rxjs";
 
 export class InsertionPageComponent implements OnInit {
   insertion: BasicInsertion | undefined;
-  user: Observable<User> | undefined;
+  user: User | undefined;
+
   page: 1 | undefined;
   userOtherInsertion: Page<BasicInsertion> | undefined;
   id: number | undefined;
@@ -31,24 +32,37 @@ export class InsertionPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.id = Number(params.get('id'));
-      this.user = this.userService.getUserById(this.insertion?.user?.id);
-    });
-
-    this.insertionService.getInsertionById(this.id).subscribe(
+    this.route.paramMap.pipe(
+      switchMap((params) => {
+        this.id = Number(params.get('id'));
+        return this.insertionService.getInsertionById(this.id);
+      })
+    ).subscribe(
       (data: BasicInsertion) => {
         this.insertion = data;
         if (this.insertion?.user) {
-          this.user = this.userService.getUserById(this.insertion.user.id);
+          this.userService.getUserById(this.insertion.user.id).subscribe(
+            (userData: User) => {
+              this.user = userData;
+            },
+            (error) => {
+              console.log('Si è verificato un errore durante il recupero dell\'utente:', error);
+            }
+          );
+
+
+          this.userService.getAllInsertionsByUser(this.id, this.page).subscribe(
+            (data: Page<BasicInsertion>) => {
+              this.userOtherInsertion = data;
+            },
+            (error) => {
+              console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
+            }
+          );
         }
-        this.processImages();
-      },
-      (error) => {
-        console.log('Si è verificato un errore durante il recupero dell\'inserzione:', error);
-      }
-    );
+      })
   }
+
 
   async processImages(): Promise<void> {
     if (this.insertion) {

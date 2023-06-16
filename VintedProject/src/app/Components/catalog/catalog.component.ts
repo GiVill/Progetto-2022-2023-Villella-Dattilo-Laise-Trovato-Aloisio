@@ -12,7 +12,7 @@ import {ImageService} from "../../service/image.service";
 export class CatalogComponent implements OnInit{
 
   catalog: Page<BasicInsertion> | undefined;
-  page = 1;
+  page = 0;
 
   constructor(private insertionService: InsertionService) { }
 
@@ -20,6 +20,7 @@ export class CatalogComponent implements OnInit{
     this.insertionService.getAllInsertions(this.page).subscribe((insertions: Page<BasicInsertion>) => {
       this.catalog = insertions;
       this.processImages();
+      console.log(this.catalog)
     });
   }
 
@@ -29,5 +30,17 @@ export class CatalogComponent implements OnInit{
       insertion.imageSrc = await ImageService.setProductImageSrc(insertion.image);
     });
   }
+
+  loadmore() {
+      this.page += 1;
+      this.insertionService.getAllInsertions(this.page).subscribe((insertions: Page<BasicInsertion>) => {
+        this.catalog = insertions;
+        this.processImages();
+        console.log(this.catalog);
+      });
+    }
+
+
+
 }
 

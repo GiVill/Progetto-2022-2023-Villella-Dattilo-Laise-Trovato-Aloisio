@@ -4,8 +4,8 @@
       <div class="card-row">
         <ng-container *ngFor="let item of catalog?.content; let i = index;">
           <app-product-card [item]="item" class="card-item"></app-product-card>
-          <ng-container *ngIf="(i + 1) % 6 === 0" class="clearfix"></ng-container>
         </ng-container>
+        <button (click)="loadmore()">dsdsd</button>
       </div>
     </div>
   </div>

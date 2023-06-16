@@ -26,8 +26,8 @@ export class UserService {
     return this.http.delete(`${this.apiUrl}/${userId}`, { responseType: 'text' });
   }
 
-  getAllInsertionsByUser(id: BigInt | undefined, page: 1 | undefined) {
-    return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}${id}?page=${page}`);
-
+  getAllInsertionsByUser(id: number | undefined, page: 1 | undefined): Observable<Page<BasicInsertion>> {
+    return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}/${id}?page=${page}`);
   }
+
 }

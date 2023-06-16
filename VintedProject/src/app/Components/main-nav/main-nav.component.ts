@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProductCardComponent } from '../product-card/product-card.component';
+import { ProductCardComponent } from '../insertion-card/product-card.component';
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 
