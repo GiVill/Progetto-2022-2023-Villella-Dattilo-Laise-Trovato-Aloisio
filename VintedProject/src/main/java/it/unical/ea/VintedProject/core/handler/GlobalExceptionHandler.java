@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.core.handler;
 
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.config.interceptor.ManyRequestException;
 import it.unical.ea.VintedProject.dto.ServiceError;
 import it.unical.ea.VintedProject.exception.UserException;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,6 +28,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ServiceError onResourceNotFoundException(WebRequest req, UserException ex){
+        return errorResponse(req, ex.getMessage() );
+    }
+
+    @ExceptionHandler(ManyRequestException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ServiceError onResourceNotFoundException(WebRequest req, ManyRequestException ex){
         return errorResponse(req, ex.getMessage() );
     }
 

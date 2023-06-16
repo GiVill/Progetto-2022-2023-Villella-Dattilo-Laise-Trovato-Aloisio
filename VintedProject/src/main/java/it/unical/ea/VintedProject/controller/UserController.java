@@ -70,7 +70,7 @@ public class UserController {
 
 
     @GetMapping("/users/{idUser}")
-    @PreAuthorize("hasAnyRole('user','admin')")
+    //@PreAuthorize("permitAll()")//hasAnyRole('user','admin')
     public ResponseEntity<UserDto> getById(@PathVariable("idUser") Long id){
         UserDto userDto = userService.getById(id);
         return ResponseEntity.ok(userDto);

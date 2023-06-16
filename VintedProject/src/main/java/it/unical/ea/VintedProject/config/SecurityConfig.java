@@ -42,6 +42,7 @@ public class SecurityConfig {
                         "vintedProject-api/v1/**"
                 ).permitAll()
                 .requestMatchers("/vintedProject-api/v1/users").permitAll()
+                .requestMatchers("/vintedProject-api/v1/users/{idUser}").permitAll()
                     .anyRequest()
                         .authenticated()
         ;
