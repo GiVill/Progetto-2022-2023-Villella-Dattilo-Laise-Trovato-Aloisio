@@ -10,7 +10,7 @@ import {BasicInsertion} from "../Model/basic-insertion.model";
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:8010/vintedProject-api/v1/users';
+  private apiUrl = 'https://localhost:8010/vintedProject-api/v1/users';
 
   constructor(private http: HttpClient) { }
 

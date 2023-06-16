@@ -10,7 +10,7 @@ import {Page} from "../Model/page.model";
   providedIn: 'root'
 })
 export class OrderService {
-  private apiUrl = 'http://localhost:8010/vintedProject-api/v1/insertions';
+  private apiUrl = 'https://localhost:8010/vintedProject-api/v1/insertions';
 
   constructor(private http: HttpClient) { }
 
