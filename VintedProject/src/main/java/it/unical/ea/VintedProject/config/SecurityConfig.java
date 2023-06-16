@@ -38,8 +38,10 @@ public class SecurityConfig {
                         "/webjars/**",
                         "/swagger-ui.html",
                         "/swagger-ui/index.html",
+                        "/actuator/health",
                         "vintedProject-api/v1/**"
                 ).permitAll()
+                .requestMatchers("/vintedProject-api/v1/users").permitAll()
                     .anyRequest()
                         .authenticated()
         ;

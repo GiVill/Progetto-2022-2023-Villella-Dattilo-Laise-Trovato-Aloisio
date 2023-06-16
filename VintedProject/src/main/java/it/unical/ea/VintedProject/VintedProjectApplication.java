@@ -9,7 +9,9 @@ import it.unical.ea.VintedProject.data.entities.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
