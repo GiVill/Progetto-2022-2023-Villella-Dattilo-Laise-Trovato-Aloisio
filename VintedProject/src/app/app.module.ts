@@ -26,6 +26,8 @@ import { CategoryComponent } from './Components/category/category.component';
 import { CatalogComponent } from './Components/catalog/catalog.component';
 import { UserInsertionComponent } from './Components/user-insertion/user-insertion.component';
 import { ProfileComponent } from './Components/profile/profile.component';
+import { CartComponent } from './Components/cart/cart.component';
+import { CartInsertionCardComponent } from './Components/cart-insertion-card/cart-insertion-card.component';
 
 
 
@@ -42,6 +44,8 @@ import { ProfileComponent } from './Components/profile/profile.component';
     CatalogComponent,
     UserInsertionComponent,
     ProfileComponent,
+    CartComponent,
+    CartInsertionCardComponent,
   ],
     imports: [
         BrowserModule,

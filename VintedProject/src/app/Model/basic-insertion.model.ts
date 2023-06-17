@@ -3,7 +3,7 @@ import { User } from "./user.model";
 import { BuyingOffer } from "./buying-offer.model";
 
 export interface BasicInsertion {
-  id : BigInt;
+  id : number;
   title : String;
   price : number;
   brand: string;

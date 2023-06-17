@@ -1,0 +1,71 @@
+.insertion-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.body-content {
+  margin: auto;
+  width: 90%;
+  padding: 10px;
+  position: relative;
+  min-height: 450px;
+}
+
+.card-container {
+  padding: 0 20px;
+  margin: 5px;
+}
+
+.card-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card-item {
+  flex: 0 0 calc(16.666% - 20px); /* Imposta la larghezza delle card in base al numero massimo di card per riga */
+}
+
+.clearfix {
+  flex-basis: 100%;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clear: both;
+}
+
+
+.button {
+  background-color: rgb(116, 116, 247);
+  text-align: center;
+  font-weight: bold;
+  height: 50px;
+  min-width: 80px;
+  margin: 20px;
+  border-radius: 4px;
+  vertical-align: top;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-family: Maison Neue;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+  cursor: pointer;
+
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Modifica la distanza dal contenuto precedente se necessario */
+}
+
+
+

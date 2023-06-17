@@ -49,5 +49,8 @@ export class InsertionService {
       return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}${category}?page=${pageNumber}`);
   }
 
+  getAllInsertionsByUser(id: number | undefined, page: number): Observable<Page<BasicInsertion>> {
+    return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}/${id}/${page}`);
+  }
 
 }

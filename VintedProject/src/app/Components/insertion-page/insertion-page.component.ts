@@ -7,6 +7,8 @@ import {ActivatedRoute} from "@angular/router";
 import {User} from "../../Model/user.model";
 import {UserService} from "../../service/user.service";
 import {Observable, switchMap} from "rxjs";
+import {CartService} from "../../service/cart.service";
+import {CookieService} from "ngx-cookie-service";
 
 
 @Component({
@@ -23,12 +25,16 @@ export class InsertionPageComponent implements OnInit {
   id: number | undefined;
   modalOpen = false;
   modalImage: string | undefined;
+  isProductInCart=false;
 
   constructor(
     private insertionService: InsertionService,
     private route: ActivatedRoute,
+    private cookieService: CookieService,
+    private cartService: CartService,
     private userService: UserService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.paramMap
@@ -67,13 +73,15 @@ export class InsertionPageComponent implements OnInit {
           console.log('Si è verificato un errore durante il recupero dell\'inserzione:', error);
         }
       );
+    this.checkProductInCart();
   }
+
 
   async processImages(): Promise<void> {
     if (this.insertion) {
       const imageSrc = await ImageService.setProductImageSrc(this.insertion.image);
       if (imageSrc) {
-        this.insertion = { ...this.insertion, imageSrc };
+        this.insertion = {...this.insertion, imageSrc};
       }
     }
   }
@@ -87,6 +95,24 @@ export class InsertionPageComponent implements OnInit {
     this.modalOpen = false;
     this.modalImage = undefined;
   }
-}
 
+  addToCart() {
+      if (this.id !== undefined) {
+        this.cartService.addToCart(this?.id);
+      }
+    this.checkProductInCart();
+      console.log(this.isProductInCart)
+  }
+
+checkProductInCart(): void {
+  if (this.id !== undefined) {
+  const cartItemsCookie = this.cookieService.get('cartItems');
+  if (cartItemsCookie) {
+    const cartItems: { insertion_id: number }[] = JSON.parse(cartItemsCookie);
+    const productInCart = cartItems.some(item => item.insertion_id === this.id);
+    if (productInCart) {
+      this.isProductInCart=true;
+    }
+  }}}
+}
 

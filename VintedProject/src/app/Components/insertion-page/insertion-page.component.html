@@ -9,10 +9,10 @@
         <h1>{{ insertion?.title }}</h1>
         <p>
           <strong>
-            BRAND <br>
-            TAGLIA <br>
-            CONDIZIONI <br>
-            COLORE <br>
+            BRAND: {{ insertion?.brand}}<br>
+            TAGLIA {{ insertion?.size}}<br>
+            CONDIZIONI {{ insertion?.condition}} <br>
+            COLORE {{ insertion?.condition}} <br>
           </strong>
         </p>
       </div>
@@ -26,7 +26,8 @@
       </p>
     </div>
     <div class="button-container">
-      <button class="btn buy-button">Acquista</button>
+      <button class="btn buy-button" *ngIf="!isProductInCart" (click)="addToCart()">Acquista</button>
+      <p class="btn buy-button disabled" style="text-align: center; color: black" *ngIf="isProductInCart">Prodotto nel carrello</p>
       <button class="btn second-button">Fai un'offerta</button>
       <button class="btn second-button">Contatta il venditore</button>
     </div>
@@ -60,5 +61,5 @@
 <!-- Finestra modale -->
 <div class="modal" *ngIf="modalOpen">
   <span class="close" (click)="closeModal()">&times;</span>
-  <img [src]="modalImage" alt="Modal Image">
+  <img [src]="modalImage || 'assets/resources/vestito.jpg'" alt="Modal Image">
 </div>
