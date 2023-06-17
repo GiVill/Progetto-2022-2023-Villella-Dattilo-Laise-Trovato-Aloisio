@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit {
       (user: User) => {
         this.user = user;
         console.log(this.user)
-        this.insertionService.getAllInsertionsByUser(this.id, this.page).subscribe(
+        this.userService.getAllInsertionsByUser(this.id, this.page).subscribe(
           (data: Page<BasicInsertion>) => {
             this.userInsertion = data;
             console.log(data)
@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit {
 
   loadmore() {
     this.page += 1;
-    this.insertionService.getAllInsertionsByUser(this.id,this.page).subscribe((insertions: Page<BasicInsertion>) => {
+    this.userService.getAllInsertionsByUser(this.id,this.page).subscribe((insertions: Page<BasicInsertion>) => {
       // Aggiungo nuovi prodotti alla lista esistente invece di sostituirla
       this.userInsertion?.content.push(...insertions.content);
       this.processImages(insertions.content);

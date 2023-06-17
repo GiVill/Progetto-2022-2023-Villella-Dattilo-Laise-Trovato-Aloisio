@@ -27,7 +27,7 @@ export class UserService {
   }
 
   getAllInsertionsByUser(id: number | undefined, page: number): Observable<Page<BasicInsertion>> {
-    return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}/${id}?page=${page}`);
+    return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}/insertions/${id}?page=${page}`);
   }
 
 }
