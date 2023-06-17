@@ -39,7 +39,7 @@ public class DbGenerator implements ApplicationRunner {
     @Value("classpath:data/insertions.csv")
     private Resource insertionsRes;
 
-    @Value("classpath:data/buyngofferts.csv")
+    @Value("classpath:data/buyingofferts.csv")
     private Resource buyingoffertsRes;
 
 
@@ -79,13 +79,13 @@ public class DbGenerator implements ApplicationRunner {
             for (CSVRecord record : paymentsCsv) {
                 insertPayment(record.get(0), record.get(1));
             }
-            /*
+
             CSVParser buyingoffertsCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(buyingoffertsRes.getInputStream()));
             for (CSVRecord record : buyingoffertsCsv) {
                 insertBuyingoffert(record.get(0), record.get(1), record.get(2));
             }
-             */
+
 
 
         } catch (IOException e) {
