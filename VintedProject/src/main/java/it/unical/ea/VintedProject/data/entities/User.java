@@ -20,7 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(value = {AuditingEntityListener.class, UserListener.class})
-@Table(name = "USER")
+@Table(name = "USERS")
 public class User {
 
     @Id

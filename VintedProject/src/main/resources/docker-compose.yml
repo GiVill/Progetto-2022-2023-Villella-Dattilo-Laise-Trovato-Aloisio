@@ -1,8 +1,23 @@
 services:
-  db:
-    image: postgres:alpine
+  dock-postgresql:
+    image: postgres:13
+    container_name: dock-postgresql
+    volumes:
+      - type: bind
+        source: ./dbdata
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: ./docker_postgres_init.sql
+        target: /docker-entrypoint-initdb.d/docker_postgres_init.sql
     ports:
       - "5432:5432"
+      - target: 5432
+        published: 15432
+        protocol: tcp
+        mode: host
+
     environment:
-      POSTGRS_PASSWORD: password
-      POSTGRES_BD: prova
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+#psql -U postgres -d prova -h localhost -p 5432 -W
