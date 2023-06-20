@@ -8,6 +8,7 @@ import {CategoryComponent} from "./Components/category/category.component";
 import {CatalogComponent} from "./Components/catalog/catalog.component";
 import {ProfileComponent} from "./Components/profile/profile.component";
 import {CartComponent} from "./Components/cart/cart.component";
+import {RegistrazoneComponent} from "./Components/registrazione/registrazione.component";
 
 const routes: Routes = [
   {path : '', component: HomePageComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path : 'category/:categoryName', component: CategoryComponent },
   {path : 'catalog', component:CatalogComponent},
   {path : 'cart', component:CartComponent},
+  {path : 'registration', component:RegistrazoneComponent},
   {path:  'profile/:userid', component: ProfileComponent}
 ];
 

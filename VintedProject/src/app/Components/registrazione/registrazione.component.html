@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="input-field">
+    <div class="form-group">
+      <label for="id">ID:</label>
+      <input type="text" [(ngModel)]="id" id="id" name="id">
+    </div>
+
+    <div class="form-group">
+      <label for="nickName">Nickname:</label>
+      <input type="text" [(ngModel)]="nickName" id="nickName" name="nickName">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="text" [(ngModel)]="email" id="email" name="email">
+    </div>
+
+    <button class="button"  style="background-color: darkred;" (click)="register()">Registrati</button>
+  </div>
+</div>

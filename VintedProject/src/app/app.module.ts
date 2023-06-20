@@ -28,6 +28,8 @@ import { UserInsertionComponent } from './Components/user-insertion/user-inserti
 import { ProfileComponent } from './Components/profile/profile.component';
 import { CartComponent } from './Components/cart/cart.component';
 import { CartInsertionCardComponent } from './Components/cart-insertion-card/cart-insertion-card.component';
+import { RegistrazoneComponent } from './Components/registrazione/registrazione.component';
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -46,22 +48,24 @@ import { CartInsertionCardComponent } from './Components/cart-insertion-card/car
     ProfileComponent,
     CartComponent,
     CartInsertionCardComponent,
+    RegistrazoneComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        MatMenuModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatButtonModule,
-        MatTreeModule,
-        MatSidenavModule,
-        MatCardModule,
-        MatInputModule,
-        BrowserAnimationsModule,
-        HttpClientModule
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTreeModule,
+    MatSidenavModule,
+    MatCardModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule
 
-    ],
+  ],
   providers: [CookieService],
   bootstrap: [AppComponent]
 })

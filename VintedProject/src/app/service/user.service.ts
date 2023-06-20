@@ -30,4 +30,9 @@ export class UserService {
     return this.http.get<Page<BasicInsertion>>(`${this.apiUrl}/insertions/${id}?page=${page}`);
   }
 
+  createUser(userData: any) {
+    return this.http.post(`'https://localhost:8010/vintedProject-api/v1/singin`, userData);
+  }
+
+
 }
