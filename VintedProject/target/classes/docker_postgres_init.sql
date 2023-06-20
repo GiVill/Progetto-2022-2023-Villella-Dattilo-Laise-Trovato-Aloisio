@@ -1,3 +1,3 @@
-CREATE DATABASE prova
+CREATE DATABASE vinted
     WITH
     OWNER = postgres;

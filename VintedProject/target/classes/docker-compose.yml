@@ -10,7 +10,7 @@ services:
         source: ./docker_postgres_init.sql
         target: /docker-entrypoint-initdb.d/docker_postgres_init.sql
     ports:
-      - "5432:5432"
+      #- "5432:5432"
       - target: 5432
         published: 15432
         protocol: tcp
