@@ -12,13 +12,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.UserServiceImpl;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
+import it.unical.ea.VintedProject.dto.OrderDto;
 import it.unical.ea.VintedProject.dto.UserDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +41,7 @@ import java.util.Locale;
 @RequiredArgsConstructor
 @Tag(name = "User")
 public class UserController {
+    private final ModelMapper modelMapper;
 
     private final MessageLang messageLang;
 
@@ -76,6 +81,12 @@ public class UserController {
     public ResponseEntity<UserDto> getById(@PathVariable("idUser") Long id){
         UserDto userDto = userService.getById(id);
         return ResponseEntity.ok(userDto);
+    }
+
+    @PostMapping("/users")
+    //@PreAuthorize("permitAll()")//hasAnyRole('user','admin')
+    public ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) {
+        return ResponseEntity.ok(userService.saveDto(userDto));
     }
 
     @GetMapping("/users/insertions/{idUser}")

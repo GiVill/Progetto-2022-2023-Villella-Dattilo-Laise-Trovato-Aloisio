@@ -20,4 +20,4 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
-#psql -U postgres -d prova -h localhost -p 5432 -W
+#psql -U postgres -d vinted -h localhost -p 5432 -W

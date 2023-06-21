@@ -42,6 +42,13 @@ public class UserServiceImpl implements UserService {
     public void save(User user) { userDao.save(user); }
 
     @Override
+    public UserDto saveDto(UserDto userDto) {
+        User user  = modelMapper.map(userDto,User.class);
+        userDao.save(user);
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
     public User getUserById(Long id) {
         return userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Don't exist a user with id: [%s]", id)));
     }

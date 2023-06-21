@@ -13,6 +13,8 @@ public interface UserService {
 
     void save(User user);
 
+    UserDto saveDto(UserDto userDto);
+
     void deleteUserById(Long id);
 
     User getUserById(Long id);

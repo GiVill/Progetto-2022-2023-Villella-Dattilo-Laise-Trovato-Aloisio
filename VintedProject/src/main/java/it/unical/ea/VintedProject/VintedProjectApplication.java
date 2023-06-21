@@ -8,6 +8,8 @@ import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.BuyingOffer;
 import it.unical.ea.VintedProject.data.entities.User;
 import jakarta.mail.MessagingException;
+import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,8 +24,6 @@ import java.util.List;
 
 @SpringBootApplication
 public class VintedProjectApplication {
-	@Autowired
-	private EmailSender service;
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(VintedProjectApplication.class, args);
