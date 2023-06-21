@@ -18,16 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/vintedProject-api/v1/")
 @Validated
 public class AtuthController {
+
     private final AuthService authService;
     private final KeycloakTokenClient keycloakTokenClient;
     @PostMapping("/signin")
     public ResponseEntity<String> signin(@RequestBody @Valid NewUserDto newUserDto){
         //TODO:VALIDARE CAMPI
-        if(authService.signin(newUserDto)){
-            return  ResponseEntity.ok(keycloakTokenClient.getToken(newUserDto.getNickName(), newUserDto.getEmail()));
-        }
-        //todo:gestire errore!
-        return ResponseEntity.ok("NON VA!!");
+        //authService.signin(newUserDto);
+        return  ResponseEntity.ok(keycloakTokenClient.userRegister(newUserDto));
     }
 
     @PostMapping("/login")
