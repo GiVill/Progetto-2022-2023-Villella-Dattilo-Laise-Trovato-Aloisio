@@ -81,7 +81,15 @@ public class KeycloakTokenClient {
 
         // Set password credential
         userResource.resetPassword(passwordCred);
-        
+
+        //        // Get realm role "tester" (requires view-realm role)
+        RoleRepresentation testerRealmRole = realmResource.roles()//
+                .get("app_user").toRepresentation();
+//
+//        // Assign realm role tester to user
+        userResource.roles().realmLevel() //
+                .add(Arrays.asList(testerRealmRole));
+
         return null;
     }
 
