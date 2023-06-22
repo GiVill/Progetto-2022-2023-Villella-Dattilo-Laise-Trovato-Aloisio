@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {UserService} from "../../service/user.service";
 import {AuthService} from "../../service/auth.service";
 import {NewUser} from "../../Model/new-user.model";
-
+import  {LogInUser} from "../../Model/log-in-user.model";
 
 @Component({
   selector: 'app-registrazione',
@@ -17,12 +17,15 @@ export class RegistrazoneComponent {
     email: '',
     password: ''
   };
-  email: string = '';
-  password: string = '';
+  login: LogInUser = {
+    username: '',
+    password: ''
+  };
+
 
   constructor(private authService: AuthService) { }
 
-  signin(): void {
+  signIn(): void {
     this.authService.signin(this.newUser).subscribe(
       response => {
         // Handle success
@@ -33,10 +36,10 @@ export class RegistrazoneComponent {
     );
   }
 
-  login(): void {
-    this.authService.login(this.email, this.password).subscribe(
+  logIn(): void {
+    this.authService.login(this.login.username,  this.login.password).subscribe(
       response => {
-        // Handle success
+
       },
       error => {
         // Handle error

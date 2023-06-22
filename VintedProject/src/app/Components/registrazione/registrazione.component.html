@@ -1,20 +1,38 @@
-<div class="container">
-  <div class="input-field">
-    <div class="form-group">
-      <label for="username">username:</label>
-      <input type="text" [(ngModel)]="newUser.username" id="username" name="username">
-    </div>
+<div class="container-wrapper">
+  <div class="container">
+    <div class="input-field">
+      <div class="form-group">
+        <label for="loginuser">Username:</label>
+        <input type="text" [(ngModel)]="login.username" id="loginuser" name="loginuser">
+      </div>
 
-    <div class="form-group">
-      <label for="email">email:</label>
-      <input type="text" [(ngModel)]="newUser.email" id="email" name="email">
-    </div>
+      <div class="form-group">
+        <label for="loginPass">Password:</label>
+        <input type="text" [(ngModel)]="login.password" id="loginPass" name="loginPass">
+      </div>
 
-    <div class="form-group">
-      <label for="password">password:</label>
-      <input type="text" [(ngModel)]="newUser.password" id="password" name="password">
+      <button class="button" style="background-color: darkred;" (click)="logIn()">Login</button>
     </div>
+  </div>
 
-    <button class="button"  style="background-color: darkred;" (click)="signin()">Registrati</button>
+  <div class="container">
+    <div class="input-field">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" [(ngModel)]="newUser.username" id="username" name="username">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="text" [(ngModel)]="newUser.email" id="email" name="email">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="text" [(ngModel)]="newUser.password" id="password" name="password">
+      </div>
+
+      <button class="button" style="background-color: darkblue;" (click)="signIn()">Registrati </button>
+    </div>
   </div>
 </div>
