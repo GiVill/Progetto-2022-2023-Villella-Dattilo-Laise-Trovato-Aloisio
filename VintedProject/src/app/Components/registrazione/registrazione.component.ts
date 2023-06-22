@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {UserService} from "../../service/user.service";
+import {AuthService} from "../../service/auth.service";
+import {NewUser} from "../../Model/new-user.model";
 
 
 @Component({
@@ -10,24 +12,37 @@ import {UserService} from "../../service/user.service";
 })
 
 export class RegistrazoneComponent {
-   id: number | undefined;
-   nickName: string | undefined;
-   email: string | undefined;
+  newUser: NewUser = {
+    username: '',
+    email: '',
+    password: ''
+  };
+  email: string = '';
+  password: string = '';
 
+  constructor(private authService: AuthService) { }
 
-  constructor(private http: HttpClient,
-              private userService: UserService) {}
-
-  register() {
-    const userData = {
-      id: this.id,
-      nickName: this.nickName,
-      email: this.email,
-
-    };
-    this.userService.createUser(userData);
+  signin(): void {
+    this.authService.signin(this.newUser).subscribe(
+      response => {
+        // Handle success
+      },
+      error => {
+        // Handle error
+      }
+    );
   }
 
+  login(): void {
+    this.authService.login(this.email, this.password).subscribe(
+      response => {
+        // Handle success
+      },
+      error => {
+        // Handle error
+      }
+    );
+  }
 
 }
 
