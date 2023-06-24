@@ -7,6 +7,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -18,6 +20,9 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfig {
 
     private final JwtAuthConverter jwtAuthConverter;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(12); }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -45,7 +50,7 @@ public class SecurityConfig {
 
                 //USERS
                 .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users").permitAll()
-                .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users/{idUser}").permitAll()
+                .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users/{idUser}").hasRole("user")
                 .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users/insertions/{idUser}").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/vintedProject-api/v1/users/{idUser}").permitAll() //.hasAnyRole(ADMIN,BASIC)
                 //PAYMENT

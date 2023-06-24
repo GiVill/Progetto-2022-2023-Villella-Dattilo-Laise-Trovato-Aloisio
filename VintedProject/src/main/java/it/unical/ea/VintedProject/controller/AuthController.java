@@ -6,8 +6,12 @@ import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,12 +20,14 @@ public class AuthController {
 
     private final AuthService authService;
     private final KeycloakTokenClient keycloakTokenClient;
+
     @PostMapping("/sign-up")
     public ResponseEntity<String> signUp(@RequestBody @Valid NewUserDto newUserDto){
-        //TODO:VALIDARE CAMPI
-        //authService.signin(newUserDto);
-        System.out.println("ENTRATO => "+ newUserDto.toString());
-        return  ResponseEntity.ok(keycloakTokenClient.userRegister(newUserDto));
+        String  token = keycloakTokenClient.userRegister(newUserDto);
+        if(!Objects.equals(token, "ERRORE") && authService.signUp(newUserDto) ){
+            return  ResponseEntity.ok(token);
+        }
+        return  ResponseEntity.ok(token);
     }
 
     @PostMapping("/login")

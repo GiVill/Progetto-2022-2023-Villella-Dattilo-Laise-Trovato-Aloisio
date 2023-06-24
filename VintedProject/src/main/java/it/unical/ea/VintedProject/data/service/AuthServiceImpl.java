@@ -6,6 +6,7 @@ import it.unical.ea.VintedProject.data.service.interfaces.AuthService;
 import it.unical.ea.VintedProject.dto.NewUserDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,11 +15,14 @@ public class AuthServiceImpl implements AuthService {
 
     private final ModelMapper modelMapper;
     private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
     @Override
-    public Boolean signin(NewUserDto newUserDto) {
-        //todo: PASSWORD IN CHIARO!
+    public Boolean signUp(NewUserDto newUserDto) {
+        System.out.println(newUserDto);
         User user = modelMapper.map(newUserDto, User.class);
         if(user != null){
+            System.out.println("ENTRATO "+user.toString());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.save(user);
             return true;
         }
