@@ -2,6 +2,7 @@
 /shelf/
 /workspace.xml
 /.idea
+/dbdata
 /VintedProject/.idea
 /VintedProject/pom.xml
 /VintedProject/hsql-db
