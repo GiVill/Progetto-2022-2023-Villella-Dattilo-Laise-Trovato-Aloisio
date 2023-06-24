@@ -9,12 +9,12 @@ import {NewUser} from "../Model/new-user.model";
 export class AuthService {
 
 
-  private apiUrl = 'https://localhost:8010/vintedProject-api/v1/';
+  private apiUrl = 'https://localhost:8010/vintedProject-api/v1';
 
   constructor(private http: HttpClient) { }
 
-  signin(newUser: NewUser): Observable<string> {
-    return this.http.post<string>(`${this.apiUrl}signin`, newUser);
+  signUp(newUser: NewUser): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}/sign-up`, newUser);
   }
 
   login(email: string, password: string): Observable<boolean> {

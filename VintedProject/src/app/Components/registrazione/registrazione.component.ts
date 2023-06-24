@@ -13,7 +13,7 @@ import  {LogInUser} from "../../Model/log-in-user.model";
 
 export class RegistrazoneComponent {
   newUser: NewUser = {
-    username: '',
+    nickName: '',
     email: '',
     password: ''
   };
@@ -25,12 +25,14 @@ export class RegistrazoneComponent {
 
   constructor(private authService: AuthService) { }
 
-  signIn(): void {
-    this.authService.signin(this.newUser).subscribe(
+  signUp(): void {
+    this.authService.signUp(this.newUser).subscribe(
       response => {
+        console.log("OK => ",response)
         // Handle success
       },
       error => {
+        console.log("ERRORE REGISTRAZIONE => ",error)
         // Handle error
       }
     );
