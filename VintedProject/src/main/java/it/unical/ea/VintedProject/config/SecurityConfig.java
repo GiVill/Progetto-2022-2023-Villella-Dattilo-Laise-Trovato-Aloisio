@@ -72,10 +72,13 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/offers/{idUser}").permitAll()
                 .requestMatchers(HttpMethod.POST, "/vintedProject-api/v1/offers").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/vintedProject-api/v1/offers/{idOffer}").permitAll()
-
+                //AUTH
+                .requestMatchers(HttpMethod.POST, "/vintedProject-api/v1/sign-up").permitAll()
                 .anyRequest()
                         .authenticated()
         ;
+
+        http.cors();
 
         http
                 .oauth2ResourceServer()
