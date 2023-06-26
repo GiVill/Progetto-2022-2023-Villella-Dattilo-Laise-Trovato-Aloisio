@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Vinted-Front-End';
+  isUserLogged=false;
+
+  checkUser() {
+    //TODO controllo del token
+  }
+
 }

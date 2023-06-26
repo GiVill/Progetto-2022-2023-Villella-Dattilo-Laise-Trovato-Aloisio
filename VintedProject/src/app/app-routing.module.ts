@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InsertionPageComponent } from './Components/insertion-page/insertion-page.component';
-import { HomePageComponent } from './Components/home-page/home-page.component';
-import {BrandComponent} from "./Components/brand/brand.component";
-import {SearchComponent} from "./Components/search/search.component";
-import {CategoryComponent} from "./Components/category/category.component";
-import {CatalogComponent} from "./Components/catalog/catalog.component";
-import {ProfileComponent} from "./Components/profile/profile.component";
-import {CartComponent} from "./Components/cart/cart.component";
-import {RegistrazoneComponent} from "./Components/registrazione/registrazione.component";
+import {HomePageComponent} from "./Components/home-page/home-page.component";
+import {InsertionPageComponent} from "./Components/Pages/Insertion/insertion-page/insertion-page.component";
+import {BrandComponent} from "./Components/Querys/brand/brand.component";
+import {SearchComponent} from "./Components/Querys/search/search.component";
+import {CategoryComponent} from "./Components/Querys/category/category.component";
+import {CatalogComponent} from "./Components/Pages/Insertion/catalog/catalog.component";
+import {RegistrazioneComponent} from "./Components/Pages/User/registrazione/registrazione.component";
+import {LoginComponent} from "./Components/Pages/User/login/login.component";
+import {CartComponent} from "./Components/Pages/cart/cart.component";
+import {ProfileComponent} from "./Components/Pages/User/profile/profile.component";
+import {CreateInsertionComponent} from "./Components/Pages/Insertion/create-insertion/create-insertion.component";
+
 
 const routes: Routes = [
   {path : '', component: HomePageComponent},
@@ -18,8 +21,11 @@ const routes: Routes = [
   {path : 'category/:categoryName', component: CategoryComponent },
   {path : 'catalog', component:CatalogComponent},
   {path : 'cart', component:CartComponent},
-  {path : 'registration', component:RegistrazoneComponent},
-  {path:  'profile/:userid', component: ProfileComponent}
+  {path : 'singin', component:RegistrazioneComponent},
+  {path : 'login', component:LoginComponent},
+  {path:  'profile/:userid', component: ProfileComponent},
+  {path : 'newinsertion', component:CreateInsertionComponent},
+
 ];
 
 @NgModule({

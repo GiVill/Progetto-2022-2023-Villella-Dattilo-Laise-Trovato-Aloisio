@@ -1,0 +1,65 @@
+<div class="mainDiv">
+  <span class="spacer"></span>
+  <div class="titleDiv">
+
+    <p routerLink="" style="cursor:pointer; margin-top: 10px; margin-right: 10px; margin-left: 10px;">OCARINA SHOP</p>
+
+  </div>
+  <span class="spacer"></span>
+      <div style="background-color: #c3d0cd; width: 100%; display: flex; flex-wrap: wrap;">
+        <div style="margin-top: 8px; margin-left: 10px; margin-right: 10px"> <!-- div della ricerca categorie -->
+          <div id="hormenu"><!-- div che contiene il menu -->
+            <ul> <!-- lista principale: definisce il menu nella sua interezza -->
+              <li>
+                <button mat-raised-button href="#" style="height: 55px" (click)="showMenu()" (mouseover)="showMenu()" >Categorie</button> <!-- primo list-item, prima voce del menu -->
+                <ul *ngIf="showSubMenu" style="width: 300px; background-color: white"> <!-- Lista annidata: voci del sotto-menu -->
+                  <li><a  [routerLink]="['/category' , 'Elettronica']">Elettronica</a></li>
+                  <li><a  [routerLink]="['/category' , 'Collezioni']">Collezioni</a></li>
+                  <li><a  [routerLink]="['/category' , 'Abbigliamento']">Abbigliamento</a></li>
+                  <li><a  [routerLink]="['/category' , 'Barche']">Barche</a></li>
+                  <li><a  [routerLink]="['/category' , 'Sport']">Sport</a></li>
+                </ul> <!-- Fine del sotto-menu -->
+              </li> <!-- Chiudo il list-item -->
+              <!--qui altri list-item -->
+            </ul>
+          </div>
+        </div>
+
+        <mat-form-field style="margin-top:8px; margin-right: 10px; flex-grow: 1; width: 50%;">
+          <input #searchkeyword matInput name="Ricerca" id="searchKey" placeholder="Ricerca prodotto" (keyup)="redirectToSearch(searchkeyword.value)">
+          <button mat-button matSuffix (click)="redirectToSearch(searchkeyword.value)">
+
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <span style="margin: 7%"></span>
+
+      <span class="spacer"></span>
+
+  <div style="display: flex; height: auto;"> <!--div bottoni iscrizione/accesso e inserisci inserzione-->
+    <button mat-raised-button style="background-color: lightblue;margin-top: 8px; margin-left: 10px; margin-right: 10px" [routerLink]="['/login']">Iscriviti/Accedi</button>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-raised-button style="background-color: rgb(116, 116, 247); margin-top: 8px; margin-left: 10px; margin-right: 10px" [routerLink]="['/newinsertion']">Crea inserzione</button>
+    <span style="flex: 1 1 auto;"></span>
+    <mat-icon style="margin-top: 10px; margin-right: 20px">help</mat-icon>
+  </div>
+  <span class="spacer"></span>
+</div>
+
+<div class="secondDiv">
+  <div>
+    <button mat-button [routerLink]="['/category' , 'donna']">Donna</button>
+    <button mat-button [routerLink]="['/category' , 'uomo']">Uomo</button>
+    <button mat-button [routerLink]="['/category' , 'bamini']">Bambini</button>
+    <button mat-button [routerLink]="['/category' , 'casa']">Casa</button>
+    <button mat-button [routerLink]="['/category' , 'intrattenimento']">Intrattenimento</button>
+    <button mat-button [routerLink]="['/category' , 'animali']">Animali</button>
+    <button mat-button [routerLink]="['/informazioni']">Informazioni</button>
+    <button mat-button [routerLink]="['/cart']">Accesso rapido al carrello</button>
+  </div>
+</div>
+
+
+
+<router-outlet></router-outlet>

@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="form-container">
+    <h2>Crea Inserzione</h2>
+
+    <form (ngSubmit)="creaInserzione()">
+      <div class="form-group">
+        <label for="titolo">Titolo:</label>
+        <input type="text" id="titolo" name="titolo" [(ngModel)]="inserzione.titolo" required>
+      </div>
+
+      <div class="form-group">
+        <label for="descrizione">Descrizione:</label>
+        <input type="text" id="descrizione" name="descrizione" [(ngModel)]="inserzione.descrizione" required class="fixed-height-textarea">
+      </div>
+
+      <div class="form-group">
+        <label for="prezzo">Prezzo:</label>
+        <input type="text" id="prezzo" name="prezzo" [(ngModel)]="inserzione.prezzo" required>
+      </div>
+
+      <div class="form-group">
+        <label for="foto">Foto (max 6, max 1 MB ciascuna):</label>
+        <input type="file" id="foto" name="foto" accept="image/*" (change)="caricaFoto($event)" multiple>
+      </div>
+
+      <button type="submit" [disabled]="!formValido()">Crea Inserzione</button>
+    </form>
+  </div>
+</div>

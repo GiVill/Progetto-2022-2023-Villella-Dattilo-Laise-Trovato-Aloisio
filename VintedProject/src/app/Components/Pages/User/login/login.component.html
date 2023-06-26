@@ -1,0 +1,24 @@
+<div class="container-wrapper">
+  <div class="container">
+    <div class="input-field">
+      <div class="form-group">
+        <label for="loginuser">Username:</label>
+        <input type="email" [(ngModel)]="login.username" id="loginuser" name="loginuser">
+      </div>
+
+      <div class="form-group">
+        <label for="loginPass">Password:</label>
+        <input type="password" [(ngModel)]="login.password" id="loginPass" name="loginPass">
+      </div>
+
+
+      <button class="button" style="background-color: darkred;" (click)="logIn()">Login</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <p></p>
+    <p>Non sei registrato? E moviti ja</p>
+    <button class="button" style="background-color: darkblue;"  [routerLink]="['/singin']">Registrati</button>
+  </div>
+</div>

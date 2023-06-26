@@ -23,8 +23,8 @@ export class InsertionService {
     return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}/${brand}`);
   }
 
-  addInsertion(basicInsertion: BasicInsertion): Observable<BasicInsertion> {
-    return this.http.post<BasicInsertion>(`${this.apiinsertionUrl}`, basicInsertion);
+  addInsertion(insertion: { descrizione: string; titolo: string; foto: any[]; prezzo: number}): Observable<BasicInsertion> {
+    return this.http.post<BasicInsertion>(`${this.apiinsertionUrl}`, insertion);
   }
 
   getInsertionById(id: number | undefined): Observable<BasicInsertion> {

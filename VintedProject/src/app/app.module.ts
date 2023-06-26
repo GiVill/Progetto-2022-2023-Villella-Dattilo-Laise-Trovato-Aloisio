@@ -5,9 +5,6 @@ import {Component} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainNavComponent } from './Components/main-nav/main-nav.component';
-import { ProductCardComponent } from './Components/insertion-card/product-card.component';
-import { InsertionPageComponent } from './Components/insertion-page/insertion-page.component';
 import { HomePageComponent } from './Components/home-page/home-page.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -19,17 +16,26 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { HttpClientModule} from "@angular/common/http";
-import { BrandComponent } from './Components/brand/brand.component';
+import { BrandComponent } from './Components/Querys/brand/brand.component';
 import { CookieService } from 'ngx-cookie-service';
-import { SearchComponent } from './Components/search/search.component';
-import { CategoryComponent } from './Components/category/category.component';
-import { CatalogComponent } from './Components/catalog/catalog.component';
-import { UserInsertionComponent } from './Components/user-insertion/user-insertion.component';
-import { ProfileComponent } from './Components/profile/profile.component';
-import { CartComponent } from './Components/cart/cart.component';
-import { CartInsertionCardComponent } from './Components/cart-insertion-card/cart-insertion-card.component';
-import { RegistrazoneComponent } from './Components/registrazione/registrazione.component';
+import { SearchComponent } from './Components/Querys/search/search.component';
+import { CategoryComponent } from './Components/Querys/category/category.component';
+
 import {FormsModule} from "@angular/forms";
+import {MainNavComponent} from "./Components/Components/main-nav/main-nav.component";
+import {ProductCardComponent} from "./Components/Components/Cards/insertion-card/product-card.component";
+import {InsertionPageComponent} from "./Components/Pages/Insertion/insertion-page/insertion-page.component";
+import {UserInsertionComponent} from "./Components/Pages/User/user-insertion/user-insertion.component";
+import {CatalogComponent} from "./Components/Pages/Insertion/catalog/catalog.component";
+import {ProfileComponent} from "./Components/Pages/User/profile/profile.component";
+import {CartComponent} from "./Components/Pages/cart/cart.component";
+import {RegistrazioneComponent} from "./Components/Pages/User/registrazione/registrazione.component";
+import {LoginComponent} from "./Components/Pages/User/login/login.component";
+import {
+  CartInsertionCardComponent
+} from "./Components/Components/Cards/cart-insertion-card/cart-insertion-card.component";
+import { CreateInsertionComponent } from './Components/Pages/Insertion/create-insertion/create-insertion.component';
+
 
 
 
@@ -48,7 +54,9 @@ import {FormsModule} from "@angular/forms";
     ProfileComponent,
     CartComponent,
     CartInsertionCardComponent,
-    RegistrazoneComponent,
+    RegistrazioneComponent,
+    LoginComponent,
+    CreateInsertionComponent,
   ],
   imports: [
     BrowserModule,
