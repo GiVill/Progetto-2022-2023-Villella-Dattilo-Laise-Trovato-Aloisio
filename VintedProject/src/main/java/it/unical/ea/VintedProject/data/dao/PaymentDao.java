@@ -10,9 +10,11 @@ import java.util.Optional;
 @Repository
 public interface PaymentDao extends JpaRepository<Payment,Long> {
 
+    //Return a SINGLE payment fetched by id
     @Override
     Optional<Payment> findById(Long aLong);
 
+    //Return a LIST with ALL payment in the Database
     @Override
     List<Payment> findAll();
 

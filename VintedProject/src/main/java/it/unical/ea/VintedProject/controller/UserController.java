@@ -47,13 +47,14 @@ public class UserController {
 
     private final UserService userService;
 
+    //TODO: Forse questa GET si può eliminare?
     @GetMapping("/users/swagger")
     @PreAuthorize("permitAll()")
     public void swagger() {
         System.out.println("Swagger documentation is running at: http://localhost:8010/swagger-ui/index.html");
     }
 
-
+    //TODO: Forse questo @Operation si può eliminare?
     @Operation(
             description = "Get endpoint for user",
             summary = "this is the list of user",
@@ -85,9 +86,7 @@ public class UserController {
 
     @PostMapping("/users")
     //@PreAuthorize("permitAll()")//hasAnyRole('user','admin')
-    public ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) {
-        return ResponseEntity.ok(userService.saveDto(userDto));
-    }
+    public ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) { return ResponseEntity.ok(userService.saveDto(userDto)); }
 
     @GetMapping("/users/insertions/{idUser}")
     //@PreAuthorize("permitAll()")//hasAnyRole('user','admin')
@@ -104,6 +103,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    //TODO: Forse questo si può eliminare?
     public String serviceAFallback(Exception e) {
         return "This is a fallback method for Service user";
     }

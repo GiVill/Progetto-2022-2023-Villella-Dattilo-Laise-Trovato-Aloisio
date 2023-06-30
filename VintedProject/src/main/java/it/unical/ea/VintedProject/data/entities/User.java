@@ -1,8 +1,8 @@
 package it.unical.ea.VintedProject.data.entities;
 
 import it.unical.ea.VintedProject.core.entitiesAuditTrailListener.UserListener;
-import it.unical.ea.VintedProject.dto.enumerated.Gender;
-import it.unical.ea.VintedProject.dto.enumerated.Role;
+import it.unical.ea.VintedProject.dto.enumeration.Gender;
+import it.unical.ea.VintedProject.dto.enumeration.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;

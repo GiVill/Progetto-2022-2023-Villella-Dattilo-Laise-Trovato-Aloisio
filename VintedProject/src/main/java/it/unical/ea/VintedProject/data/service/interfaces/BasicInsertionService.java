@@ -2,16 +2,10 @@ package it.unical.ea.VintedProject.data.service.interfaces;
 
 
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
-import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
-import it.unical.ea.VintedProject.dto.enumerated.Brand;
-import it.unical.ea.VintedProject.dto.enumerated.Category;
+import it.unical.ea.VintedProject.dto.enumeration.Brand;
+import it.unical.ea.VintedProject.dto.enumeration.Category;
 import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
-import org.springframework.data.repository.query.Param;
-
-import java.util.Optional;
 
 
 public interface BasicInsertionService {//extends Repository<BasicInsertion,Long> {

@@ -1,7 +1,6 @@
 package it.unical.ea.VintedProject.data.entities;
 
 
-import it.unical.ea.VintedProject.dto.enumerated.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

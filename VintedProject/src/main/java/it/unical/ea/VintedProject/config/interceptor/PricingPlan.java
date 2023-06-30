@@ -6,6 +6,7 @@ import io.github.bucket4j.Refill;
 import java.time.Duration;
 
 enum PricingPlan {
+    //Definizione dei Bucket
     PREVENT (Bandwidth.classic(3, Refill.intervally(10, Duration.ofSeconds(100)))),
     FREE (Bandwidth.classic(10, Refill.intervally(10, Duration.ofHours(1)))),
     BASIC (Bandwidth.classic(40, Refill.intervally(40, Duration.ofHours(1)))),
@@ -22,7 +23,7 @@ enum PricingPlan {
         this.limit=limit;
     }
 
-
+    //"Mappatura" Bucket-Stringa
     static PricingPlan resolvePlanFromApiKey(String apiKey) {
         if (apiKey.startsWith("PREVENT")) {
             return PREVENT;

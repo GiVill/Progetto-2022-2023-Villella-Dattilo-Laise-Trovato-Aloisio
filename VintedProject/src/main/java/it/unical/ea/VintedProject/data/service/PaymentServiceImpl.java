@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.data.service;
 
+import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.data.dao.PaymentDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.Order;
@@ -20,6 +21,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentDao paymentDao;
     private final ModelMapper modelMapper;
+    private final MessageLang messageLang;
 
     @Override
     public PaymentDto save(PaymentDto payment) {
@@ -44,7 +46,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentDto findById(Long id) {
-        Payment payment = paymentDao.findById(id).orElseThrow(() -> new EntityNotFoundException("ERRORE!!!!!!!!!!"));
+        Payment payment = paymentDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("payment.not.present",id)));
         return modelMapper.map(payment, PaymentDto.class);
     }
 }

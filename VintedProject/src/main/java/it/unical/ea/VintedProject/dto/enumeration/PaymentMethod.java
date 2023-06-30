@@ -1,4 +1,4 @@
-package it.unical.ea.VintedProject.dto.enumerated;
+package it.unical.ea.VintedProject.dto.enumeration;
 
 public enum PaymentMethod {
     CARD,

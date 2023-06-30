@@ -1,10 +1,7 @@
 package it.unical.ea.VintedProject.core.detail;
 
 import it.unical.ea.VintedProject.data.entities.User;
-import it.unical.ea.VintedProject.dto.enumerated.Role;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import java.util.Collection;
+import it.unical.ea.VintedProject.dto.enumeration.Role;
 
 
 public class LoggedUserDetail implements UserLogged {

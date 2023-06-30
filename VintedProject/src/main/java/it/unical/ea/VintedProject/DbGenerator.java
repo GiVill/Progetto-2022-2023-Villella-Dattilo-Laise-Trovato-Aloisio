@@ -2,15 +2,12 @@ package it.unical.ea.VintedProject;
 
 import it.unical.ea.VintedProject.data.entities.*;
 import it.unical.ea.VintedProject.data.service.interfaces.*;
-import it.unical.ea.VintedProject.dto.BuyingOfferDto;
-import it.unical.ea.VintedProject.dto.PaymentDto;
-import it.unical.ea.VintedProject.dto.enumerated.PaymentMethod;
-import it.unical.ea.VintedProject.dto.enumerated.Status;
+import it.unical.ea.VintedProject.dto.enumeration.PaymentMethod;
+import it.unical.ea.VintedProject.dto.enumeration.Status;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Component
 @RequiredArgsConstructor

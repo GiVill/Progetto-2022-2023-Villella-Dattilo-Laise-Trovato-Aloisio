@@ -13,13 +13,13 @@ import lombok.ToString;
 @ToString
 public class NewUserDto {
 
-    @NotNull(message = "nickname.notempty")
+    @NotNull(message = "password.not.empty")
     private String password;
 
-    @NotNull(message = "nickname.notempty")
+    @NotNull(message = "nickname.not.empty")
     private String nickName;
 
-    @Email(message = "email.valid")
+    @Email(message = "email.not.valid")
     private String email;
 
 }

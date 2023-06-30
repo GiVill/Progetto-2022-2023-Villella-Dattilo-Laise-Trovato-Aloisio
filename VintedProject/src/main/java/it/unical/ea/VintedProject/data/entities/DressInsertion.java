@@ -1,7 +1,7 @@
 package it.unical.ea.VintedProject.data.entities;
 
-import it.unical.ea.VintedProject.dto.enumerated.Brand;
-import it.unical.ea.VintedProject.dto.enumerated.Category;
+import it.unical.ea.VintedProject.dto.enumeration.Brand;
+import it.unical.ea.VintedProject.dto.enumeration.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

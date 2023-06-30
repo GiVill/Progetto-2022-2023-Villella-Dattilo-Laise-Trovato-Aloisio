@@ -39,11 +39,13 @@ public class KeycloakTokenClient {
                 .password("admin")
                 .resteasyClient(new ResteasyClientBuilder().connectionPoolSize(10).build()).build();
     }
+
     public RealmResource getRealm() {
         return getAdminKeycloakUser().realm("vinted2_0");
     }
 
     public String userRegister(NewUserDto newUserDto){
+        //TODO: registrazione utente su keycloak
         if(addUserOnKeyCloak(newUserDto)){
             return getToken(newUserDto.getNickName(),newUserDto.getPassword());
         }
@@ -76,8 +78,8 @@ public class KeycloakTokenClient {
             return tokenResponse.getAccess_token();
         } else {
             System.out.println("error while retrieving the token from keycloak!");
-            //todo:gestire errore
-            throw new RuntimeException("ciao");
+            //TODO:gestire errore
+            throw new RuntimeException(messageLang.getMessage("keycloak.token.error"));
         }
     }
 
@@ -97,11 +99,11 @@ public class KeycloakTokenClient {
         UserRepresentation userRepresentation = newUserDtoConverter(newUserDto);
 
         RealmResource realmResource = getAdminKeycloakUser().realm("vinted2_0");
-        UsersResource usersRessource = realmResource.users();
+        UsersResource usersResource = realmResource.users();
 
-        Response response = usersRessource.create(userRepresentation);
+        Response response = usersResource.create(userRepresentation);
 
-        System.out.printf("Repsonse: %s %s%n", response.getStatus(), response.getStatusInfo());
+        //System.out.printf("Repsonse: %s %s%n", response.getStatus(), response.getStatusInfo());
 
         System.out.println(response.getLocation());
         String userId = CreatedResponseUtil.getCreatedId(response);
@@ -113,10 +115,10 @@ public class KeycloakTokenClient {
         passwordCred.setTemporary(false);
         passwordCred.setType(CredentialRepresentation.PASSWORD);
         passwordCred.setValue(newUserDto.getPassword());
-        System.out.println(passwordCred);
-        System.out.println(userRepresentation);
+        //System.out.println(passwordCred);
+        //System.out.println(userRepresentation);
 
-        UserResource userResource = usersRessource.get(userId);
+        UserResource userResource = usersResource.get(userId);
 
         // Set password credential
         userResource.resetPassword(passwordCred);

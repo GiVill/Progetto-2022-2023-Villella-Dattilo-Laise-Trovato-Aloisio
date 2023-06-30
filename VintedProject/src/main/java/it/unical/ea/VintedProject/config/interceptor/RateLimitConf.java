@@ -5,5 +5,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableCaching
-public class RateLimitConf {
-}
+public class RateLimitConf { } // Serve per abilitare il chacing con @EnableCaching

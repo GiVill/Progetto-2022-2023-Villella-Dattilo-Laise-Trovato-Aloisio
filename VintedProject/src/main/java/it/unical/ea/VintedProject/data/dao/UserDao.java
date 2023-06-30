@@ -1,6 +1,5 @@
 package it.unical.ea.VintedProject.data.dao;
 
-import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,11 +10,14 @@ import java.util.Optional;
 @Repository
 public interface UserDao extends JpaRepository<User,Long> {
 
+    //Return the LIST of ALL User fetched by FirstName
     List<User> findAllByFirstName(String firstName);
 
+    //Return a SINGLE User fetched by id
     @Override
     Optional<User> findById(Long aLong);
 
+    //Return a SINGLE User fetched by Nickname
     Optional<User> findByNickName(String nickName);
 
 

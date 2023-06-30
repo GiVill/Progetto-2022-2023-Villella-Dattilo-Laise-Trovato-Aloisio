@@ -12,38 +12,28 @@ public class InsertionListener {
     private BasicInsertionService insertionService;
 
     @PostLoad
-    private void afterLoad(BasicInsertion insertion){
-        log.info("[INSERTION AUDIT] insertion loaded with id: " + insertion.getId());
-    }
+    private void afterLoad(BasicInsertion insertion){ log.info("[INSERTION AUDIT] insertion loaded with id: " + insertion.getId()); }
 
     @PreUpdate
-    private void preUpdate(BasicInsertion insertion){
-        log.info("[INSERTION AUDIT] insertion with id: " + insertion.getId() + " is about to be updated");
-    }
+    private void preUpdate(BasicInsertion insertion){ log.info("[INSERTION AUDIT] insertion with id: " + insertion.getId() + " is about to be updated"); }
 
     @PostUpdate
-    private void postUpdate(BasicInsertion insertion){
-        log.info("[INSERTION AUDIT] insertion with id: " + insertion.getId() + " was updated");
-    }
+    private void postUpdate(BasicInsertion insertion){ log.info("[INSERTION AUDIT] insertion with id: " + insertion.getId() + " was updated"); }
+
+    //
 
     @PrePersist
-    private void prePersist(BasicInsertion insertion){
-        log.info("[INSERTION AUDIT] insertion with id: " + insertion.getId() + " is about to be entered into the db");
-    }
+    private void prePersist(BasicInsertion insertion){ log.info("[INSERTION AUDIT] insertion with id: " + insertion.getId() + " is about to be entered into the db"); }
 
     @PostPersist
-    private void postPersist(BasicInsertion insertion){
-        log.info("[INSERTION AUDIT] insertion with id: " + insertion.getId() + " was entered into the db");
-    }
+    private void postPersist(BasicInsertion insertion){ log.info("[INSERTION AUDIT] insertion with id: " + insertion.getId() + " was entered into the db"); }
+
+    //
 
     @PreRemove
-    private void preRemove(BasicInsertion insertion){
-        log.info("[INSERTION AUDIT] insertion with id: " + insertion.getId() + " is about to be removed from the db");
-    }
+    private void preRemove(BasicInsertion insertion){ log.info("[INSERTION AUDIT] insertion with id: " + insertion.getId() + " is about to be removed from the db"); }
 
     @PostRemove
-    private void postRemove(BasicInsertion insertion){
-        log.info("[INSERTION AUDIT] insertion with id: " + insertion.getId() + " was removed from the db");
-    }
+    private void postRemove(BasicInsertion insertion){ log.info("[INSERTION AUDIT] insertion with id: " + insertion.getId() + " was removed from the db"); }
 
 }

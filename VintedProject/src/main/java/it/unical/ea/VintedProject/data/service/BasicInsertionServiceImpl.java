@@ -1,16 +1,13 @@
 package it.unical.ea.VintedProject.data.service;
 
+import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
-import it.unical.ea.VintedProject.data.entities.Order;
-import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
-import it.unical.ea.VintedProject.dto.OrderDto;
-import it.unical.ea.VintedProject.dto.UserDto;
-import it.unical.ea.VintedProject.dto.enumerated.Brand;
-import it.unical.ea.VintedProject.dto.enumerated.Category;
+import it.unical.ea.VintedProject.dto.enumeration.Brand;
+import it.unical.ea.VintedProject.dto.enumeration.Category;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -21,7 +18,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +30,8 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     private final UserDao userDao;
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 10;
+
+    private final MessageLang messageLang;
 
     @Override
     public void save(BasicInsertion basicInsertion) {
@@ -95,13 +93,13 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     @Override
     public BasicInsertionDto getInsertionById(Long id) {
-        BasicInsertion basicInsertion = basicInsertionDao.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Don't exist a teacher with id: [%s]", id)));
+        BasicInsertion basicInsertion = basicInsertionDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present",id)));
         return modelMapper.map(basicInsertion, BasicInsertionDto.class);
     }
 
     @Override
     public BasicInsertion findById(Long id) {
-        return basicInsertionDao.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Don't exist an insertion with id: [%s]", id)));
+        return basicInsertionDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present",id)));
     }
 
     @Override

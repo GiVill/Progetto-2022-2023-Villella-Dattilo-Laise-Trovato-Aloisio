@@ -1,23 +1,17 @@
 package it.unical.ea.VintedProject.data.service;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
-import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
-import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.UserDto;
-import it.unical.ea.VintedProject.exception.UserException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -50,19 +44,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
-        return userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Don't exist a user with id: [%s]", id)));
+        return userDao.findById(id).orElseThrow(() -> new EntityNotFoundException((messageLang.getMessage("user.not.present",id))));
     }
 
     @Override
     public UserDto getById(Long id) {
-        User user = userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not",id)));
+        User user = userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present",id)));
         return modelMapper.map(user, UserDto.class);
     }
 
     public List<Order> getOrdersByUser(Long userId) {
         List<Order> orders = orderDao.findByUser(userId);
         if (orders.isEmpty()) {
-            throw new EntityNotFoundException(String.format("Doesn't exist any order made from user with id: [%s]", userId));
+            throw new EntityNotFoundException(messageLang.getMessage("user.order.not.present",userId));
         }
         return orders;
     }
@@ -81,7 +75,7 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findByNickName(String nickName) {
         Optional<User> user = userDao.findByNickName(nickName);
         if(user.isEmpty()){
-            throw new EntityNotFoundException(String.format("Doesn't exist any user with nickname: [%s]", nickName));
+            throw new EntityNotFoundException(messageLang.getMessage("user.nickname.not.present",nickName));
         }
         return user;
     }

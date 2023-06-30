@@ -21,9 +21,11 @@ public class SecurityConfig {
 
     private final JwtAuthConverter jwtAuthConverter;
 
+    //Password encoder with BCrypt
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(12); }
 
+    //list of all endpoint with relative permission
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -90,14 +92,11 @@ public class SecurityConfig {
                     .jwt()
                         .jwtAuthenticationConverter(jwtAuthConverter);
 
-        http
-                .sessionManagement()
-                    .sessionCreationPolicy(STATELESS);
+        http.sessionManagement().sessionCreationPolicy(STATELESS);
 
         http.headers().httpStrictTransportSecurity()
                 .maxAgeInSeconds(0)
                 .includeSubDomains(true);
-
 
         return http.build();
     }

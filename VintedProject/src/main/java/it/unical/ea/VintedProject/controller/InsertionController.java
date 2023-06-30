@@ -1,19 +1,14 @@
 package it.unical.ea.VintedProject.controller;
 
-import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
-import it.unical.ea.VintedProject.dto.OrderDto;
-import it.unical.ea.VintedProject.dto.enumerated.Brand;
-import it.unical.ea.VintedProject.dto.enumerated.Category;
+import it.unical.ea.VintedProject.dto.enumeration.Brand;
+import it.unical.ea.VintedProject.dto.enumeration.Category;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -28,7 +23,6 @@ public class InsertionController {
     //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<Page<BasicInsertionDto>> all(@RequestParam("page") int page){
         return ResponseEntity.ok(basicInsertionService.getAllPaged(page));
-
     }
 
     @PostMapping("/insertions")

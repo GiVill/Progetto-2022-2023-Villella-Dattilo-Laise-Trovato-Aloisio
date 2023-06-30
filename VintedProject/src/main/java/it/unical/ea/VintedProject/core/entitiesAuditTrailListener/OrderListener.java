@@ -16,22 +16,16 @@ public class OrderListener {
     }
 
     @PrePersist
-    private void prePersist(Order order){
-        log.info("[ORDER AUDIT] order with id: " + order.getId() + " is about to be entered on db");
-    }
+    private void prePersist(Order order){ log.info("[ORDER AUDIT] order with id: " + order.getId() + " is about to be entered on db"); }
 
     @PostPersist
-    private void postPersist(Order order){
-        log.info("[ORDER AUDIT] order with id: " + order.getId() + " was entered into the db");
-    }
+    private void postPersist(Order order){ log.info("[ORDER AUDIT] order with id: " + order.getId() + " was entered into the db"); }
+
+    //
 
     @PreRemove
-    private void preRemove(Order order){
-        log.info("[ORDER AUDIT] order with id: " + order.getId() + " is about to be removed from the db");
-    }
+    private void preRemove(Order order){ log.info("[ORDER AUDIT] order with id: " + order.getId() + " is about to be removed from the db"); }
 
     @PostRemove
-    private void postRemove(Order order){
-        log.info("[ORDER AUDIT] order with id: " + order.getId() + " was removed from the db");
-    }
+    private void postRemove(Order order){ log.info("[ORDER AUDIT] order with id: " + order.getId() + " was removed from the db"); }
 }

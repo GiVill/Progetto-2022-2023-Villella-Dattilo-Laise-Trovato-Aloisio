@@ -5,7 +5,6 @@ import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
 import it.unical.ea.VintedProject.dto.BuyingOfferDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

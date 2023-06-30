@@ -18,24 +18,17 @@ public class OrderController {
 
     private final OrderService orderService;
 
-
     @GetMapping("/orders/{id}")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<OrderDto> getOrderById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(orderService.getOrderById(id));
-    }
+    public ResponseEntity<OrderDto> getOrderById(@PathVariable("id") Long id) { return ResponseEntity.ok(orderService.getOrderById(id)); }
 
     @GetMapping("/orders")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<Page<OrderDto>> all(@RequestParam("page") int page){
-        return ResponseEntity.ok(orderService.getAllPaged(page));
-    }
+    public ResponseEntity<Page<OrderDto>> all(@RequestParam("page") int page){ return ResponseEntity.ok(orderService.getAllPaged(page)); }
 
     @PostMapping("/orders")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<OrderDto> addOrder(@RequestBody @Valid OrderDto orderDto) {
-        return ResponseEntity.ok(orderService.save(orderDto));
-    }
+    public ResponseEntity<OrderDto> addOrder(@RequestBody @Valid OrderDto orderDto) { return ResponseEntity.ok(orderService.save(orderDto)); }
 
     @DeleteMapping("/orders/{id}")
     //@PreAuthorize("hasAnyRole('user','admin')")

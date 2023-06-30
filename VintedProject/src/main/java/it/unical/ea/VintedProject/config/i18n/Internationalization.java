@@ -9,21 +9,23 @@ import java.util.Arrays;
 import java.util.Locale;
 
 @Configuration
-    public class Internationalization {
+public class Internationalization {
 
-        @Bean
-        public AcceptHeaderLocaleResolver localeResolver() {
-            final LanguageResolver resolver = new LanguageResolver();
-            resolver.setSupportedLocales(Arrays.asList(Locale.ITALY, Locale.US,Locale.UK));
-            resolver.setDefaultLocale(Locale.ITALY);
-            return resolver;
-        }
-    
-        @Bean
-        public ResourceBundleMessageSource messageSource() {
-            final ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-            source.setBasename("language/messages");
-            source.setDefaultEncoding("UTF-8");
-            return source;
-        }
-    }  
+    //Sets all the language supported by our server
+    @Bean
+    public AcceptHeaderLocaleResolver localeResolver() {
+        final LanguageResolver resolver = new LanguageResolver();
+        resolver.setSupportedLocales(Arrays.asList(Locale.ITALY, Locale.US, Locale.UK)); //All the language supported by our server
+        resolver.setDefaultLocale(Locale.ITALY); //Default language
+        return resolver;
+    }
+
+    //Load from the  | resource-> Resource Bundle 'messages' | the relative .properties requested in the HTTP Request (see LanguageResolver class)
+    @Bean
+    public ResourceBundleMessageSource messageSource() {
+        final ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+        source.setBasename("language/messages");
+        source.setDefaultEncoding("UTF-8");
+        return source;
+    }
+}

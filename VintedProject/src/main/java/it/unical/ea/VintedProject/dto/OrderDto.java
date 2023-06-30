@@ -1,8 +1,5 @@
 package it.unical.ea.VintedProject.dto;
-import it.unical.ea.VintedProject.dto.enumerated.PaymentMethod;
-import jakarta.persistence.Enumerated;
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 

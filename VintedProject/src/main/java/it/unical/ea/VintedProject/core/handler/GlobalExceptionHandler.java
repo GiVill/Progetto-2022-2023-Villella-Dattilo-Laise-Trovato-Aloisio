@@ -1,7 +1,6 @@
 package it.unical.ea.VintedProject.core.handler;
 
-import it.unical.ea.VintedProject.config.i18n.MessageLang;
-import it.unical.ea.VintedProject.config.interceptor.ManyRequestException;
+import it.unical.ea.VintedProject.exception.ManyRequestException;
 import it.unical.ea.VintedProject.dto.ServiceError;
 import it.unical.ea.VintedProject.exception.UserException;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,18 +18,21 @@ import java.util.Date;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    //404
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ServiceError onResourceNotFoundException(WebRequest req, EntityNotFoundException ex){
         return errorResponse(req, ex.getMessage());
     }
 
+    //401
     @ExceptionHandler(UserException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ServiceError onResourceNotFoundException(WebRequest req, UserException ex){
         return errorResponse(req, ex.getMessage() );
     }
 
+    //403
     @ExceptionHandler(ManyRequestException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ServiceError onResourceNotFoundException(WebRequest req, ManyRequestException ex){

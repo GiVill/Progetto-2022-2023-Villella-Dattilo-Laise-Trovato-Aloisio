@@ -16,7 +16,9 @@ class PricingPlanService {
     }
 
     private Bucket newBucket(String apiKey) {
-        PricingPlan pricingPlan = PricingPlan.resolvePlanFromApiKey(apiKey);
+
+        //Qui viene passata una stringa presa dall'header HTTP (vedi RateLimiterInterceptor, il preHandle)
+        PricingPlan pricingPlan = PricingPlan.resolvePlanFromApiKey(apiKey); //Il resolvePlanFromApiKey collega ad una stringa un relativo Bucket
 
         return Bucket.builder()
             .addLimit(pricingPlan.getLimit())

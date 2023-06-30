@@ -20,14 +20,9 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
-
-
     @GetMapping("/payments/{idPayment}")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<PaymentDto> getById(@PathVariable("idPayment") Long id){
-        PaymentDto paymentDto = paymentService.findById(id);
-        return ResponseEntity.ok(paymentDto);
-    }
+    public ResponseEntity<PaymentDto> getById(@PathVariable("idPayment") Long id){ return ResponseEntity.ok(paymentService.findById(id)); }
 
     @GetMapping("/payments")
     //@PreAuthorize("hasAnyRole('user','admin')")
@@ -37,9 +32,7 @@ public class PaymentController {
 
     @PostMapping("/payments")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<PaymentDto> addPayment (@RequestBody @Valid PaymentDto payment) {
-        return ResponseEntity.ok(paymentService.save(payment));
-    }
+    public ResponseEntity<PaymentDto> addPayment (@RequestBody @Valid PaymentDto payment) { return ResponseEntity.ok(paymentService.save(payment)); }
 
     @DeleteMapping("payments/{idPayment}")
     //@PreAuthorize("hasAnyRole('user','admin')")

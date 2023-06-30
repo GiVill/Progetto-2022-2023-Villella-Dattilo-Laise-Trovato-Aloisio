@@ -18,6 +18,8 @@ import java.util.Objects;
 @RequestMapping("/vintedProject-api/v1/")
 public class AuthController {
 
+    //TODO Correggere sia sign up che login
+
     private final AuthService authService;
     private final KeycloakTokenClient keycloakTokenClient;
 
@@ -29,6 +31,7 @@ public class AuthController {
         }
         return  ResponseEntity.ok(token);
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<Boolean> login(@RequestBody @Valid String email,@RequestBody @Valid String password){

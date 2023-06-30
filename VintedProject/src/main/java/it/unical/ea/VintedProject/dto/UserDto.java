@@ -1,10 +1,7 @@
 package it.unical.ea.VintedProject.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import it.unical.ea.VintedProject.data.entities.Address;
-import it.unical.ea.VintedProject.dto.enumerated.Gender;
+import it.unical.ea.VintedProject.dto.enumeration.Gender;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import lombok.Data;
@@ -20,16 +17,16 @@ public class UserDto {
 
     private Long id;
 
-    @NotNull(message = "nickname.notempty")
+    @NotNull(message = "nickname.not.empty")
     private String nickName;
 
-    @NotNull(message = "firstname.notempty")
+    @NotNull(message = "firstname.not.empty")
     private String firstName;
 
-
+    @NotNull(message = "lastname.not.empty")
     private String lastName;
 
-    @Email(message = "email.valid")
+    @Email(message = "email.not.valid")
     private String email;
 
     @Past(message = "birthdate.past" )

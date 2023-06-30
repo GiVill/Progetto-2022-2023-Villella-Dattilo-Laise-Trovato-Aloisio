@@ -1,4 +1,5 @@
 package it.unical.ea.VintedProject.data.service;
+import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.Order;
@@ -24,6 +25,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderDao orderDao;
     private final ModelMapper modelMapper;
+    private final MessageLang messageLang;
     private final static int SIZE_FOR_PAGE = 5;
 
     @Override
@@ -41,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto getOrderById(Long id) {
-        Order order = orderDao.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Don't exist any order with id: [%s]", id)));
+        Order order = orderDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("order.not.present",id)));
         return modelMapper.map(order, OrderDto.class);
     }
 
@@ -57,6 +59,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findById(Long id) {
-        return orderDao.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Don't exist a order with id: [%s]", id)));
+        return orderDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("order.not.present",id)));
     }
 }

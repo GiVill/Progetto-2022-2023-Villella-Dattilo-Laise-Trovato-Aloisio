@@ -12,7 +12,7 @@ public class WebConfiguration implements WebMvcConfigurer{
     public void addCorsMappings(CorsRegistry registry) {
 
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("*") //TODO: Andrebbero messi gli indirizzi dei server, non * . Es: localhost:4200
                 .allowedMethods("POST", "OPTIONS", "GET", "DELETE", "PUT")
                 .allowedHeaders("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization")
                 .maxAge(3600)
