@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -116,6 +117,15 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
         return new PageImpl<>(collect);
     }
 
+    @Override
+    public String modifyById(Long insertionId, String title, Float price, String description) {
+        BasicInsertion insertion = findById(insertionId);
+        insertion.setTitle(title);
+        insertion.setPrice(price);
+        insertion.setDescription(description);
+        basicInsertionDao.save(insertion);
+        return "Ok :'(";
+    }
 
 
 }

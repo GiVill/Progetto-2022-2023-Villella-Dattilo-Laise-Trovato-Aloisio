@@ -52,7 +52,7 @@ public class SecurityConfig {
 
                 //USERS
                 .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users").permitAll()
-                .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users/{idUser}").hasRole("user")
+                .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users/{idUser}").permitAll()//hasRole("user")
                 .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users/insertions/{idUser}").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/vintedProject-api/v1/users/{idUser}").permitAll() //.hasAnyRole(ADMIN,BASIC)
                 //PAYMENT
@@ -74,6 +74,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/{title}/{page}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/{brand}/{page}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/{category}/{page}").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/vintedProject-api/v1/insertions/{InsertionId}").permitAll()
                 //OFFERS
                 .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/offers").permitAll()
                 .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/offers/{idUser}").permitAll()
@@ -81,6 +82,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/vintedProject-api/v1/offers/{idOffer}").permitAll()
                 //AUTH
                 .requestMatchers(HttpMethod.POST, "/vintedProject-api/v1/sign-up").permitAll()
+                .requestMatchers(HttpMethod.POST, "/vintedProject-api/v1/login").permitAll()
                 .anyRequest()
                         .authenticated()
         ;

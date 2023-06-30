@@ -30,7 +30,7 @@ public class BasicInsertion {
     private String title;
 
     @Column(name = "PRICE")
-    private Integer price;
+    private Float price;
 
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.DATE)

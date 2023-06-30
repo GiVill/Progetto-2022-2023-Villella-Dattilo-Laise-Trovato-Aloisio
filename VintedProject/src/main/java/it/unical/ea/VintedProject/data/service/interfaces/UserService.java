@@ -3,6 +3,7 @@ import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
+import it.unical.ea.VintedProject.dto.LoginUserDto;
 import it.unical.ea.VintedProject.dto.UserDto;
 import org.springframework.data.domain.Page;
 
@@ -31,5 +32,5 @@ public interface UserService {
 
     Page<BasicInsertionDto> getInsertionByUserId(Long userId, int page);
 
-
+    String doLogin(LoginUserDto data);
 }

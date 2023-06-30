@@ -7,7 +7,9 @@ import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
+import it.unical.ea.VintedProject.dto.LoginUserDto;
 import it.unical.ea.VintedProject.dto.UserDto;
+import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -28,7 +30,7 @@ public class UserServiceImpl implements UserService {
     private final BasicInsertionService basicInsertionService;
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 10;
-
+    private final KeycloakTokenClient keycloakTokenClient;
 
     private final MessageLang messageLang;
 
@@ -84,6 +86,15 @@ public class UserServiceImpl implements UserService {
     public Page<BasicInsertionDto> getInsertionByUserId(Long userId, int page) {
 
         return null;//basicInsertionService.findAllByUserId(userId, page);
+    }
+
+    @Override
+    public String doLogin(LoginUserDto data) {
+        Optional<User> u = userDao.findByEmailAndPassword(data.getEmail(),data.getPassword());
+        if (u.isEmpty()){
+            throw new EntityNotFoundException(messageLang.getMessage("credentials.not.valid"));
+        }
+        return keycloakTokenClient.getToken(data.getEmail(), data.getPassword());
     }
 
     @Override

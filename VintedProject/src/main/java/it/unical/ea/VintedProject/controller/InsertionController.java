@@ -46,7 +46,7 @@ public class InsertionController {
 
     @DeleteMapping("/insertions/{UserId}")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<Void> deleteAllInsertionByUserId(@RequestParam("userId") Long userId) {
+    public ResponseEntity<Void> deleteAllInsertionByUserId(@RequestParam("UserId") Long userId) {
         basicInsertionService.deleteBasicInsertionById(userId);
         return ResponseEntity.noContent().build();
     }
@@ -67,6 +67,11 @@ public class InsertionController {
     //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<Page<BasicInsertionDto>> getByCategory(@PathVariable("category") Category category, @PathVariable("page") int page){
         return ResponseEntity.ok(basicInsertionService.getByCategory(category,page));
+    }
+
+    @PutMapping("/insertions/{InsertionId}")
+    public ResponseEntity<String> modifyInsertionById(@PathVariable("InsertionId") Long insertionId, String title, Float price, String description){
+        return ResponseEntity.ok(basicInsertionService.modifyById(insertionId,title,price,description));
     }
 
 }

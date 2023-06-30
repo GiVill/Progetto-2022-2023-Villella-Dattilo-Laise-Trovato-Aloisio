@@ -104,7 +104,7 @@ public class DbGenerator implements ApplicationRunner {
 
         BasicInsertion basicInsertion = new BasicInsertion();
         basicInsertion.setTitle(title);
-        basicInsertion.setPrice(Integer.valueOf(price));
+        basicInsertion.setPrice(Float.valueOf(price));
         basicInsertion.setCreationDate(LocalDate.parse(creationDate));
         basicInsertion.setDescription(description);
         basicInsertion.setUser(userService.getUserById(Long.valueOf(idUser)));

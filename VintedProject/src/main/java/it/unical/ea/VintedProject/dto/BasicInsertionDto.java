@@ -16,7 +16,7 @@ public class BasicInsertionDto {
 
     private String title;
 
-    private Integer price;
+    private Float price;
 
     private String description;
 

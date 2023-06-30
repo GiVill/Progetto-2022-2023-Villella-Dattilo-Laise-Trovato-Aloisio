@@ -3,6 +3,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
+          #Collegamento con keycloak
           issuer-uri: http://localhost:8090/realms/vinted2_0
           jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
   server:
@@ -15,12 +16,15 @@ jwt:
       principle-attribute: preferred_username
 
 server:
+
   ssl:
+    #Si occupa di mettere HTTPS
     key-alias: spring-https
-    key-store: classpath:javatechie.jks
+    key-store: classpath:javatechie.jks #path dove risiede la chiave
     key-store-type: JKS
     key-password: vinted
     key-store-password: vinted
 
+  #mette il server in ascolto sulla porta 8010
   port: 8010
 

@@ -1,6 +1,9 @@
 package it.unical.ea.VintedProject.controller;
 
+import it.unical.ea.VintedProject.data.service.UserServiceImpl;
 import it.unical.ea.VintedProject.data.service.interfaces.AuthService;
+import it.unical.ea.VintedProject.data.service.interfaces.UserService;
+import it.unical.ea.VintedProject.dto.LoginUserDto;
 import it.unical.ea.VintedProject.dto.NewUserDto;
 import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
 import jakarta.validation.Valid;
@@ -22,6 +25,8 @@ public class AuthController {
 
     private final AuthService authService;
     private final KeycloakTokenClient keycloakTokenClient;
+    private final UserService userService;
+
 
     @PostMapping("/sign-up")
     public ResponseEntity<String> signUp(@RequestBody @Valid NewUserDto newUserDto){
@@ -32,9 +37,9 @@ public class AuthController {
         return  ResponseEntity.ok(token);
     }
 
-
+    //TODO testare ma funziona sicuro
     @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody @Valid String email,@RequestBody @Valid String password){
-        return ResponseEntity.ok(true);
+    public ResponseEntity<String> login(@RequestBody @Valid LoginUserDto data){
+        return ResponseEntity.ok(userService.doLogin(data));
     }
 }

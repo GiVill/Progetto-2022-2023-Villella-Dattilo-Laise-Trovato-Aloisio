@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.data.dao;
 
 import it.unical.ea.VintedProject.data.entities.User;
+import it.unical.ea.VintedProject.dto.LoginUserDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +21,5 @@ public interface UserDao extends JpaRepository<User,Long> {
     //Return a SINGLE User fetched by Nickname
     Optional<User> findByNickName(String nickName);
 
-
+    Optional<User> findByEmailAndPassword(String email, String password);
 }
