@@ -19,22 +19,13 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     private final ModelMapper modelMapper;
     private final BuyingOfferDao buyingOfferDao;
 
-    /*@Override
-    public void save(BuyingOffer offer) {
-        buyingOfferDao.save(offer);
-    }*/
-
     @Override
     public BuyingOfferDto save(BuyingOfferDto offer) {
         BuyingOffer buyingOffer = modelMapper.map(offer,BuyingOffer.class);
         buyingOfferDao.save(buyingOffer);
+
         BuyingOffer o = buyingOfferDao.save(buyingOffer);
         return modelMapper.map(o,BuyingOfferDto.class);
-    }
-
-    @Override
-    public void deleteOfferById(Long id) {
-        buyingOfferDao.deleteById(id);
     }
 
     @Override
@@ -45,12 +36,16 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     @Override
     public Stream<BuyingOfferDto> getById(Long id) {
         return buyingOfferDao.findById(id).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class));
-
     }
 
     @Override
     public List<BuyingOfferDto> findAll() {
         return buyingOfferDao.findAll().stream().map(s -> modelMapper.map(s, BuyingOfferDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteOfferById(Long id) {
+        buyingOfferDao.deleteById(id);
     }
 
 }

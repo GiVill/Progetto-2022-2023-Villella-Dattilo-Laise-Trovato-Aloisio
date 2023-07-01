@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
         servers = {
                 @Server(
                         description = "local IT",
-                        url = "https://localhost:8010"
+                        url = "https://localhost:8010/vintedProject-api"
                 )
         },
         security = {

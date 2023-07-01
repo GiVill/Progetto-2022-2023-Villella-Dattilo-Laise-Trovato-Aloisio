@@ -21,6 +21,9 @@ public class SecurityConfig {
 
     private final JwtAuthConverter jwtAuthConverter;
 
+    private final String ADMIN = "admin";
+    private final String USER = "user";
+
     //Password encoder with BCrypt
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(12); }
@@ -50,39 +53,45 @@ public class SecurityConfig {
                         "vintedProject-api/v1/**"
                 ).permitAll()
 
+                //.hasRole("user")
+                //.hasRole(ADMIN)
+                //.hasAnyRole(ADMIN,USER)
+
+
                 //USERS
-                .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users").permitAll()
-                .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users/{idUser}").permitAll()//hasRole("user")
-                .requestMatchers(HttpMethod.DELETE, "/vintedProject-api/v1/users/{idUser}").permitAll() //.hasAnyRole(ADMIN,BASIC)
+                .requestMatchers(HttpMethod.GET,"/v1/users").permitAll()
+                .requestMatchers(HttpMethod.GET,"/v1/users/{idUser}").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/v1/users/{idUser}").permitAll()
                 //PAYMENT
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/payments").permitAll()
-                .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/payments/{idPayment}").permitAll()
-                .requestMatchers(HttpMethod.POST, "/vintedProject-api/v1/payments").permitAll()
-                .requestMatchers(HttpMethod.DELETE,"/vintedProject-api/v1/payments/{idPayment}").permitAll() //.hasRole(ADMIN)
+                .requestMatchers(HttpMethod.GET, "/v1/payments").permitAll()
+                .requestMatchers(HttpMethod.GET,"/v1/payments/{idPayment}").permitAll()
+                .requestMatchers(HttpMethod.POST, "/v1/payments").permitAll()
+                .requestMatchers(HttpMethod.DELETE,"/v1/payments/{idPayment}").permitAll()
+                .requestMatchers(HttpMethod.GET,"/v1/payments/user/{userId}/{page}").permitAll()
                 //ORDERS
-                .requestMatchers(HttpMethod.POST, "/vintedProject-api/v1/orders").permitAll()
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/orders/{id}").permitAll()
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/orders").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/vintedProject-api/v1/orders/{id}").permitAll()
+                .requestMatchers(HttpMethod.POST, "/v1/orders").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/orders/{id}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/orders").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/v1/orders/{id}").permitAll()
                 //INSERTION
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions").permitAll()
-                .requestMatchers(HttpMethod.POST, "/vintedProject-api/v1/insertions").permitAll()
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/{id}").permitAll()
-                .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/insertions/user/{idUser}/{page}").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/vintedProject-api/v1/insertions/{id}").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/vintedProject-api/v1/insertions").permitAll()
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/title/{title}/{page}").permitAll()
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/brand/{brand}/{page}").permitAll()
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/category/{category}/{page}").permitAll()
-                .requestMatchers(HttpMethod.PUT, "/vintedProject-api/v1/insertions/{InsertionId}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/insertions").permitAll()
+                .requestMatchers(HttpMethod.POST, "/v1/insertions").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/insertions/{id}").permitAll()
+                .requestMatchers(HttpMethod.GET,"/v1/insertions/user/{idUser}/{page}").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/v1/insertions/{id}").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/v1/insertions").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/insertions/title/{title}/{page}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/insertions/brand/{brand}/{page}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/insertions/category/{category}/{page}").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/v1/insertions/{InsertionId}").permitAll()
                 //OFFERS
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/offers").permitAll()
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/offers/{idUser}").permitAll()
-                .requestMatchers(HttpMethod.POST, "/vintedProject-api/v1/offers").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/vintedProject-api/v1/offers/{idOffer}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/offers").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/offers/{idUser}").permitAll()
+                .requestMatchers(HttpMethod.POST, "/v1/offers").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/v1/offers/{idOffer}").permitAll()
                 //AUTH
-                .requestMatchers(HttpMethod.POST, "/vintedProject-api/v1/sign-up").permitAll()
-                .requestMatchers(HttpMethod.POST, "/vintedProject-api/v1/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/v1/sign-up").permitAll()
+                .requestMatchers(HttpMethod.POST, "/v1/login").permitAll()
                 .anyRequest()
                         .authenticated()
         ;

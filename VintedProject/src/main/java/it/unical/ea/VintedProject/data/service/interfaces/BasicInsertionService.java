@@ -35,7 +35,7 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
 
     Page<BasicInsertionDto> getByCategory(Category category, int page);
 
-    String modifyById(Long insertionId, String title, Float price, String description);
+    Boolean modifyById(Long insertionId, String title, Float price, String description);
 /*
     @Query("select * from basicinsertion where user=:a")
     Page<BasicInsertion> @Param("a") User;

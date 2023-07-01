@@ -1,10 +1,12 @@
 package it.unical.ea.VintedProject.data.entities;
 
 
+import it.unical.ea.VintedProject.core.entitiesAuditTrailListener.OrderListener;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 
@@ -12,6 +14,7 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(value = {AuditingEntityListener.class, OrderListener.class})
 @Table(name = "ORDERS")
 public class Order {
 

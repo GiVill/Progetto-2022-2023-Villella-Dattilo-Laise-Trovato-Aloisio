@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.enumeration.Brand;
@@ -12,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/vintedProject-api/v1/")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("/v1")
 @RequiredArgsConstructor
+@Tag(name = "Insertion") //Name displayed on swagger
 public class InsertionController {
 
     private final BasicInsertionService basicInsertionService;
@@ -72,17 +73,14 @@ public class InsertionController {
         return ResponseEntity.ok(basicInsertionService.getByBrand(brand,page));
     }
 
-
-
     @GetMapping("/insertions/category/{category}/{page}")
     //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<Page<BasicInsertionDto>> getByCategory(@PathVariable("category") Category category, @PathVariable("page") int page){
         return ResponseEntity.ok(basicInsertionService.getByCategory(category,page));
     }
 
-
     @PutMapping("/insertions/{InsertionId}")
-    public ResponseEntity<String> modifyInsertionById(@PathVariable("InsertionId") Long insertionId, String title, Float price, String description){
+    public ResponseEntity<Boolean> modifyInsertionById(@PathVariable("InsertionId") Long insertionId, String title, Float price, String description){
         return ResponseEntity.ok(basicInsertionService.modifyById(insertionId,title,price,description));
     }
 

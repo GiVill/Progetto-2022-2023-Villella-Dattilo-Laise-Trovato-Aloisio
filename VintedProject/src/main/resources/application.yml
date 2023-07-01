@@ -28,3 +28,9 @@ server:
   #mette il server in ascolto sulla porta 8010
   port: 8010
 
+  #Imposta la scritta dopo http://localhost:8010 PER TUTTO IL PROGETTO
+  #In questo caso http://localhost:8010/vintedProject-api
+  servlet:
+    context-path: /vintedProject-api
+  #Ricorda che se modifichi questo, DEVI modificare il server url nella classe OpenApiConfig per far si che swagger faccia le GET,POST,ecc ai giusti endpoint!
+

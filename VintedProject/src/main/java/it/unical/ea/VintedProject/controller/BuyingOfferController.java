@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
 import it.unical.ea.VintedProject.dto.BuyingOfferDto;
@@ -14,9 +15,10 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/vintedProject-api/v1/")
+@RequestMapping("/v1")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
+@Tag(name = "Offer") //Name displayed on swagger
 public class BuyingOfferController {
 
     private final BuyingOfferService buyingOfferService;
@@ -38,13 +40,6 @@ public class BuyingOfferController {
     public ResponseEntity<BuyingOfferDto> addBuyingOffer (@RequestBody @Valid BuyingOfferDto offer){
         return ResponseEntity.ok(buyingOfferService.save(offer));
     }
-
-    /*
-    @PostMapping("/students")
-    public ResponseEntity<StudentBasicDto> add(@RequestBody @Valid StudentDto student) {
-        return ResponseEntity.ok(studentService.save(student));
-      }
-     */
 
     @DeleteMapping("/offers/{idOffer}")
     //@PreAuthorize("hasAnyRole('user','admin')")

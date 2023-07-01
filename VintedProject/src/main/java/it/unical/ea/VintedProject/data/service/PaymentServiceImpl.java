@@ -6,10 +6,14 @@ import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.Payment;
 import it.unical.ea.VintedProject.data.service.interfaces.PaymentService;
+import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.PaymentDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +26,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentDao paymentDao;
     private final ModelMapper modelMapper;
     private final MessageLang messageLang;
+    private final static int SIZE_FOR_PAGE = 5;
 
     @Override
     public PaymentDto save(PaymentDto payment) {
@@ -35,11 +40,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void deleteInsertion(Long id) {
-        paymentDao.deleteById(id);
-    }
-
-    @Override
     public List<PaymentDto> findAll() {
         return paymentDao.findAll().stream().map(s -> modelMapper.map(s, PaymentDto.class)).collect(Collectors.toList());
     }
@@ -48,6 +48,21 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentDto findById(Long id) {
         Payment payment = paymentDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("payment.not.present",id)));
         return modelMapper.map(payment, PaymentDto.class);
+    }
+
+    @Override
+    public Page<PaymentDto> findAllByUser(Long userId, int page) {
+        PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE);
+        List<PaymentDto> collect = paymentDao.findAllByUserId(userId, pageRequest).stream().map(s -> modelMapper.map(s, PaymentDto.class)).collect(Collectors.toList());
+        if(collect.isEmpty()){
+            throw new EntityNotFoundException(messageLang.getMessage("user.without.payment",userId));
+        }
+        return new PageImpl<>(collect);
+    }
+
+    @Override
+    public void deleteInsertion(Long id) {
+        paymentDao.deleteById(id);
     }
 }
 

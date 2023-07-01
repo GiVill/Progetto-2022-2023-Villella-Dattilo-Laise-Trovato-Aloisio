@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.controller;
 
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.data.service.interfaces.OrderService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.OrderDto;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/vintedProject-api/v1/")
+@RequestMapping("/v1")
+@Tag(name = "Order") //Name displayed on swagger
 public class OrderController {
 
     private final OrderService orderService;

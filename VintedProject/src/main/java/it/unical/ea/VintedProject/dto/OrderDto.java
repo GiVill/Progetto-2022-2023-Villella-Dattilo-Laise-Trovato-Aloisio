@@ -1,4 +1,5 @@
 package it.unical.ea.VintedProject.dto;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -12,16 +13,21 @@ import java.time.LocalDate;
 @ToString
 public class OrderDto {
 
+    @NotNull
     private Long id;
 
     private LocalDate date;
 
-    private Long paymentId;
-
+    @NotNull
     private Integer number;
 
+    @NotNull
+    private Long paymentId;
+
+    @NotNull
     private Long insertionId;
 
+    @NotNull
     private Long userId;
 
 }

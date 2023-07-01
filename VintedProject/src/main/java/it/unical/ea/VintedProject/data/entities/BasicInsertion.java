@@ -1,12 +1,14 @@
 package it.unical.ea.VintedProject.data.entities;
 
 
+import it.unical.ea.VintedProject.core.entitiesAuditTrailListener.InsertionListener;
 import it.unical.ea.VintedProject.dto.enumeration.Brand;
 import it.unical.ea.VintedProject.dto.enumeration.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Blob;
 import java.time.LocalDate;
@@ -17,6 +19,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(value = {AuditingEntityListener.class, InsertionListener.class})
 @Table(name = "BASICINSERTION")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class BasicInsertion {

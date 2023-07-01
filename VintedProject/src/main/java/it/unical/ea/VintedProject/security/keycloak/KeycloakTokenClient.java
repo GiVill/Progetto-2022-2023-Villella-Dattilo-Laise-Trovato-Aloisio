@@ -49,7 +49,7 @@ public class KeycloakTokenClient {
         if(addUserOnKeyCloak(newUserDto)){
             return getToken(newUserDto.getNickName(),newUserDto.getPassword());
         }
-        return "ERRORE";
+        return "ERRORE"; //throw new RuntimeException(messageLang.getMessage("keycloak.token.error")); ?????
     }
 
     public String getToken(String username, String password) {
@@ -95,43 +95,48 @@ public class KeycloakTokenClient {
     }
 
     public boolean addUserOnKeyCloak(NewUserDto newUserDto){
-
-        UserRepresentation userRepresentation = newUserDtoConverter(newUserDto);
-
-        RealmResource realmResource = getAdminKeycloakUser().realm("vinted2_0");
-        UsersResource usersResource = realmResource.users();
-
-        Response response = usersResource.create(userRepresentation);
-
-        //System.out.printf("Repsonse: %s %s%n", response.getStatus(), response.getStatusInfo());
-
-        System.out.println(response.getLocation());
-        String userId = CreatedResponseUtil.getCreatedId(response);
-
-        System.out.printf("User created with userId: %s%n", userId);
-
-        // Define password credential
-        CredentialRepresentation passwordCred = new CredentialRepresentation();
-        passwordCred.setTemporary(false);
-        passwordCred.setType(CredentialRepresentation.PASSWORD);
-        passwordCred.setValue(newUserDto.getPassword());
-        //System.out.println(passwordCred);
-        //System.out.println(userRepresentation);
-
-        UserResource userResource = usersResource.get(userId);
-
-        // Set password credential
-        userResource.resetPassword(passwordCred);
-
-        // Get realm role "app_user" (requires view-realm role)
-        RoleRepresentation appUserRole = realmResource.roles()//
-                .get("app_user").toRepresentation();
+        try {
 
 
-        // Assign realm role tester to user
-        userResource.roles().realmLevel() //
-                .add(Arrays.asList(appUserRole));
+            UserRepresentation userRepresentation = newUserDtoConverter(newUserDto);
 
-        return true;
+            RealmResource realmResource = getAdminKeycloakUser().realm("vinted2_0");
+            UsersResource usersResource = realmResource.users();
+
+            Response response = usersResource.create(userRepresentation);
+
+            //System.out.printf("Repsonse: %s %s%n", response.getStatus(), response.getStatusInfo());
+
+            System.out.println(response.getLocation());
+            String userId = CreatedResponseUtil.getCreatedId(response);
+
+            System.out.printf("User created with userId: %s%n", userId);
+
+            // Define password credential
+            CredentialRepresentation passwordCred = new CredentialRepresentation();
+            passwordCred.setTemporary(false);
+            passwordCred.setType(CredentialRepresentation.PASSWORD);
+            passwordCred.setValue(newUserDto.getPassword());
+            //System.out.println(passwordCred);
+            //System.out.println(userRepresentation);
+
+            UserResource userResource = usersResource.get(userId);
+
+            // Set password credential
+            userResource.resetPassword(passwordCred);
+
+            // Get realm role "app_user" (requires view-realm role)
+            RoleRepresentation appUserRole = realmResource.roles()//
+                    .get("app_user").toRepresentation();
+
+
+            // Assign realm role tester to user
+            userResource.roles().realmLevel() //
+                    .add(Arrays.asList(appUserRole));
+
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }

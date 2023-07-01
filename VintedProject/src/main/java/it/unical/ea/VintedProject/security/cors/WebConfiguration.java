@@ -17,10 +17,7 @@ public class WebConfiguration implements WebMvcConfigurer{
                 .allowedHeaders("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization")
                 .maxAge(3600)
                 .exposedHeaders("X-Get-Header");
-
-        registry.addMapping("/**");
     }
-
 
 }
 

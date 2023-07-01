@@ -1,13 +1,8 @@
 package it.unical.ea.VintedProject.core.entitiesAuditTrailListener;
 
-import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.entities.User;
-import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import jakarta.persistence.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.util.Optional;
 
 @Slf4j
 public class UserListener{

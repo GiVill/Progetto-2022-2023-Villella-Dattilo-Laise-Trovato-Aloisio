@@ -3,7 +3,7 @@ package it.unical.ea.VintedProject.core.detail;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.dto.enumeration.Role;
 
-
+//TODO Sicuri che questa classe serva
 public class LoggedUserDetail implements UserLogged {
 
     //private static final long serialVersionUID = 1;

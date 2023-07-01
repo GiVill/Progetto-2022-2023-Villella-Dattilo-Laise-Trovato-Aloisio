@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OrderListener {
 
-    private OrderService orderService;
+    //private OrderService orderService;
 
     @PostLoad
     private void afterLoad(Order order){

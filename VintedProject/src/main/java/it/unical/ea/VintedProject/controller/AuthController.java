@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.data.service.UserServiceImpl;
 import it.unical.ea.VintedProject.data.service.interfaces.AuthService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
@@ -18,10 +19,11 @@ import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/vintedProject-api/v1/")
+@RequestMapping("/v1")
+@Tag(name = "Auth") //Name displayed on swagger
 public class AuthController {
 
-    //TODO Correggere sia sign up che login
+    //TODO Scrivere meglio sia sign up
 
     private final AuthService authService;
     private final KeycloakTokenClient keycloakTokenClient;
