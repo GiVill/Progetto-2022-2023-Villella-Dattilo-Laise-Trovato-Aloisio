@@ -53,7 +53,6 @@ public class SecurityConfig {
                 //USERS
                 .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users").permitAll()
                 .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users/{idUser}").permitAll()//hasRole("user")
-                .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/users/insertions/{idUser}").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/vintedProject-api/v1/users/{idUser}").permitAll() //.hasAnyRole(ADMIN,BASIC)
                 //PAYMENT
                 .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/payments").permitAll()
@@ -69,11 +68,12 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions").permitAll()
                 .requestMatchers(HttpMethod.POST, "/vintedProject-api/v1/insertions").permitAll()
                 .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/{id}").permitAll()
+                .requestMatchers(HttpMethod.GET,"/vintedProject-api/v1/insertions/user/{idUser}/{page}").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/vintedProject-api/v1/insertions/{id}").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/vintedProject-api/v1/insertions").permitAll()
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/{title}/{page}").permitAll()
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/{brand}/{page}").permitAll()
-                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/{category}/{page}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/title/{title}/{page}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/brand/{brand}/{page}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/insertions/category/{category}/{page}").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/vintedProject-api/v1/insertions/{InsertionId}").permitAll()
                 //OFFERS
                 .requestMatchers(HttpMethod.GET, "/vintedProject-api/v1/offers").permitAll()

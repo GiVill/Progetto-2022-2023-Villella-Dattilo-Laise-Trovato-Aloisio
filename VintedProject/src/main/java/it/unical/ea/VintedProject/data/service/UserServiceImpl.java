@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.data.service;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.Order;
@@ -14,7 +15,9 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -27,10 +30,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
     private final OrderDao orderDao;
-    private final BasicInsertionService basicInsertionService;
+    private final BasicInsertionDao basicInsertionDao;
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 10;
     private final KeycloakTokenClient keycloakTokenClient;
+    private final PasswordEncoder passwordEncoder;
+
 
     private final MessageLang messageLang;
 
@@ -83,18 +88,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<BasicInsertionDto> getInsertionByUserId(Long userId, int page) {
-
-        return null;//basicInsertionService.findAllByUserId(userId, page);
-    }
-
-    @Override
     public String doLogin(LoginUserDto data) {
         Optional<User> u = userDao.findByEmailAndPassword(data.getEmail(),data.getPassword());
-        if (u.isEmpty()){
-            throw new EntityNotFoundException(messageLang.getMessage("credentials.not.valid"));
+        //TODO da testare ma funziona
+        if (u != null && passwordEncoder.matches(data.getPassword(), u.get().getPassword())){
+            return keycloakTokenClient.getToken(data.getEmail(), data.getPassword());
         }
-        return keycloakTokenClient.getToken(data.getEmail(), data.getPassword());
+
+        throw new EntityNotFoundException(messageLang.getMessage("credentials.not.valid"));
     }
 
     @Override

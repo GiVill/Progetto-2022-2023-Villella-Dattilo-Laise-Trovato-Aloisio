@@ -30,7 +30,6 @@ public interface UserService {
 
     Optional<User> findByNickName(String nickName);
 
-    Page<BasicInsertionDto> getInsertionByUserId(Long userId, int page);
 
     String doLogin(LoginUserDto data);
 }

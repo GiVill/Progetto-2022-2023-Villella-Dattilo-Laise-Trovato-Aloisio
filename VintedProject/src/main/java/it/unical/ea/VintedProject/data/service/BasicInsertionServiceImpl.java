@@ -30,7 +30,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     private final BasicInsertionDao basicInsertionDao;
     private final UserDao userDao;
     private final ModelMapper modelMapper;
-    private final static int SIZE_FOR_PAGE = 10;
+    private final static int SIZE_FOR_PAGE = 2;
 
     private final MessageLang messageLang;
 
@@ -58,7 +58,8 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     @Override
     public Page<BasicInsertionDto> findAllByUser(Long uId, int page) {
-        PageRequest pageRequest = PageRequest.of(SIZE_FOR_PAGE, page);
+        PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE);
+
         List<BasicInsertionDto> collect = basicInsertionDao.findAllByUserId(uId, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         System.out.println(collect);
         return new PageImpl<>(collect);
@@ -87,7 +88,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     @Override
     public Page<BasicInsertionDto> getAllByTitleStartWith(String title, int page) {
-        PageRequest pageRequest = PageRequest.of(SIZE_FOR_PAGE, page, Sort.by("title").ascending());
+        PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("title").ascending());
         List<BasicInsertionDto> collect = basicInsertionDao.findAllByTitleLike(title, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
@@ -105,14 +106,14 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     @Override
     public Page<BasicInsertionDto> getByBrand(Brand brand, int page){
-        PageRequest pageRequest = PageRequest.of(SIZE_FOR_PAGE, page, Sort.by("brand").ascending());
+        PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("brand").ascending());
         List<BasicInsertionDto> collect = basicInsertionDao.findByBrand(brand, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
 
     @Override
     public Page<BasicInsertionDto> getByCategory(Category category, int page){
-        PageRequest pageRequest = PageRequest.of(SIZE_FOR_PAGE, page, Sort.by("category").ascending());
+        PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("category").ascending());
         List<BasicInsertionDto> collect = basicInsertionDao.findByCategory(category,pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }

@@ -37,6 +37,15 @@ public class InsertionController {
         return ResponseEntity.ok(basicInsertionService.getInsertionById(id));
     }
 
+    @GetMapping("/insertions/user/{idUser}/{page}")
+    //@PreAuthorize("permitAll()")//hasAnyRole('user','admin')
+    public ResponseEntity<Page<BasicInsertionDto>> getInsertionByUserId(@PathVariable("idUser") Long id, @PathVariable("page") int page){
+
+        System.out.println(page);
+
+        return ResponseEntity.ok(basicInsertionService.findAllByUser(id, page));
+    }
+
     @DeleteMapping("/insertions/{id}")
     //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<Void> deleteInsertionById(@PathVariable("id") Long id) {
@@ -51,23 +60,26 @@ public class InsertionController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/insertions/{title}/{page}")
+    @GetMapping("/insertions/title/{title}/{page}")
     //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<Page<BasicInsertionDto>> getByTitle(@PathVariable("title") String title, @PathVariable("page") int page){
          return ResponseEntity.ok(basicInsertionService.getAllByTitleStartWith(title,page));
     }
 
-    @GetMapping("/insertions/{brand}/{page}")
+    @GetMapping("/insertions/brand/{brand}/{page}")
     //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<Page<BasicInsertionDto>> getByBrand(@PathVariable("brand") Brand brand, @PathVariable("page") int page){
         return ResponseEntity.ok(basicInsertionService.getByBrand(brand,page));
     }
 
-    @GetMapping("/insertions/{category}/{page}")
+
+
+    @GetMapping("/insertions/category/{category}/{page}")
     //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<Page<BasicInsertionDto>> getByCategory(@PathVariable("category") Category category, @PathVariable("page") int page){
         return ResponseEntity.ok(basicInsertionService.getByCategory(category,page));
     }
+
 
     @PutMapping("/insertions/{InsertionId}")
     public ResponseEntity<String> modifyInsertionById(@PathVariable("InsertionId") Long insertionId, String title, Float price, String description){

@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.UserServiceImpl;
+import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.OrderDto;
@@ -46,6 +47,7 @@ public class UserController {
     private final MessageLang messageLang;
 
     private final UserService userService;
+    private final BasicInsertionService basicInsertionService;
 
     //TODO: Forse questa GET si può eliminare?
     @GetMapping("/users/swagger")
@@ -88,13 +90,6 @@ public class UserController {
     //@PreAuthorize("permitAll()")//hasAnyRole('user','admin')
     public ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) { return ResponseEntity.ok(userService.saveDto(userDto)); }
 
-    @GetMapping("/users/insertions/{idUser}")
-    //@PreAuthorize("permitAll()")//hasAnyRole('user','admin')
-    public ResponseEntity<Page<BasicInsertionDto>> getInsertionByUserId(@PathVariable("idUser") Long id, @RequestParam("page") int page){
-        //TODO
-        System.out.println(page);
-        return ResponseEntity.ok(userService.getInsertionByUserId(id, page));
-    }
 
     @DeleteMapping("/users/{idUser}")
     //@PreAuthorize("hasRole('admin')")
