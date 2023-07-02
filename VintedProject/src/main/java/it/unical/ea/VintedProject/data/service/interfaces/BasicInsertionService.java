@@ -20,9 +20,6 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
 
     Page<BasicInsertionDto> findAllByUser(Long uId, int page);
 
-    //questo è di test
-    //Page<BasicInsertionDto> findAllByUserId(Long user, int page);
-
     Page<BasicInsertionDto> getAllPaged(int page);
 
     Page<BasicInsertionDto> getAllByTitleStartWith(String title, int page);

@@ -20,15 +20,26 @@ public class VintedProjectApplication {
 
 		//Postgresql Server running at ---> localhost:15432/vinted
 		//Docker ---> https://hub.docker.com/u/givill
+
+		// Keycloak su Docker (https://hub.docker.com/r/givill/vinted_project/tags) :
+		// Scrivi sul cmd: docker pull givill/vinted_project:latest
+		// vai su Docker, Images ed clicca sul bottone per attivare givill/vinted_project MA NON LO RUNNARE, PRIMA APRI Optional Settings E NELLA HOST PORTS PIù IN ALTO METTI 8090!!
+		// Ora vai su http://localhost:8090 e inserisci le credenziali admin admin
+
+		//TODO La versione di Keycloak su docker non ha i giusti Role Mapping!! Keycloak non funziona correttamente senza!!
+		//TODO PROBABILMENTE DEVI ELIMINARE IL TUO DB -> Il login va a cercare gli utenti anche su Keycloak(per generare il JWT), ma su Keycloak NON sono presenti gli stessi utenti presenti sul DB! (vai su DbGenerator e scommenta la riga in insertUser e quella nel run)
+
 		//GitHub ---> https://github.com/GiVill/VintedProject
 
 		//PER ANDROID
 		//Ricordati di avviare il sync di Gradle prima di avviare il progetto, la prima volta che lo scarichi!
 
 		//PER ANGULAR
-		//Ricordati di scrivere sul terminale:
+		//Ricordati di scrivere sul terminale (No PowerShell):
 		// npm install --force
 		// prima di avviare il progetto, la prima volta che lo scarichi!
+
+
 
 
 

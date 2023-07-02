@@ -42,6 +42,6 @@ public class AuthController {
     //TODO testare ma funziona sicuro
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid LoginUserDto data){
-        return ResponseEntity.ok(userService.doLogin(data));
+        return ResponseEntity.ok(authService.doLogin(data));
     }
 }

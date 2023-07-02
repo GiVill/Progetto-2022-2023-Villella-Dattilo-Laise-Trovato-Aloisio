@@ -29,11 +29,8 @@ public class UserServiceImpl implements UserService {
     private final OrderDao orderDao;
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 10;
-    private final KeycloakTokenClient keycloakTokenClient;
-    private final PasswordEncoder passwordEncoder;
-
-
     private final MessageLang messageLang;
+
 
     @Override
     public void save(User user) { userDao.save(user); }
@@ -81,17 +78,6 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundException(messageLang.getMessage("user.nickname.not.present",nickName));
         }
         return user;
-    }
-
-    @Override
-    public String doLogin(LoginUserDto data) {
-        Optional<User> u = userDao.findByEmailAndPassword(data.getEmail(),data.getPassword());
-        //TODO da testare ma funziona
-        if (u != null && passwordEncoder.matches(data.getPassword(), u.get().getPassword())){
-            return keycloakTokenClient.getToken(data.getEmail(), data.getPassword());
-        }
-
-        throw new EntityNotFoundException(messageLang.getMessage("credentials.not.valid"));
     }
 
     @Override

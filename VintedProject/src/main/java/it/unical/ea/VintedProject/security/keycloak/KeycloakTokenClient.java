@@ -105,7 +105,7 @@ public class KeycloakTokenClient {
 
             Response response = usersResource.create(userRepresentation);
 
-            //System.out.printf("Repsonse: %s %s%n", response.getStatus(), response.getStatusInfo());
+            System.out.printf("Repsonse: %s %s%n", response.getStatus(), response.getStatusInfo());
 
             System.out.println(response.getLocation());
             String userId = CreatedResponseUtil.getCreatedId(response);

@@ -30,6 +30,4 @@ public interface UserService {
 
     Optional<User> findByNickName(String nickName);
 
-
-    String doLogin(LoginUserDto data);
 }

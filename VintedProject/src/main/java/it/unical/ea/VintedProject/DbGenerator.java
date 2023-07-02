@@ -2,16 +2,21 @@ package it.unical.ea.VintedProject;
 
 import it.unical.ea.VintedProject.data.entities.*;
 import it.unical.ea.VintedProject.data.service.interfaces.*;
+import it.unical.ea.VintedProject.dto.NewUserDto;
+import it.unical.ea.VintedProject.dto.UserDto;
 import it.unical.ea.VintedProject.dto.enumeration.PaymentMethod;
 import it.unical.ea.VintedProject.dto.enumeration.Status;
+import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.io.Resource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -21,6 +26,11 @@ import java.time.LocalDate;
 @Component
 @RequiredArgsConstructor
 public class DbGenerator implements ApplicationRunner {
+
+    private final PasswordEncoder passwordEncoder;
+    private final KeycloakTokenClient keycloakTokenClient;
+    private final AuthService authService;
+    private final ModelMapper modelMapper;
 
 
     @Value("classpath:data/users.csv")
@@ -81,6 +91,8 @@ public class DbGenerator implements ApplicationRunner {
             for (CSVRecord record : buyingoffertsCsv) {
                 insertBuyingoffert(record.get(0), record.get(1), record.get(2));
             }
+
+
 
 
 
@@ -147,6 +159,10 @@ public class DbGenerator implements ApplicationRunner {
         user.setPhoneNumber(Integer.valueOf(phoneNumber));
         user.setBirthDate(LocalDate.parse(birthDate));
         user.setAddress(address);
+
+        //keycloakTokenClient.userRegister(modelMapper.map(user, NewUserDto.class));
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userService.save(user);
     }
