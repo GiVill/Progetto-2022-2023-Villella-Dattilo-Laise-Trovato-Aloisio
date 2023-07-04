@@ -1,4 +1,4 @@
-package io.swagger.client.infrastructure
+package com.example.vintedandroid.client.infrastructure
 
 typealias MultiValueMap = Map<String, List<String>>
 

@@ -2,6 +2,7 @@ package com.example.vintedandroid
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.StrictMode
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,7 +29,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.vintedandroid.client.apis.UserApi
+import com.example.vintedandroid.model.dto.UserDto
 import com.example.vintedandroid.view.theme.VintedAndroidTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
@@ -36,8 +41,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             VintedAndroidTheme {
-                val nome = UserApi()
-                Log.i("papà",nome.all().toString())
+                StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitNetwork().build())
+                val userApi = UserApi()
+                val users = userApi.all()
+                users.forEach { user ->
+                    Log.i("papà",user.toString())
+                }
                 MainScreen()
             }
         }

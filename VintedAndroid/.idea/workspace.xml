@@ -9,72 +9,42 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="557ca968-8d4e-4309-85fc-f99f498ba3bb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/config/ModelMapper.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/controller/UserController.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/dto/BasicInsertionDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dto/BasicInsertionDto.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/dto/BuyingOfferDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dto/BuyingOfferDto.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/dto/OrderDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dto/OrderDto.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/dto/PaymentDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dto/PaymentDto.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/dto/ServiceError.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dto/ServiceError.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/dto/UserDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dto/UserDto.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/dto/enumerated/Brand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dto/enumerated/Brand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/dto/enumerated/Category.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dto/enumerated/Category.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/dto/enumerated/Gender.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dto/enumerated/Gender.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/dto/enumerated/PaymentMethod.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dto/enumerated/PaymentMethod.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/dto/enumerated/Role.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dto/enumerated/Role.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/dto/enumerated/Status.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dto/enumerated/Status.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/AppDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/AppDatabase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dao/BasicInsertionDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dao/BasicInsertionDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dao/BuyingOfferDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dao/BuyingOfferDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dao/OrderDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dao/OrderDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dao/PaymentDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dao/PaymentDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dao/UserDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/model/dao/UserDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/ui/theme/Color.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/view/theme/Color.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/ui/theme/Theme.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/view/theme/Theme.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/ui/theme/Type.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/vintedandroid/view/theme/Type.kt" afterDir="false" />
-    </list>
+    <list default="true" id="1e6a90a3-ab7e-4527-ac9f-5f359761fecc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\ville\.android\avd\Pixel_6_API_30.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\ville\.android\avd\Pixel_XL_API_30.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2S4NhiMZq9XnckreEGW7sBBBuhW" />
+  <component name="ProjectId" id="2S76UBVg5MSIiu2voK2g5bPU9uq" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ville/Documents/GitHub/VintedProjectAndroid/VintedAndroid/app/src/main/res/xml&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "C:/Users/ville/Desktop/VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5/VintedAndroid/app/src/main/res/xml"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\ville\Documents\GitHub\VintedProjectAndroid\VintedAndroid\app\src\main\res\xml" />
-      <recent name="C:\Users\ville\Documents\GitHub\VintedProjectAndroid\VintedAndroid\app\src\main\res\raw" />
-      <recent name="C:\Users\ville\Documents\GitHub\VintedProjectAndroid\VintedAndroid\app\src\main\java\com\example\vintedandroid" />
+      <recent name="C:\Users\ville\Desktop\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\VintedAndroid\app\src\main\res\xml" />
+      <recent name="C:\Users\ville\Desktop\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\VintedAndroid\app\src\main\res" />
+      <recent name="C:\Users\ville\Desktop\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\VintedAndroid\app\src\main\java\com\example\vintedandroid" />
+      <recent name="C:\Users\ville\Desktop\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\VintedAndroid\app\src\main\java\com\example\vintedandroid\client" />
     </key>
   </component>
   <component name="RunManager">
@@ -140,23 +110,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="557ca968-8d4e-4309-85fc-f99f498ba3bb" name="Changes" comment="" />
-      <created>1688402014418</created>
+      <changelist id="1e6a90a3-ab7e-4527-ac9f-5f359761fecc" name="Changes" comment="" />
+      <created>1688485286538</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1688402014418</updated>
+      <updated>1688485286538</updated>
     </task>
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
 </project>

@@ -1,16 +1,16 @@
-#Mon Jul 03 21:16:16 CEST 2023
-base.0=C\:\\Users\\ville\\Documents\\GitHub\\VintedProjectAndroid\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-base.1=C\:\\Users\\ville\\Documents\\GitHub\\VintedProjectAndroid\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
-base.10=C\:\\Users\\ville\\Documents\\GitHub\\VintedProjectAndroid\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
-base.11=C\:\\Users\\ville\\Documents\\GitHub\\VintedProjectAndroid\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes3.dex
-base.2=C\:\\Users\\ville\\Documents\\GitHub\\VintedProjectAndroid\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\10\\classes.dex
-base.3=C\:\\Users\\ville\\Documents\\GitHub\\VintedProjectAndroid\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\11\\classes.dex
-base.4=C\:\\Users\\ville\\Documents\\GitHub\\VintedProjectAndroid\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
-base.5=C\:\\Users\\ville\\Documents\\GitHub\\VintedProjectAndroid\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
-base.6=C\:\\Users\\ville\\Documents\\GitHub\\VintedProjectAndroid\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
-base.7=C\:\\Users\\ville\\Documents\\GitHub\\VintedProjectAndroid\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\6\\classes.dex
-base.8=C\:\\Users\\ville\\Documents\\GitHub\\VintedProjectAndroid\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\7\\classes.dex
-base.9=C\:\\Users\\ville\\Documents\\GitHub\\VintedProjectAndroid\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex
+#Tue Jul 04 18:31:34 CEST 2023
+base.0=C\:\\Users\\ville\\Desktop\\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\ville\\Desktop\\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.10=C\:\\Users\\ville\\Desktop\\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+base.11=C\:\\Users\\ville\\Desktop\\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes3.dex
+base.2=C\:\\Users\\ville\\Desktop\\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\10\\classes.dex
+base.3=C\:\\Users\\ville\\Desktop\\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\11\\classes.dex
+base.4=C\:\\Users\\ville\\Desktop\\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
+base.5=C\:\\Users\\ville\\Desktop\\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
+base.6=C\:\\Users\\ville\\Desktop\\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
+base.7=C\:\\Users\\ville\\Desktop\\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\6\\classes.dex
+base.8=C\:\\Users\\ville\\Desktop\\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\7\\classes.dex
+base.9=C\:\\Users\\ville\\Desktop\\VintedProject-3c9c34aeadaf4fd936d0ed889d29281efe13e5d5\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex
 path.0=classes.dex
 path.1=0/classes.dex
 path.10=classes2.dex

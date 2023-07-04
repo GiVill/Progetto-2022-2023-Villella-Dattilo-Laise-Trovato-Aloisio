@@ -24,7 +24,7 @@ import com.example.vintedandroid.client.models.OrderDto
 import com.example.vintedandroid.client.models.PageOrderDto
 
 import com.example.vintedandroid.client.infrastructure.*
-import io.swagger.client.infrastructure.MultiValueMap
+import com.example.vintedandroid.client.infrastructure.MultiValueMap
 
 class OrderApi(basePath: kotlin.String = "https://localhost:8010/vintedProject-api") : ApiClient(basePath) {
 
