@@ -2,7 +2,7 @@ package com.example.vintedandroid.model.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.example.vintedandroid.dto.OrderDto
+import com.example.vintedandroid.model.dto.OrderDto
 
 @Dao
 interface OrderDao {

@@ -5,11 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-import com.example.vintedandroid.dto.BasicInsertionDto
-import com.example.vintedandroid.dto.BuyingOfferDto
-import com.example.vintedandroid.dto.OrderDto
-import com.example.vintedandroid.dto.PaymentDto
-import com.example.vintedandroid.dto.UserDto
+import com.example.vintedandroid.model.dto.BasicInsertionDto
+import com.example.vintedandroid.model.dto.BuyingOfferDto
+import com.example.vintedandroid.model.dto.OrderDto
+import com.example.vintedandroid.model.dto.PaymentDto
+import com.example.vintedandroid.model.dto.UserDto
 import com.example.vintedandroid.model.dao.BasicInsertionDao
 import com.example.vintedandroid.model.dao.BuyingOfferDao
 import com.example.vintedandroid.model.dao.OrderDao

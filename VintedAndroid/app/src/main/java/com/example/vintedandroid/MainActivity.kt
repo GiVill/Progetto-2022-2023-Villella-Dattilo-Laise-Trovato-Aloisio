@@ -2,6 +2,7 @@ package com.example.vintedandroid
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -26,7 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.vintedandroid.ui.theme.VintedAndroidTheme
+import com.example.vintedandroid.client.apis.UserApi
+import com.example.vintedandroid.view.theme.VintedAndroidTheme
 
 
 class MainActivity : ComponentActivity() {
@@ -34,6 +36,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             VintedAndroidTheme {
+                val nome = UserApi()
+                Log.i("papà",nome.all().toString())
                 MainScreen()
             }
         }
@@ -45,20 +49,22 @@ class MainActivity : ComponentActivity() {
 fun MainScreen() {
     val isMenuOpen = remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
+    var searchText = remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "VinteDroid") },
-                navigationIcon = {
-                    IconButton(onClick = { isMenuOpen.value = true }) {
-                        Icon(Icons.Default.Menu, contentDescription = "Menu")
-                    }
-                },
+                title = { },
                 actions = {
-                    IconButton(onClick = { /* Open search screen */ }) {
-                        Icon(Icons.Default.Search, contentDescription = "Search")
-                    }
+                    TextField(
+                        value = searchText.value,
+                        onValueChange = { searchText.value = it },
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .fillMaxWidth(1f),
+                        singleLine = true,
+                        placeholder = { Icon(Icons.Default.Search, contentDescription = "Search")}
+                    )
                 }
             )
         },
@@ -99,7 +105,6 @@ fun MainScreen() {
         }
     )
 }
-
 @Composable
 fun DrawerContent(isMenuOpen: MutableState<Boolean>) {
     Column(modifier = Modifier.padding(start = 10.dp, top = 16.dp)) {

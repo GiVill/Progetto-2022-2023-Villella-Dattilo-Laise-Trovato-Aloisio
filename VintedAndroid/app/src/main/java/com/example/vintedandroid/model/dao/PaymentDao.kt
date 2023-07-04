@@ -2,7 +2,7 @@ package com.example.vintedandroid.model.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.example.vintedandroid.dto.PaymentDto
+import com.example.vintedandroid.model.dto.PaymentDto
 
 @Dao
 public interface PaymentDao {
