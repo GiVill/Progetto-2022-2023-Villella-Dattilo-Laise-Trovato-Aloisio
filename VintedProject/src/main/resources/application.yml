@@ -19,8 +19,8 @@ server:
 
   ssl:
     #Si occupa di mettere HTTPS
-    key-alias: spring-https
-    key-store: classpath:javatechie.jks #path dove risiede la chiave
+    key-alias: vinted
+    key-store: classpath:keystore.jks #path dove risiede la chiave
     key-store-type: JKS
     key-password: vinted
     key-store-password: vinted
