@@ -160,7 +160,7 @@ public class DbGenerator implements ApplicationRunner {
         user.setBirthDate(LocalDate.parse(birthDate));
         user.setAddress(address);
 
-        //keycloakTokenClient.userRegister(modelMapper.map(user, NewUserDto.class));
+        keycloakTokenClient.userRegister(modelMapper.map(user, NewUserDto.class));
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

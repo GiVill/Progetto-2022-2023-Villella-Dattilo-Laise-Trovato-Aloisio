@@ -40,6 +40,43 @@ public class KeycloakTokenClient {
                 .resteasyClient(new ResteasyClientBuilder().connectionPoolSize(10).build()).build();
     }
 
+    public String getRefreshToken(String refreshToken){
+
+        System.out.println(refreshToken);
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "refresh_token");
+        body.add("client_id", "vinted-client");
+        body.add("refresh_token", refreshToken);
+
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<TokenResponse> responseEntity = restTemplate.exchange(
+                TOKEN_ENDPOINT,
+                HttpMethod.POST,
+                requestEntity,
+                TokenResponse.class
+        );
+
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            TokenResponse tokenResponse = responseEntity.getBody();
+            //"access_token:" "eyiufsjdbfsjdvfhdsbgs"
+            //"refresh_token:" "sjkdgfdsgdsgdsdshj"
+
+            return tokenResponse.toString();
+
+        } else {
+            System.out.println("error while retrieving the token from keycloak!");
+            //TODO:gestire errore
+            throw new RuntimeException(messageLang.getMessage("keycloak.token.error"));
+        }
+    }
+
+
     public RealmResource getRealm() {
         return getAdminKeycloakUser().realm("vinted2_0");
     }
@@ -75,7 +112,7 @@ public class KeycloakTokenClient {
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             TokenResponse tokenResponse = responseEntity.getBody();
-            return tokenResponse.getAccess_token();
+            return tokenResponse.toString();
         } else {
             System.out.println("error while retrieving the token from keycloak!");
             //TODO:gestire errore

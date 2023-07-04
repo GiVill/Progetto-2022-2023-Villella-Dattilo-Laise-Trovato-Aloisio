@@ -24,7 +24,7 @@ public class VintedProjectApplication {
 		// Keycloak su Docker (https://hub.docker.com/r/givill/vinted_project/tags) :
 		// Scrivi sul cmd: docker pull givill/vinted_project:latest
 		// vai su Docker, Images ed clicca sul bottone per attivare givill/vinted_project MA NON LO RUNNARE, PRIMA APRI Optional Settings E NELLA HOST PORTS PIù IN ALTO METTI 8090!!
-		// Ora vai su http://localhost:8090 e inserisci le credenziali admin admin
+		// Ora vai su http://localhost:8090 e inserisci le credenziali admin admin per accedere a Keycloak
 
 		//TODO La versione di Keycloak su docker non ha i giusti Role Mapping!! Keycloak non funziona correttamente senza!!
 		//TODO PROBABILMENTE DEVI ELIMINARE IL TUO DB -> Il login va a cercare gli utenti anche su Keycloak(per generare il JWT), ma su Keycloak NON sono presenti gli stessi utenti presenti sul DB! (vai su DbGenerator e scommenta la riga in insertUser e quella nel run)

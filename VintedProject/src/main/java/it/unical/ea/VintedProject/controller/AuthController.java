@@ -39,9 +39,13 @@ public class AuthController {
         return  ResponseEntity.ok(token);
     }
 
-    //TODO testare ma funziona sicuro
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid LoginUserDto data){
         return ResponseEntity.ok(authService.doLogin(data));
+    }
+
+    @PostMapping("/get-refresh-token/{v}")
+    public ResponseEntity<String> getRefreshToken(@PathVariable("v") @Valid String refreshToken){
+        return ResponseEntity.ok(keycloakTokenClient.getRefreshToken(refreshToken));
     }
 }

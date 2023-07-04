@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class TokenResponse {
     //Fields of the response
     private String access_token;
+    private String refresh_token;
     private String token_type;
 }
