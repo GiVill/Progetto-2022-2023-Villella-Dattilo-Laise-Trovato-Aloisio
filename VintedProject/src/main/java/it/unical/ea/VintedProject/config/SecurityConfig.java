@@ -92,7 +92,7 @@ public class SecurityConfig {
                 //AUTH
                 .requestMatchers(HttpMethod.POST, "/v1/sign-up").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/v1/get-refresh-token/{v}").permitAll()
+                .requestMatchers(HttpMethod.POST, "/v1/get-refresh-token").permitAll()
                 .anyRequest()
                         .authenticated()
         ;

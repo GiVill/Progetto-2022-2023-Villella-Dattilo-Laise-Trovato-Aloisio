@@ -30,7 +30,7 @@ public class UserDto {
     private String email;
 
     @Past(message = "birthdate.past" )
-    private LocalDate birthDate;
+    private String birthDate;
 
     private Gender gender;
     private String addressStreet;

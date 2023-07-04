@@ -44,8 +44,8 @@ public class AuthController {
         return ResponseEntity.ok(authService.doLogin(data));
     }
 
-    @PostMapping("/get-refresh-token/{v}")
-    public ResponseEntity<String> getRefreshToken(@PathVariable("v") @Valid String refreshToken){
+    @PostMapping("/get-refresh-token")
+    public ResponseEntity<String> getRefreshToken(@RequestBody @Valid String refreshToken){
         return ResponseEntity.ok(keycloakTokenClient.getRefreshToken(refreshToken));
     }
 }
