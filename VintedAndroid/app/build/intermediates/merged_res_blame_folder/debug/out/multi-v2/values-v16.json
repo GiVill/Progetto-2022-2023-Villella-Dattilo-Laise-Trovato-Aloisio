@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.vintedandroid.app-mergeDebugResources-42:/values-v16/values-v16.xml",
+            "outputFile": "com.example.vintedandroid.app-mergeDebugResources-48:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Umberto\\.gradle\\caches\\transforms-3\\e16c59b1e48c239ca2936c03d482d39b\\transformed\\core-1.8.0\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\frand\\.gradle\\caches\\transforms-3\\e16c59b1e48c239ca2936c03d482d39b\\transformed\\core-1.8.0\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

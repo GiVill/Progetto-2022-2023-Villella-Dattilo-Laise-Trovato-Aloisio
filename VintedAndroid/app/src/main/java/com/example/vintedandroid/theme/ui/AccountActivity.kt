@@ -29,6 +29,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.vintedandroid.R
 import com.example.vintedandroid.client.models.UserDto
 import com.example.vintedandroid.theme.Typography
@@ -37,7 +39,7 @@ import com.example.vintedandroid.theme.Typography
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AccountActivity(user : UserDto) {
+fun AccountActivity(navController: NavController, user : UserDto) {
 
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
@@ -46,7 +48,7 @@ fun AccountActivity(user : UserDto) {
             style = TextStyle(fontSize = Typography.titleLarge.fontSize)
         )
         Column() {
-            Card(onClick = { /*TODO*/ }) {
+            Card(onClick = { navController.popBackStack(); navController.navigate("profile") }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Filled.AccountCircle,
                         contentDescription = stringResource(R.string.default_account),
@@ -155,7 +157,10 @@ fun AccountActivity(user : UserDto) {
 
 @Preview(showBackground = true)
 @Composable
-fun preview() {
+fun AccountActivityPreview() {
+
+    val navController = rememberNavController()
+
     val user = UserDto(1L,"ciao","Boh","ciaoBoh")
-    AccountActivity(user)
+    AccountActivity(navController, user)
 }

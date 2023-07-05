@@ -1,4 +1,11 @@
+int attr action 0x7f010011
 int attr alpha 0x7f010000
+int attr argType 0x7f010012
+int attr data 0x7f010013
+int attr dataPattern 0x7f010014
+int attr destination 0x7f010015
+int attr enterAnim 0x7f010016
+int attr exitAnim 0x7f010017
 int attr font 0x7f010001
 int attr fontProviderAuthority 0x7f010002
 int attr fontProviderCerts 0x7f010003
@@ -10,11 +17,26 @@ int attr fontProviderSystemFontFamily 0x7f010008
 int attr fontStyle 0x7f010009
 int attr fontVariationSettings 0x7f01000a
 int attr fontWeight 0x7f01000b
+int attr graph 0x7f010018
 int attr lStar 0x7f01000c
+int attr launchSingleTop 0x7f010019
+int attr mimeType 0x7f01001a
+int attr navGraph 0x7f01001b
 int attr nestedScrollViewStyle 0x7f01000d
+int attr nullable 0x7f01001c
+int attr popEnterAnim 0x7f01001d
+int attr popExitAnim 0x7f01001e
+int attr popUpTo 0x7f01001f
+int attr popUpToInclusive 0x7f010020
+int attr popUpToSaveState 0x7f010021
 int attr queryPatterns 0x7f01000e
+int attr restoreState 0x7f010022
+int attr route 0x7f010023
 int attr shortcutMatchRequired 0x7f01000f
+int attr startDestination 0x7f010024
+int attr targetPackage 0x7f010025
 int attr ttcIndex 0x7f010010
+int attr uri 0x7f010026
 int color androidx_core_ripple_material_light 0x7f020000
 int color androidx_core_secondary_text_default_material_light 0x7f020001
 int color black 0x7f020002
@@ -123,6 +145,7 @@ int id is_pooling_container_tag 0x7f050033
 int id italic 0x7f050034
 int id line1 0x7f050035
 int id line3 0x7f050036
+int id nav_controller_view_tag 0x7f050054
 int id normal 0x7f050037
 int id notification_background 0x7f050038
 int id notification_main_column 0x7f050039
@@ -198,6 +221,12 @@ int style TextAppearance_Compat_Notification_Title 0x7f0b0007
 int style Theme_VintedAndroid 0x7f0b0008
 int style Widget_Compat_NotificationActionContainer 0x7f0b0009
 int style Widget_Compat_NotificationActionText 0x7f0b000a
+int[] styleable ActivityNavigator { 0x01010003, 0x7f010011, 0x7f010013, 0x7f010014, 0x7f010025 }
+int styleable ActivityNavigator_android_name 0
+int styleable ActivityNavigator_action 1
+int styleable ActivityNavigator_data 2
+int styleable ActivityNavigator_dataPattern 3
+int styleable ActivityNavigator_targetPackage 4
 int[] styleable Capability { 0x7f01000e, 0x7f01000f }
 int styleable Capability_queryPatterns 0
 int styleable Capability_shortcutMatchRequired 1
@@ -242,6 +271,38 @@ int styleable GradientColor_android_endY 11
 int[] styleable GradientColorItem { 0x010101a5, 0x01010514 }
 int styleable GradientColorItem_android_color 0
 int styleable GradientColorItem_android_offset 1
+int[] styleable NavAction { 0x010100d0, 0x7f010015, 0x7f010016, 0x7f010017, 0x7f010019, 0x7f01001d, 0x7f01001e, 0x7f01001f, 0x7f010020, 0x7f010021, 0x7f010022 }
+int styleable NavAction_android_id 0
+int styleable NavAction_destination 1
+int styleable NavAction_enterAnim 2
+int styleable NavAction_exitAnim 3
+int styleable NavAction_launchSingleTop 4
+int styleable NavAction_popEnterAnim 5
+int styleable NavAction_popExitAnim 6
+int styleable NavAction_popUpTo 7
+int styleable NavAction_popUpToInclusive 8
+int styleable NavAction_popUpToSaveState 9
+int styleable NavAction_restoreState 10
+int[] styleable NavArgument { 0x01010003, 0x010101ed, 0x7f010012, 0x7f01001c }
+int styleable NavArgument_android_name 0
+int styleable NavArgument_android_defaultValue 1
+int styleable NavArgument_argType 2
+int styleable NavArgument_nullable 3
+int[] styleable NavDeepLink { 0x010104ee, 0x7f010011, 0x7f01001a, 0x7f010026 }
+int styleable NavDeepLink_android_autoVerify 0
+int styleable NavDeepLink_action 1
+int styleable NavDeepLink_mimeType 2
+int styleable NavDeepLink_uri 3
+int[] styleable NavGraphNavigator { 0x7f010024 }
+int styleable NavGraphNavigator_startDestination 0
+int[] styleable NavHost { 0x7f01001b }
+int styleable NavHost_navGraph 0
+int[] styleable NavInclude { 0x7f010018 }
+int styleable NavInclude_graph 0
+int[] styleable Navigator { 0x01010001, 0x010100d0, 0x7f010023 }
+int styleable Navigator_android_label 0
+int styleable Navigator_android_id 1
+int styleable Navigator_route 2
 int xml backup_rules 0x7f0d0000
 int xml data_extraction_rules 0x7f0d0001
 int xml network_security_config 0x7f0d0002
