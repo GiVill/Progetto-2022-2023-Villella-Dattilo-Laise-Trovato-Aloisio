@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">VintedAndroid</string>
+    <string name="default_account">Default Account</string>
+    <string name="account_settings">Profilo</string>
 </resources>

@@ -16,7 +16,9 @@ drawable ic_profile
 mipmap ic_launcher
 mipmap ic_launcher_round
 raw vinted
+string account_settings
 string app_name
+string default_account
 style Theme.VintedAndroid
 xml backup_rules
 xml data_extraction_rules

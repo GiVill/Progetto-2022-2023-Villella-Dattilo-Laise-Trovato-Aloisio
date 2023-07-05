@@ -29,11 +29,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.vintedandroid.client.apis.UserApi
-import com.example.vintedandroid.model.dto.UserDto
-import com.example.vintedandroid.view.theme.VintedAndroidTheme
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.example.vintedandroid.theme.VintedAndroidTheme
 
 
 class MainActivity : ComponentActivity() {
@@ -88,14 +84,20 @@ fun MainScreen() {
                 BottomNavigationItem(
                     selected = false,
                     onClick = { /* Feed */ },
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Feed") },
-                    label = { Text(text = "Feed") }
+                    icon = { Icon(Icons.Default.Search, contentDescription = "search") },
+                    label = { Text(text = "Search") }
                 )
                 BottomNavigationItem(
                     selected = false,
                     onClick = { /* Profile */ },
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text(text = "Profile") }
+                    icon = { Icon(Icons.Default.AddCircle, contentDescription = "add_circle") },
+                    label = { Text(text = "Add") }
+                )
+                BottomNavigationItem(
+                    selected = false,
+                    onClick = { /* Profile */ },
+                    icon = { Icon(Icons.Default.AccountCircle, contentDescription = "add_circle") },
+                    label = { Text(text = "Profilo") }
                 )
                 BottomNavigationItem(
                     selected = false,
@@ -167,7 +169,7 @@ fun ItemList() {
         )
     }
 
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier.padding(10.dp)) {
         items.forEach { item ->
             ItemCard(item)
         }

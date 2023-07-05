@@ -1,4 +1,4 @@
-package com.example.vintedandroid.view.theme
+package com.example.vintedandroid.theme
 
 import androidx.compose.ui.graphics.Color
 

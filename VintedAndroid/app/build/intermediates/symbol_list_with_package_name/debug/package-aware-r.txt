@@ -164,11 +164,13 @@ layout notification_template_part_time
 mipmap ic_launcher
 mipmap ic_launcher_round
 raw vinted
+string account_settings
 string androidx_startup
 string app_name
 string close_drawer
 string close_sheet
 string collapsed
+string default_account
 string default_error_message
 string default_popup_window_title
 string dialog

@@ -11,6 +11,9 @@
  */
 package com.example.vintedandroid.client.models
 
+import java.time.LocalDate
+import java.time.LocalDateTime
+
 
 /**
  * 
@@ -33,9 +36,9 @@ data class UserDto (
     val id: kotlin.Long? = null,
     val nickName: kotlin.String,
     val firstName: kotlin.String,
-    val lastName: kotlin.String,
+    val lastName: kotlin.String?,
     val email: kotlin.String? = null,
-    val birthDate: String? = null,
+    val birthDate: kotlin.String? = null,
     val gender: Gender? = null,
     val addressStreet: kotlin.String? = null,
     val addressNumber: kotlin.Int? = null,
