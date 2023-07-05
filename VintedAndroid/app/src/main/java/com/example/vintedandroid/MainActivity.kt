@@ -2,22 +2,22 @@ package com.example.vintedandroid
 
 import android.os.Bundle
 import android.os.StrictMode
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.vintedandroid.client.apis.UserApi
 import com.example.vintedandroid.theme.VintedAndroidTheme
 
 
@@ -41,8 +41,8 @@ class MainActivity : ComponentActivity() {
                 SetupNavGraph(navController = navController)
 
                 Scaffold(
-                    topBar = { ContactTopBar(navController) },
-                    bottomBar = { ContactBottomBar(navController) }) {
+                    topBar = { ApplicationTopBar(navController) },
+                    bottomBar = { ApplicationBottomBar(navController) }) {
                     Box(modifier = Modifier.padding(it)) {
                         SetupNavGraph(navController = navController)
                     }
@@ -54,9 +54,27 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ContactTopBar(navHostController: NavHostController) {
-    //val currentBackStackEntry by navHostController.currentBackStackEntryAsState()
-    //val showBackIcon by remember(currentBackStackEntry) { derivedStateOf { navHostController.previousBackStackEntry != null } }
+fun ApplicationTopBar(navHostController: NavHostController) {
+
+    var searchText = remember { mutableStateOf("") }
+
+    TopAppBar(
+        title = { },
+        actions = {
+            TextField(
+                value = searchText.value,
+                onValueChange = { searchText.value = it },
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .fillMaxWidth(1f),
+                singleLine = true,
+                placeholder = { Icon(Icons.Default.Search, contentDescription = "Search")}
+            )
+        }
+    )
+
+    /*
+    TopBar fatta da Umberto
 
     TopAppBar(
         title = { Text(text = "VinteDroid") },
@@ -72,7 +90,15 @@ fun ContactTopBar(navHostController: NavHostController) {
         }
     )
 
+    */
+
     /*
+
+    TopBar del professore
+
+    //val currentBackStackEntry by navHostController.currentBackStackEntryAsState()
+    //val showBackIcon by remember(currentBackStackEntry) { derivedStateOf { navHostController.previousBackStackEntry != null } }
+
 
     TopAppBar(title = { Text(stringResource(R.string.app_name)) },
         navigationIcon = {
@@ -100,7 +126,7 @@ fun ContactTopBar(navHostController: NavHostController) {
 
 
 @Composable
-fun ContactBottomBar(navController: NavHostController) {//,selectedIndex: MutableState<Int>
+fun ApplicationBottomBar(navController: NavHostController) {//,selectedIndex: MutableState<Int>
 
     // TUTTI i navController.popBackStack(); ANDREBBERO gestiti diversamente, per ora sono ni
 
