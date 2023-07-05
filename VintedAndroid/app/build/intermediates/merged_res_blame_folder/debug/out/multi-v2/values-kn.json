@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.vintedandroid.app-mergeDebugResources-42:/values-kn/values-kn.xml",
+            "outputFile": "com.example.vintedandroid.app-mergeDebugResources-44:/values-kn/values-kn.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ville\\.gradle\\caches\\transforms-3\\213950dc821e776a8249de9139e8bd41\\transformed\\material3-1.0.0\\res\\values-kn\\values-kn.xml",
+                    "source": "C:\\Users\\Umberto\\.gradle\\caches\\transforms-3\\213950dc821e776a8249de9139e8bd41\\transformed\\material3-1.0.0\\res\\values-kn\\values-kn.xml",
                     "from": {
                         "startLines": "2,3,4",
                         "startColumns": "4,4,4",
@@ -21,24 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\ville\\.gradle\\caches\\transforms-3\\e16c59b1e48c239ca2936c03d482d39b\\transformed\\core-1.8.0\\res\\values-kn\\values-kn.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "19",
-                        "startColumns": "4",
-                        "startOffsets": "1549",
-                        "endColumns": "100",
-                        "endOffsets": "1645"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\ville\\.gradle\\caches\\transforms-3\\0b1236ad4808bb0da3ecf66abe67c5e1\\transformed\\ui-1.3.0\\res\\values-kn\\values-kn.xml",
+                    "source": "C:\\Users\\Umberto\\.gradle\\caches\\transforms-3\\0b1236ad4808bb0da3ecf66abe67c5e1\\transformed\\ui-1.3.0\\res\\values-kn\\values-kn.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -52,6 +35,23 @@
                         "startOffsets": "105,202,368,464,636,807,891,984,1075,1160,1231,1302,1384,1470,1650,1719",
                         "endColumns": "96,83,95,99,88,83,92,90,84,70,70,81,85,78,68,117",
                         "endOffsets": "197,281,459,559,720,886,979,1070,1155,1226,1297,1379,1465,1544,1714,1832"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Umberto\\.gradle\\caches\\transforms-3\\e16c59b1e48c239ca2936c03d482d39b\\transformed\\core-1.8.0\\res\\values-kn\\values-kn.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "19",
+                        "startColumns": "4",
+                        "startOffsets": "1549",
+                        "endColumns": "100",
+                        "endOffsets": "1645"
                     }
                 }
             ]
