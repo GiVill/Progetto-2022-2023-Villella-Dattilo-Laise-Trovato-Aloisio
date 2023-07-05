@@ -2,6 +2,8 @@ package com.example.vintedandroid
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.StrictMode
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -26,23 +28,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.vintedandroid.theme.VintedAndroidTheme
+import com.example.vintedandroid.client.apis.UserApi
+import com.example.vintedandroid.model.dto.UserDto
+import com.example.vintedandroid.view.theme.VintedAndroidTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            setContent {
-                    VintedAndroidApp()
+        setContent {
+            VintedAndroidTheme {
+                StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitNetwork().build())
+                val userApi = UserApi()
+                val users = userApi.all()
+                users.forEach { user ->
+                    Log.i("papà",user.toString())
+                }
+                MainScreen()
             }
         }
-    }
-
-
-@Composable
-fun VintedAndroidApp() {
-    VintedAndroidTheme {
-        MainScreen()
     }
 }
 
@@ -56,7 +63,6 @@ fun MainScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
-
                 title = { },
                 actions = {
                     TextField(
@@ -199,5 +205,7 @@ data class Item(val name: String, val description: String, val price: Float)
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    VintedAndroidApp()
+    VintedAndroidTheme {
+        MainScreen()
+    }
 }
