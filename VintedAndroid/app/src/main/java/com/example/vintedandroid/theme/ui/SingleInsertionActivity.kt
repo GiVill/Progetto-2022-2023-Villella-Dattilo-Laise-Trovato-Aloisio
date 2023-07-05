@@ -6,8 +6,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.vintedandroid.client.models.BasicInsertionDto
 
 @Composable
-fun SingleInsertion(insertion : BasicInsertionDto) {
-    Image(painter = insertion.imagePath, contentDescription = )
+fun SingleInsertion() {
 
 }
 
