@@ -57,6 +57,7 @@ import { CreateInsertionComponent } from './Components/Pages/Insertion/create-in
     RegistrazioneComponent,
     LoginComponent,
     CreateInsertionComponent,
+
   ],
   imports: [
     BrowserModule,

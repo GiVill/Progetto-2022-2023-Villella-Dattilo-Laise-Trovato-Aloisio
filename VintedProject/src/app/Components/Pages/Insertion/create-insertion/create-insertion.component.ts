@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import {NewUser} from "../../../../Model/new-user.model";
-import {Observable} from "rxjs";
-import {AuthService} from "../../../../service/auth.service";
 import {InsertionService} from "../../../../service/insertion.service";
 import {Router} from "@angular/router";
 

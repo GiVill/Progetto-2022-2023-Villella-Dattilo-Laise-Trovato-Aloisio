@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
+import {AppComponent} from "../../../app.component";
+import {CookiesService} from "../../../service/cookies.service";
 
 @Component({
   selector: 'app-main-nav',
@@ -11,16 +13,23 @@ import {CookieService} from "ngx-cookie-service";
 export class MainNavComponent implements OnInit{
 
   showFiller!: boolean;
-  logStringResult: string | undefined;
   showSubMenu: boolean = false;
+  public logStringResult: string | undefined;
 
   constructor(
               private router: Router,
-              private cookieService: CookieService){}
+              private appComponent: AppComponent,
+              private cookiesService: CookieService,
+              private cookieService: CookiesService){}
 
 
   ngOnInit(): void {
-    this.checkUserCookie()
+    this.cookieService.checkUserCookie()
+  }
+
+  getUserString(){
+    this.logStringResult = this.cookieService.logStringResultfun()
+    return this.logStringResult || 'Login';
   }
 
 
@@ -34,19 +43,19 @@ export class MainNavComponent implements OnInit{
 
 
 
-checkUserCookie(): void {
-    const userCookie = this.cookieService.get('username');
 
-    if (userCookie) {
-      this.logStringResult = userCookie;
-    } else {
-      this.logStringResult = 'Login';
-    }
+
+
+  logout(): void {
+    this.cookiesService.delete('username', '/');
+    this.cookiesService.delete('token', '/');
+    this.cookieService.checkUserCookie();
+    this.router.navigate(['/login']);
   }
 
 
   redirectToSearch(searchKeyword: string) {
-
+    this.cookieService.checkUserCookie();
     const formattedSearch = searchKeyword.toLowerCase();
     this.router.navigate(['/search', formattedSearch]);
 

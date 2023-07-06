@@ -1,6 +1,6 @@
 <div class="main-container">
   <div class="image-container">
-    <img class="productImage" [src]="insertion?.imageSrc || 'assets/resources/vestito.jpg'" (click)="openModal(insertion?.imageSrc)">
+    <img class="productImage" [src]="insertion?.imagePath || 'assets/resources/vestito.jpg'" (click)="openModal(insertion?.imagePath)">
   </div>
 
   <div class="info-container">
@@ -9,8 +9,6 @@
         <h1>{{ insertion?.title }}</h1>
         <p>
           <strong>
-            BRAND: {{ insertion?.brand}}<br>
-            TAGLIA {{ insertion?.size}}<br>
             CONDIZIONI {{ insertion?.condition}} <br>
             COLORE {{ insertion?.condition}} <br>
           </strong>
@@ -32,7 +30,7 @@
       <button class="btn second-button">Contatta il venditore</button>
     </div>
     <div class="image-thumbnails">
-      <div *ngFor="let image of insertion?.additionalImages" class="thumbnail" (click)="openModal(image)">
+      <div *ngFor="let image of insertion?.imagePath" class="thumbnail" (click)="openModal(image)">
         <img [src]="image" alt="Thumbnail">
       </div>
     </div>

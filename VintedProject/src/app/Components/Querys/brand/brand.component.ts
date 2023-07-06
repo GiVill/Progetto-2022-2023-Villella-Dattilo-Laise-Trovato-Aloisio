@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Page} from "../../../Model/page.model";
-import {BasicInsertion} from "../../../Model/basic-insertion.model";
+import {BasicInsertionDto} from "../../../Model/basicInsertionDto";
+import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
 import {InsertionService} from "../../../service/insertion.service";
 import {ActivatedRoute} from "@angular/router";
 import {ImageService} from "../../../service/image.service";
@@ -11,7 +11,7 @@ import {ImageService} from "../../../service/image.service";
   styleUrls: ['./brand.component.css']
 })
 export class BrandComponent implements OnInit{
-  Brandedinsertion: Page<BasicInsertion> | undefined;
+  Brandedinsertion: PageBasicInsertionDto | undefined;
   page = 1;
   brandName: string | undefined;
 
@@ -22,7 +22,7 @@ export class BrandComponent implements OnInit{
     this.route.paramMap.subscribe((params) => {
       this.brandName = String(params.get('brandName'));});
 
-    this.insertionService.getInsertionByBrand(this.brandName,this.page).subscribe((insertions: Page<BasicInsertion>) => {
+    this.insertionService.getInsertionByBrand(this.brandName,this.page).subscribe((insertions: PageBasicInsertionDto) => {
       this.Brandedinsertion = insertions;
       this.processImages();
     });
@@ -30,10 +30,11 @@ export class BrandComponent implements OnInit{
 
 
   processImages(): void {
-    this.Brandedinsertion?.content.forEach(async (insertion: BasicInsertion) => {
-      insertion.imageSrc = await ImageService.setProductImageSrc(insertion.image);
+    this.Brandedinsertion?.content?.forEach(async (insertion: BasicInsertionDto) => {
+      insertion.imagePath = await ImageService.setProductImageSrc(insertion.image);
     });
   }
+
 
 
 }

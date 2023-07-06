@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 
 import {Router} from "@angular/router";
-import {BasicInsertion} from "../../../../Model/basic-insertion.model";
+import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
 import {CartComponent} from "../../../Pages/cart/cart.component";
 
 
@@ -11,7 +11,7 @@ import {CartComponent} from "../../../Pages/cart/cart.component";
   styleUrls: ['./cart-insertion-card.component.css']
 })
 export class CartInsertionCardComponent {
-  @Input() item: BasicInsertion | undefined;
+  @Input() item: BasicInsertionDto | undefined;
 
   isHovered = false;
 

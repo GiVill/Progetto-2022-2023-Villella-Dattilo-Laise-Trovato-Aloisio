@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {BasicInsertion} from "../../../../Model/basic-insertion.model";
-import {Page} from "../../../../Model/page.model";
+import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
+import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
 import {InsertionService} from "../../../../service/insertion.service";
 import {ImageService} from "../../../../service/image.service";
 
@@ -11,7 +11,7 @@ import {ImageService} from "../../../../service/image.service";
   styleUrls: ['./catalog.component.css']
 })
 export class CatalogComponent implements OnInit {
-  catalog: Page<BasicInsertion> | undefined;
+  catalog: PageBasicInsertionDto | undefined;
   page = 0;
 
 
@@ -22,7 +22,7 @@ export class CatalogComponent implements OnInit {
   }
 
   loadInsertions(): void {
-    this.insertionService.getAllInsertions(this.page).subscribe((insertions: Page<BasicInsertion>) => {
+    this.insertionService.getAllInsertions(this.page).subscribe((insertions: PageBasicInsertionDto) => {
       this.catalog = insertions;
       this.processImages(insertions.content);
       console.log(this.catalog);
@@ -31,18 +31,20 @@ export class CatalogComponent implements OnInit {
 
   loadmore() {
     this.page += 1;
-    this.insertionService.getAllInsertions(this.page).subscribe((insertions: Page<BasicInsertion>) => {
+    this.insertionService.getAllInsertions(this.page).subscribe((insertions: PageBasicInsertionDto) => {
       // Aggiungi i nuovi prodotti alla lista esistente invece di sostituirla
-      this.catalog?.content.push(...insertions.content);
-      this.processImages(insertions.content);
-      console.log(this.catalog);
+      if (this.catalog?.content && insertions.content) {
+        this.catalog.content.push(...insertions.content);
+        this.processImages(insertions.content);
+        console.log(this.catalog);
+      }
     });
   }
 
 
-  processImages(insertions: BasicInsertion[]): void {
-    insertions.forEach(async (insertion: BasicInsertion) => {
-      insertion.imageSrc = await ImageService.setProductImageSrc(insertion.image);
+  processImages(insertions: Array<BasicInsertionDto> | undefined): void {
+    insertions?.forEach(async (insertion: BasicInsertionDto) => {
+      insertion.imagePath = await ImageService.setProductImageSrc(insertion.image);
     });
   }
 

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Page} from "../../../Model/page.model";
-import {BasicInsertion} from "../../../Model/basic-insertion.model";
+import {BasicInsertionDto} from "../../../Model/basicInsertionDto";
+import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
 import {HttpClient} from "@angular/common/http";
 import {InsertionService} from "../../../service/insertion.service";
 import {CookieService} from "ngx-cookie-service";
@@ -17,7 +17,7 @@ export class CategoryComponent implements OnInit{
 
   category: string | undefined;
   pageNumber: number = 0;
-  insertion: Page<BasicInsertion> | undefined;
+  insertion: PageBasicInsertionDto | undefined;
   disableLoadMore= false;
 
 
@@ -42,7 +42,7 @@ export class CategoryComponent implements OnInit{
     }
 
     return this.insertionService.findAllByCategory(pageNumber, this.category).pipe(
-      tap((insertions: Page<BasicInsertion>) => {
+      tap((insertions: PageBasicInsertionDto) => {
         this.insertion = insertions;
         this.processImages();
       })
@@ -50,9 +50,11 @@ export class CategoryComponent implements OnInit{
   }
 
   processImages(): void {
-    this.insertion?.content.forEach(async (insertion: BasicInsertion) => {
-      insertion.imageSrc = await ImageService.setProductImageSrc(insertion.image);
-    });
+
+      this.insertion?.content?.forEach(async (insertion: BasicInsertionDto) => {
+        insertion.imagePath = await ImageService.setProductImageSrc(insertion.image);
+      });
+
   }
 
 

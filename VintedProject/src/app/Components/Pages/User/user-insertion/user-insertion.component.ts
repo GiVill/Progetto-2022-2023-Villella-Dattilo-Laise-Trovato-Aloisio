@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from "../../../../Model/user.model";
-import {BasicInsertion} from "../../../../Model/basic-insertion.model";
+import {UserDto} from "../../../../Model/userDto";
+import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
 import {ActivatedRoute} from "@angular/router";
 import {InsertionService} from "../../../../service/insertion.service";
 import {UserService} from "../../../../service/user.service";
@@ -13,8 +13,8 @@ import {ImageService} from "../../../../service/image.service";
 })
 export class UserInsertionComponent implements OnInit{
 
-  @Input() user: User | undefined;
-  @Input() insertion: BasicInsertion | undefined;
+  @Input() user: UserDto | undefined;
+  @Input() insertion: BasicInsertionDto | undefined;
 
 
   constructor(private insertionService: InsertionService,
@@ -23,7 +23,7 @@ export class UserInsertionComponent implements OnInit{
 
   ngOnInit(): void {
     this.userService.getUserById(this.user?.id).subscribe(
-      (data: User) => {
+      (data: UserDto) => {
         this.user = data;
         this.processImages();
       },
@@ -37,7 +37,7 @@ export class UserInsertionComponent implements OnInit{
     if (this.user && this.user.photo) {
       const imageSrc = await ImageService.setProductImageSrc(this.user.photo);
       if (imageSrc) {
-        this.user.photoSrc = imageSrc;
+        this.user.imagepath = imageSrc;
       }
     }
   }

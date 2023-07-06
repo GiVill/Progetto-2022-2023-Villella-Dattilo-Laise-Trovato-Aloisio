@@ -2,11 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import {ActivatedRoute} from "@angular/router";
-import {BasicInsertion} from "../../../Model/basic-insertion.model";
+import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
+import {BasicInsertionDto} from "../../../Model/basicInsertionDto";
 import {InsertionService} from "../../../service/insertion.service";
 import {of, tap} from "rxjs";
 import {ImageService} from "../../../service/image.service";
-import {Page} from "../../../Model/page.model";
+
 
 @Component({
   selector: 'app-search',
@@ -17,7 +18,7 @@ export class SearchComponent implements OnInit {
 
   search: string | undefined;
   pageNumber: number = 0;
-  insertion: Page<BasicInsertion> | undefined;
+  insertion: PageBasicInsertionDto | undefined;
   disableLoadMore= false;
 
 
@@ -43,7 +44,7 @@ export class SearchComponent implements OnInit {
     }
 
     return this.insertionService.findAllByTitleLike(pageNumber, this.search).subscribe(
-      (insertions: Page<BasicInsertion>) => {
+      (insertions: PageBasicInsertionDto) => {
         this.insertion = insertions;
         this.processImages();
       }
@@ -53,8 +54,12 @@ export class SearchComponent implements OnInit {
 
 
   processImages(): void {
-    this.insertion?.content.forEach(async (insertion: BasicInsertion) => {
+    /*
+    this.insertion?.content.forEach(async (insertion: BasicInsertionDto) => {
       insertion.imageSrc = await ImageService.setProductImageSrc(insertion.image);
     });
+  }
+
+     */
   }
 }

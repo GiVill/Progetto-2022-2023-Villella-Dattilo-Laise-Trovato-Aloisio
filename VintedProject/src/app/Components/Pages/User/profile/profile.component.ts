@@ -1,12 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Observable, switchMap} from "rxjs";
-import {User} from "../../../../Model/user.model";
-import {Page} from "../../../../Model/page.model";
-import {BasicInsertion} from "../../../../Model/basic-insertion.model";
+import {UserDto} from "../../../../Model/userDto";
+import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
 import {InsertionService} from "../../../../service/insertion.service";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../../service/user.service";
 import {ImageService} from "../../../../service/image.service";
+import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
 
 
 @Component({
@@ -15,8 +15,8 @@ import {ImageService} from "../../../../service/image.service";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  @Input() user: User | undefined;
-  userInsertion: Page<BasicInsertion> | undefined;
+  @Input() user: UserDto | undefined;
+  userInsertion: PageBasicInsertionDto | undefined;
   page= 0
 
   id: number | undefined;
@@ -37,11 +37,11 @@ export class ProfileComponent implements OnInit {
         return this.userService.getUserById(this.id);
       })
     ).subscribe(
-      (user: User) => {
+      (user: UserDto) => {
         this.user = user;
         console.log(this.user)
         this.userService.getAllInsertionsByUser(this.id, this.page).subscribe(
-          (data: Page<BasicInsertion>) => {
+          (data: PageBasicInsertionDto) => {
             this.userInsertion = data;
             console.log(data)
             //this.processImages(data.content);
@@ -57,20 +57,20 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-
+/*
   loadmore() {
     this.page += 1;
-    this.userService.getAllInsertionsByUser(this.id,this.page).subscribe((insertions: Page<BasicInsertion>) => {
+    this.userService.getAllInsertionsByUser(this.id,this.page).subscribe((insertions: PageBasicInsertionDto) => {
       // Aggiungo nuovi prodotti alla lista esistente invece di sostituirla
-      this.userInsertion?.content.push(...insertions.content);
+      this.userInsertion?.content?.push(...insertions.content);
       this.processImages(insertions.content);
 
     });
   }
-
-  processImages(insertions: BasicInsertion[]): void {
-    insertions.forEach(async (insertion: BasicInsertion) => {
-      insertion.imageSrc = await ImageService.setProductImageSrc(insertion.image);
+*/
+  processImages(insertions: BasicInsertionDto[]): void {
+    insertions.forEach(async (insertion: BasicInsertionDto) => {
+      insertion.imagePath = await ImageService.setProductImageSrc(insertion.image);
     });
   }
 

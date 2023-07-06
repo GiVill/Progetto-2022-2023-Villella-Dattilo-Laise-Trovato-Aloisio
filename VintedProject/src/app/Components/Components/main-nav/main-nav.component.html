@@ -36,9 +36,10 @@
       <span style="margin: 7%"></span>
 
       <span class="spacer"></span>
-  <span>{{ logStringResult }}</span>
+
   <div style="display: flex; height: auto;"> <!--div bottoni iscrizione/accesso e inserisci inserzione-->
-    <button mat-raised-button style="background-color: lightblue;margin-top: 8px; margin-left: 10px; margin-right: 10px" [routerLink]="['/login']">Iscriviti/Accedi</button>
+    <button mat-raised-button style="background-color: lightblue; margin-top: 8px; margin-left: 10px; margin-right: 10px" (click)="logout()" *ngIf="getUserString() !== 'Login'">Esci</button>
+    <button mat-raised-button style="background-color: lightblue; margin-top: 8px; margin-left: 10px; margin-right: 10px" [routerLink]="['/login']" *ngIf="getUserString() === 'Login'">Iscriviti/Accedi</button>
     <span style="flex: 1 1 auto;"></span>
     <button mat-raised-button style="background-color: rgb(116, 116, 247); margin-top: 8px; margin-left: 10px; margin-right: 10px" [routerLink]="['/newinsertion']">Crea inserzione</button>
     <span style="flex: 1 1 auto;"></span>

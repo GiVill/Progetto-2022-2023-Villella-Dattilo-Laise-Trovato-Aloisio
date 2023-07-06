@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {NewUser} from "../Model/new-user.model";
+import {NewUserDto} from "../Model/newUserDto";
+import {TokenResponse} from "../Model/token-response";
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,12 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  signUp(newUser: NewUser): Observable<string> {
+  signUp(newUser: NewUserDto): Observable<string> {
     return this.http.post<string>(`${this.apiUrl}/sign-up`, newUser);
   }
 
-  login(email: string, password: string): Observable<boolean> {
+  login(email: string, password: string): Observable<TokenResponse> {
     const body = { email, password };
-    return this.http.post<boolean>(`${this.apiUrl}/login`, body);
+    return this.http.post<TokenResponse>(`${this.apiUrl}/login`, body);
   }
 }

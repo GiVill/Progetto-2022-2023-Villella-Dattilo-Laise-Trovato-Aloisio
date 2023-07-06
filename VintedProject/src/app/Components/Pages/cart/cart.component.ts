@@ -3,7 +3,7 @@ import {CookieService} from "ngx-cookie-service";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {forkJoin, Observable} from "rxjs";
-import {BasicInsertion} from "../../../Model/basic-insertion.model";
+import {BasicInsertionDto} from "../../../Model/basicInsertionDto";
 import {InsertionService} from "../../../service/insertion.service";
 import {CartService} from "../../../service/cart.service";
 
@@ -15,7 +15,7 @@ import {CartService} from "../../../service/cart.service";
 })
 export class CartComponent implements OnInit {
   product: any[] = [];
-  cartProduct: BasicInsertion[] | undefined;
+  cartProduct: BasicInsertionDto[] | undefined;
   ordineCreato = false;
   logStringResultBool = false;
   totalCost = 0;
@@ -42,15 +42,15 @@ export class CartComponent implements OnInit {
   }
 
   loadProductDetails(): void {
-    const productRequests: Observable<BasicInsertion>[] = this.product.map((cartItem) =>
+    const productRequests: Observable<BasicInsertionDto>[] = this.product.map((cartItem) =>
       this.insertionService.getInsertionById(cartItem.insertion_id)
     );
 
-    const loadedProducts: BasicInsertion[] = []; // Array to store loaded products
+    const loadedProducts: BasicInsertionDto[] = []; // Array to store loaded products
 
     for (const request of productRequests) {
       request.subscribe(
-        (data: BasicInsertion) => {
+        (data: BasicInsertionDto) => {
           loadedProducts.push(data); // Add the loaded product to the array
           console.log(data);
           this.calculateTotalCost();

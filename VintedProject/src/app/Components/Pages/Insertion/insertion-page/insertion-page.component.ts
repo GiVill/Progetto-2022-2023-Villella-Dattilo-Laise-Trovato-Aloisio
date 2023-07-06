@@ -5,13 +5,13 @@ import {ActivatedRoute} from "@angular/router";
 import {Observable, switchMap} from "rxjs";
 
 import {CookieService} from "ngx-cookie-service";
-import {BasicInsertion} from "../../../../Model/basic-insertion.model";
-import {User} from "../../../../Model/user.model";
+import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
+import {UserDto} from "../../../../Model/userDto";
 import {InsertionService} from "../../../../service/insertion.service";
 import {CartService} from "../../../../service/cart.service";
 import {UserService} from "../../../../service/user.service";
 import {ImageService} from "../../../../service/image.service";
-import {Page} from "../../../../Model/page.model";
+import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
 
 
 @Component({
@@ -21,11 +21,11 @@ import {Page} from "../../../../Model/page.model";
 })
 
 export class InsertionPageComponent implements OnInit {
-  insertion: BasicInsertion | undefined;
-  user: User | undefined;
+  insertion: BasicInsertionDto | undefined;
+  user: UserDto | undefined;
   page = 1;
   // @ts-ignore
-  userOtherInsertion: Page<BasicInsertion> | undefined;
+  userOtherInsertion: PageBasicInsertionDto | undefined;
   id: number | undefined;
   modalOpen = false;
   modalImage: string | undefined;
@@ -49,12 +49,12 @@ export class InsertionPageComponent implements OnInit {
         })
       )
       .subscribe(
-        (data: BasicInsertion) => {
+        (data: BasicInsertionDto) => {
           this.insertion = data;
           console.log(this.insertion);
           if (this.insertion?.userId) {
             this.userService.getUserById(this.insertion.userId).subscribe(
-              (userData: User) => {
+              (userData: UserDto) => {
                 this.user = userData;
                 console.log(this.user?.id); // Verifica qui
               },
@@ -64,7 +64,7 @@ export class InsertionPageComponent implements OnInit {
             );
 
             this.userService.getAllInsertionsByUser(this.id, this.page).subscribe(
-              (data: Page<BasicInsertion>) => {
+              (data: PageBasicInsertionDto) => {
                 this.userOtherInsertion = data;
               },
               (error) => {
@@ -83,9 +83,9 @@ export class InsertionPageComponent implements OnInit {
 
   async processImages(): Promise<void> {
     if (this.insertion) {
-      const imageSrc = await ImageService.setProductImageSrc(this.insertion.image);
-      if (imageSrc) {
-        this.insertion = {...this.insertion, imageSrc};
+      const imagePath = await ImageService.setProductImageSrc(this.insertion.image);
+      if (imagePath) {
+        this.insertion = {...this.insertion, imagePath};
       }
     }
   }

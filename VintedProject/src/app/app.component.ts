@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-root',
@@ -9,8 +11,5 @@ export class AppComponent {
   title = 'Vinted-Front-End';
   isUserLogged=false;
 
-  checkUser() {
-    //TODO controllo del token
-  }
 
 }

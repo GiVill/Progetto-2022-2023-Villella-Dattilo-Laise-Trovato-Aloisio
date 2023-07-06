@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {AuthService} from "../../../../service/auth.service";
 import {Router} from "@angular/router";
-import {NewUser} from "../../../../Model/new-user.model";
+import {NewUserDto} from "../../../../Model/newUserDto";
 
 @Component({
   selector: 'app-registrazione',
@@ -11,7 +11,7 @@ import {NewUser} from "../../../../Model/new-user.model";
 export class RegistrazioneComponent {
   passwordsMatch: boolean = true;
 
-  newUser: NewUser = {
+  newUser: NewUserDto = {
     nickName: '',
     email: '',
     password: '',

@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import { Router } from '@angular/router';
-import {BasicInsertion} from "../../../../Model/basic-insertion.model";
-
+import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
 
 
 @Component({
@@ -10,7 +9,7 @@ import {BasicInsertion} from "../../../../Model/basic-insertion.model";
   styleUrls: ['./product-card.component.css']
 })
 export class ProductCardComponent {
-  @Input() item: BasicInsertion | undefined;
+  @Input() item: BasicInsertionDto | undefined;
 
   isHovered = false;
 

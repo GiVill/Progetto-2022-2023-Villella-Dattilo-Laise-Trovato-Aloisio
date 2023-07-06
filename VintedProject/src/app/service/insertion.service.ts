@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {BasicInsertion} from "../Model/basic-insertion.model";
-import {Page} from "../Model/page.model";
+import {PageBasicInsertionDto} from "../Model/pageBasicInsertionDto";
+import {BasicInsertionDto} from "../Model/basicInsertionDto";
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +13,15 @@ export class InsertionService {
 
   constructor(private http: HttpClient) { }
 
-  getAllInsertions(page: number): Observable<Page<BasicInsertion>> {
+  getAllInsertions(page: number): Observable<PageBasicInsertionDto> {
     const params = new HttpParams().set('page', page.toString());
-    return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}`, { params });
+    return this.http.get<PageBasicInsertionDto>(`${this.apiinsertionUrl}`, { params });
   }
 
 
-  getInsertionByBrand(brand: string | undefined, page: number): Observable<Page<BasicInsertion>> {
+  getInsertionByBrand(brand: string | undefined, page: number): Observable<PageBasicInsertionDto> {
     const params = new HttpParams().set('page', page.toString());
-    return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}/${brand}`);
+    return this.http.get<PageBasicInsertionDto>(`${this.apiinsertionUrl}/${brand}`);
   }
 
   addInsertion(insertion: {
@@ -28,13 +29,13 @@ export class InsertionService {
     description: string;
     title: string;
     userId: number
-  }): Observable<BasicInsertion> {
+  }): Observable<BasicInsertionDto> {
     console.log(insertion);
-    return this.http.post<BasicInsertion>(`${this.apiinsertionUrl}`, insertion);
+    return this.http.post<BasicInsertionDto>(`${this.apiinsertionUrl}`, insertion);
   }
 
-  getInsertionById(id: number | undefined): Observable<BasicInsertion> {
-    return this.http.get<BasicInsertion>(`${this.apiinsertionUrl}/${id}`);
+  getInsertionById(id: number | undefined): Observable<BasicInsertionDto> {
+    return this.http.get<BasicInsertionDto>(`${this.apiinsertionUrl}/${id}`);
   }
 
   deleteInsertionById(id: number): Observable<any> {
@@ -48,11 +49,11 @@ export class InsertionService {
 
 
   findAllByTitleLike(pageNumber: number, search: string) {
-    return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}/title/${search}/${pageNumber}`);
+    return this.http.get<PageBasicInsertionDto>(`${this.apiinsertionUrl}/title/${search}/${pageNumber}`);
   }
 
   findAllByCategory(pageNumber: number, category: string) {
-      return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}${category}?page=${pageNumber}`);
+      return this.http.get<PageBasicInsertionDto>(`${this.apiinsertionUrl}${category}?page=${pageNumber}`);
   }
 
 
