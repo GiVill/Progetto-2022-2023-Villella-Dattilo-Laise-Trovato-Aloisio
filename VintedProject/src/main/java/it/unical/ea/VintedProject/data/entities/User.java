@@ -67,9 +67,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    //todo: chiedere al prof come gestire le foto
     @Lob
-    private Blob photo;
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] userImage;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Payment> payments;

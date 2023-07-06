@@ -1,6 +1,9 @@
 package it.unical.ea.VintedProject.dto;
 
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,7 +34,9 @@ public class BasicInsertionDto {
 
     private LocalDate endDate;
 
-    private String imagePath;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] image;
 
     @NotNull
     private Long userId;

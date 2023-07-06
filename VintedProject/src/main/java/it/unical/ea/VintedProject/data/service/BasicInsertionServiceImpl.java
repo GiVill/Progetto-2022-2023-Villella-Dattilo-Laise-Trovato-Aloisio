@@ -15,7 +15,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -118,5 +120,18 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("title").ascending());
         List<BasicInsertionDto> collect = basicInsertionDao.findAllByIsPro("Normal",pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
+    }
+
+    @Override
+    public Boolean uploadUserImage(Long insertionId, MultipartFile img) {
+        BasicInsertion insertion = basicInsertionDao.findById(insertionId).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present", insertionId)));
+        try {
+            insertion.setImage(img.getBytes());
+            basicInsertionDao.save(insertion);
+            return true;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

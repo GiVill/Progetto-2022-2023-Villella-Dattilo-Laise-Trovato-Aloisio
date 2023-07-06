@@ -16,6 +16,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -105,6 +108,50 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+    @Override
+    public Boolean uploadUserImage(Long userId, MultipartFile img) {
+        User user = userDao.findById(userId).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", userId)));
+        try {
+            user.setUserImage(img.getBytes());
+            userDao.save(user);
+            return true;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+    /*
+
+    @Override
+    public Boolean uploadUserImage(Long id, MultipartFile img) {
+        try {
+            System.out.println(img.getOriginalFilename());
+
+
+            String imagPath = FileUtil.saveMultipartFile(img);
+            System.out.println(imagPath);
+            User user = userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", id)));
+            user.setUserImagePath(imagPath);
+            userDao.save(user);
+
+            return true;
+
+        } catch (EntityNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public Resource loadUserImage(String path) {
+        return new FileSystemResource(path);
+    }
+     */
 
     @Override
     public void deleteUserById(Long id) { userDao.deleteById(id); }

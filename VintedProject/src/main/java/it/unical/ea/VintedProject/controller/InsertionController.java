@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -94,6 +95,12 @@ public class InsertionController {
     @PutMapping("/insertions/{InsertionId}")
     public ResponseEntity<Boolean> modifyInsertionById(@PathVariable("InsertionId") Long insertionId, String title, Float price, String description){
         return ResponseEntity.ok(basicInsertionService.modifyById(insertionId,title,price,description));
+    }
+
+    @PostMapping("/insertions/uploadImage/{idInsertion}")
+    public ResponseEntity<Boolean> uploadUserImage(@PathVariable("idInsertion") Long id, @RequestBody @Valid MultipartFile img){
+        System.out.println(img.toString());
+        return ResponseEntity.ok(basicInsertionService.uploadUserImage(id,img));
     }
 
 

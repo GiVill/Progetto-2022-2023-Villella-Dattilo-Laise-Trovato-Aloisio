@@ -7,6 +7,7 @@ import it.unical.ea.VintedProject.dto.enumeration.Brand;
 import it.unical.ea.VintedProject.dto.enumeration.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 
 public interface BasicInsertionService {//extends Repository<BasicInsertion,Long> {
@@ -40,5 +41,7 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
 
  */
     Page<BasicInsertionDto> getAllByIsNormal(int page);
+
+    Boolean uploadUserImage(Long insertionId, MultipartFile img);
 
 }

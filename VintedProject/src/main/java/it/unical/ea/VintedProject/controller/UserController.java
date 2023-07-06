@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -74,6 +75,29 @@ public class UserController {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/users/uploadImage/{idUser}")
+    public ResponseEntity<Boolean> uploadUserImage(@PathVariable("idUser") Long id, @RequestBody @Valid MultipartFile img){
+        System.out.println(img.toString());
+        return ResponseEntity.ok(userService.uploadUserImage(id,img));
+    }
+
+    /*
+    IMMAGINI SU FILE SISTEM MA NON VA !
+    @PostMapping("/users/uploadImage/{idUser}")
+    public ResponseEntity<Boolean> uploadUserImage(@PathVariable("idUser") Long id, @RequestBody @Valid MultipartFile img){
+        System.out.println(img.toString());
+        return ResponseEntity.ok(userService.uploadUserImage(id,img));
+    }
+
+    @GetMapping("/users/uploadImage/{path}")
+    public ResponseEntity<?> uploadUserImage(@PathVariable("path") String path){
+        Resource resource = userService.loadUserImage(path);
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG) // Adjust the media type based on your image type
+                .body(resource);
+    }
+     */
 
     //TODO: Forse questo si può eliminare?
     public String serviceAFallback(Exception e) {
