@@ -114,5 +114,9 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
         }
     }
 
-
+    public Page<BasicInsertionDto> getAllByIsNormal(int page){
+        PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("title").ascending());
+        List<BasicInsertionDto> collect = basicInsertionDao.findAllByIsPro("Normal",pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        return new PageImpl<>(collect);
+    }
 }

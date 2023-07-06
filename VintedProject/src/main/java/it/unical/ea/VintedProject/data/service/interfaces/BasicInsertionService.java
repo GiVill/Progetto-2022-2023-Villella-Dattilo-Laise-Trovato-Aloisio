@@ -6,6 +6,7 @@ import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.enumeration.Brand;
 import it.unical.ea.VintedProject.dto.enumeration.Category;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface BasicInsertionService {//extends Repository<BasicInsertion,Long> {
@@ -38,5 +39,6 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
     Page<BasicInsertion> @Param("a") User;
 
  */
+    Page<BasicInsertionDto> getAllByIsNormal(int page);
 
 }

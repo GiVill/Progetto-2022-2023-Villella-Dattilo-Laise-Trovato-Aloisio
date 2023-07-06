@@ -1,14 +1,19 @@
 package it.unical.ea.VintedProject.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import it.unical.ea.VintedProject.config.JwtAuthConverter;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
+import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
+import it.unical.ea.VintedProject.dto.UserDto;
 import it.unical.ea.VintedProject.dto.enumeration.Brand;
 import it.unical.ea.VintedProject.dto.enumeration.Category;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -19,11 +24,18 @@ import org.springframework.web.bind.annotation.*;
 public class InsertionController {
 
     private final BasicInsertionService basicInsertionService;
+    private final JwtAuthConverter converter;
 
     @GetMapping("/insertions")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<Page<BasicInsertionDto>> all(@RequestParam("page") int page){
-        return ResponseEntity.ok(basicInsertionService.getAllPaged(page));
+    public ResponseEntity<Page<BasicInsertionDto>> all(Jwt jwt, @RequestParam("page") int page){
+        //utente pro
+        if (converter.extractResourceRoles(jwt).equals("ROLE_app_admin")){
+            return ResponseEntity.ok(basicInsertionService.getAllPaged(page));
+        }
+        else{
+            return ResponseEntity.ok(basicInsertionService.getAllByIsNormal(page));
+        }
     }
 
     @PostMapping("/insertions")
@@ -84,4 +96,10 @@ public class InsertionController {
         return ResponseEntity.ok(basicInsertionService.modifyById(insertionId,title,price,description));
     }
 
+
+    //potrebbe essere superflua
+    @GetMapping("/insertions/isNormal/{page}")
+    public ResponseEntity<Page<BasicInsertionDto>> getByIsNormal(@PathVariable int page){
+        return ResponseEntity.ok(basicInsertionService.getAllByIsNormal(page));
+    }
 }

@@ -53,7 +53,8 @@ public class BasicInsertion {
     @Column(name = "CONDITION")
     private String condition;
 
-
+    @Column
+    private String isPro;
     ///////////////////////////
 
 
@@ -61,13 +62,13 @@ public class BasicInsertion {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+
+
     @Column(name = "BRAND")
     private Brand brand;
 
 
     ////////////////////////////
-
-
 
     @ManyToMany(mappedBy = "favorites")
     Set<User> usersFavorites;

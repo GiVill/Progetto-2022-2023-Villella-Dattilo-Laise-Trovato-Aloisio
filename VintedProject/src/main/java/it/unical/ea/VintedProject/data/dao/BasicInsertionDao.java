@@ -42,4 +42,5 @@ public interface BasicInsertionDao extends JpaRepository<BasicInsertion,Long> {
     //Return a PAGEABLE of Insertion with a determinate Category
     Page<BasicInsertion> findByCategory(Category category, Pageable pageable);
 
+    Page<BasicInsertion> findAllByIsPro(String pro, Pageable pageable);
 }
