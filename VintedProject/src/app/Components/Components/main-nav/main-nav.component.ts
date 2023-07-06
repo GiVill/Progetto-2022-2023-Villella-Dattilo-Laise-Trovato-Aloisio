@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 
@@ -8,15 +8,20 @@ import {CookieService} from "ngx-cookie-service";
   styleUrls: ['./main-nav.component.css'],
 })
 
-export class MainNavComponent {
+export class MainNavComponent implements OnInit{
 
   showFiller!: boolean;
-
+  logStringResult: string | undefined;
   showSubMenu: boolean = false;
 
   constructor(
               private router: Router,
               private cookieService: CookieService){}
+
+
+  ngOnInit(): void {
+    this.checkUserCookie()
+  }
 
 
   showMenu() {
@@ -25,6 +30,18 @@ export class MainNavComponent {
 
   hideMenu() {
     this.showSubMenu = false;
+  }
+
+
+
+checkUserCookie(): void {
+    const userCookie = this.cookieService.get('username');
+
+    if (userCookie) {
+      this.logStringResult = userCookie;
+    } else {
+      this.logStringResult = 'Login';
+    }
   }
 
 

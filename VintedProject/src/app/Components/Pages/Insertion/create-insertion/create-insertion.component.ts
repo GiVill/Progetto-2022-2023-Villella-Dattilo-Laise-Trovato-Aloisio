@@ -12,10 +12,10 @@ import {Router} from "@angular/router";
 })
 export class CreateInsertionComponent {
   inserzione = {
-    titolo: '',
-    descrizione: '',
-    prezzo: 0,
-    foto: []
+    title: '',
+    userId: 12,
+    description: '',
+    price: 0,
   };
 
   constructor(private router: Router,
@@ -41,27 +41,31 @@ export class CreateInsertionComponent {
     }
 
     // Salva le foto nell'oggetto inserzione
-    this.inserzione.foto = Array.from(files);
+    //this.inserzione.foto = Array.from(files);
   }
 
   formValido() {
     return (
-      this.inserzione.titolo &&
-      this.inserzione.descrizione &&
-      this.inserzione.prezzo > 0 &&
-      this.inserzione.foto.length > 0
+      this.inserzione.title &&
+      this.inserzione.description &&
+      this.inserzione.price > 0
+      //this.inserzione.foto.length > 0
     );
   }
 
   creaInserzione() {
+    console.log(this.inserzione)
     this.insertionService.addInsertion(this.inserzione).subscribe(
+
       response => {
+        console.log(this.inserzione)
         console.log("OK => ",response)
         // Handle success
         this.router.navigate(['/']);
       },
       error => {
         console.log("ERRORE REGISTRAZIONE => ",error)
+        console.log(this.inserzione)
         // Handle error
       }
     );

@@ -42,12 +42,14 @@ export class SearchComponent implements OnInit {
       return of(undefined); // Restituisci un observable di undefined
     }
 
-    return this.insertionService.findAllByTitleLike(pageNumber, this.search).pipe(
-      tap((insertions: Page<BasicInsertion>) => {
+    return this.insertionService.findAllByTitleLike(pageNumber, this.search).subscribe(
+      (insertions: Page<BasicInsertion>) => {
         this.insertion = insertions;
         this.processImages();
-      }))
+      }
+    );
   }
+
 
 
   processImages(): void {

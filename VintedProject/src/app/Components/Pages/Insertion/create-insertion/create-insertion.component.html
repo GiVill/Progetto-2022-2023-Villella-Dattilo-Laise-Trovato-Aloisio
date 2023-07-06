@@ -5,17 +5,17 @@
     <form (ngSubmit)="creaInserzione()">
       <div class="form-group">
         <label for="titolo">Titolo:</label>
-        <input type="text" id="titolo" name="titolo" [(ngModel)]="inserzione.titolo" required>
+        <input type="text" id="titolo" name="titolo" [(ngModel)]="inserzione.title" required>
       </div>
 
       <div class="form-group">
         <label for="descrizione">Descrizione:</label>
-        <input type="text" id="descrizione" name="descrizione" [(ngModel)]="inserzione.descrizione" required class="fixed-height-textarea">
+        <input type="text" id="descrizione" name="descrizione" [(ngModel)]="inserzione.description" required class="fixed-height-textarea">
       </div>
 
       <div class="form-group">
         <label for="prezzo">Prezzo:</label>
-        <input type="text" id="prezzo" name="prezzo" [(ngModel)]="inserzione.prezzo" required>
+        <input type="text" id="prezzo" name="prezzo" [(ngModel)]="inserzione.price" required>
       </div>
 
       <div class="form-group">

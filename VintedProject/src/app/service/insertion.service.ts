@@ -23,7 +23,13 @@ export class InsertionService {
     return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}/${brand}`);
   }
 
-  addInsertion(insertion: { descrizione: string; titolo: string; foto: any[]; prezzo: number}): Observable<BasicInsertion> {
+  addInsertion(insertion: {
+    price: number;
+    description: string;
+    title: string;
+    userId: number
+  }): Observable<BasicInsertion> {
+    console.log(insertion);
     return this.http.post<BasicInsertion>(`${this.apiinsertionUrl}`, insertion);
   }
 
@@ -42,7 +48,7 @@ export class InsertionService {
 
 
   findAllByTitleLike(pageNumber: number, search: string) {
-    return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}${search}?page=${pageNumber}`);
+    return this.http.get<Page<BasicInsertion>>(`${this.apiinsertionUrl}/title/${search}/${pageNumber}`);
   }
 
   findAllByCategory(pageNumber: number, category: string) {
