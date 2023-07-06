@@ -1,10 +1,5 @@
 package it.unical.ea.VintedProject.controller;
 
-import java.awt.Desktop;
-
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
-import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -68,6 +62,11 @@ public class UserController {
     //@PreAuthorize("permitAll()")//hasAnyRole('user','admin')
     public ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) { return ResponseEntity.ok(userService.saveDto(userDto)); }
 
+    @PutMapping("/update-users-password/{idUser}")
+    public ResponseEntity<Boolean> updateUserPassword(@PathVariable("idUser") Long id, @RequestBody @Valid String newPassword) { return ResponseEntity.ok(userService.updateUserPassword(id, newPassword));}
+
+    @PutMapping("/update-users-nickname/{idUser}")
+    public ResponseEntity<Boolean> updateUserNickname(@PathVariable("idUser") Long id, @RequestBody @Valid String newNickname) { return ResponseEntity.ok(userService.updateUserNickname(id, newNickname));}
 
     @DeleteMapping("/users/{idUser}")
     //@PreAuthorize("hasRole('admin')")

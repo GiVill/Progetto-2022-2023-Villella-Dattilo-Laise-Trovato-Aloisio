@@ -81,6 +81,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Boolean updateUserPassword(Long id, String newPassword) {
+        //TODO L'update andrebbe fatta anche su Keycloak
+        try{
+            User user = userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", id)));
+            user.setPassword(newPassword);
+            userDao.save(user);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean updateUserNickname(Long id, String newNickname) {
+        //TODO L'update andrebbe fatta anche su Keycloak
+        try{
+            User user = userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", id)));
+            user.setNickName(newNickname);
+            userDao.save(user);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
     public void deleteUserById(Long id) { userDao.deleteById(id); }
 
 }

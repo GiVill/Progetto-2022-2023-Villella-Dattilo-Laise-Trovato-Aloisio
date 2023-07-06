@@ -64,9 +64,6 @@ public class KeycloakTokenClient {
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             TokenResponse tokenResponse = responseEntity.getBody();
-            //"access_token:" "eyiufsjdbfsjdvfhdsbgs"
-            //"refresh_token:" "sjkdgfdsgdsgdsdshj"
-
             return tokenResponse.toString();
 
         } else {
