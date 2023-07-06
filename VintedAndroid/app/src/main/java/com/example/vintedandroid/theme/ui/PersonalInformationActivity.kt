@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -42,7 +43,7 @@ fun PersonalInfo(user : UserDto) {
             modifier = Modifier.padding(10.dp),
             style = TextStyle(fontSize = Typography.titleLarge.fontSize)
         )
-        Column() {
+        Column {
             Card(onClick = { /*TODO*/ },) {
                 Icon(
                     Icons.Filled.AccountCircle,
@@ -54,26 +55,42 @@ fun PersonalInfo(user : UserDto) {
                 )
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Row(modifier = Modifier.align(CenterHorizontally)) {
-                        Column(modifier = Modifier.padding(10.dp)) {
+                        Column(modifier = Modifier
+                            .padding(10.dp)
+                            .weight(1f)) {
                             Text(text = "Nickname:" )
+                            Divider()
                             Text(text = "Firstname:" )
+                            Divider()
                             Text(text = "Lastname:" )
+                            Divider()
                             Text(text = "Email:" )
+                            Divider()
                             Text(text = "BirthDate:" )
+                            Divider()
                             Text(text = "Address:" )
                         }
-                        Column(Modifier.padding(10.dp).padding(start = 10.dp)) {
+                        Column(
+                            Modifier
+                                .padding(10.dp)
+                                .weight(1f)) {
                             Text(text = user.nickName)
+                            Divider()
                             Text(text = user.firstName )
+                            Divider()
                             user.lastName?.let { Text(text = it) }
+                            Divider()
                             user.email?.let { Text(text = it) }
+                            Divider()
                             user.birthDate?.let { Text(text = it) }
+                            Divider()
                             Text(text = "${user.addressState} ${user.addressRegion} ${user.addressCity} ${user.addressCap} ${user.addressStreet} ${user.addressNumber}")
                         }
                     }
                 }
 
             }
+            Divider()
 
             Spacer(modifier = Modifier.height(15.dp))
 
