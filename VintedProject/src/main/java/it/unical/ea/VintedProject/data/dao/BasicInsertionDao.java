@@ -25,7 +25,7 @@ public interface BasicInsertionDao extends JpaRepository<BasicInsertion,Long> {
     Page<BasicInsertion> findAllByUserId(Long uLong, Pageable pageable);
 
     //Return a PAGEABLE of Insertion fetched by title
-    Page<BasicInsertion> findAllByTitleLike(String title,Pageable pageable);
+    Page<BasicInsertion> findAllByTitleContainingIgnoreCase(String title,Pageable pageable);
 
     //Return ALL the Insertion with a price lower or equal
     List<BasicInsertion> findByPriceLessThanEqual(int price);

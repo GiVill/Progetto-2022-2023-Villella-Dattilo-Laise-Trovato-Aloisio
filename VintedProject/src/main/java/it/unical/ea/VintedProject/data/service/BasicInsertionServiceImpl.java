@@ -70,7 +70,8 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     @Override
     public Page<BasicInsertionDto> getAllByTitleStartWith(String title, int page) {
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("title").ascending());
-        List<BasicInsertionDto> collect = basicInsertionDao.findAllByTitleLike(title, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        System.out.println(basicInsertionDao.findAllByTitleContainingIgnoreCase(title, pageRequest));
+        List<BasicInsertionDto> collect = basicInsertionDao.findAllByTitleContainingIgnoreCase(title, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
 
