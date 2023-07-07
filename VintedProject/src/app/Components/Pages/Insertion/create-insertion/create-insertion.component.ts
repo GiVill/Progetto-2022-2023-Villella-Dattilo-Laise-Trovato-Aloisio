@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {InsertionService} from "../../../../service/insertion.service";
 import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
+import {CookiesService} from "../../../../service/cookies.service";
 
 @Component({
   selector: 'app-create-insertion',
   templateUrl: './create-insertion.component.html',
   styleUrls: ['./create-insertion.component.css']
 })
-export class CreateInsertionComponent {
+export class CreateInsertionComponent implements OnInit{
   inserzione = {
     title: '',
     userId: 12,
@@ -16,7 +18,9 @@ export class CreateInsertionComponent {
   };
 
   constructor(private router: Router,
-              private insertionService: InsertionService) { }
+              private insertionService: InsertionService,
+              private cookieService: CookiesService,)
+                                                    { }
 
   caricaFoto(event: any) {
     const fileInput = event.target;
@@ -67,6 +71,12 @@ export class CreateInsertionComponent {
       }
     );
 
+  }
+
+  ngOnInit(): void {
+    if (!this.cookieService.checkUserToken()){
+      this.router.navigate(['/login']);
+    }
   }
 
 

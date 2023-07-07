@@ -22,13 +22,13 @@ export class HomePageComponent implements OnInit {
 
       this.mostRequested = {
         ...insertions,
-        content: insertions.content?.slice(0, 5)
+        content: insertions.content?.slice(0, 6)
       };
 
       this.insertionService.getAllInsertions(this.page).subscribe((insertions: PageBasicInsertionDto) => {
         this.feed = {
           ...insertions,
-          content: insertions.content?.slice(0, 5)
+          content: insertions.content?.slice(0, 6)
         };
       });
     })

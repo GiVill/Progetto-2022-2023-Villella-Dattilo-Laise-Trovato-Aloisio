@@ -14,7 +14,7 @@ export class MainNavComponent implements OnInit{
 
   showFiller!: boolean;
   showSubMenu: boolean = false;
-  public logStringResult: string | undefined;
+  logStringResult: string | undefined;
 
   constructor(
               private router: Router,
@@ -28,8 +28,7 @@ export class MainNavComponent implements OnInit{
   }
 
   getUserString(){
-    this.logStringResult = this.cookieService.logStringResultfun()
-    return this.logStringResult || 'Login';
+    return this.logStringResult = this.cookieService.logStringResultfun()
   }
 
 
@@ -43,12 +42,9 @@ export class MainNavComponent implements OnInit{
 
 
 
-
-
-
   logout(): void {
     this.cookiesService.delete('username', '/');
-    this.cookiesService.delete('token', '/');
+    this.cookiesService.delete('jwtToken', '/');
     this.cookieService.checkUserCookie();
     this.router.navigate(['/login']);
   }

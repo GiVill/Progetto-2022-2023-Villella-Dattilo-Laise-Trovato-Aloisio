@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {Component} from '@angular/core';
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './Components/home-page/home-page.component';
@@ -35,6 +32,10 @@ import {
   CartInsertionCardComponent
 } from "./Components/Components/Cards/cart-insertion-card/cart-insertion-card.component";
 import { CreateInsertionComponent } from './Components/Pages/Insertion/create-insertion/create-insertion.component';
+import { JwtModule  } from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { MyprofileComponent } from './Components/Pages/User/myprofile/myprofile.component';
+
 
 
 
@@ -57,7 +58,7 @@ import { CreateInsertionComponent } from './Components/Pages/Insertion/create-in
     RegistrazioneComponent,
     LoginComponent,
     CreateInsertionComponent,
-
+    MyprofileComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,10 +73,18 @@ import { CreateInsertionComponent } from './Components/Pages/Insertion/create-in
     MatInputModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule
-
+    FormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('jwtToken');
+        },
+        allowedDomains: ['localhost'], // Domini consentiti per l'invio del token
+        disallowedRoutes: ['example.com/api/login'] // Rotte disabilitate per l'invio del token
+      }
+    })
   ],
-  providers: [CookieService],
+  providers: [CookieService,JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,10 +1,19 @@
 .image-container {
   position: relative;
   display: inline-block;
+  max-height: 250px;
+}
+.image-container img {
   width: 100%;
-  max-height: 400px;
+  height: 100%;
+  object-fit: cover;
 }
 
+@media screen and (max-width: 600px) {
+  .image-container {
+    max-height: 150px;
+  }
+}
 .cardOver {
   position: absolute;
   top: 0;

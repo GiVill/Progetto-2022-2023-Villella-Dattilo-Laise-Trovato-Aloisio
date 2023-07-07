@@ -11,6 +11,7 @@ import {LoginComponent} from "./Components/Pages/User/login/login.component";
 import {CartComponent} from "./Components/Pages/cart/cart.component";
 import {ProfileComponent} from "./Components/Pages/User/profile/profile.component";
 import {CreateInsertionComponent} from "./Components/Pages/Insertion/create-insertion/create-insertion.component";
+import {MyprofileComponent} from "./Components/Pages/User/myprofile/myprofile.component";
 
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path : 'login', component:LoginComponent},
   {path:  'profile/:userid', component: ProfileComponent},
   {path : 'newinsertion', component:CreateInsertionComponent},
+  {path: 'myprofile', component: MyprofileComponent},
 
 ];
 

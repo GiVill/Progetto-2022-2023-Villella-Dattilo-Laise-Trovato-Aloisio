@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit{
         const userCookie = this.cookieService.get('username');
         if (!userCookie) {
           this.cookieService.set('username', this.login.email, 1, '/');
-          this.cookieService.set('token', String(response), 1, '/');
+          this.cookieService.set('jwtToken', response.access_token, 1, '/');
           this.cookiesService.checkUserCookie();
           this.User.getUserString();
           this.router.navigate(['/']);

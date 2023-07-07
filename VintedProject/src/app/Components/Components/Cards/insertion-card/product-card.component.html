@@ -1,6 +1,6 @@
 <div>
   <div>
-    <img style=" max-height: 180px;" src="{{'data:image/png;base64,' + item?.image}}" (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
+    <img style=" max-height: 180px;"  [src]="item?.image ? 'data:image/png;base64,' + item?.image : 'assets/resources/vestito.jpg'"  (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
   </div>
   <div style="padding-left: 2%;">
     <div class="product-card">
