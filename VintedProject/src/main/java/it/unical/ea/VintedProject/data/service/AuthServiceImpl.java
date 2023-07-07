@@ -48,7 +48,9 @@ public class AuthServiceImpl implements AuthService {
         // NON FARE ALCUN sout DEGLI UTENTI! Data la pesantezza verrà dato un errore col toString() e col  java.lang.StackOverflowError
         // System.out.println(u);
         if (u.isPresent() && passwordEncoder.matches(data.getPassword(), u.get().getPassword())){
-            return keycloakTokenClient.getToken(data.getEmail(), data.getPassword());
+            TokenResponse response = keycloakTokenClient.getToken(data.getEmail(), data.getPassword());
+            response.setUserId(u.get().getId());
+            return response;
         }
 
         throw new EntityNotFoundException(messageLang.getMessage("credentials.not.valid"));
