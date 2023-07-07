@@ -29,14 +29,10 @@ public class InsertionController {
 
     @GetMapping("/insertions")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<Page<BasicInsertionDto>> all(Jwt jwt, @RequestParam("page") int page){
-        //utente pro
-        if (converter.extractResourceRoles(jwt).equals("ROLE_app_admin")){
-            return ResponseEntity.ok(basicInsertionService.getAllPaged(page));
-        }
-        else{
-            return ResponseEntity.ok(basicInsertionService.getAllByIsNormal(page));
-        }
+    public ResponseEntity<Page<BasicInsertionDto>> all(@RequestParam("page") int page){
+
+        return ResponseEntity.ok(basicInsertionService.getAllPaged(page));
+
     }
 
     @PostMapping("/insertions")
@@ -105,8 +101,8 @@ public class InsertionController {
 
 
     //potrebbe essere superflua
-    @GetMapping("/insertions/isNormal/{page}")
+    /*@GetMapping("/insertions/isNormal/{page}")
     public ResponseEntity<Page<BasicInsertionDto>> getByIsNormal(@PathVariable int page){
         return ResponseEntity.ok(basicInsertionService.getAllByIsNormal(page));
-    }
+    }*/
 }
