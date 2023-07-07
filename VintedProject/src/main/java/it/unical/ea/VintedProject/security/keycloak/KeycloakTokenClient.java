@@ -78,15 +78,15 @@ public class KeycloakTokenClient {
         return getAdminKeycloakUser().realm("vinted2_0");
     }
 
-    public String userRegister(NewUserDto newUserDto){
+    public TokenResponse userRegister(NewUserDto newUserDto){
         //TODO: registrazione utente su keycloak
         if(addUserOnKeyCloak(newUserDto)){
             return getToken(newUserDto.getNickName(),newUserDto.getPassword());
         }
-        return "ERRORE"; //throw new RuntimeException(messageLang.getMessage("keycloak.token.error")); ?????
+        return null; //throw new RuntimeException(messageLang.getMessage("keycloak.token.error")); ?????
     }
 
-    public String getToken(String username, String password) {
+    public TokenResponse getToken(String username, String password) {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -109,7 +109,7 @@ public class KeycloakTokenClient {
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             TokenResponse tokenResponse = responseEntity.getBody();
-            return tokenResponse.toString();
+            return tokenResponse;
         } else {
             System.out.println("error while retrieving the token from keycloak!");
             //TODO:gestire errore

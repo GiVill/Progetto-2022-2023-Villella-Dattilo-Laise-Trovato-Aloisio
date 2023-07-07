@@ -7,6 +7,7 @@ import it.unical.ea.VintedProject.data.service.interfaces.AuthService;
 import it.unical.ea.VintedProject.dto.LoginUserDto;
 import it.unical.ea.VintedProject.dto.NewUserDto;
 import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
+import it.unical.ea.VintedProject.security.keycloak.TokenResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -39,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String doLogin(LoginUserDto data) {
+    public TokenResponse doLogin(LoginUserDto data) {
         Optional<User> u = Optional.ofNullable(userDao.findUserByEmail(data.getEmail()).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("credentials.not.valid"))));
         // NON FARE ALCUN sout DEGLI UTENTI! Data la pesantezza verrà dato un errore col toString() e col  java.lang.StackOverflowError
         // System.out.println(u);
