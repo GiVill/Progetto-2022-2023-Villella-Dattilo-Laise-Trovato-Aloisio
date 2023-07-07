@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.vintedandroid.theme.VintedAndroidTheme
+import com.example.vintedandroid.view.SetupNavGraph
 
 
 class MainActivity : ComponentActivity() {
@@ -141,19 +142,19 @@ fun ApplicationBottomBar(navController: NavHostController) {//,selectedIndex: Mu
             )
             BottomNavigationItem(
                 selected = false,
-                onClick = { /* Search */ }, //navController.navigate("search")
+                onClick = { navController.popBackStack(); navController.navigate("search") }, //navController.navigate("search")
                 icon = { Icon(Icons.Default.Search, contentDescription = "search") },
                 label = { Text(text = "Search") }
             )
             BottomNavigationItem(
                 selected = false,
-                onClick = { /* Profile */ }, //navController.navigate("add")
+                onClick = { navController.popBackStack(); navController.navigate("add") }, //navController.navigate("add")
                 icon = { Icon(Icons.Default.AddCircle, contentDescription = "add_circle") },
                 label = { Text(text = "Add") }
             )
             BottomNavigationItem(
                 selected = false,
-                onClick = { navController.popBackStack(); navController.navigate("account") }, //navController.navigate("profile")
+                onClick = { navController.popBackStack(); navController.navigate("bottom-bar-profile") }, //navController.navigate("profile")
                 icon = { Icon(Icons.Default.AccountCircle, contentDescription = "add_circle") },
                 label = { Text(text = "Profile") }
             )

@@ -1,4 +1,4 @@
-package com.example.vintedandroid.theme.ui
+package com.example.vintedandroid.view
 
 
 import android.annotation.SuppressLint
@@ -39,7 +39,7 @@ import com.example.vintedandroid.theme.Typography
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AccountActivity(navController: NavController, user : UserDto) {
+fun BottomBarProfile(navController: NavController, user : UserDto) {
 
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
@@ -68,7 +68,7 @@ fun AccountActivity(navController: NavController, user : UserDto) {
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            Card(onClick = { /*TODO*/ }) {
+            Card(onClick = { navController.popBackStack(); navController.navigate("favorite") }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Filled.Favorite,
                         contentDescription = stringResource(R.string.default_account),
@@ -81,7 +81,7 @@ fun AccountActivity(navController: NavController, user : UserDto) {
                 }
             }
 
-            Card(onClick = { /*TODO*/ }) {
+            Card(onClick = { navController.popBackStack(); navController.navigate("balance") }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Filled.PlayArrow,
                         contentDescription = stringResource(R.string.default_account),
@@ -94,7 +94,7 @@ fun AccountActivity(navController: NavController, user : UserDto) {
                 }
             }
 
-            Card(onClick = { /*TODO*/ }) {
+            Card(onClick = { navController.popBackStack(); navController.navigate("setting") }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Filled.Settings,
                         contentDescription = stringResource(R.string.default_account),
@@ -107,7 +107,7 @@ fun AccountActivity(navController: NavController, user : UserDto) {
                 }
             }
 
-            Card(onClick = { /*TODO*/ }) {
+            Card(onClick = { navController.popBackStack(); navController.navigate("feedback") }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Filled.Info,
                         contentDescription = stringResource(R.string.default_account),
@@ -157,10 +157,10 @@ fun AccountActivity(navController: NavController, user : UserDto) {
 
 @Preview(showBackground = true)
 @Composable
-fun AccountActivityPreview() {
+fun BottomBarProfilePreview() {
 
     val navController = rememberNavController()
 
     val user = UserDto(1L,"ciao","Boh","ciaoBoh")
-    AccountActivity(navController, user)
+    BottomBarProfile(navController, user)
 }

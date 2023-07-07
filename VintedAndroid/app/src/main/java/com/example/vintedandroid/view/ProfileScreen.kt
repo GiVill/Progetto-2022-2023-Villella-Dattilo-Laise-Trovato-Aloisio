@@ -1,6 +1,5 @@
-package com.example.vintedandroid.theme.ui
+package com.example.vintedandroid.view
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,12 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,7 +30,7 @@ import com.example.vintedandroid.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PersonalInfo(user : UserDto) {
+fun ProfileScreen(user : UserDto) {
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
             text = stringResource(R.string.account_settings),
@@ -127,9 +121,9 @@ fun PersonalInfo(user : UserDto) {
 
 @Preview(showBackground = true)
 @Composable
-fun prev() {
+fun ProfileScreenPreview() {
     val user = UserDto(1L,"ciao","Boh","ciaoBoh","ciao@yahoo.it",
         "10-05-2001",UserDto.Gender.MALE,"via napoli",8,"Lamezia",21312,
         "Italy","asdojad")
-    PersonalInfo(user)
+    ProfileScreen(user)
 }
