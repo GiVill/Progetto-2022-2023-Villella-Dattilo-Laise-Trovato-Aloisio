@@ -7,8 +7,10 @@ import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.LoginUserDto;
 import it.unical.ea.VintedProject.dto.NewUserDto;
 import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
+import it.unical.ea.VintedProject.security.keycloak.TokenResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.jboss.resteasy.annotations.Body;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,9 +32,10 @@ public class AuthController {
     private final UserService userService;
 
 
+
     @PostMapping("/sign-up")
-    public ResponseEntity<String> signUp(@RequestBody @Valid NewUserDto newUserDto){
-        String  token = keycloakTokenClient.userRegister(newUserDto);
+    public ResponseEntity<TokenResponse> signUp(@RequestBody @Valid NewUserDto newUserDto){
+        TokenResponse  token = keycloakTokenClient.userRegister(newUserDto);
         if(!Objects.equals(token, "ERRORE") && authService.signUp(newUserDto) ){
             return  ResponseEntity.ok(token);
         }
@@ -40,7 +43,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginUserDto data){
+    public ResponseEntity<TokenResponse> login(@RequestBody @Valid LoginUserDto data){
         return ResponseEntity.ok(authService.doLogin(data));
     }
 

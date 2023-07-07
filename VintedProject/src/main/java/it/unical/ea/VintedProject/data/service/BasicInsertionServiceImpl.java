@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.data.service;
 
+import com.nimbusds.jose.JOSEException;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
@@ -7,6 +8,7 @@ import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.enumeration.Brand;
 import it.unical.ea.VintedProject.dto.enumeration.Category;
+import it.unical.ea.VintedProject.security.TokenStore;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,7 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -116,11 +121,6 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
         }
     }
 
-    public Page<BasicInsertionDto> getAllByIsNormal(int page){
-        PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("title").ascending());
-        List<BasicInsertionDto> collect = basicInsertionDao.findAllByIsPro("Normal",pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
-        return new PageImpl<>(collect);
-    }
 
     @Override
     public Boolean uploadUserImage(Long insertionId, MultipartFile img) {
@@ -133,5 +133,33 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public String generateToken(Long id) {
+        BasicInsertion insertion = basicInsertionDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present", id)));
+        Map<String, Object> claims  = new HashMap<>();
+        claims.put("id",insertion.getId());
+        try {
+            return TokenStore.getInstance().createToken(claims);
+        } catch (JOSEException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public BasicInsertionDto getPrivateInsertion(String token) {
+        try {
+            Long id = TokenStore.getInstance().verifyToken(token);
+            if(id != null){
+                BasicInsertion insertion = basicInsertionDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present", id)));
+                return modelMapper.map(insertion, BasicInsertionDto.class);
+            }
+        } catch (JOSEException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

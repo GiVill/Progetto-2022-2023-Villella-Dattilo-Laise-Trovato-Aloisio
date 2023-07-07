@@ -17,6 +17,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.ws.rs.Path;
+
 
 @RestController
 @RequestMapping("/v1")
@@ -29,14 +31,8 @@ public class InsertionController {
 
     @GetMapping("/insertions")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<Page<BasicInsertionDto>> all(Jwt jwt, @RequestParam("page") int page){
-        //utente pro
-        if (converter.extractResourceRoles(jwt).equals("ROLE_app_admin")){
-            return ResponseEntity.ok(basicInsertionService.getAllPaged(page));
-        }
-        else{
-            return ResponseEntity.ok(basicInsertionService.getAllByIsNormal(page));
-        }
+    public ResponseEntity<Page<BasicInsertionDto>> all(@RequestParam("page") int page){
+        return ResponseEntity.ok(basicInsertionService.getAllPaged(page));
     }
 
     @PostMapping("/insertions")
@@ -104,9 +100,13 @@ public class InsertionController {
     }
 
 
-    //potrebbe essere superflua
-    @GetMapping("/insertions/isNormal/{page}")
-    public ResponseEntity<Page<BasicInsertionDto>> getByIsNormal(@PathVariable int page){
-        return ResponseEntity.ok(basicInsertionService.getAllByIsNormal(page));
+    @GetMapping("/insertions/token/{idInsertion}")
+    public ResponseEntity<String> generateCapabilities(@PathVariable("idInsertion") Long insertionId){
+        return ResponseEntity.ok(basicInsertionService.generateToken(insertionId));
+    }
+
+    @GetMapping("/insertions/private/{token}")
+    public ResponseEntity<BasicInsertionDto> getPrivateInsertion(@PathVariable("token") String token){
+        return ResponseEntity.ok(basicInsertionService.getPrivateInsertion(token));
     }
 }

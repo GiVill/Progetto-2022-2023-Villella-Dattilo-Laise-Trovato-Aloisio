@@ -55,9 +55,7 @@ public class BasicInsertion {
     private String condition;
 
     @Column
-    private String isPro;
-    ///////////////////////////
-
+    private Boolean isPrivate;
 
     @Column(name = "CATEGORY")
     @Enumerated(EnumType.STRING)

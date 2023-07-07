@@ -88,7 +88,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/v1/insertions/brand/{brand}/{page}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/v1/insertions/category/{category}/{page}").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/v1/insertions/{InsertionId}").permitAll()
-                .requestMatchers(HttpMethod.GET,"/v1/insertions/isNormal/{page}").permitAll()
+                .requestMatchers(HttpMethod.GET,"/v1/insertions/token/{idInsertion}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/insertions/private/{token}").permitAll()
                 //OFFERS
                 .requestMatchers(HttpMethod.GET, "/v1/offers").permitAll()
                 .requestMatchers(HttpMethod.GET, "/v1/offers/{idUser}").permitAll()

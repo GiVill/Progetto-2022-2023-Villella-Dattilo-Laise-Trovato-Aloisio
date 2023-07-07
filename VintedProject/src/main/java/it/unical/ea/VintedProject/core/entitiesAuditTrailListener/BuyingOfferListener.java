@@ -8,28 +8,28 @@ import lombok.extern.slf4j.Slf4j;
 public class BuyingOfferListener {
 
     @PostLoad
-    private void afterLoad(BuyingOffer offer){ log.info("[INSERTION AUDIT] offer loaded with id: " + offer.getId()); }
+    private void afterLoad(BuyingOffer offer){ log.info("[BUYINGOFFER AUDIT] offer loaded with id: " + offer.getId()); }
 
     @PreUpdate
-    private void preUpdate(BuyingOffer offer){ log.info("[INSERTION AUDIT] offer with id: " + offer.getId() + " is about to be updated"); }
+    private void preUpdate(BuyingOffer offer){ log.info("[BUYINGOFFER AUDIT] offer with id: " + offer.getId() + " is about to be updated"); }
 
     @PostUpdate
-    private void postUpdate(BuyingOffer offer){ log.info("[INSERTION AUDIT] offer with id: " + offer.getId() + " was updated"); }
+    private void postUpdate(BuyingOffer offer){ log.info("[BUYINGOFFER AUDIT] offer with id: " + offer.getId() + " was updated"); }
 
     //
 
     @PrePersist
-    private void prePersist(BuyingOffer offer){ log.info("[INSERTION AUDIT] offer with id: " + offer.getId() + " is about to be entered into the db"); }
+    private void prePersist(BuyingOffer offer){ log.info("[BUYINGOFFER AUDIT] offer with id: " + offer.getId() + " is about to be entered into the db"); }
 
     @PostPersist
-    private void postPersist(BuyingOffer offer){ log.info("[INSERTION AUDIT] offer with id: " + offer.getId() + " was entered into the db"); }
+    private void postPersist(BuyingOffer offer){ log.info("[BUYINGOFFER AUDIT] offer with id: " + offer.getId() + " was entered into the db"); }
 
     //
 
     @PreRemove
-    private void preRemove(BuyingOffer offer){ log.info("[INSERTION AUDIT] offer with id: " + offer.getId() + " is about to be removed from the db"); }
+    private void preRemove(BuyingOffer offer){ log.info("[BUYINGOFFER AUDIT] offer with id: " + offer.getId() + " is about to be removed from the db"); }
 
     @PostRemove
-    private void postRemove(BuyingOffer offer){ log.info("[INSERTION AUDIT] offer with id: " + offer.getId() + " was removed from the db"); }
+    private void postRemove(BuyingOffer offer){ log.info("[BUYINGOFFER AUDIT] offer with id: " + offer.getId() + " was removed from the db"); }
 
 }

@@ -32,6 +32,8 @@ public class BasicInsertionDto {
     @NotNull
     private LocalDate creationDate;
 
+    private Boolean isPrivate;
+
     private LocalDate endDate;
 
     @Lob

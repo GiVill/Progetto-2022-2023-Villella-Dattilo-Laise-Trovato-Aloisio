@@ -70,7 +70,7 @@ public class DbGenerator implements ApplicationRunner {
             CSVParser insertionsCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(insertionsRes.getInputStream()));
             for (CSVRecord record : insertionsCsv) {
-                insertInsertion(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4), record.get(5));
+                insertInsertion(record.get(0), record.get(1), record.get(2), record.get(3),record.get(4), record.get(5));
             }
 
             CSVParser ordersCsv = CSVFormat.DEFAULT.withDelimiter(';')
@@ -120,7 +120,7 @@ public class DbGenerator implements ApplicationRunner {
         basicInsertion.setCreationDate(LocalDate.parse(creationDate));
         basicInsertion.setDescription(description);
         basicInsertion.setUser(userService.getUserById(Long.valueOf(idUser)));
-        basicInsertion.setIsPro(isPro);
+        basicInsertion.setIsPrivate(Boolean.valueOf(isPro));
 
         insertionService.save(basicInsertion);
     }

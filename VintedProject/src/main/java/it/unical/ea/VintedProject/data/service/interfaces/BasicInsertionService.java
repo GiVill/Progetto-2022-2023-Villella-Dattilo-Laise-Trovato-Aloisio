@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.data.service.interfaces;
 
 
+import com.nimbusds.jose.JOSEException;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.enumeration.Brand;
@@ -40,8 +41,12 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
     Page<BasicInsertion> @Param("a") User;
 
  */
-    Page<BasicInsertionDto> getAllByIsNormal(int page);
+
 
     Boolean uploadUserImage(Long insertionId, MultipartFile img);
+
+    String generateToken(Long id) ;
+
+    BasicInsertionDto getPrivateInsertion(String token);
 
 }
