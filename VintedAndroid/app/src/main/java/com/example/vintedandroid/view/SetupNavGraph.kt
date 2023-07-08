@@ -2,20 +2,26 @@ package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.vintedandroid.Item
+import com.example.vintedandroid.client.apis.InsertionApi
 import com.example.vintedandroid.client.models.UserDto
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun SetupNavGraph(navController: NavHostController) {
+fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>) {
 
     val itemsInCart = remember {
         mutableStateListOf<Item?>()
+    }
+
+    val searchString = remember {
+        mutableStateListOf<String>()
     }
 
     //TODO user e user1 vanno cambiati!
@@ -26,15 +32,15 @@ fun SetupNavGraph(navController: NavHostController) {
     val user1 = UserDto(1L,"ciao","Boh","ciaoBoh")
 
 
-
-    NavHost(navController = navController, startDestination = ScreenController.Home.route ){
+    NavHost(navController = navController, startDestination = "home") {
+    //NavHost(navController = navController, startDestination = ScreenController.Home.route ){
 
         composable(route = ScreenController.Home.route){
             HomeScreen(itemsInCart)
         }
-        composable(route = ScreenController.Search.route){
-            SearchScreen()
-        }
+        composable("search") {
+            SearchScreen(searchText.value, InsertionApi()) }
+
         composable(route = ScreenController.Add.route){
             AddScreen()
         }

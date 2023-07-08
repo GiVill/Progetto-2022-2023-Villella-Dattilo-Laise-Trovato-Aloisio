@@ -26,17 +26,18 @@ package com.example.vintedandroid.client.models
  * @param empty 
  */
 data class PageBasicInsertionDto (
-
-    val totalElements: kotlin.Long? = null,
-    val totalPages: kotlin.Int? = null,
-    val size: kotlin.Int? = null,
-    val content: kotlin.Array<BasicInsertionDto>? = null,
-    val number: kotlin.Int? = null,
+    val totalElements: Long? = null,
+    val totalPages: Int? = null,
+    val size: Int? = null,
+    val content: Array<BasicInsertionDto>? = null,
+    val number: Int? = null,
     val sort: SortObject? = null,
-    val first: kotlin.Boolean? = null,
-    val last: kotlin.Boolean? = null,
-    val numberOfElements: kotlin.Int? = null,
+    val first: Boolean? = null,
+    val last: Boolean? = null,
+    val numberOfElements: Int? = null,
     val pageable: PageableObject? = null,
-    val empty: kotlin.Boolean? = null
+    val empty: Boolean? = null
 ) {
+    val results: List<BasicInsertionDto>
+        get() = content.orEmpty().toList()
 }

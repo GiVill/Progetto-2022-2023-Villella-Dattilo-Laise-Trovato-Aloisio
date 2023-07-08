@@ -2,6 +2,7 @@ package com.example.vintedandroid
 
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -11,6 +12,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -18,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.vintedandroid.client.apis.UserApi
 import com.example.vintedandroid.theme.VintedAndroidTheme
 import com.example.vintedandroid.view.SetupNavGraph
 
@@ -28,34 +31,38 @@ class MainActivity : ComponentActivity() {
         setContent {
             VintedAndroidTheme {
                 StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitNetwork().build())
+
                 /*
                 //QUESTE FUNZIONANO SOLO A LUIGI! AGLI ALTRI DARà ERRORE!!
                 val userApi = UserApi()
                 val users = userApi.all()
                 users.forEach { user ->
                     Log.i("papà",user.toString())
-                }
-                 */
+                }*/
+
 
                 val navController = rememberNavController()
 
-                SetupNavGraph(navController = navController)
+                val searchText = remember { mutableStateOf("") }
+
+                //SetupNavGraph(navController = navController)
 
                 Scaffold(
-                    topBar = { ApplicationTopBar(navController) },
+                    topBar = { ApplicationTopBar(searchText, navController) },
                     bottomBar = { ApplicationBottomBar(navController) }) {
                     Box(modifier = Modifier.padding(it)) {
-                        SetupNavGraph(navController = navController)
+                        SetupNavGraph(navController = navController, searchText = searchText)
                     }
 
                 }
             }
         }
     }
+
 }
 
 @Composable
-fun ApplicationTopBar(navHostController: NavHostController) {
+fun ApplicationTopBar(searchText: MutableState<String>, navHostController: NavHostController) {
 
     var searchText = remember { mutableStateOf("") }
 
@@ -142,7 +149,7 @@ fun ApplicationBottomBar(navController: NavHostController) {//,selectedIndex: Mu
             )
             BottomNavigationItem(
                 selected = false,
-                onClick = { navController.popBackStack(); navController.navigate("login") }, //navController.navigate("search")
+                onClick = { navController.popBackStack(); navController.navigate("search") }, //navController.navigate("search")
                 icon = { Icon(Icons.Default.Search, contentDescription = "search") },
                 label = { Text(text = "Search") }
             )
