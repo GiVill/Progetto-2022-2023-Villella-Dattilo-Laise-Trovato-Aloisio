@@ -28,16 +28,12 @@ import {ProfileComponent} from "./Components/Pages/User/profile/profile.componen
 import {CartComponent} from "./Components/Pages/cart/cart.component";
 import {RegistrazioneComponent} from "./Components/Pages/User/registrazione/registrazione.component";
 import {LoginComponent} from "./Components/Pages/User/login/login.component";
-import {
-  CartInsertionCardComponent
-} from "./Components/Components/Cards/cart-insertion-card/cart-insertion-card.component";
+import {CartInsertionCardComponent} from "./Components/Components/Cards/cart-insertion-card/cart-insertion-card.component";
 import { CreateInsertionComponent } from './Components/Pages/Insertion/create-insertion/create-insertion.component';
 import { JwtModule  } from '@auth0/angular-jwt';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { MyprofileComponent } from './Components/Pages/User/myprofile/myprofile.component';
-
-
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -74,6 +70,7 @@ import { MyprofileComponent } from './Components/Pages/User/myprofile/myprofile.
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    MatSnackBarModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

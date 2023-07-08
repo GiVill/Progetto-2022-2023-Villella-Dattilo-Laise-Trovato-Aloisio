@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {AuthService} from "../../../../service/auth.service";
 import {LoginUserDto} from "../../../../Model/loginUserDto";
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
 import {MainNavComponent} from "../../../Components/main-nav/main-nav.component";
 import {CookiesService} from "../../../../service/cookies.service";
+import { NewUserDto } from 'src/app/Model/newUserDto';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -14,9 +16,26 @@ import {CookiesService} from "../../../../service/cookies.service";
 })
 export class LoginComponent implements OnInit{
 
+  isFlipped: boolean = false;
+
+  passwordsMatch: boolean = true;
+
+  isAllFilledLogin: boolean = false;
+
+  isAllFilledRegistration: boolean = false;
+
+
   login: LoginUserDto = {
     email: '',
     password: ''
+  };
+
+
+  newUser: NewUserDto = {
+    nickName: '',
+    email: '',
+    password: '',
+    passwordCheck: ''
   };
 
 
@@ -24,7 +43,9 @@ export class LoginComponent implements OnInit{
               private cookieService: CookieService,
               private cookiesService: CookiesService,
               private User: MainNavComponent,
-              private router: Router
+              private router: Router,
+              private renderer: Renderer2,
+              private snackBar: MatSnackBar
 ) { }
 
 
@@ -45,6 +66,7 @@ export class LoginComponent implements OnInit{
       error => {
         // Handle error
         console.log(error)
+        this.snackBar.open("Credenziali errate!","OK");
       }
     );
   }
@@ -59,6 +81,47 @@ export class LoginComponent implements OnInit{
     if (userCookie) {
       this.router.navigate(['/']);
     }
+  }
+
+  flipCard(): void {
+    this.isFlipped = !this.isFlipped;
+  }
+
+  signUp(): void {
+    if (this.newUser.password !== this.newUser.passwordCheck) {
+      this.passwordsMatch = false;
+      return;
+    }
+    this.authService.signUp(this.newUser).subscribe(
+      response => {
+        console.log("OK => ",response)
+        // Handle success
+        this.snackBar.open("Registrazione completata con successo!","OK");
+        this.flipCard();
+      },
+      error => {
+        console.log("ERRORE REGISTRAZIONE => ",error)
+        // Handle error
+        this.snackBar.open("Errore registrazione, riprova più tardi!", "OK");
+      }
+    );
+  }
+
+  isLoginFormValid(): boolean {
+    if (this.login.email.length==0 || this.login.password.length==0){
+      return false;
+    }
+    return true;
+  }
+
+  isRegistrationFormValid(): boolean {
+    if (this.newUser.nickName.length==0 ||
+        this.newUser.email.length==0 ||
+        this.newUser.password.length==0 ||
+        this.newUser.passwordCheck.length==0){
+      return false;
+    }
+    return true;
   }
 
 

@@ -1,5 +1,45 @@
-<div class="container-wrapper">
-  <div class="container">
+<div class="mainContainer">
+  <img class="backgroundImage" src="assets/resources/login-background.jpg">
+  <div class="loginCardContainer" [ngClass]="{flipped: isFlipped}">
+    <div class="front">
+      <h2>LOGIN</h2>
+      <form id="log" style="display: flex;">
+        <div id="firstColumn">
+          <label for="loginuser" style="margin: 0 5px;">Email:</label>
+          <label for="loginPass" style="margin: 0 5px; margin-top: 10%;">Password:</label>
+        </div>
+        <div id="secondColumn">
+          <input type="email" style="margin: 0 5px;" [(ngModel)]="login.email" name="loginMail">
+          <input type="password" style="margin: 0 5px; margin-top: 3%;" [(ngModel)]="login.password" name="loginPassword">
+        </div>
+      </form>
+      <button mat-flat-button [disabled]="!isLoginFormValid()" style="margin-top: 12%; color: rgb(3, 90, 3);" (click)="logIn()">Accedi</button>
+      <button mat-flat-button style="margin-top: 12%;" (click)="flipCard()">Passa alla registrazione</button>
+    </div>
+    <div class="back">
+      <h2>REGISTRAZIONE</h2>
+      <form id="registration" style="display: flex;">
+        <div id="firstColumn">
+          <label for="loginuser" style="margin: 0 5px;">Username:</label>
+          <label for="loginemail" style="margin: 0 5px; margin-top: 10%;">Email:</label>
+          <label for="loginPass" style="margin: 0 5px; margin-top: 10%;">Password:</label>
+          <label for="loginPass" style="margin: 0 5px; margin-top: 10%;">Conferma password:</label>
+        </div>
+        <div id="secondColumn">
+          <input type="text" style="margin: 0 5px;" [(ngModel)]="newUser.nickName" name="registerNickName">
+          <input type="email" style="margin: 0 5px; margin-top: 6%;" [(ngModel)]="newUser.email" name="registerMail">
+          <input type="password" style="margin: 0 5px; margin-top: 6%;" [(ngModel)]="newUser.password" name="registerPassword">
+          <input type="password" style="margin: 0 5px; margin-top: 10%;" [(ngModel)]="newUser.passwordCheck" name="registerConfirmPassword">
+        </div>
+      </form>
+      <button mat-flat-button style="margin-top: 12%; color: rgb(3, 90, 3);" [disabled]="!isRegistrationFormValid()" (click)="signUp()">Registrati</button>
+      <button mat-flat-button style="margin-top: 12%;" (click)="flipCard()">Passa all'accesso</button>
+    </div>
+  </div>
+</div>
+
+<!--<div class="container-wrapper">
+  <div class="container" style="background-color: greenyellow;">
     <div class="input-field">
       <div class="form-group">
         <label for="loginuser">Username:</label>
@@ -21,4 +61,4 @@
     <p>Non sei registrato? E moviti ja</p>
     <button class="button" style="background-color: darkblue;"  [routerLink]="['/singin']">Registrati</button>
   </div>
-</div>
+</div>-->
