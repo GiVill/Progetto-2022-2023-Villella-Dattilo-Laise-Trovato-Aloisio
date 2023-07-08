@@ -1,10 +1,12 @@
 package it.unical.ea.VintedProject.dto.enumeration;
 
 public enum Category {
-    ELECTRONIC,
-    COLLECTION,
-    FASHION,
-    BOAT,
+    ELETTRONICA,
+    COLLEZIONI,
+    ABBIGLIAMENTO,
+    BARCHE,
     SPORT,
-    DONNA
+    DONNA,
+    UOMO,
+    BAMBINI
 }

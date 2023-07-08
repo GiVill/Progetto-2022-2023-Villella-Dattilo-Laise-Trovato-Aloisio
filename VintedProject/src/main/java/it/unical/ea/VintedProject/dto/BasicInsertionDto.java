@@ -1,6 +1,8 @@
 package it.unical.ea.VintedProject.dto;
 
 
+import it.unical.ea.VintedProject.dto.enumeration.Brand;
+import it.unical.ea.VintedProject.dto.enumeration.Category;
 import jakarta.persistence.Basic;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Lob;
@@ -29,7 +31,6 @@ public class BasicInsertionDto {
 
     private String condition;
 
-    @NotNull
     private LocalDate creationDate;
 
     private Boolean isPrivate;
@@ -37,6 +38,10 @@ public class BasicInsertionDto {
     private LocalDate endDate;
 
     private String imageName;
+
+    private Brand brand;
+
+    private Category category;
 
     @NotNull
     private Long userId;

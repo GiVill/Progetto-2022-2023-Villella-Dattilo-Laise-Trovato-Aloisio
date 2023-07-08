@@ -37,7 +37,7 @@ public class InsertionController {
 
     @PostMapping("/insertions")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<BasicInsertionDto> addInsertion(@RequestBody @Valid BasicInsertionDto basicInsertionDto) {
+    public ResponseEntity<BasicInsertionDto> addInsertion(@RequestBody BasicInsertionDto basicInsertionDto) {
         return ResponseEntity.ok(basicInsertionService.saveDto(basicInsertionDto));
     }
 
