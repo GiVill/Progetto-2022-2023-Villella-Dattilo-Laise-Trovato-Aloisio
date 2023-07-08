@@ -90,6 +90,7 @@ export class LoginComponent implements OnInit{
   signUp(): void {
     if (this.newUser.password !== this.newUser.passwordCheck) {
       this.passwordsMatch = false;
+      this.snackBar.open("Le password non corrispondono!","OK");
       return;
     }
     this.authService.signUp(this.newUser).subscribe(

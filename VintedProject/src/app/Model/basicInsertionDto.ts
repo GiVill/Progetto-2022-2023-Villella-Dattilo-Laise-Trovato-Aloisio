@@ -17,9 +17,72 @@ export interface BasicInsertionDto {
     description?: string;
     condition?: string;
     creationDate: string;
+    category?: Category.CategoryEnum;
+    brand?: Brand.BrandEnum;
     endDate?: string;
     imagePath?: string;
     userId: number;
     image: Blob;
 
 }
+
+export namespace Category {
+  export type CategoryEnum =
+    | 'DONNA'
+    | 'UOMO'
+    | 'COLLEZIONI'
+    | 'ELETTRONICA'
+    | 'SPORT'
+    | 'ABBIGLIAMENTO'
+    | 'BARCHE'
+    | 'BAMBINI';
+
+  export const CategoryEnum = {
+    DONNA: 'DONNA' as CategoryEnum,
+    UOMO: 'UOMO' as CategoryEnum,
+    COLLEZIONI: 'COLLEZIONI' as CategoryEnum,
+    ELETTRONICA: 'ELETTRONICA' as CategoryEnum,
+    SPORT: 'SPORT' as CategoryEnum,
+    ABBIGLIAMENTO: 'ABBIGLIAMENTO' as CategoryEnum,
+    BARCHE: 'BARCHE' as CategoryEnum,
+    BAMBINI: 'BAMBINI' as CategoryEnum,
+  };
+}
+
+export namespace Brand {
+  export type BrandEnum =
+     'Adidas'
+    | 'Puma'
+    | 'Nike'
+    | 'Microsoft'
+    | 'Xiaomi'
+    | 'Nothing'
+    | 'Guess'
+    | 'Pumpling'
+    | 'Fila'
+    | 'Onze'
+    | 'Gojiang'
+    | 'Rebook'
+    | 'New Balance'
+    | 'Asix'
+    | 'Sony';
+
+  export const BrandEnum = {
+    Adidas: 'Adidas' as BrandEnum,
+    Puma: 'Puma' as BrandEnum,
+    Nike: 'Nike' as BrandEnum,
+    Microsoft: 'Microsoft' as BrandEnum,
+    Xiaomi: 'Xiaomi' as BrandEnum,
+    Nothing: 'Nothing' as BrandEnum,
+    Guess: 'Guess' as BrandEnum,
+    Pumpling: 'Pumpling' as BrandEnum,
+    Fila: 'Fila' as BrandEnum,
+    Onze: 'Onze' as BrandEnum,
+    Gojiang: 'Gojiang' as BrandEnum,
+    Rebook: 'Rebook' as BrandEnum,
+    New_Balance: 'New Balance' as BrandEnum,
+    Asix: 'Asix' as BrandEnum,
+    Sony: 'Sony' as BrandEnum
+  };
+}
+

@@ -3,6 +3,7 @@ import {InsertionService} from "../../../../service/insertion.service";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {CookiesService} from "../../../../service/cookies.service";
+import {Brand, Category} from "../../../../Model/basicInsertionDto";
 
 @Component({
   selector: 'app-create-insertion',
@@ -12,10 +13,15 @@ import {CookiesService} from "../../../../service/cookies.service";
 export class CreateInsertionComponent implements OnInit{
   inserzione = {
     title: '',
+    category:'',
+    brand:'',
     userId: 12,
     description: '',
     price: 0,
   };
+
+  categoryOptions: Category.CategoryEnum[] = Object.values(Category.CategoryEnum);
+  brandOptions: Brand.BrandEnum[] = Object.values(Brand.BrandEnum);
 
   constructor(private router: Router,
               private insertionService: InsertionService,

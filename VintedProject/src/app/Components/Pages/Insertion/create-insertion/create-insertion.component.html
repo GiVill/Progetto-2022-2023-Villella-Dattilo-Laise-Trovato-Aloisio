@@ -1,29 +1,47 @@
-<div class="container">
-  <div class="form-container">
-    <h2>Crea Inserzione</h2>
+<div class="mainContainer">
+  <img class="backgroundImage" src="assets/resources/login-background.jpg">
+  <div class="container">
+    <div class="form-container">
+      <h2>Crea Inserzione</h2>
 
-    <form (ngSubmit)="creaInserzione()">
-      <div class="form-group">
-        <label for="titolo">Titolo:</label>
-        <input type="text" id="titolo" name="titolo" [(ngModel)]="inserzione.title" required>
-      </div>
+      <form (ngSubmit)="creaInserzione()">
+        <div class="form-group">
+          <label for="titolo">Titolo:</label>
+          <input type="text" id="titolo" name="titolo" [(ngModel)]="inserzione.title" required>
+        </div>
 
-      <div class="form-group">
-        <label for="descrizione">Descrizione:</label>
-        <input type="text" id="descrizione" name="descrizione" [(ngModel)]="inserzione.description" required class="fixed-height-textarea">
-      </div>
+        <div class="form-group">
+          <label for="Categoria">Categoria:</label>
+          <select id="Categoria" name="Categoria" [(ngModel)]="inserzione.category" required>
+            <option *ngFor="let category of categoryOptions" [value]="category">{{ category }}</option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label for="prezzo">Prezzo:</label>
-        <input type="text" id="prezzo" name="prezzo" [(ngModel)]="inserzione.price" required>
-      </div>
+        <div class="form-group">
+          <label for="Brand">Brand:</label>
+          <select id="Brand" name="Brand" [(ngModel)]="inserzione.brand" required>
+            <option *ngFor="let brand of brandOptions" [value]="brand">{{ brand }}</option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label for="foto">Foto (max 6, max 1 MB ciascuna):</label>
-        <input type="file" id="foto" name="foto" accept="image/*" (change)="caricaFoto($event)" multiple>
-      </div>
+        <div class="form-group">
+          <label for="descrizione">Descrizione:</label>
+          <input type="text" id="descrizione" name="descrizione" [(ngModel)]="inserzione.description" required class="fixed-height-textarea">
+        </div>
 
-      <button type="submit" [disabled]="!formValido()">Crea Inserzione</button>
-    </form>
+        <div class="form-group">
+          <label for="prezzo">Prezzo:</label>
+          <input type="text" id="prezzo" name="prezzo" [(ngModel)]="inserzione.price" required>
+        </div>
+
+        <div class="form-group">
+          <label for="foto">Foto (max 6, max 1 MB ciascuna):</label>
+          <input type="file" id="foto" name="foto" accept="image/*" (change)="caricaFoto($event)" multiple>
+        </div>
+
+        <button type="submit" [disabled]="!formValido()">Crea Inserzione</button>
+      </form>
+    </div>
   </div>
 </div>
+
