@@ -4,14 +4,11 @@ import it.unical.ea.VintedProject.core.entitiesAuditTrailListener.UserListener;
 import it.unical.ea.VintedProject.dto.enumeration.Gender;
 import it.unical.ea.VintedProject.dto.enumeration.Role;
 import jakarta.persistence.*;
-import jakarta.transaction.TransactionScoped;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Blob;
 import java.time.LocalDate;
