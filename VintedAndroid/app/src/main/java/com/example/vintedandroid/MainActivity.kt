@@ -142,7 +142,7 @@ fun ApplicationBottomBar(navController: NavHostController) {//,selectedIndex: Mu
             )
             BottomNavigationItem(
                 selected = false,
-                onClick = { navController.popBackStack(); navController.navigate("search") }, //navController.navigate("search")
+                onClick = { navController.popBackStack(); navController.navigate("login") }, //navController.navigate("search")
                 icon = { Icon(Icons.Default.Search, contentDescription = "search") },
                 label = { Text(text = "Search") }
             )

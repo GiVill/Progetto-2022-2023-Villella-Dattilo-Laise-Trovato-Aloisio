@@ -11,5 +11,8 @@ sealed class ScreenController(val route: String){
     object Balance: ScreenController(route = "balance")
     object Setting: ScreenController(route = "setting")
     object Feedback: ScreenController(route = "feedback")
+    object Login:ScreenController(route = "login")
+    object Register:ScreenController(route = "register")
+
 
 }

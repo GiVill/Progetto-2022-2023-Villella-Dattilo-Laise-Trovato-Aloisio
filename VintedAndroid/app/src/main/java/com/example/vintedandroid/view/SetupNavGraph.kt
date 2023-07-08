@@ -59,6 +59,12 @@ fun SetupNavGraph(navController: NavHostController) {
         composable(route = ScreenController.Feedback.route){
             FeedbackScreen()
         }
+        composable(route = ScreenController.Login.route){
+            LoginScreen(navController)
+        }
+        composable(route = ScreenController.Register.route){
+            RegistrationScreen(navController)
+        }
     }
 
 }
