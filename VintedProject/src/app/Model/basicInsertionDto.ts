@@ -63,7 +63,7 @@ export namespace Brand {
     | 'Onze'
     | 'Gojiang'
     | 'Rebook'
-    | 'New Balance'
+    | 'New_Balance'
     | 'Asix'
     | 'Sony';
 
@@ -80,7 +80,7 @@ export namespace Brand {
     Onze: 'Onze' as BrandEnum,
     Gojiang: 'Gojiang' as BrandEnum,
     Rebook: 'Rebook' as BrandEnum,
-    New_Balance: 'New Balance' as BrandEnum,
+    New_Balance: 'New_Balance' as BrandEnum,
     Asix: 'Asix' as BrandEnum,
     Sony: 'Sony' as BrandEnum
   };
