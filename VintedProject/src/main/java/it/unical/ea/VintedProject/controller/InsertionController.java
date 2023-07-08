@@ -93,13 +93,6 @@ public class InsertionController {
         return ResponseEntity.ok(basicInsertionService.modifyById(insertionId,title,price,description));
     }
 
-    @PostMapping("/insertions/uploadImage/{idInsertion}")
-    public ResponseEntity<Boolean> uploadUserImage(@PathVariable("idInsertion") Long id, @RequestBody @Valid MultipartFile img){
-        System.out.println(img.toString());
-        return ResponseEntity.ok(basicInsertionService.uploadUserImage(id,img));
-    }
-
-
     @GetMapping("/insertions/token/{idInsertion}")
     public ResponseEntity<String> generateCapabilities(@PathVariable("idInsertion") Long insertionId){
         return ResponseEntity.ok(basicInsertionService.generateToken(insertionId));

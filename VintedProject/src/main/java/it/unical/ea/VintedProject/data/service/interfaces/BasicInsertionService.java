@@ -42,9 +42,6 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
 
  */
 
-
-    Boolean uploadUserImage(Long insertionId, MultipartFile img);
-
     String generateToken(Long id) ;
 
     BasicInsertionDto getPrivateInsertion(String token);

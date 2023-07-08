@@ -46,10 +46,8 @@ public class BasicInsertion {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "IMAGE")
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private byte[] image;
+    @Column(name = "IMAGE_NAME")
+    private String imageName;
 
     @Column(name = "CONDITION")
     private String condition;

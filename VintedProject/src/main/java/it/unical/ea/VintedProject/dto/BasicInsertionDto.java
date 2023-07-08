@@ -36,9 +36,7 @@ public class BasicInsertionDto {
 
     private LocalDate endDate;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private byte[] image;
+    private String imageName;
 
     @NotNull
     private Long userId;

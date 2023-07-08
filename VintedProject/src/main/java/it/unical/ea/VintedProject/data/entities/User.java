@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -67,9 +66,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private byte[] userImage;
+    @Column(name = "IMAGE_NAME")
+    private String imageName;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Payment> payments;

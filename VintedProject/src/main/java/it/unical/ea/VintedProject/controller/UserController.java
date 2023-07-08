@@ -3,15 +3,20 @@ package it.unical.ea.VintedProject.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import it.unical.ea.VintedProject.data.dao.UserDao;
+import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.UserDto;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -21,6 +26,10 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserDao userDao;
+
+    @Autowired
+    private HttpServletRequest request;
 
     //TODO: Forse questa GET si può eliminare?
     @GetMapping("/swagger")
@@ -75,29 +84,6 @@ public class UserController {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
-
-    @PostMapping("/users/uploadImage/{idUser}")
-    public ResponseEntity<Boolean> uploadUserImage(@PathVariable("idUser") Long id, @RequestBody @Valid MultipartFile img){
-        System.out.println(img.toString());
-        return ResponseEntity.ok(userService.uploadUserImage(id,img));
-    }
-
-    /*
-    IMMAGINI SU FILE SISTEM MA NON VA !
-    @PostMapping("/users/uploadImage/{idUser}")
-    public ResponseEntity<Boolean> uploadUserImage(@PathVariable("idUser") Long id, @RequestBody @Valid MultipartFile img){
-        System.out.println(img.toString());
-        return ResponseEntity.ok(userService.uploadUserImage(id,img));
-    }
-
-    @GetMapping("/users/uploadImage/{path}")
-    public ResponseEntity<?> uploadUserImage(@PathVariable("path") String path){
-        Resource resource = userService.loadUserImage(path);
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG) // Adjust the media type based on your image type
-                .body(resource);
-    }
-     */
 
     //TODO: Forse questo si può eliminare?
     public String serviceAFallback(Exception e) {

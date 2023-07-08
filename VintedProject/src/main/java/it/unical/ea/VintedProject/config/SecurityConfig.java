@@ -64,7 +64,6 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/v1/users/{idUser}").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/v1/update-users-password/{idUser}").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/v1/update-users-nickname/{idUser}").permitAll()
-                .requestMatchers(HttpMethod.POST, "/v1/users/uploadImage/{idUser}").permitAll()
                 //PAYMENT
                 .requestMatchers(HttpMethod.GET, "/v1/payments").permitAll()
                 .requestMatchers(HttpMethod.GET,"/v1/payments/{idPayment}").permitAll()
@@ -79,7 +78,6 @@ public class SecurityConfig {
                 //INSERTION
                 .requestMatchers(HttpMethod.GET, "/v1/insertions").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/insertions").permitAll()
-                .requestMatchers(HttpMethod.POST, "/v1/insertions/uploadImage/{idInsertion}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/v1/insertions/{id}").permitAll()
                 .requestMatchers(HttpMethod.GET,"/v1/insertions/user/{idUser}/{page}").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/v1/insertions/{id}").permitAll()
@@ -99,6 +97,12 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/v1/sign-up").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/get-refresh-token").permitAll()
+                //IMAGE
+                .requestMatchers(HttpMethod.GET, "/v1/images/{userId}").permitAll()
+                .requestMatchers(HttpMethod.POST, "/v1/images/user/{userId}").permitAll()
+                .requestMatchers(HttpMethod.POST, "/v1/images/insertion/{insertionId}").permitAll()
+
+
                 .anyRequest()
                 .authenticated()
         ;

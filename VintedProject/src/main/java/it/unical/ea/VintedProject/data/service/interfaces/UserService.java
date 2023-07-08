@@ -30,6 +30,4 @@ public interface UserService {
     Boolean updateUserPassword(Long id, String newPassword);
 
     Boolean updateUserNickname(Long id, String newNickname);
-
-    Boolean uploadUserImage(Long userId, MultipartFile img);
 }

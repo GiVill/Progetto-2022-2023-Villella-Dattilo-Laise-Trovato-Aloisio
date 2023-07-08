@@ -5,5 +5,6 @@ public enum Category {
     COLLECTION,
     FASHION,
     BOAT,
-    SPORT
+    SPORT,
+    DONNA
 }

@@ -121,20 +121,6 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
         }
     }
 
-
-    @Override
-    public Boolean uploadUserImage(Long insertionId, MultipartFile img) {
-        BasicInsertion insertion = basicInsertionDao.findById(insertionId).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present", insertionId)));
-        try {
-            insertion.setImage(img.getBytes());
-            basicInsertionDao.save(insertion);
-            return true;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
     @Override
     public String generateToken(Long id) {
         BasicInsertion insertion = basicInsertionDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present", id)));

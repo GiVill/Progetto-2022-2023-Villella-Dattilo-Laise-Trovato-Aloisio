@@ -110,50 +110,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean uploadUserImage(Long userId, MultipartFile img) {
-        User user = userDao.findById(userId).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", userId)));
-        try {
-            user.setUserImage(img.getBytes());
-            userDao.save(user);
-            return true;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-
-    /*
-
-    @Override
-    public Boolean uploadUserImage(Long id, MultipartFile img) {
-        try {
-            System.out.println(img.getOriginalFilename());
-
-
-            String imagPath = FileUtil.saveMultipartFile(img);
-            System.out.println(imagPath);
-            User user = userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", id)));
-            user.setUserImagePath(imagPath);
-            userDao.save(user);
-
-            return true;
-
-        } catch (EntityNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @Override
-    public Resource loadUserImage(String path) {
-        return new FileSystemResource(path);
-    }
-     */
-
-    @Override
     public void deleteUserById(Long id) { userDao.deleteById(id); }
 
 }

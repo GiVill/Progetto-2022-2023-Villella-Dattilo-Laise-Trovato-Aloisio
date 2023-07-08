@@ -1,17 +1,12 @@
 package it.unical.ea.VintedProject.dto;
 
 import it.unical.ea.VintedProject.dto.enumeration.Gender;
-import jakarta.persistence.Basic;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Lob;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -29,9 +24,7 @@ public class UserDto {
     @NotNull(message = "lastname.not.empty")
     private String lastName;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private byte[] userImage;
+    private String imageName;
 
     @Email(message = "email.not.valid")
     private String email;
