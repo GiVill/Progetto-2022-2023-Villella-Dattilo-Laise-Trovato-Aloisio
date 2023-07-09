@@ -2,6 +2,7 @@ package it.unical.ea.VintedProject.data.service;
 
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.config.utility.FileUtil;
+import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,13 +44,28 @@ public class ImageServiceImpl implements ImageService {
         throw new EntityNotFoundException(messageLang.getMessage("image.not.found"));
     }
 
-    public Boolean insertUserImage(Long userId, MultipartFile img){
-
+    public Boolean insertUserImage(MultipartFile img){
+        Optional<User> u = userService.findByNickName(LoggedUserDetail.getInstance().getUsername());
+        if(u.get().getNickName() == null){
+            //TODO: ECCEZIONE CON MESSAGGIO
+            System.out.println("NPOOOOOOOOOOOOOOO");
+            return null;
+        }
         try {
             String realPathToUploads = System.getProperty("user.dir") + File.separator + relativePathToUploads;
 
             if (!new File(realPathToUploads).exists()) {
                 new File(realPathToUploads).mkdir();
+            }
+
+            if(u.get().getImageName() != null) {
+                String oldFilePath = realPathToUploads + "\\" + u.get().getImageName();
+                File fileToDelete = new File(oldFilePath);
+                if (fileToDelete.exists()) {
+                    if (fileToDelete.delete()) {
+                        System.out.println("Il file è stato eliminato con successo.");
+                    }
+                }
             }
 
             String orgName = FileUtil.assignProgressiveName(img);
@@ -57,10 +74,9 @@ public class ImageServiceImpl implements ImageService {
             File dest = new File(filePath);
             img.transferTo(dest);
 
-            User u = userService.getUserById(userId);
-            u.setImageName(orgName);
+            u.get().setImageName(orgName);
 
-            userService.save(u);
+            userService.save(u.get());
 
             return true;
         }catch (Exception e){ return false; }

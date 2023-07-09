@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -99,7 +100,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/v1/get-refresh-token").permitAll()
                 //IMAGE
                 .requestMatchers(HttpMethod.GET, "/v1/images/{userId}").permitAll()
-                .requestMatchers(HttpMethod.POST, "/v1/images/user/{userId}").permitAll()
+                .requestMatchers(HttpMethod.POST, "/v1/images/user").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/images/insertion/{insertionId}").permitAll()
 
 

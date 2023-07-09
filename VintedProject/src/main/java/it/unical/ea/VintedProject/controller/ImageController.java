@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.service.interfaces.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -23,9 +24,9 @@ public class ImageController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(imageService.getImage(imagePath));
     }
 
-    @PostMapping("/images/user/{userId}")
-    public ResponseEntity<Boolean> insertUserImage(@PathVariable("userId") Long userId, @RequestBody MultipartFile img){
-        return ResponseEntity.ok(imageService.insertUserImage(userId, img));
+    @PostMapping("/images/user")
+    public ResponseEntity<Boolean> insertUserImage(@RequestBody MultipartFile img){
+        return ResponseEntity.ok(imageService.insertUserImage(img));
     }
 
     @PostMapping("/images/insertion/{insertionId}")

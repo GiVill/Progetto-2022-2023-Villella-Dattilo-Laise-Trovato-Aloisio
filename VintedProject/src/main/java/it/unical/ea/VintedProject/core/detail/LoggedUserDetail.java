@@ -1,45 +1,37 @@
 package it.unical.ea.VintedProject.core.detail;
 
+import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.User;
+import it.unical.ea.VintedProject.data.service.UserServiceImpl;
+import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.enumeration.Role;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.io.Serializable;
+import java.util.Optional;
 
 //TODO Sicuri che questa classe serva
-public class LoggedUserDetail implements UserLogged {
 
-    //private static final long serialVersionUID = 1;
+@Data
+public class LoggedUserDetail implements Serializable {
 
-    private String username;
+    private static LoggedUserDetail instance;
 
+    public static LoggedUserDetail getInstance() {
+        if(instance == null){
+            instance = new LoggedUserDetail();
+        }
+        return instance;
+    }
+
+    private LoggedUserDetail(){}
+
+    private String idKeycloac;
     private String email;
-
-    private String password;
-
-    private Role auth;
-
-    public LoggedUserDetail(User user){
-        this.username = user.getNickName();
-        this.email = user.getEmail();
-        this.password = user.getPassword();
-        this.auth = user.getRole();
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail(){
-        return email;
-    }
-
-    public Role getRole(){
-        return auth;
-    }
-
+    private String username;
+    private String sessionId;
 
 }

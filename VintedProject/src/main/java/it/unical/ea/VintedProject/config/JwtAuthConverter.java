@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.config;
 
+import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
@@ -45,6 +46,8 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
     }
 
     private String getPrincipleClaimName(Jwt jwt) {
+
+        getUserInformation(jwt);
         String claimName = JwtClaimNames.SUB;
         if (principleAttribute != null) {
             claimName = principleAttribute;
@@ -72,5 +75,13 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
                 .stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toSet());
+    }
+
+
+    private void getUserInformation(Jwt jwt){
+        LoggedUserDetail.getInstance().setIdKeycloac(jwt.getClaim("sub"));
+        LoggedUserDetail.getInstance().setUsername(jwt.getClaim("preferred_username"));
+        LoggedUserDetail.getInstance().setEmail(jwt.getClaim("email"));
+        LoggedUserDetail.getInstance().setSessionId(jwt.getClaim("sid"));
     }
 }

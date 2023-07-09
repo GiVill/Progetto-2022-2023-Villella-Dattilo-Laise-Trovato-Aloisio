@@ -7,7 +7,7 @@ public interface ImageService {
 
     Resource getImage(String imagePath);
 
-    Boolean insertUserImage(Long userId, MultipartFile img);
+    Boolean insertUserImage(MultipartFile img);
 
     Boolean insertInsertionImage(Long insertionId, MultipartFile img);
 }
