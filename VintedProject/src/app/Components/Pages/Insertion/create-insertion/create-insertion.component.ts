@@ -25,7 +25,7 @@ export class CreateInsertionComponent implements OnInit{
 
   constructor(private router: Router,
               private insertionService: InsertionService,
-              private cookieService: CookiesService,)
+              private cookieService: CookiesService)
                                                     { }
 
   caricaFoto(event: any) {

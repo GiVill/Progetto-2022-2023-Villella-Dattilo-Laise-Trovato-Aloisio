@@ -2,10 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {forkJoin, Observable} from "rxjs";
+import { Observable } from "rxjs";
 import {BasicInsertionDto} from "../../../Model/basicInsertionDto";
 import {InsertionService} from "../../../service/insertion.service";
 import {CartService} from "../../../service/cart.service";
+import {OrderService} from "../../../service/order.service";
+import {TokenService} from "../../../service/token.service";
+
 
 
 @Component({
@@ -14,20 +17,25 @@ import {CartService} from "../../../service/cart.service";
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+
+
   product: any[] = [];
   cartProduct: BasicInsertionDto[] | undefined;
   ordineCreato = false;
-  logStringResultBool = false;
   totalCost = 0;
   orderSuccess = false;
   orderError = false;
+
+
 
   constructor(
     private cookieService: CookieService,
     private insertionService: InsertionService,
     private cartService: CartService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private orderService: OrderService,
+    private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
@@ -93,6 +101,64 @@ export class CartComponent implements OnInit {
     const updatedCartItems = cartItems.map(item => ({ insertion_id: item.insertion_id}));
     this.cookieService.set('cartItems', JSON.stringify(updatedCartItems), 1, '/');
   }
+
+  createOrder(): void {
+    if (this.product.length === 0) {
+      console.log("Nessun prodotto nel carrello. Impossibile creare l'ordine.");
+      return;
+    }
+
+    // Extract the insertion IDs from the cart items
+    const insertionIds: number[] = this.product.map(item => item.insertion_id);
+    const token = this.cookieService.get('jwtToken');
+    const userId: number = this.tokenService.getUserStringFromToken(token);
+
+    const order = {
+      id: null,
+      creationDate: new Date().toISOString(),
+      insertionId: insertionIds,
+      userId: userId
+    };
+    console.log("cart",order);
+
+
+
+    // Call the order service to create the order
+    this.orderService.addOrder(order).subscribe(
+      response => {
+        console.log("Ordine creato con successo:", response);
+        this.ordineCreato = true;
+        this.orderSuccess = true;
+        this.orderError = false;
+
+        // Clear the cart after successful order creation
+        this.clearCart();
+      },
+      error => {
+        console.log("cart",order); // Stampa l'oggetto orderDto invece di order
+        console.log("Errore durante la creazione dell'ordine:", error);
+        this.ordineCreato = false;
+        this.orderSuccess = false;
+        this.orderError = true;
+      }
+    );
+  }
+
+
+
+  clearCart(): void {
+    // Clear the cart items and update the cookie
+    this.product = [];
+    this.saveCartItems(this.product);
+
+    // Clear the loaded products in cartProduct
+    this.cartProduct = undefined;
+
+    // Recalculate the total cost
+    this.calculateTotalCost();
+  }
+
+
   calculateTotalCost(): void {
     let totalCost = 0;
 

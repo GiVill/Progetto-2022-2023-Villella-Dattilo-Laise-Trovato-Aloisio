@@ -7,6 +7,7 @@ import {MainNavComponent} from "../../../Components/main-nav/main-nav.component"
 import {CookiesService} from "../../../../service/cookies.service";
 import { NewUserDto } from 'src/app/Model/newUserDto';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {ErrorService} from "../../../../service/error.service";
 
 
 @Component({
@@ -45,7 +46,8 @@ export class LoginComponent implements OnInit{
               private User: MainNavComponent,
               private router: Router,
               private renderer: Renderer2,
-              private snackBar: MatSnackBar
+              private snackBar: MatSnackBar,
+              private error: ErrorService,
 ) { }
 
 
@@ -66,7 +68,8 @@ export class LoginComponent implements OnInit{
       error => {
         // Handle error
         console.log(error)
-        this.snackBar.open("Credenziali errate!","OK");
+        if (!this.error.redirectToErrorPage(error))
+          this.snackBar.open("Credenziali errate!","OK");
       }
     );
   }
@@ -88,22 +91,17 @@ export class LoginComponent implements OnInit{
   }
 
   signUp(): void {
-    if (this.newUser.password !== this.newUser.passwordCheck) {
-      this.passwordsMatch = false;
-      this.snackBar.open("Le password non corrispondono!","OK");
-      return;
-    }
     this.authService.signUp(this.newUser).subscribe(
       response => {
-        console.log("OK => ",response)
         // Handle success
-        this.snackBar.open("Registrazione completata con successo!","OK");
+        this.snackBar.open("Registrazione completata con successo!", "OK");
         this.flipCard();
       },
       error => {
-        console.log("ERRORE REGISTRAZIONE => ",error)
-        // Handle error
-        this.snackBar.open("Errore registrazione, riprova più tardi!", "OK");
+        console.log("ERRORE REGISTRAZIONE => ", error);
+        if (!this.error.redirectToErrorPage(error))
+          this.snackBar.open("Errore registrazione, riprova più tardi!", "OK");
+
       }
     );
   }

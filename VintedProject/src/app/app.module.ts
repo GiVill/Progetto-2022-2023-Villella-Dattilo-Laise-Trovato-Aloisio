@@ -26,7 +26,6 @@ import {UserInsertionComponent} from "./Components/Pages/User/user-insertion/use
 import {CatalogComponent} from "./Components/Pages/Insertion/catalog/catalog.component";
 import {ProfileComponent} from "./Components/Pages/User/profile/profile.component";
 import {CartComponent} from "./Components/Pages/cart/cart.component";
-import {RegistrazioneComponent} from "./Components/Pages/User/registrazione/registrazione.component";
 import {LoginComponent} from "./Components/Pages/User/login/login.component";
 import {CartInsertionCardComponent} from "./Components/Components/Cards/cart-insertion-card/cart-insertion-card.component";
 import { CreateInsertionComponent } from './Components/Pages/Insertion/create-insertion/create-insertion.component';
@@ -34,6 +33,11 @@ import { JwtModule  } from '@auth0/angular-jwt';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { MyprofileComponent } from './Components/Pages/User/myprofile/myprofile.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NotFoundComponent } from './Components/Pages/Errors/not-found/not-found.component';
+import { NotAuthorizedComponent } from './Components/Pages/Errors/not-authorized/not-authorized.component';
+import { BadComponent} from "./Components/Pages/Errors/badRequest/bad.component";
+import { RefusedComponent } from './Components/Pages/Errors/refused/refused.component';
+
 
 
 @NgModule({
@@ -51,10 +55,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ProfileComponent,
     CartComponent,
     CartInsertionCardComponent,
-    RegistrazioneComponent,
     LoginComponent,
     CreateInsertionComponent,
     MyprofileComponent,
+    NotFoundComponent,
+    NotAuthorizedComponent,
+    BadComponent,
+    RefusedComponent,
   ],
   imports: [
     BrowserModule,

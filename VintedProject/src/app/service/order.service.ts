@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import Order = jasmine.Order;
-import {Page} from "../Model/page.model";
+import { OrderDto} from "../Model/orderDto";
+import { PageOrderDto} from "../Model/pageOrderDto";
+import {BasicInsertionDto} from "../Model/basicInsertionDto";
 
 
 
@@ -10,21 +11,22 @@ import {Page} from "../Model/page.model";
   providedIn: 'root'
 })
 export class OrderService {
-  private apiUrl = 'https://localhost:8010/vintedProject-api/v1/insertions';
+  private apiUrl = 'https://localhost:8010/vintedProject-api/v1/orders';
 
   constructor(private http: HttpClient) { }
 
-  addOrder(order: Order): Observable<Order> {
-    return this.http.post<Order>(`${this.apiUrl}`, order);
+  addOrder(order: { id:null; creationDate: string; insertionId: number[];  userId: number }): Observable<OrderDto> {
+    console.log(order);
+    return this.http.post<OrderDto>(`${this.apiUrl}`, order);
   }
 
-  getOrderById(id: number): Observable<Order> {
-    return this.http.get<Order>(`${this.apiUrl}/${id}`);
+  getOrderById(id: number): Observable<OrderDto> {
+    return this.http.get<OrderDto>(`${this.apiUrl}/${id}`);
   }
 
-  getAllOrders(page: number): Observable<Page<Order>> {
+  getAllOrders(page: number): Observable<PageOrderDto> {
     const params = new HttpParams().set('page', page.toString());
-    return this.http.get<Page<Order>>(`${this.apiUrl}`, { params });
+    return this.http.get<PageOrderDto>(`${this.apiUrl}`, { params });
   }
 
   deleteOrderById(id: number): Observable<any> {
