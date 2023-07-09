@@ -1446,6 +1446,7 @@ id chronometer
 id clear_text
 id clip_horizontal
 id clip_vertical
+id coil_request_manager
 id collapseActionView
 id compose_view_saveable_id_tag
 id confirm_button
@@ -1560,6 +1561,7 @@ id pooling_container_listener_holder_tag
 id progress_circular
 id progress_horizontal
 id radio
+id report_drawn
 id right
 id right_icon
 id right_side
@@ -1890,6 +1892,7 @@ string range_start
 string search_menu_title
 string selected
 string status_bar_notification_info_overflow
+string switch_role
 string tab
 string template_percent
 style AlertDialog_AppCompat

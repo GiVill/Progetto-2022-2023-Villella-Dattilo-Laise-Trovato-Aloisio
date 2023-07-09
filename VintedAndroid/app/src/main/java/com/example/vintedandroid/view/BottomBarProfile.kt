@@ -34,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.vintedandroid.R
 import com.example.vintedandroid.client.models.UserDto
 import com.example.vintedandroid.theme.Typography
+import java.util.UUID
 
 //TODO: CAMBIARE USER CON INSERZIONE
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -161,6 +162,6 @@ fun BottomBarProfilePreview() {
 
     val navController = rememberNavController()
 
-    val user = UserDto(1L,"ciao","Boh","ciaoBoh")
+    val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh")
     BottomBarProfile(navController, user)
 }

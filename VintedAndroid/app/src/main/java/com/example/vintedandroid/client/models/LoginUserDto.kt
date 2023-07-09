@@ -11,7 +11,6 @@
  */
 package com.example.vintedandroid.client.models
 
-
 /**
  * 
  * @param email 

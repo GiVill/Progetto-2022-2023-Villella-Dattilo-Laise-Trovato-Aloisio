@@ -1,5 +1,6 @@
 package com.example.vintedandroid
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
@@ -20,12 +21,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.vintedandroid.client.apis.UserApi
+import com.example.vintedandroid.client.models.UserDatabaseDto
+import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.theme.VintedAndroidTheme
 import com.example.vintedandroid.view.SetupNavGraph
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.UUID
 
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("CoroutineCreationDuringComposition")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -40,6 +47,9 @@ class MainActivity : ComponentActivity() {
                     Log.i("papà",user.toString())
                 }*/
 
+                //var c = AppDatabase.getInstance(context = application.applicationContext).userDao().getAll()
+
+
 
                 val navController = rememberNavController()
 
@@ -51,7 +61,19 @@ class MainActivity : ComponentActivity() {
                     topBar = { ApplicationTopBar(searchText, navController) },
                     bottomBar = { ApplicationBottomBar(navController) }) {
                     Box(modifier = Modifier.padding(it)) {
-                        SetupNavGraph(navController = navController, searchText = searchText)
+
+
+                        CoroutineScope(Dispatchers.IO).launch {
+                            //val user1 = UserDatabaseDto(UUID.randomUUID().toString(), "ciao", "Boh", "ciaoBoh")
+                            //AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().insert(user1) //Inserimento di un utente
+                            //var c = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll() //Get di un utente
+                            //Log.i("tag", c.toString())
+                        }
+
+
+
+
+                        SetupNavGraph(navController = navController, searchText = searchText, application = application.applicationContext)
                     }
 
                 }
@@ -64,14 +86,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ApplicationTopBar(searchText: MutableState<String>, navHostController: NavHostController) {
 
-    var searchText = remember { mutableStateOf("") }
-
     TopAppBar(
         title = { },
         actions = {
             TextField(
                 value = searchText.value,
-                onValueChange = { searchText.value = it },
+                onValueChange = { searchText.value = it; },
                 modifier = Modifier
                     .padding(end = 16.dp)
                     .fillMaxWidth(1f),

@@ -26,11 +26,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.vintedandroid.R
 import com.example.vintedandroid.client.models.UserDto
+import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.theme.Typography
+import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(user : UserDto) {
+
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
             text = stringResource(R.string.account_settings),
@@ -122,7 +125,7 @@ fun ProfileScreen(user : UserDto) {
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    val user = UserDto(1L,"ciao","Boh","ciaoBoh","ciao@yahoo.it",
+    val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh","ciao@yahoo.it",
         "10-05-2001",UserDto.Gender.MALE,"via napoli",8,"Lamezia",21312,
         "Italy","asdojad")
     ProfileScreen(user)

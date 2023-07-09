@@ -1,4 +1,7 @@
 package com.example.vintedandroid.view
+import android.util.Log
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,14 +20,19 @@ import com.example.vintedandroid.client.models.PageBasicInsertionDto
 import kotlinx.coroutines.launch
 
 @Composable
-fun SearchScreen(searchText: String, insertionApi: InsertionApi) {
+fun SearchScreen(searchText: MutableState<String>) {
+
     var searchResults by remember { mutableStateOf(PageBasicInsertionDto()) }
     val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(searchText) {
-        if (searchText.isNotEmpty()) {
+    LaunchedEffect(searchText.value) {
+
+        if (searchText.value != "") {
+
             coroutineScope.launch {
-                searchResults = insertionApi.getByTitle(searchText, 0)
+                Log.i("tag", "Hai inserito questo testo => ${searchText.value}")
+                //val insertionApi = InsertionApi()
+                //searchResults = insertionApi.getByTitle(searchText.value, 0)
             }
         }
     }
@@ -33,6 +41,7 @@ fun SearchScreen(searchText: String, insertionApi: InsertionApi) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         items(searchResults.results) { result ->
             SearchResultCard(result = result)
         }

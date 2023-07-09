@@ -1,6 +1,7 @@
 package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
@@ -11,10 +12,16 @@ import androidx.navigation.compose.composable
 import com.example.vintedandroid.Item
 import com.example.vintedandroid.client.apis.InsertionApi
 import com.example.vintedandroid.client.models.UserDto
+import com.example.vintedandroid.model.AppDatabase
+import org.springframework.context.ApplicationContext
+import java.util.UUID
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>) {
+fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context) {
+
+    //var user = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll() //Get di un utente
+
 
     val itemsInCart = remember {
         mutableStateListOf<Item?>()
@@ -25,11 +32,11 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
     }
 
     //TODO user e user1 vanno cambiati!
-    val user = UserDto(1L,"ciao","Boh","ciaoBoh","ciao@yahoo.it",
+    val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh","ciao@yahoo.it",
         "10-05-2001", UserDto.Gender.MALE,"via napoli",8,"Lamezia",21312,
         "Italy","asdojad")
 
-    val user1 = UserDto(1L,"ciao","Boh","ciaoBoh")
+    val user1 = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh")
 
 
     NavHost(navController = navController, startDestination = "home") {
@@ -39,8 +46,8 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             HomeScreen(itemsInCart)
         }
         composable("search") {
-            SearchScreen(searchText.value, InsertionApi()) }
-
+            SearchScreen(searchText)
+        }
         composable(route = ScreenController.Add.route){
             AddScreen()
         }

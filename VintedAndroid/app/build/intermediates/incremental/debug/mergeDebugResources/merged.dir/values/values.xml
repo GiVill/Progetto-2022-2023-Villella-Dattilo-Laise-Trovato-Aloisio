@@ -572,6 +572,7 @@
     <item name="action_menu_divider" type="id"/>
     <item name="action_menu_presenter" type="id"/>
     <item name="androidx_compose_ui_view_composition_context" type="id"/>
+    <item name="coil_request_manager" type="id"/>
     <item name="compose_view_saveable_id_tag" type="id"/>
     <item name="consume_window_insets_tag" type="id"/>
     <item name="ghost_view" type="id"/>
@@ -591,6 +592,7 @@
     <item name="pooling_container_listener_holder_tag" type="id"/>
     <item name="progress_circular" type="id"/>
     <item name="progress_horizontal" type="id"/>
+    <item name="report_drawn" type="id"/>
     <item name="save_non_transition_alpha" type="id"/>
     <item name="save_overlay_view" type="id"/>
     <item name="snackbar_action" type="id"/>
@@ -754,6 +756,7 @@
     <string name="search_menu_title">Search</string>
     <string name="selected">Selected</string>
     <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="switch_role">Switch</string>
     <string name="tab">Tab</string>
     <string name="template_percent"><ns1:g id="percentage">%1$d</ns1:g> percent.</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
