@@ -15,7 +15,7 @@ export class CreateInsertionComponent implements OnInit{
     title: '',
     category:'',
     brand:'',
-    userId: 12,
+    userId: 2,
     description: '',
     price: 0,
   };

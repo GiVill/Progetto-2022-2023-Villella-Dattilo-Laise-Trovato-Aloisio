@@ -12,6 +12,7 @@ import {CartService} from "../../../../service/cart.service";
 import {UserService} from "../../../../service/user.service";
 import {ImageService} from "../../../../service/image.service";
 import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
+import {OrderService} from "../../../../service/order.service";
 
 
 @Component({
@@ -36,8 +37,8 @@ export class InsertionPageComponent implements OnInit {
     private route: ActivatedRoute,
     private cookieService: CookieService,
     private cartService: CartService,
-    private userService: UserService
-  ) {
+    private userService: UserService,
+    private orderService: OrderService,) {
   }
 
   ngOnInit(): void {
@@ -118,5 +119,30 @@ checkProductInCart(): void {
       this.isProductInCart=true;
     }
   }}}
+
+  BuyNow() {
+    const order = {
+
+      creationDate: new Date().toISOString(),
+      insertionId: this.id,
+      userId: 2
+    };
+    console.log("cart", order);
+
+
+    // Call the order service to create the order
+    this.orderService.addOrder(order).subscribe(
+      response => {
+        console.log("Ordine creato con successo:", response);
+
+      },
+      error => {
+        console.log("cart", order); // Stampa l'oggetto orderDto invece di order
+        console.log("Errore durante la creazione dell'ordine:", error);
+
+      }
+    );
+  }
+
 }
 

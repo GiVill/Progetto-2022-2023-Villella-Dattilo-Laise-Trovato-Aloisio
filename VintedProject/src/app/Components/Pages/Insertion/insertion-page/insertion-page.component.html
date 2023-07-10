@@ -24,7 +24,7 @@
       </p>
     </div>
     <div class="button-container">
-      <button class="btn buy-button" *ngIf="!isProductInCart" (click)="addToCart()">Acquista</button>
+      <button class="btn buy-button" *ngIf="!isProductInCart" (click)="BuyNow()">Acquista</button>
       <p class="btn buy-button disabled" style="text-align: center; color: black" *ngIf="isProductInCart">Prodotto nel carrello</p>
       <button class="btn second-button">Fai un'offerta</button>
       <button class="btn second-button">Contatta il venditore</button>
