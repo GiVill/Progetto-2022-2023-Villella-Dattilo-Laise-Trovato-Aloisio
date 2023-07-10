@@ -27,11 +27,11 @@ export class InsertionService {
 
   addInsertion(insertion: BasicInsertionDto, image : File){
     console.log(insertion);
-    const provaDto : ProvaDto ={
-      insertionDto : insertion,
-      img : image
-    }
-    return this.http.post<BasicInsertionDto>(`${this.apiinsertionUrl}`,provaDto);
+    const insertionBlob = new Blob([JSON.stringify(insertion)], { type: 'application/json' });
+    const formData = new FormData();
+    formData.append('insertion', insertionBlob);
+    formData.append('img', image);
+    return this.http.post<BasicInsertionDto>(`${this.apiinsertionUrl}`,formData);
   }
 
   getInsertionById(id: number | undefined): Observable<BasicInsertionDto> {
