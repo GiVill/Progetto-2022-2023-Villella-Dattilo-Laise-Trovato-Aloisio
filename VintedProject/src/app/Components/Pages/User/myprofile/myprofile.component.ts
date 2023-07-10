@@ -7,6 +7,9 @@ import {UserService} from "../../../../service/user.service";
 import {switchMap} from "rxjs";
 import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
 import {ImageService} from "../../../../service/image.service";
+import {TokenService} from "../../../../service/token.service";
+import {PageOrderDto} from "../../../../Model/pageOrderDto";
+import {OrderService} from "../../../../service/order.service";
 
 @Component({
   selector: 'app-myprofile',
@@ -16,33 +19,40 @@ import {ImageService} from "../../../../service/image.service";
 export class MyprofileComponent {
 
   @Input() user: UserDto | undefined;
-  userInsertion: PageBasicInsertionDto | undefined;
+  myInsertion: PageBasicInsertionDto | undefined;
+  myOrder: PageOrderDto | undefined
   page= 0
+  isAnyInsertion=false;
+  isAnyOrder=false;
+  newPassword: string = '';
+  newNickname: string = '';
+  userId: number = Number(this.tokenservice.getUserStringFromToken);
+  isUpdatingPassword: boolean = false;
+  isUpdatingNickname: boolean = false;
+  showUpdateSection =false;
 
-  id: number | undefined;
-  modalOpen = false;
-  modalImage: string | undefined;
 
   constructor(
     private insertionService: InsertionService,
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private tokenservice: TokenService,
+    private  orderService: OrderService
   ) {}
 
 
   ngOnInit(): void {
     this.route.paramMap.pipe(
       switchMap((params) => {
-        this.id = Number(params.get('userid'));
-        return this.userService.getUserById(this.id);
+        return this.userService.getUserById(this.userId);
       })
     ).subscribe(
       (user: UserDto) => {
         this.user = user;
-        console.log(this.user)
-        this.userService.getAllInsertionsByUser(this.id, this.page).subscribe(
+        //TODO Creare sto cazzo di get insertionBUserId e get orderByUserId //
+        this.userService.getAllInsertionsByUser(this.userId, this.page).subscribe(
           (data: PageBasicInsertionDto) => {
-            this.userInsertion = data;
+            this.myInsertion = data;
             console.log(data)
             //this.processImages(data.content);
           },
@@ -50,11 +60,29 @@ export class MyprofileComponent {
             console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
           }
         );
+      if (this.myInsertion?.empty){
+        this.isAnyInsertion=true;
+      }
+      })
+
+    //TODO orderService deve prendere gli ordini dell'utente pagiagble /////this.page
+    this.orderService.getAllOrders(this.userId).subscribe(
+      (data: PageOrderDto) => {
+        this.myOrder = data;
+        console.log(data);
+        // Further processing if needed
       },
       (error) => {
-        console.log('Si è verificato un errore durante il recupero dell\'utente:', error);
-      }
-    );
+        console.log('Si è verificato un errore durante il recupero degli ordini dell\'utente:', error);
+      })
+    if (this.myOrder?.empty){
+      this.isAnyOrder=true;
+    }
+  }
+
+
+  show(){
+    this.showUpdateSection = !this.showUpdateSection;
   }
 
   /*
@@ -68,11 +96,53 @@ export class MyprofileComponent {
       });
     }
   */
+
   processImages(insertions: BasicInsertionDto[]): void {
     insertions.forEach(async (insertion: BasicInsertionDto) => {
       insertion.imagePath = await ImageService.setProductImageSrc(insertion.image);
     });
   }
+
+
+  updatePassword() {
+    if (this.userId && this.newPassword) {
+      this.isUpdatingPassword = true;
+      this.userService.updateUserPassword(this.newPassword, this.userId).subscribe(
+        (success: boolean) => {
+          // Password update successful
+          this.isUpdatingPassword = false;
+          this.newPassword = '';
+          // Handle success response
+        },
+        (error: any) => {
+          // Password update failed
+          this.isUpdatingPassword = false;
+          console.log(error)
+        }
+      );
+    }
+  }
+
+  updateNickname() {
+    if (this.userId && this.newNickname) {
+      this.isUpdatingNickname = true;
+      this.userService.updateUserNickname(this.newNickname, this.userId).subscribe(
+        (success: boolean) => {
+          // Nickname update successful
+          this.isUpdatingNickname = false;
+          this.newNickname = '';
+          // Handle success response
+        },
+        (error: any) => {
+          console.log(error)
+          this.isUpdatingNickname = false;
+          // Handle error response
+        }
+      );
+    }
+  }
+
+
 
 
 

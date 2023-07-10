@@ -1,0 +1,12 @@
+<div>
+  <div>
+    <img style=" max-height: 180px;" src="assets/resources/vestito.jpg" (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
+  </div>
+  <div style="padding-left: 2%;">
+    <div class="product-card">
+      <!-- Visualizza i dettagli del prodotto -->
+      <h2>{{ item?.creationDate}}</h2>
+      <p style="max-width: 250px">totale: {{ item?.total }}</p>
+    </div>
+  </div>
+</div>

@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit{
       error => {
         // Handle error
         console.log(error)
-        if (!this.error.redirectToErrorPage(error))
+        // (!this.error.redirectToErrorPage(error))
           this.snackBar.open("Credenziali errate!","OK");
       }
     );

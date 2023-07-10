@@ -9,16 +9,61 @@
       <p>Cognome: {{ user?.lastName }}</p>
       <p>Email: {{ user?.email }}</p>
       <p>Data di nascita: {{ user?.birthDate }}</p>
-      <!--Altre informazioni utente qui -->
+      <!-- Altre informazioni utente qui -->
     </div>
-    <button mat-raised-button class="button"  style="margin-left: 25%" [routerLink]="['/myprofile']" >Modifica informazioni</button>
+    <button mat-raised-button class="button" style="margin-left: 25%" [routerLink]="['/myprofile']" (click)="show()">Modifica informazioni</button>
   </div>
 
-  <div class="other-insertions-container">
-    <h2>Le mie inserzioni:</h2>
-    <div class="insertion-container" *ngIf="userInsertion">
-      <div class="insertion-card" *ngFor="let insertion of userInsertion?.content">
-        <app-product-card [item]="insertion"></app-product-card>
+  <div class="update-section" *ngIf="showUpdateSection">
+    <h2>Aggiorna nickname e password</h2>
+    <div class="input-container">
+      <label for="nickname">Nuovo nickname:</label>
+      <input type="text" id="nickname" [(ngModel)]="newNickname">
+      <button mat-raised-button class="small-button" style="margin: 2%" (click)="updateNickname()">Salva</button>
+    <div class="input-container">
+      <label for="password">Nuova password:</label>
+      <input type="password" id="password" [(ngModel)]="newPassword">
+      <button mat-raised-button class="small-button" style="margin: 2%" (click)="updatePassword()">Salva</button>
+
+    </div>
+    </div>
+  </div>
+
+
+  <div class="insertion-container" *ngIf="isAnyInsertion">
+    <div class="body-content" style="margin-top: 30px">
+      <div style="max-height: 700px;">
+        <div class="header">
+          <h2 class="font">Le mie inserzioni</h2>
+          <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutte</button>
+        </div>
+        <div class="card-container">
+          <div class="card-row" >
+            <div *ngFor="let item of myInsertion?.content" class="card-item">
+              <app-product-card [item]="item"></app-product-card>
+            </div>
+            <button type="button" class="btn btn-secondary" style="height: 300px; min-width: 25%; min-height: 30%"  [routerLink]="['/catalog']">Vedi tutte</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insertion-container" *ngIf="isAnyOrder">
+    <div class="body-content" style="margin-top: 30px">
+      <div style="max-height: 700px;">
+        <div class="header">
+          <h2 class="font">I mie ordini</h2>
+          <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutti</button>
+        </div>
+        <div class="card-container">
+          <div class="card-row" >
+            <div *ngFor="let item of myOrder?.content" class="card-item">
+              <app-order-card [item]="item"></app-order-card>
+            </div>
+            <button type="button" class="btn btn-secondary" style="height: 300px; min-width: 25%; min-height: 30%"  [routerLink]="['/catalog']">Vedi tutti</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

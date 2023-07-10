@@ -37,6 +37,7 @@ import { NotFoundComponent } from './Components/Pages/Errors/not-found/not-found
 import { NotAuthorizedComponent } from './Components/Pages/Errors/not-authorized/not-authorized.component';
 import { BadComponent} from "./Components/Pages/Errors/badRequest/bad.component";
 import { RefusedComponent } from './Components/Pages/Errors/refused/refused.component';
+import { OrderCardComponent } from './Components/Components/Cards/order-card/order-card.component';
 
 
 
@@ -62,6 +63,7 @@ import { RefusedComponent } from './Components/Pages/Errors/refused/refused.comp
     NotAuthorizedComponent,
     BadComponent,
     RefusedComponent,
+    OrderCardComponent,
   ],
   imports: [
     BrowserModule,

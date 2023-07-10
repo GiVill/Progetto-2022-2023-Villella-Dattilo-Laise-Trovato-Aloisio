@@ -25,6 +25,7 @@ export class MainNavComponent implements OnInit{
 
   ngOnInit(): void {
     this.cookieService.checkUserCookie()
+    this.getUserString()
   }
 
   getUserString(){

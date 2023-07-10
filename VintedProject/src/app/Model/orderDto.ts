@@ -13,6 +13,7 @@
 export interface OrderDto {
     id: number;
     creationDate: string;
+    total: number;
     //paymentId: number;
     insertionId: number[];
     userId: number;
