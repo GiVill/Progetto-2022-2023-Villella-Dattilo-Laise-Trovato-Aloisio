@@ -102,4 +102,6 @@ public class InsertionController {
     public ResponseEntity<BasicInsertionDto> getPrivateInsertion(@PathVariable("token") String token){
         return ResponseEntity.ok(basicInsertionService.getPrivateInsertion(token));
     }
+
+
 }

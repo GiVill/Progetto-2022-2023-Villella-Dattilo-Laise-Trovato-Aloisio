@@ -46,4 +46,5 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
 
     BasicInsertionDto getPrivateInsertion(String token);
 
+
 }

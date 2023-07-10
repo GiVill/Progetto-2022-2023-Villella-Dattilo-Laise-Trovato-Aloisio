@@ -33,4 +33,16 @@ public class ImageController {
     public ResponseEntity<Boolean> insertInsertionImage(@PathVariable("insertionId") Long insertionId, @RequestBody MultipartFile img){
         return ResponseEntity.ok(imageService.insertInsertionImage(insertionId, img));
     }
+
+    @DeleteMapping("/images/delete/user/{id}")
+    public ResponseEntity<String> deleteImage(@PathVariable("id") Long id){
+        imageService.deleteImageUser(id);
+        return ResponseEntity.ok("ok");
+    }
+
+    @DeleteMapping("/images/delete/insertion/{id}")
+    public ResponseEntity<String> deleteImageInsertion(@PathVariable("id") Long id){
+        imageService.deleteImageInsertion(id);
+        return ResponseEntity.ok("ok");
+    }
 }

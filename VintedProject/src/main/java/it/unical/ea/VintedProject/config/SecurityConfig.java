@@ -102,6 +102,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/v1/images/{userId}").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/images/user").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/images/insertion/{insertionId}").permitAll()
+                .requestMatchers(HttpMethod.DELETE,"/v1/images/delete/user/{id}").permitAll()
+                .requestMatchers(HttpMethod.DELETE,"/v1/images/delete/insertion/{id}").permitAll()
                 //CHAT
                 .requestMatchers(HttpMethod.GET,"/v1/chat/user/{id}").permitAll()
                 .requestMatchers(HttpMethod.GET,"/v1/chat/message/{id}/{id2}").permitAll()

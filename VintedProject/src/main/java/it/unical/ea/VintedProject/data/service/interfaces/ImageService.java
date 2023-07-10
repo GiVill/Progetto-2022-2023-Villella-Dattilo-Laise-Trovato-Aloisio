@@ -10,4 +10,8 @@ public interface ImageService {
     Boolean insertUserImage(MultipartFile img);
 
     Boolean insertInsertionImage(Long insertionId, MultipartFile img);
+
+    void deleteImageUser(Long id);
+
+    void deleteImageInsertion(Long id);
 }

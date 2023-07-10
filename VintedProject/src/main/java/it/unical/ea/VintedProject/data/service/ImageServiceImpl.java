@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,7 @@ public class ImageServiceImpl implements ImageService {
     private final UserService userService;
     private final BasicInsertionService insertionService;
     private final MessageLang messageLang;
+    private final BasicInsertionServiceImpl basicInsertionService;
 
     private final String relativePathToUploads = "src/main/resources/image/";
 
@@ -103,6 +105,47 @@ public class ImageServiceImpl implements ImageService {
 
             return true;
         }catch (Exception e){ return false; }
+    }
+
+    @Override
+    public void deleteImageUser(Long id) {
+        User user = userService.getUserById(id);
+        String newPath =  relativePathToUploads + user.getImageName();
+
+        File file = new File(newPath);
+
+        if (file.exists() && file.isFile()) {
+            if (file.delete()) {
+                System.out.println("File eliminato con successo.");
+                user.setImageName(null);
+                userService.save(user);
+            } else {
+                System.out.println("Impossibile eliminare il file.");
+            }
+        } else {
+            System.out.println("Il file non esiste o non è un file valido.");
+        }
+
+
+    }
+    @Override
+    public void deleteImageInsertion(Long id) {
+
+        BasicInsertion basicInsertion = basicInsertionService.findById(id);
+        String newPath = relativePathToUploads + basicInsertion.getImageName();
+
+        File file = new File(newPath);
+        if (file.exists() && file.isFile()) {
+            if (file.delete()) {
+                System.out.println("File eliminato con successo.");
+                basicInsertion.setImageName(null);
+                basicInsertionService.save(basicInsertion);
+            } else {
+                System.out.println("Impossibile eliminare il file.");
+            }
+        } else {
+            System.out.println("Il file non esiste o non è un file valido.");
+        }
     }
 
     /*

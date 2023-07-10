@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
@@ -32,11 +33,14 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     //private final DressInsertionDao
 
+    private  final BasicInsertionService basicInsertionService;
     private final BasicInsertionDao basicInsertionDao;
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 5;
 
     private final MessageLang messageLang;
+    private final String relativePathToUploads = "src/main/resources/image/";
+
 
     @Override
     public void save(BasicInsertion basicInsertion) {
@@ -148,4 +152,5 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
         }
         return null;
     }
+
 }
