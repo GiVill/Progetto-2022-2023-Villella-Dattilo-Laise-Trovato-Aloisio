@@ -26,7 +26,7 @@ import com.example.vintedandroid.client.models.PageBasicInsertionDto
 import com.example.vintedandroid.client.infrastructure.*
 import com.example.vintedandroid.client.infrastructure.MultiValueMap
 
-class InsertionApi(basePath: kotlin.String = "https://localhost:8010/vintedProject-api") : ApiClient(basePath) {
+class InsertionApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
     /**
      * 

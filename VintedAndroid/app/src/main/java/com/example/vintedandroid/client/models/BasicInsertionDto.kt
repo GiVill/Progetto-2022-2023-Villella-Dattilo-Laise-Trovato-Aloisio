@@ -31,8 +31,8 @@ data class BasicInsertionDto (
     val price: kotlin.Float,
     val description: kotlin.String? = null,
     val condition: kotlin.String? = null,
-    val creationDate: java.time.LocalDate,
-    val endDate: java.time.LocalDate? = null,
+    val creationDate: Any? = null,
+    val endDate: Any? = null,
     val imagePath: kotlin.String? = null,
     val userId: kotlin.Long
 ) {

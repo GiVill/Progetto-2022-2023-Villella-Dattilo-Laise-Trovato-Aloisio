@@ -16,7 +16,12 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -33,6 +38,9 @@ import java.util.UUID
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(user : UserDto) {
+
+    var isEditing by remember { mutableStateOf(false) }
+    var textValue by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
@@ -91,12 +99,19 @@ fun ProfileScreen(user : UserDto) {
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            Card(onClick = { /*TODO*/ }) {
-                Row(verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(10.dp)) {
-                    Text(text = "Modifica nickname")
-                    Spacer(modifier = Modifier.weight(1f))
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.default_account))
+            Card(onClick = { isEditing = true }) {
+                if (isEditing) {
+                    TextField(
+                        value = textValue,
+                        onValueChange = { newValue -> textValue = newValue },
+                        modifier = Modifier.padding(10.dp)
+                    )
+                } else {
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(10.dp)) {
+                        Text(text = "Modifica nickname")
+                        Spacer(modifier = Modifier.weight(1f))
+                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.default_account))
+                    }
                 }
             }
 

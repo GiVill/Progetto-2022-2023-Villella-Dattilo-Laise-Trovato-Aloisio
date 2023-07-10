@@ -1,14 +1,21 @@
 package com.example.vintedandroid
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -16,11 +23,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.vintedandroid.client.apis.UserApi
 import com.example.vintedandroid.client.models.UserDatabaseDto
 import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.theme.VintedAndroidTheme
@@ -30,53 +40,78 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.UUID
 
-
 class MainActivity : ComponentActivity() {
-    @SuppressLint("CoroutineCreationDuringComposition")
+    @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             VintedAndroidTheme {
                 StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitNetwork().build())
 
-                /*
-                //QUESTE FUNZIONANO SOLO A LUIGI! AGLI ALTRI DARà ERRORE!!
-                val userApi = UserApi()
-                val users = userApi.all()
-                users.forEach { user ->
-                    Log.i("papà",user.toString())
-                }*/
+                if (checkForInternet(this)) {
+                    //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this,"a", Toast.LENGTH_SHORT).show()
 
-                //var c = AppDatabase.getInstance(context = application.applicationContext).userDao().getAll()
+                    /*
+                    //QUESTE FUNZIONANO SOLO A LUIGI! AGLI ALTRI DARà ERRORE!!
+                    val userApi = UserApi()
+                    val users = userApi.all()
+                    users.forEach { user ->
+                        Log.i("papà",user.toString())
+                    }
+                     */
 
-
-
-                val navController = rememberNavController()
-
-                val searchText = remember { mutableStateOf("") }
-
-                //SetupNavGraph(navController = navController)
-
-                Scaffold(
-                    topBar = { ApplicationTopBar(searchText, navController) },
-                    bottomBar = { ApplicationBottomBar(navController) }) {
-                    Box(modifier = Modifier.padding(it)) {
+                    //var c = AppDatabase.getInstance(context = application.applicationContext).userDao().getAll()
 
 
-                        CoroutineScope(Dispatchers.IO).launch {
-                            //val user1 = UserDatabaseDto(UUID.randomUUID().toString(), "ciao", "Boh", "ciaoBoh")
-                            //AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().insert(user1) //Inserimento di un utente
-                            //var c = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll() //Get di un utente
-                            //Log.i("tag", c.toString())
+
+                    val navController = rememberNavController()
+
+                    val searchText = remember { mutableStateOf("") }
+
+                    //SetupNavGraph(navController = navController)
+
+                    Scaffold(
+                        topBar = { ApplicationTopBar(searchText, navController) },
+                        bottomBar = { ApplicationBottomBar(navController) }) {
+                        Box(modifier = Modifier.padding(it)) {
+
+
+                            CoroutineScope(Dispatchers.IO).launch {
+                                //val user1 = UserDatabaseDto(UUID.randomUUID().toString(), "ciao", "Boh", "ciaoBoh")
+                                //AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().insert(user1) //Inserimento di un utente
+                                //var c = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll() //Get di un utente
+                                //Log.i("tag", c.toString())
+                            }
+
+                            SetupNavGraph(navController = navController, searchText = searchText, application = application.applicationContext)
                         }
 
-
-
-
-                        SetupNavGraph(navController = navController, searchText = searchText, application = application.applicationContext)
                     }
+                } else {
+                    Scaffold(){
+                        Box(modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                            contentAlignment = Alignment.Center ) {
 
+                            Card(modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth()) {
+                                Text(text = "Please connect to the internet")
+                                Spacer(modifier = Modifier.width(3.dp))
+                                Icon(
+                                    imageVector = Icons.Filled.Warning,
+                                    contentDescription = "No Internet Connection",
+                                    //tint = Color.Red
+                                )
+                                
+                            }
+                        }
+                    }
+                    Toast.makeText(this, "You are not connected to the Internet!", Toast.LENGTH_SHORT).show()
                 }
+
             }
         }
     }
@@ -218,6 +253,46 @@ fun ApplicationBottomBar(navController: NavHostController) {//,selectedIndex: Mu
     }
 
          */
+    }
+}
+
+
+private fun checkForInternet(context: Context): Boolean {
+
+    // register activity with the connectivity manager service
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    // if the android version is equal to M
+    // or greater we need to use the
+    // NetworkCapabilities to check what type of
+    // network has the internet connection
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+        // Returns a Network object corresponding to
+        // the currently active default data network.
+        val network = connectivityManager.activeNetwork ?: return false
+
+        // Representation of the capabilities of an active network.
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+        return when {
+            // Indicates this network uses a Wi-Fi transport,
+            // or WiFi has network connectivity
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+
+            // Indicates this network uses a Cellular transport. or
+            // Cellular has network connectivity
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+
+            // else return false
+            else -> false
+        }
+    } else {
+        // if the android version is below M
+        @Suppress("DEPRECATION") val networkInfo =
+            connectivityManager.activeNetworkInfo ?: return false
+        @Suppress("DEPRECATION")
+        return networkInfo.isConnected
     }
 }
 

@@ -9,7 +9,7 @@ public final class MainActivity extends androidx.activity.ComponentActivity {
         super();
     }
     
-    @android.annotation.SuppressLint(value = {"CoroutineCreationDuringComposition"})
+    @android.annotation.SuppressLint(value = {"CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter"})
     @java.lang.Override
     protected void onCreate(@org.jetbrains.annotations.Nullable
     android.os.Bundle savedInstanceState) {

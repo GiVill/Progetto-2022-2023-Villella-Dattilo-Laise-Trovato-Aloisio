@@ -14,13 +14,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.vintedandroid.client.apis.InsertionApi
 import com.example.vintedandroid.client.models.BasicInsertionDto
 import com.example.vintedandroid.client.models.PageBasicInsertionDto
 import kotlinx.coroutines.launch
 
 @Composable
-fun SearchScreen(searchText: MutableState<String>) {
+fun SearchScreen(searchText: MutableState<String>, insertionApi: InsertionApi, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>) {
 
     var searchResults by remember { mutableStateOf(PageBasicInsertionDto()) }
     val coroutineScope = rememberCoroutineScope()
@@ -31,8 +32,8 @@ fun SearchScreen(searchText: MutableState<String>) {
 
             coroutineScope.launch {
                 Log.i("tag", "Hai inserito questo testo => ${searchText.value}")
-                //val insertionApi = InsertionApi()
-                //searchResults = insertionApi.getByTitle(searchText.value, 0)
+                searchResults = insertionApi.getByTitle(searchText.value, 0)
+                Log.i("tag", searchResults.toString());
             }
         }
     }
@@ -43,20 +44,24 @@ fun SearchScreen(searchText: MutableState<String>) {
     ) {
 
         items(searchResults.results) { result ->
-            SearchResultCard(result = result)
+            //Text(text = "test e basta")
+            SearchResultCard(result = result, navController, searchedProduct)
         }
     }
 }
 
 @Composable
-fun SearchResultCard(result: BasicInsertionDto) {
+fun SearchResultCard(result: BasicInsertionDto, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp, start = 16.dp, end = 16.dp),
         elevation = 4.dp
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier =
+        Modifier.padding(16.dp)
+            .clickable(onClick = { searchedProduct.value = result ;navController.popBackStack(); navController.navigate("product") }),
+        ) {
             Text(text = result.title, style = MaterialTheme.typography.h6)
             result.description?.let { Text(text = it, style = MaterialTheme.typography.body1) }
             Text(text = "Prezzo: ${result.price}", style = MaterialTheme.typography.body2)

@@ -2,9 +2,15 @@ package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -26,13 +32,32 @@ import com.google.android.material
 .Snackbar;
 import androidx.coordinatorlayout
 .widget.CoordinatorLayout;
+import com.example.vintedandroid.client.apis.InsertionApi
+import com.example.vintedandroid.client.models.BasicInsertionDto
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(itemsInCart: MutableList<Item?>) {
-
+fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>) {
+/*
+    LazyRow(modifier = Modifier.fillMaxWidth()) {
+        items(items) { item ->
+            // Replace this with your item composable
+            // that represents each item in the list
+            Text(text = item)
+        }
+    }
+ */
 
     //val snackbar: Snackbar = Snackbar.make(containerLayout, "", Snackbar.LENGTH_LONG)
+
+    val scrollState = rememberLazyListState()
+    val scrollState1 = rememberLazyListState()
+
+    val scrollState2 = rememberLazyListState()
+
+    val scrollState3 = rememberLazyListState()
+
+
 
     val items = remember {
         listOf(
@@ -47,18 +72,127 @@ fun HomeScreen(itemsInCart: MutableList<Item?>) {
         )
     }
 
+    val itemsWomen = InsertionApi().getByCategory("DONNA", 0)
+    val itemsMan = InsertionApi().getByCategory("UOMO", 0)
+    val itemsBaby = InsertionApi().getByCategory("BAMBINI", 0)
+    //val itemAll = InsertionApi().getAll()
 
 
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        items.forEach { item ->
-            ItemCart(item, itemsInCart)
+
+
+    /*
+        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            items.forEach { item ->
+                ItemCart(item, itemsInCart)
+            }
+        }
+
+
+     */
+
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        item {
+
+            // Header item here
+            // Add any Composable you want to use as the header
+        }
+        item {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .clickable(onClick = { /* Open item details activity */ }),
+                elevation = 4.dp
+            ) {
+                Text(text = "WOMEN")
+                LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState1) {
+                    items(itemsWomen.results) { item ->
+                        ItemCart(item, itemsInCart)
+                    }
+                }
+            }
+        }
+        item {
+
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+        item {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .clickable(onClick = { /* Open item details activity */ }),
+                elevation = 4.dp
+            ) {
+                Text(text = "MAN")
+                LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState2) {
+                    items(itemsMan.results) { item ->
+                        ItemCart(item, itemsInCart)
+                    }
+                }
+            }
+        }
+        item {
+
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+        item {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .clickable(onClick = { /* Open item details activity */ }),
+                elevation = 4.dp
+            ) {
+                Text(text = "BABY")
+                LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState3) {
+                    items(itemsBaby.results) { item ->
+                        ItemCart(item, itemsInCart)
+                    }
+                }
+            }
         }
     }
+    /*
+    Row(modifier = Modifier.fillMaxWidth()) {
+        Text(text = "Woman")
+
+            LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState1) {
+                items(itemsWomen.results) { item ->
+                    ItemCart(item, itemsInCart)
+                }
+            }
+            Text(text = "Man")
+            LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState2) {
+                items(itemsMan.results) { item ->
+                    ItemCart(item, itemsInCart)
+                }
+            }
+        Text(text = "Baby ciuati")
+
+            LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState3) {
+                items(itemsBaby.results) { item ->
+                    ItemCart(item, itemsInCart)
+                }
+            }
+
+    }
+
+     */
+
+    /*
+    LazyRow(modifier = Modifier.horizontalScroll(rememberScrollState())) {
+        items(itemsInCart.filterNotNull()) { item ->
+            ItemCart(item, itemsInCart)
+
+        }
+    }
+     */
 
 }
 
 @Composable
-fun ItemCart(item: Item, itemsInCart: MutableList<Item?>) {
+fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto?>) {
 
     var showDialog by remember { mutableStateOf(false) }
 
@@ -73,14 +207,15 @@ fun ItemCart(item: Item, itemsInCart: MutableList<Item?>) {
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = item.name)
+            Text(text = item.title)
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = item.description)
+            item.description?.let { Text(text = it) }
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = "$${item.price}")
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = {
                 showDialog = true;
+
 
                 if (!itemsInCart.contains(item)) {
                     itemsInCart.add(item)
@@ -99,7 +234,7 @@ fun ItemCart(item: Item, itemsInCart: MutableList<Item?>) {
             }
             if (showDialog) {
                 PopupDialog(onDismiss = { showDialog = false }) {
-                    Text("${item.name} added in cart!  Mannaggia ai Negri!")
+                    Text("${item.title} added in cart!  Mannaggia ai Negri!")
                 }
             }
         }
@@ -128,7 +263,7 @@ fun PopupDialog(onDismiss: () -> Unit, content: @Composable () -> Unit) {
 fun HomeScreenPreview() {
 
     val itemsInCart = remember {
-        mutableListOf<Item?>()
+        mutableListOf<BasicInsertionDto?>()
     }
 
     HomeScreen(itemsInCart)

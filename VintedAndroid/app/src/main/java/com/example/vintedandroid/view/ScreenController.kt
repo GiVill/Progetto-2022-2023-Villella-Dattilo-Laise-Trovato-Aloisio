@@ -13,6 +13,6 @@ sealed class ScreenController(val route: String){
     object Feedback: ScreenController(route = "feedback")
     object Login:ScreenController(route = "login")
     object Register:ScreenController(route = "register")
-
+    object Product:ScreenController(route = "product")
 
 }

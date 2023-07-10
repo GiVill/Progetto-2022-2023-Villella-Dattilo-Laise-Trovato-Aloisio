@@ -35,9 +35,50 @@ data class PageBasicInsertionDto (
     val first: Boolean? = null,
     val last: Boolean? = null,
     val numberOfElements: Int? = null,
-    val pageable: PageableObject? = null,
+    val pageable: Any? = null,
     val empty: Boolean? = null
 ) {
     val results: List<BasicInsertionDto>
         get() = content.orEmpty().toList()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PageBasicInsertionDto
+
+        if (totalElements != other.totalElements) return false
+        if (totalPages != other.totalPages) return false
+        if (size != other.size) return false
+        if (content != null) {
+            if (other.content == null) return false
+            if (!content.contentEquals(other.content)) return false
+        } else if (other.content != null) return false
+        if (number != other.number) return false
+        if (sort != other.sort) return false
+        if (first != other.first) return false
+        if (last != other.last) return false
+        if (numberOfElements != other.numberOfElements) return false
+        if (pageable != other.pageable) return false
+        if (empty != other.empty) return false
+        if (results != other.results) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = totalElements?.hashCode() ?: 0
+        result = 31 * result + (totalPages ?: 0)
+        result = 31 * result + (size ?: 0)
+        result = 31 * result + (content?.contentHashCode() ?: 0)
+        result = 31 * result + (number ?: 0)
+        result = 31 * result + (sort?.hashCode() ?: 0)
+        result = 31 * result + (first?.hashCode() ?: 0)
+        result = 31 * result + (last?.hashCode() ?: 0)
+        result = 31 * result + (numberOfElements ?: 0)
+        result = 31 * result + (pageable?.hashCode() ?: 0)
+        result = 31 * result + (empty?.hashCode() ?: 0)
+        result = 31 * result + results.hashCode()
+        return result
+    }
 }

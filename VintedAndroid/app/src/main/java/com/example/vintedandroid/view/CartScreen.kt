@@ -19,11 +19,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.vintedandroid.Item
+import com.example.vintedandroid.client.models.BasicInsertionDto
 
 //import com.google.android.material.snackbar.Snackbar
 
 @Composable
-fun CartScreen(itemsInCart: MutableList<Item?>) {
+fun CartScreen(itemsInCart: MutableList<BasicInsertionDto?>) {
+
+    //TODO BasicInsertionDto
+
     //val snackbar = Snackbar.make( "This is a simple popup", Snackbar.LENGTH_SHORT)
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -54,7 +58,7 @@ fun CartScreen(itemsInCart: MutableList<Item?>) {
 }
 
 @Composable
-fun ItemsInCart(item : Item, itemsInCart: MutableList<Item?>) {
+fun ItemsInCart(item : BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto?>) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -66,9 +70,9 @@ fun ItemsInCart(item : Item, itemsInCart: MutableList<Item?>) {
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = item.name)
+            Text(text = item.title)
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = item.description)
+            item.description?.let { Text(text = it) }
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = "$${item.price}")
             Spacer(modifier = Modifier.height(16.dp))
@@ -89,7 +93,7 @@ fun ItemsInCart(item : Item, itemsInCart: MutableList<Item?>) {
 fun CartScreenPreview() {
 
     val itemsInCart = remember {
-        mutableListOf<Item?>()
+        mutableListOf<BasicInsertionDto?>()
     }
 
     CartScreen(itemsInCart)
