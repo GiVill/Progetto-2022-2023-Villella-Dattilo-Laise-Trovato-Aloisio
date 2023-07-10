@@ -65,7 +65,7 @@ fun ProductScreen(searchedProduct: MutableState<BasicInsertionDto>) {
 @Composable
 fun ProductScreenPreview() {
     var searchedProduct = remember {
-        mutableStateOf(BasicInsertionDto(1L,"null", Float.MIN_VALUE,null,null,null,null,null,2L))
+        mutableStateOf(BasicInsertionDto(1L,"null", Float.MIN_VALUE,null,null,null,null,null,"",BasicInsertionDto.Brand.ADIDAS,BasicInsertionDto.Category.ABBIGLIAMENTO, 2L))
     }
     ProductScreen(searchedProduct)
 }

@@ -1,9 +1,14 @@
 package com.example.vintedandroid.view
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -21,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.vintedandroid.client.apis.AuthApi
+import com.example.vintedandroid.client.infrastructure.ResponseType
 import com.example.vintedandroid.client.models.LoginUserDto
 
 @Composable
@@ -29,53 +35,69 @@ fun LoginScreen(navController: NavHostController) {
     val emailField = remember { mutableStateOf(TextFieldValue()) }
     val passwordField = remember { mutableStateOf(TextFieldValue()) }
 
+    val auth = AuthApi()
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        TextField(
-            value = emailField.value,
-            onValueChange = { emailField.value = it },
-            modifier = Modifier.padding(8.dp),
-            textStyle = MaterialTheme.typography.body1.copy(fontSize = 16.sp),
-            label = { Text("Insert Email") }
-        )
-        TextField(
-            value = passwordField.value,
-            onValueChange = { passwordField.value = it },
-            modifier = Modifier.padding(8.dp),
-            textStyle = MaterialTheme.typography.body1.copy(fontSize = 16.sp),
-            label = { Text("Insert Password") }
-        )
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp),
+        contentAlignment = Alignment.Center) {
 
-        Button(
-            onClick = { navController.popBackStack(); navController.navigate("register") },
-            modifier = Modifier.padding(8.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Devi registrarti?")
-        }
+            Text(text = "LOGIN", fontSize = 48.sp)
+            Spacer(modifier = Modifier.height(50.dp))
 
-        Button(
-            onClick = { navController.popBackStack(); navController.navigate("home") },
-            modifier = Modifier.padding(8.dp)
-        ) {
-            //val auth = AuthApi()
-            val loginUserDto = LoginUserDto(
-            email = emailField.value.text,
-            password = passwordField.value.text
+            TextField(
+                value = emailField.value,
+                onValueChange = { emailField.value = it },
+                modifier = Modifier.padding(8.dp),
+                textStyle = MaterialTheme.typography.body1.copy(fontSize = 16.sp),
+                label = { Text("Insert Email") }
             )
-            //if(auth.login(loginUserDto).isEmpty()){ //TODO AGGIUSTARE
-                //Text(text = "Login Effettuato!")
-            //}
-            //else{
-                //Text(text = "Password o Email sbagliate")
-            //}
-            Text("Login")
+            TextField(
+                value = passwordField.value,
+                onValueChange = { passwordField.value = it },
+                modifier = Modifier.padding(8.dp),
+                textStyle = MaterialTheme.typography.body1.copy(fontSize = 16.sp),
+                label = { Text("Insert Password") }
+            )
+
+
+
+            var loginResultText = ""
+
+            Button(
+                onClick = {
+                    val loginUserDto = LoginUserDto(
+                        email = emailField.value.text,
+                        password = passwordField.value.text
+                    )
+
+                    val response = auth.login(loginUserDto)
+
+                    //Log.i("tag", response.toString()) //response.contains("").toString()
+
+                    navController.popBackStack()
+                    navController.navigate("home")
+                },
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Text("Login")
+            }
+
+
+            Button(
+                onClick = { navController.popBackStack(); navController.navigate("register") },
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Text("Need new account? Register!")
+            }
         }
     }
 }

@@ -39,18 +39,19 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
     }
 
     var searchedProduct = remember {
-        mutableStateOf(BasicInsertionDto(1L,"null", Float.MIN_VALUE,null,null,null,null,null,2L))
+        mutableStateOf(BasicInsertionDto(1L,"null", Float.MIN_VALUE,null,null,null,null,null,"",BasicInsertionDto.Brand.ADIDAS,BasicInsertionDto.Category.ABBIGLIAMENTO, 2L))
+
     }
 
     //TODO user e user1 vanno cambiati!
-    val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh","ciao@yahoo.it",
+    val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh","","ciao@yahoo.it",
         "10-05-2001", UserDto.Gender.MALE,"via napoli",8,"Lamezia",21312,
         "Italy","asdojad")
 
     val user1 = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh")
 
 
-    NavHost(navController = navController, startDestination = "home") {
+    NavHost(navController = navController, startDestination = "login") {
     //NavHost(navController = navController, startDestination = ScreenController.Home.route ){
 
         composable(route = ScreenController.Home.route){

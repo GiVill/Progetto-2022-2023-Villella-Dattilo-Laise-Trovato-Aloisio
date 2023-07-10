@@ -1,4 +1,4 @@
-package com.example.vintedandroid.client.models
+package com.example.vintedandroid.model.dto
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

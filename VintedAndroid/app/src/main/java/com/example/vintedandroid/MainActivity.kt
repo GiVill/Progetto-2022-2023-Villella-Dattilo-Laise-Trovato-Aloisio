@@ -7,7 +7,6 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,20 +24,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.vintedandroid.client.apis.UserApi
-import com.example.vintedandroid.client.models.UserDatabaseDto
-import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.theme.VintedAndroidTheme
 import com.example.vintedandroid.view.SetupNavGraph
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.UUID
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter")
@@ -53,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     //Toast.makeText(this,"a", Toast.LENGTH_SHORT).show()
 
                     /*
-                    //QUESTE FUNZIONANO SOLO A LUIGI! AGLI ALTRI DARà ERRORE!!
+                    //QUESTE FUNZIONANO SOLO SE IL TUO IP è 192.168.1.90! AGLI ALTRI DARà ERRORE!!
                     val userApi = UserApi()
                     val users = userApi.all()
                     users.forEach { user ->

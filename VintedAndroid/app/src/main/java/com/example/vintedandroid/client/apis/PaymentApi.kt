@@ -25,7 +25,7 @@ import com.example.vintedandroid.client.models.PaymentDto
 
 import com.example.vintedandroid.client.infrastructure.*
 
-class PaymentApi(basePath: kotlin.String = "https://localhost:8010/vintedProject-api") : ApiClient(basePath) {
+class PaymentApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
     /**
      * 

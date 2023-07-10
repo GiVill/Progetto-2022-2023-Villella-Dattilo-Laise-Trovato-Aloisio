@@ -22,8 +22,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.vintedandroid.Item
 
@@ -124,7 +126,7 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>) {
                     .clickable(onClick = { /* Open item details activity */ }),
                 elevation = 4.dp
             ) {
-                Text(text = "MAN")
+                Text(text = "MAN", fontSize = 20.sp, textAlign = TextAlign.Center)
                 LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState2) {
                     items(itemsMan.results) { item ->
                         ItemCart(item, itemsInCart)
@@ -234,7 +236,7 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
             }
             if (showDialog) {
                 PopupDialog(onDismiss = { showDialog = false }) {
-                    Text("${item.title} added in cart!  Mannaggia ai Negri!")
+                    Text("${item.title} added in cart!")
                 }
             }
         }

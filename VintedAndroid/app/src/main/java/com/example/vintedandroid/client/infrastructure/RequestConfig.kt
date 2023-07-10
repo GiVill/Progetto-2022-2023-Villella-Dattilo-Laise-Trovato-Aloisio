@@ -1,5 +1,7 @@
 package com.example.vintedandroid.client.infrastructure
 
+import com.example.vintedandroid.client.infrastructure.RequestMethod
+
 /**
  * Defines a config object for a given request.
  * NOTE: This object doesn't include 'body' because it
@@ -9,8 +11,8 @@ package com.example.vintedandroid.client.infrastructure
  *       multi-valued headers as csv-only.
  */
 data class RequestConfig(
-        val method: RequestMethod,
-        val path: String,
-        val headers: Map<String, String> = mapOf(),
-        val query: Map<String, List<String>> = mapOf()
+    val method: RequestMethod,
+    val path: String,
+    val headers: Map<String, String> = mapOf(),
+    val query: Map<String, List<String>> = mapOf()
 )

@@ -22,10 +22,11 @@ import com.example.vintedandroid.client.infrastructure.ServerException
 import com.example.vintedandroid.client.infrastructure.Success
 import com.example.vintedandroid.client.models.LoginUserDto
 import com.example.vintedandroid.client.models.NewUserDto
+import com.example.vintedandroid.client.models.TokenResponse
 
 import com.example.vintedandroid.client.infrastructure.*
 
-class AuthApi(basePath: kotlin.String = "https://localhost:8010/vintedProject-api") : ApiClient(basePath) {
+class AuthApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
     /**
      * 
@@ -34,11 +35,11 @@ class AuthApi(basePath: kotlin.String = "https://localhost:8010/vintedProject-ap
      * @return kotlin.String
      */
     @Suppress("UNCHECKED_CAST")
-    fun login(body: LoginUserDto): kotlin.String {
+    fun getRefreshToken(body: kotlin.String): kotlin.String {
         val localVariableBody: kotlin.Any? = body
         val localVariableConfig = RequestConfig(
                 RequestMethod.POST,
-                "/v1/login"
+                "/v1/get-refresh-token"
         )
         val response = request<kotlin.String>(
                 localVariableConfig, localVariableBody
@@ -56,21 +57,46 @@ class AuthApi(basePath: kotlin.String = "https://localhost:8010/vintedProject-ap
      * 
      * 
      * @param body  
-     * @return kotlin.String
+     * @return TokenResponse
      */
     @Suppress("UNCHECKED_CAST")
-    fun signUp(body: NewUserDto): kotlin.String {
+    fun login(body: LoginUserDto): TokenResponse {
+        val localVariableBody: kotlin.Any? = body
+        val localVariableConfig = RequestConfig(
+                RequestMethod.POST,
+                "/v1/login"
+        )
+        val response = request<TokenResponse>(
+                localVariableConfig, localVariableBody
+        )
+
+        return when (response.responseType) {
+            ResponseType.Success -> (response as Success<*>).data as TokenResponse
+            ResponseType.Informational -> TODO()
+            ResponseType.Redirection -> TODO()
+            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
+        }
+    }
+    /**
+     * 
+     * 
+     * @param body  
+     * @return TokenResponse
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun signUp(body: NewUserDto): TokenResponse {
         val localVariableBody: kotlin.Any? = body
         val localVariableConfig = RequestConfig(
                 RequestMethod.POST,
                 "/v1/sign-up"
         )
-        val response = request<kotlin.String>(
+        val response = request<TokenResponse>(
                 localVariableConfig, localVariableBody
         )
 
         return when (response.responseType) {
-            ResponseType.Success -> (response as Success<*>).data as kotlin.String
+            ResponseType.Success -> (response as Success<*>).data as TokenResponse
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
             ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")

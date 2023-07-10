@@ -14,6 +14,7 @@ package com.example.vintedandroid.client.apis
 import com.example.vintedandroid.client.infrastructure.ApiClient
 import com.example.vintedandroid.client.infrastructure.ClientError
 import com.example.vintedandroid.client.infrastructure.ClientException
+import com.example.vintedandroid.client.infrastructure.MultiValueMap
 import com.example.vintedandroid.client.infrastructure.RequestConfig
 import com.example.vintedandroid.client.infrastructure.RequestMethod
 import com.example.vintedandroid.client.infrastructure.ResponseType
@@ -24,7 +25,6 @@ import com.example.vintedandroid.client.models.BasicInsertionDto
 import com.example.vintedandroid.client.models.PageBasicInsertionDto
 
 import com.example.vintedandroid.client.infrastructure.*
-import com.example.vintedandroid.client.infrastructure.MultiValueMap
 
 class InsertionApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
@@ -123,6 +123,30 @@ class InsertionApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedPr
 
         return when (response.responseType) {
             ResponseType.Success -> Unit
+            ResponseType.Informational -> TODO()
+            ResponseType.Redirection -> TODO()
+            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
+        }
+    }
+    /**
+     * 
+     * 
+     * @param idInsertion  
+     * @return kotlin.String
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun generateCapabilities(idInsertion: kotlin.Long): kotlin.String {
+        val localVariableConfig = RequestConfig(
+                RequestMethod.GET,
+                "/v1/insertions/token/{idInsertion}".replace("{" + "idInsertion" + "}", "$idInsertion")
+        )
+        val response = request<kotlin.String>(
+                localVariableConfig
+        )
+
+        return when (response.responseType) {
+            ResponseType.Success -> (response as Success<*>).data as kotlin.String
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
             ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
@@ -247,6 +271,30 @@ class InsertionApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedPr
 
         return when (response.responseType) {
             ResponseType.Success -> (response as Success<*>).data as PageBasicInsertionDto
+            ResponseType.Informational -> TODO()
+            ResponseType.Redirection -> TODO()
+            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
+        }
+    }
+    /**
+     * 
+     * 
+     * @param token  
+     * @return BasicInsertionDto
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun getPrivateInsertion(token: kotlin.String): BasicInsertionDto {
+        val localVariableConfig = RequestConfig(
+                RequestMethod.GET,
+                "/v1/insertions/private/{token}".replace("{" + "token" + "}", "$token")
+        )
+        val response = request<BasicInsertionDto>(
+                localVariableConfig
+        )
+
+        return when (response.responseType) {
+            ResponseType.Success -> (response as Success<*>).data as BasicInsertionDto
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
             ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")

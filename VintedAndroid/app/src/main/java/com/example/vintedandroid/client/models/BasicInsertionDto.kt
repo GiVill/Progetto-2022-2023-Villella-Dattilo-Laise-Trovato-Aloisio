@@ -20,8 +20,11 @@ package com.example.vintedandroid.client.models
  * @param description 
  * @param condition 
  * @param creationDate 
+ * @param isPrivate 
  * @param endDate 
- * @param imagePath 
+ * @param imageName 
+ * @param brand 
+ * @param category 
  * @param userId 
  */
 data class BasicInsertionDto (
@@ -32,8 +35,46 @@ data class BasicInsertionDto (
     val description: kotlin.String? = null,
     val condition: kotlin.String? = null,
     val creationDate: Any? = null,
+    val isPrivate: kotlin.Boolean? = null,
     val endDate: Any? = null,
-    val imagePath: kotlin.String? = null,
+    val imageName: kotlin.String? = null,
+    val brand: Brand? = null,
+    val category: Category? = null,
     val userId: kotlin.Long
 ) {
+    /**
+    * 
+    * Values: ADIDAS,PUMA,NIKE,MICROSOFT,XIAOMI,NOTHING,GUESS,PUMPLING,FILA,ONZE,GOJIANG,REBOOK,NEWBALANCE,ASIX,SONY
+    */
+    enum class Brand(val value: kotlin.String){
+        ADIDAS("Adidas"),
+        PUMA("Puma"),
+        NIKE("Nike"),
+        MICROSOFT("Microsoft"),
+        XIAOMI("Xiaomi"),
+        NOTHING("Nothing"),
+        GUESS("Guess"),
+        PUMPLING("Pumpling"),
+        FILA("Fila"),
+        ONZE("Onze"),
+        GOJIANG("Gojiang"),
+        REBOOK("Rebook"),
+        NEWBALANCE("New_Balance"),
+        ASIX("Asix"),
+        SONY("Sony");
+    }
+    /**
+    * 
+    * Values: ELETTRONICA,COLLEZIONI,ABBIGLIAMENTO,BARCHE,SPORT,DONNA,UOMO,BAMBINI
+    */
+    enum class Category(val value: kotlin.String){
+        ELETTRONICA("ELETTRONICA"),
+        COLLEZIONI("COLLEZIONI"),
+        ABBIGLIAMENTO("ABBIGLIAMENTO"),
+        BARCHE("BARCHE"),
+        SPORT("SPORT"),
+        DONNA("DONNA"),
+        UOMO("UOMO"),
+        BAMBINI("BAMBINI");
+    }
 }

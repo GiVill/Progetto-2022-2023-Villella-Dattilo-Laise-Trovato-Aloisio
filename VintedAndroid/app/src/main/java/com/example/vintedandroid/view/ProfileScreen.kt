@@ -140,7 +140,7 @@ fun ProfileScreen(user : UserDto) {
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh","ciao@yahoo.it",
+    val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh","","ciao@yahoo.it",
         "10-05-2001",UserDto.Gender.MALE,"via napoli",8,"Lamezia",21312,
         "Italy","asdojad")
     ProfileScreen(user)

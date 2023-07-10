@@ -143,4 +143,56 @@ class UserApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject
             ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
         }
     }
+    /**
+     * 
+     * 
+     * @param body  
+     * @param idUser  
+     * @return kotlin.Boolean
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun updateUserNickname(body: kotlin.String, idUser: kotlin.Long): kotlin.Boolean {
+        val localVariableBody: kotlin.Any? = body
+        val localVariableConfig = RequestConfig(
+                RequestMethod.PUT,
+                "/v1/update-users-nickname/{idUser}".replace("{" + "idUser" + "}", "$idUser")
+        )
+        val response = request<kotlin.Boolean>(
+                localVariableConfig, localVariableBody
+        )
+
+        return when (response.responseType) {
+            ResponseType.Success -> (response as Success<*>).data as kotlin.Boolean
+            ResponseType.Informational -> TODO()
+            ResponseType.Redirection -> TODO()
+            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
+        }
+    }
+    /**
+     * 
+     * 
+     * @param body  
+     * @param idUser  
+     * @return kotlin.Boolean
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun updateUserPassword(body: kotlin.String, idUser: kotlin.Long): kotlin.Boolean {
+        val localVariableBody: kotlin.Any? = body
+        val localVariableConfig = RequestConfig(
+                RequestMethod.PUT,
+                "/v1/update-users-password/{idUser}".replace("{" + "idUser" + "}", "$idUser")
+        )
+        val response = request<kotlin.Boolean>(
+                localVariableConfig, localVariableBody
+        )
+
+        return when (response.responseType) {
+            ResponseType.Success -> (response as Success<*>).data as kotlin.Boolean
+            ResponseType.Informational -> TODO()
+            ResponseType.Redirection -> TODO()
+            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
+        }
+    }
 }

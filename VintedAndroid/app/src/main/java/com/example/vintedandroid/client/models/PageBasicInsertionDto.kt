@@ -19,24 +19,25 @@ package com.example.vintedandroid.client.models
  * @param content 
  * @param number 
  * @param sort 
+ * @param pageable 
  * @param first 
  * @param last 
  * @param numberOfElements 
- * @param pageable 
  * @param empty 
  */
 data class PageBasicInsertionDto (
-    val totalElements: Long? = null,
-    val totalPages: Int? = null,
-    val size: Int? = null,
-    val content: Array<BasicInsertionDto>? = null,
-    val number: Int? = null,
+
+    val totalElements: kotlin.Long? = null,
+    val totalPages: kotlin.Int? = null,
+    val size: kotlin.Int? = null,
+    val content: kotlin.Array<BasicInsertionDto>? = null,
+    val number: kotlin.Int? = null,
     val sort: SortObject? = null,
-    val first: Boolean? = null,
-    val last: Boolean? = null,
-    val numberOfElements: Int? = null,
     val pageable: Any? = null,
-    val empty: Boolean? = null
+    val first: kotlin.Boolean? = null,
+    val last: kotlin.Boolean? = null,
+    val numberOfElements: kotlin.Int? = null,
+    val empty: kotlin.Boolean? = null
 ) {
     val results: List<BasicInsertionDto>
         get() = content.orEmpty().toList()
@@ -56,12 +57,11 @@ data class PageBasicInsertionDto (
         } else if (other.content != null) return false
         if (number != other.number) return false
         if (sort != other.sort) return false
+        if (pageable != other.pageable) return false
         if (first != other.first) return false
         if (last != other.last) return false
         if (numberOfElements != other.numberOfElements) return false
-        if (pageable != other.pageable) return false
         if (empty != other.empty) return false
-        if (results != other.results) return false
 
         return true
     }
@@ -73,12 +73,11 @@ data class PageBasicInsertionDto (
         result = 31 * result + (content?.contentHashCode() ?: 0)
         result = 31 * result + (number ?: 0)
         result = 31 * result + (sort?.hashCode() ?: 0)
+        result = 31 * result + (pageable?.hashCode() ?: 0)
         result = 31 * result + (first?.hashCode() ?: 0)
         result = 31 * result + (last?.hashCode() ?: 0)
         result = 31 * result + (numberOfElements ?: 0)
-        result = 31 * result + (pageable?.hashCode() ?: 0)
         result = 31 * result + (empty?.hashCode() ?: 0)
-        result = 31 * result + results.hashCode()
         return result
     }
 }

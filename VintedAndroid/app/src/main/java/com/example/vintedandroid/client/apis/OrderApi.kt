@@ -14,6 +14,7 @@ package com.example.vintedandroid.client.apis
 import com.example.vintedandroid.client.infrastructure.ApiClient
 import com.example.vintedandroid.client.infrastructure.ClientError
 import com.example.vintedandroid.client.infrastructure.ClientException
+import com.example.vintedandroid.client.infrastructure.MultiValueMap
 import com.example.vintedandroid.client.infrastructure.RequestConfig
 import com.example.vintedandroid.client.infrastructure.RequestMethod
 import com.example.vintedandroid.client.infrastructure.ResponseType
@@ -24,9 +25,8 @@ import com.example.vintedandroid.client.models.OrderDto
 import com.example.vintedandroid.client.models.PageOrderDto
 
 import com.example.vintedandroid.client.infrastructure.*
-import com.example.vintedandroid.client.infrastructure.MultiValueMap
 
-class OrderApi(basePath: kotlin.String = "https://localhost:8010/vintedProject-api") : ApiClient(basePath) {
+class OrderApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
     /**
      * 

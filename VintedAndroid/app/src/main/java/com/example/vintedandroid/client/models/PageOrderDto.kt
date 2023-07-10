@@ -19,10 +19,10 @@ package com.example.vintedandroid.client.models
  * @param content 
  * @param number 
  * @param sort 
+ * @param pageable 
  * @param first 
  * @param last 
  * @param numberOfElements 
- * @param pageable 
  * @param empty 
  */
 data class PageOrderDto (
@@ -33,10 +33,48 @@ data class PageOrderDto (
     val content: kotlin.Array<OrderDto>? = null,
     val number: kotlin.Int? = null,
     val sort: SortObject? = null,
+    val pageable: PageableObject? = null,
     val first: kotlin.Boolean? = null,
     val last: kotlin.Boolean? = null,
     val numberOfElements: kotlin.Int? = null,
-    val pageable: PageableObject? = null,
     val empty: kotlin.Boolean? = null
 ) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PageOrderDto
+
+        if (totalElements != other.totalElements) return false
+        if (totalPages != other.totalPages) return false
+        if (size != other.size) return false
+        if (content != null) {
+            if (other.content == null) return false
+            if (!content.contentEquals(other.content)) return false
+        } else if (other.content != null) return false
+        if (number != other.number) return false
+        if (sort != other.sort) return false
+        if (pageable != other.pageable) return false
+        if (first != other.first) return false
+        if (last != other.last) return false
+        if (numberOfElements != other.numberOfElements) return false
+        if (empty != other.empty) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = totalElements?.hashCode() ?: 0
+        result = 31 * result + (totalPages ?: 0)
+        result = 31 * result + (size ?: 0)
+        result = 31 * result + (content?.contentHashCode() ?: 0)
+        result = 31 * result + (number ?: 0)
+        result = 31 * result + (sort?.hashCode() ?: 0)
+        result = 31 * result + (pageable?.hashCode() ?: 0)
+        result = 31 * result + (first?.hashCode() ?: 0)
+        result = 31 * result + (last?.hashCode() ?: 0)
+        result = 31 * result + (numberOfElements ?: 0)
+        result = 31 * result + (empty?.hashCode() ?: 0)
+        return result
+    }
 }

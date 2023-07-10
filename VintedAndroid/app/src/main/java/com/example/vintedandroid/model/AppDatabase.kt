@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.vintedandroid.client.models.UserDatabaseDto
+import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.model.dao.UserDatabaseDao
 
 
