@@ -3,7 +3,6 @@ package it.unical.ea.VintedProject;
 import it.unical.ea.VintedProject.data.entities.*;
 import it.unical.ea.VintedProject.data.service.interfaces.*;
 import it.unical.ea.VintedProject.dto.NewUserDto;
-import it.unical.ea.VintedProject.dto.UserDto;
 import it.unical.ea.VintedProject.dto.enumeration.PaymentMethod;
 import it.unical.ea.VintedProject.dto.enumeration.Status;
 import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
@@ -22,6 +21,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Component
 @RequiredArgsConstructor
@@ -48,12 +49,15 @@ public class DbGenerator implements ApplicationRunner {
     @Value("classpath:data/buyingofferts.csv")
     private Resource buyingoffertsRes;
 
+    @Value("classpath:data/chat.csv")
+    private Resource chatRes;
 
     protected final UserService userService;
     protected final PaymentService paymentService;
     protected final BasicInsertionService insertionService;
     protected final OrderService orderService;
     protected final BuyingOfferService buyingOfferService;
+    protected final ChatService chatService;
 
 
     public void createDb() {
@@ -92,6 +96,12 @@ public class DbGenerator implements ApplicationRunner {
                 insertBuyingoffert(record.get(0), record.get(1), record.get(2));
             }
 
+            CSVParser chatCsv = CSVFormat.DEFAULT.withDelimiter(';')
+                    .parse(new InputStreamReader(chatRes.getInputStream()));
+            for (CSVRecord record : chatCsv) {
+                System.out.println(record.get(0)+ record.get(1) +record.get(2)+ record.get(3));
+                insertChat(record.get(0), record.get(1), record.get(2), record.get(3));
+            }
 
 
 
@@ -99,6 +109,16 @@ public class DbGenerator implements ApplicationRunner {
         } catch (IOException e) {
             throw new RuntimeException("ERROR TO GENERATE DB TEST");
         }
+    }
+
+    private void insertChat(String id1, String id2, String message, String date) {
+        Chat chat = new Chat();
+        chat.setIdUser1(Long.valueOf(id1));
+        chat.setIdUser2(Long.valueOf(id2));
+        chat.setMessage(message);
+        chat.setDate(LocalDateTime.parse(date));
+
+        chatService.save(chat);
     }
 
     private void insertBuyingoffert(String price, String idInsertion, String idUser) {

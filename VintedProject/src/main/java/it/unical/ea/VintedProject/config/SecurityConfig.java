@@ -102,7 +102,10 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/v1/images/{userId}").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/images/user").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/images/insertion/{insertionId}").permitAll()
-
+                //CHAT
+                .requestMatchers(HttpMethod.GET,"/v1/chat/user/{id}").permitAll()
+                .requestMatchers(HttpMethod.GET,"/v1/chat/message/{id}/{id2}").permitAll()
+                .requestMatchers(HttpMethod.POST,"/v1/chat/insert").permitAll()
 
                 .anyRequest()
                 .authenticated()

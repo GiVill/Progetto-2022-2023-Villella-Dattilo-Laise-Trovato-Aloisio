@@ -88,4 +88,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "BASICINSERTION_ID"))
     Set<BasicInsertion> favorites;
 
+    /*
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Chat> chats;
+*/
 }
