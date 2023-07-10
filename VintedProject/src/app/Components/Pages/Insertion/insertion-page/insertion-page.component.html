@@ -1,6 +1,6 @@
 <div class="main-container">
   <div class="image-container">
-    <img class="productImage" [src]="insertion?.imagePath || 'assets/resources/vestito.jpg'" (click)="openModal(insertion?.imagePath)">
+    <img class="productImage" [src]="'https://localhost:8010/vintedProject-api/v1/images/{{insertion?.imageName}}' || 'assets/resources/vestito.jpg'">
   </div>
 
   <div class="info-container">
@@ -30,7 +30,7 @@
       <button class="btn second-button">Contatta il venditore</button>
     </div>
     <div class="image-thumbnails">
-      <div *ngFor="let image of insertion?.imagePath" class="thumbnail" (click)="openModal(image)">
+      <div *ngFor="let image of insertion?.imageName" class="thumbnail" (click)="openModal(image)">
         <img [src]="image" alt="Thumbnail">
       </div>
     </div>

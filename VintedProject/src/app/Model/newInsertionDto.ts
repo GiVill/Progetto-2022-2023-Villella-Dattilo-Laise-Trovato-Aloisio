@@ -10,19 +10,15 @@
  * Do not edit the class manually.
  */
 
-export interface BasicInsertionDto {
-    id: number;
+export interface newBasicInsertionDto {
     title: string;
     price: number;
-    description?: string;
-    condition?: string;
-    creationDate: string;
-    isPrivate : boolean;
-    category?: Category.CategoryEnum;
-    brand?: Brand.BrandEnum;
-    endDate?: string;
+    description: string;
+    condition: string;
+    category: string;
+    brand: string;
     userId: number;
-    imageName: String;
+    img: File|null;
 
 }
 

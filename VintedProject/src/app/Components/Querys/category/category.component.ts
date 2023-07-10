@@ -44,18 +44,8 @@ export class CategoryComponent implements OnInit{
     return this.insertionService.findAllByCategory(pageNumber, this.category).pipe(
       tap((insertions: PageBasicInsertionDto) => {
         this.insertion = insertions;
-        this.processImages();
       })
     );
   }
-
-  processImages(): void {
-
-      this.insertion?.content?.forEach(async (insertion: BasicInsertionDto) => {
-        insertion.imagePath = await ImageService.setProductImageSrc(insertion.image);
-      });
-
-  }
-
 
 }

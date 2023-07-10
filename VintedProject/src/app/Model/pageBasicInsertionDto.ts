@@ -25,5 +25,5 @@ export interface PageBasicInsertionDto {
     numberOfElements?: number;
     pageable?: PageableObject;
     empty?: boolean;
-    image?: Blob;
+    imageName: String;
 }

@@ -81,16 +81,6 @@ export class InsertionPageComponent implements OnInit {
     this.checkProductInCart();
   }
 
-
-  async processImages(): Promise<void> {
-    if (this.insertion) {
-      const imagePath = await ImageService.setProductImageSrc(this.insertion.image);
-      if (imagePath) {
-        this.insertion = {...this.insertion, imagePath};
-      }
-    }
-  }
-
   openModal(imageSrc: string | undefined): void {
     this.modalOpen = true;
     this.modalImage = imageSrc;

@@ -46,20 +46,8 @@ export class SearchComponent implements OnInit {
     return this.insertionService.findAllByTitleLike(pageNumber, this.search).subscribe(
       (insertions: PageBasicInsertionDto) => {
         this.insertion = insertions;
-        this.processImages();
       }
     );
   }
 
-
-
-  processImages(): void {
-    /*
-    this.insertion?.content.forEach(async (insertion: BasicInsertionDto) => {
-      insertion.imageSrc = await ImageService.setProductImageSrc(insertion.image);
-    });
-  }
-
-     */
-  }
 }

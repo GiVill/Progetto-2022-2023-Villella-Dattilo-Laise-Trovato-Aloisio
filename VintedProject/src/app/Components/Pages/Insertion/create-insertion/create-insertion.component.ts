@@ -3,7 +3,7 @@ import {InsertionService} from "../../../../service/insertion.service";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {CookiesService} from "../../../../service/cookies.service";
-import {Brand, Category} from "../../../../Model/basicInsertionDto";
+import {BasicInsertionDto, Brand, Category} from "../../../../Model/basicInsertionDto";
 
 @Component({
   selector: 'app-create-insertion',
@@ -11,13 +11,20 @@ import {Brand, Category} from "../../../../Model/basicInsertionDto";
   styleUrls: ['./create-insertion.component.css']
 })
 export class CreateInsertionComponent implements OnInit{
-  inserzione = {
-    title: '',
-    category:'',
-    brand:'',
-    userId: 2,
-    description: '',
-    price: 0,
+  image !: File
+  inserzione : BasicInsertionDto = {
+    id: 0,
+    title: "sfdfsd",
+    price: 213,
+    description: "dasd",
+    condition: "",
+    creationDate: "2023-07-10",
+    isPrivate: true,
+    endDate: "2023-07-10",
+    imageName: "",
+    brand: "Adidas",
+    category: "ABBIGLIAMENTO",
+    userId: 2
   };
 
   categoryOptions: Category.CategoryEnum[] = Object.values(Category.CategoryEnum);
@@ -47,6 +54,8 @@ export class CreateInsertionComponent implements OnInit{
       }
     }
 
+    this.image = files[0]
+
     // Salva le foto nell'oggetto inserzione
     //this.inserzione.foto = Array.from(files);
   }
@@ -62,7 +71,9 @@ export class CreateInsertionComponent implements OnInit{
 
   creaInserzione() {
     console.log(this.inserzione)
-    this.insertionService.addInsertion(this.inserzione).subscribe(
+    console.log(this.image)
+    this.insertionService.addInsertion(this.inserzione, this.image).subscribe(
+
 
       response => {
         console.log(this.inserzione)

@@ -54,7 +54,6 @@ export class MyprofileComponent {
           (data: PageBasicInsertionDto) => {
             this.myInsertion = data;
             console.log(data)
-            //this.processImages(data.content);
           },
           (error) => {
             console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
@@ -96,12 +95,6 @@ export class MyprofileComponent {
       });
     }
   */
-
-  processImages(insertions: BasicInsertionDto[]): void {
-    insertions.forEach(async (insertion: BasicInsertionDto) => {
-      insertion.imagePath = await ImageService.setProductImageSrc(insertion.image);
-    });
-  }
 
 
   updatePassword() {

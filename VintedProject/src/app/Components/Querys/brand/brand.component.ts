@@ -24,17 +24,7 @@ export class BrandComponent implements OnInit{
 
     this.insertionService.getInsertionByBrand(this.brandName,this.page).subscribe((insertions: PageBasicInsertionDto) => {
       this.Brandedinsertion = insertions;
-      this.processImages();
     });
   }
-
-
-  processImages(): void {
-    this.Brandedinsertion?.content?.forEach(async (insertion: BasicInsertionDto) => {
-      insertion.imagePath = await ImageService.setProductImageSrc(insertion.image);
-    });
-  }
-
-
 
 }

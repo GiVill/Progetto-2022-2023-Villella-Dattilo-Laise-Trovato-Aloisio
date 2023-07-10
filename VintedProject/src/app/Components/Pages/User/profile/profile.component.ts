@@ -68,12 +68,5 @@ export class ProfileComponent implements OnInit {
     });
   }
 */
-  processImages(insertions: BasicInsertionDto[]): void {
-    insertions.forEach(async (insertion: BasicInsertionDto) => {
-      insertion.imagePath = await ImageService.setProductImageSrc(insertion.image);
-    });
-  }
-
-
 
 }

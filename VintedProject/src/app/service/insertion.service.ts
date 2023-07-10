@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {PageBasicInsertionDto} from "../Model/pageBasicInsertionDto";
 import {BasicInsertionDto} from "../Model/basicInsertionDto";
+import { ProvaDto } from '../Model/provadto';
 
 
 @Injectable({
@@ -24,14 +25,13 @@ export class InsertionService {
     return this.http.get<PageBasicInsertionDto>(`${this.apiinsertionUrl}/${brand}`);
   }
 
-  addInsertion(insertion: {
-    price: number;
-    description: string;
-    title: string;
-    userId: number
-  }): Observable<BasicInsertionDto> {
+  addInsertion(insertion: BasicInsertionDto, image : File){
     console.log(insertion);
-    return this.http.post<BasicInsertionDto>(`${this.apiinsertionUrl}`, insertion);
+    const provaDto : ProvaDto ={
+      insertionDto : insertion,
+      img : image
+    }
+    return this.http.post<BasicInsertionDto>(`${this.apiinsertionUrl}`,provaDto);
   }
 
   getInsertionById(id: number | undefined): Observable<BasicInsertionDto> {
