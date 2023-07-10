@@ -4,6 +4,7 @@ import it.unical.ea.VintedProject.dto.OrderDto;
 import org.springframework.data.domain.Page;
 
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -22,6 +23,8 @@ public interface OrderService {
     Page<OrderDto> getAllPaged(int page);
 
     Order findById(Long id);
+
+    List<OrderDto> findByUserId(Long UserId);
 
 }
 

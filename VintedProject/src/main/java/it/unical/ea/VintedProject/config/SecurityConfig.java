@@ -76,6 +76,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/v1/orders/{id}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/v1/orders").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/v1/orders/{id}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/orders/user/{userId}").permitAll()
                 //INSERTION
                 .requestMatchers(HttpMethod.GET, "/v1/insertions").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/insertions").permitAll()

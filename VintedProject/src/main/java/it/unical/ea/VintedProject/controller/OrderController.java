@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1")
@@ -37,6 +39,11 @@ public class OrderController {
     public ResponseEntity<Void> deleteOrderById(@PathVariable("id") Long id) {
         orderService.deleteOrderById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("orders/user/{userId}")
+    public ResponseEntity<List<OrderDto>> getUserOrders(@PathVariable("userId") Long userId){
+        return ResponseEntity.ok(orderService.findByUserId(userId));
     }
 
 }

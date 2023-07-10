@@ -19,7 +19,7 @@ public interface UserService {
 
     UserDto getById(Long id);
 
-    List<Order> getOrdersByUser(Long userId);
+    //List<Order> getOrdersByUser(Long userId);
 
     List<User> findAll();
 

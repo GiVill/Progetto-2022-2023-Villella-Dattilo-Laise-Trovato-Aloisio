@@ -1,8 +1,10 @@
 package it.unical.ea.VintedProject.data.service;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
+import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.Order;
+import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.OrderService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.OrderDto;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderDao orderDao;
+    private final UserDao userDao;
     private final ModelMapper modelMapper;
     private final MessageLang messageLang;
     private final static int SIZE_FOR_PAGE = 5;
@@ -60,5 +63,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findById(Long id) {
         return orderDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("order.not.present",id)));
+    }
+
+    @Override
+    public List<OrderDto> findByUserId(Long UserId){
+        Optional<User> u = userDao.findById(UserId);
+        if (u != null){
+            List<Order> orders = orderDao.findByUser(u);
+            return orders.stream().map(s -> modelMapper.map(s,OrderDto.class)).collect(Collectors.toList());
+        }
+        return null;
     }
 }

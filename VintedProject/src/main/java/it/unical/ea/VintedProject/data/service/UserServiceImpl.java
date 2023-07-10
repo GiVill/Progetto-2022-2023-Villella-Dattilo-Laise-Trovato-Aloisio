@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
-    private final OrderDao orderDao;
+    //private final OrderDao orderDao;
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 10;
     private final MessageLang messageLang;
@@ -56,13 +56,13 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user, UserDto.class);
     }
 
-    public List<Order> getOrdersByUser(Long userId) {
+    /*public List<Order> getOrdersByUser(Long userId) {
         List<Order> orders = orderDao.findByUser(userId);
         if (orders.isEmpty()) {
             throw new EntityNotFoundException(messageLang.getMessage("user.order.not.present",userId));
         }
         return orders;
-    }
+    }*/
 
     @Override
     public List<User> findAll() {

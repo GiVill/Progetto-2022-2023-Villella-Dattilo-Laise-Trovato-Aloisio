@@ -26,7 +26,6 @@ public class ImageServiceImpl implements ImageService {
     private final UserService userService;
     private final BasicInsertionService insertionService;
     private final MessageLang messageLang;
-    private final BasicInsertionServiceImpl basicInsertionService;
 
     private final String relativePathToUploads = "src/main/resources/image/";
 
@@ -131,7 +130,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void deleteImageInsertion(Long id) {
 
-        BasicInsertion basicInsertion = basicInsertionService.findById(id);
+        BasicInsertion basicInsertion = insertionService.findById(id);
         String newPath = relativePathToUploads + basicInsertion.getImageName();
 
         File file = new File(newPath);
@@ -139,7 +138,7 @@ public class ImageServiceImpl implements ImageService {
             if (file.delete()) {
                 System.out.println("File eliminato con successo.");
                 basicInsertion.setImageName(null);
-                basicInsertionService.save(basicInsertion);
+                insertionService.save(basicInsertion);
             } else {
                 System.out.println("Impossibile eliminare il file.");
             }

@@ -33,7 +33,6 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     //private final DressInsertionDao
 
-    private  final BasicInsertionService basicInsertionService;
     private final BasicInsertionDao basicInsertionDao;
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 5;
