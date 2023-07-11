@@ -14,14 +14,14 @@ package com.example.vintedandroid.client.models
 
 /**
  * 
- * @param accessToken 
- * @param refreshToken 
- * @param tokenType 
+ * @param access_token
+ * @param refresh_token
+ * @param token_type
  */
 data class TokenResponse (
 
-    val accessToken: kotlin.String? = null,
-    val refreshToken: kotlin.String? = null,
-    val tokenType: kotlin.String? = null
+    val access_token: kotlin.String? = null,
+    val refresh_token: kotlin.String? = null,
+    val token_type: kotlin.String? = null
 ) {
 }

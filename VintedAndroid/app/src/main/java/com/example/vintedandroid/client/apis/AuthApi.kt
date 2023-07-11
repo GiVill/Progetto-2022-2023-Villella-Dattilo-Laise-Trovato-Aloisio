@@ -70,11 +70,15 @@ class AuthApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject
                 localVariableConfig, localVariableBody
         )
 
+        val t = TokenResponse(
+            access_token = null
+        )
+
         return when (response.responseType) {
             ResponseType.Success -> (response as Success<*>).data as TokenResponse
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
-            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ClientError -> t//throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
             ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
         }
     }
@@ -95,11 +99,15 @@ class AuthApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject
                 localVariableConfig, localVariableBody
         )
 
+        val t = TokenResponse(
+            access_token = null
+        )
+
         return when (response.responseType) {
             ResponseType.Success -> (response as Success<*>).data as TokenResponse
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
-            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ClientError -> t//throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
             ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
         }
     }

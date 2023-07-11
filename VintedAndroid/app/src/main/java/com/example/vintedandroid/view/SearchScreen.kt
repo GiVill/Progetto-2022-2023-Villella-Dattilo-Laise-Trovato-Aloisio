@@ -54,7 +54,6 @@ fun SearchScreen(searchText: MutableState<String>, insertionApi: InsertionApi, n
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         items(searchResults.results) { result ->
             SearchResultCard(result = result, navController, searchedProduct)
         }

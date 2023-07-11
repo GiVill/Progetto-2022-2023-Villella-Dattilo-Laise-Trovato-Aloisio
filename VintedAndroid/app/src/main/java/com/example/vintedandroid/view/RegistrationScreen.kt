@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.vintedandroid.client.apis.AuthApi
 import com.example.vintedandroid.client.models.NewUserDto
 
 @Composable
@@ -30,7 +31,6 @@ fun RegistrationScreen(navController: NavHostController) {
     val emailField = remember { mutableStateOf(TextFieldValue()) }
     val nicknameField = remember { mutableStateOf(TextFieldValue()) }
     val passwordField = remember { mutableStateOf(TextFieldValue()) }
-
 
     Column(
         modifier = Modifier
@@ -70,19 +70,30 @@ fun RegistrationScreen(navController: NavHostController) {
             onClick = { navController.popBackStack(); navController.navigate("home") },
             modifier = Modifier.padding(8.dp)
         ) {
-            //val auth = AuthApi()
             val registrationUserDto = NewUserDto(
                 password = passwordField.value.text,
                 nickName = nicknameField.value.text,
                 email = emailField.value.text
             )
-            //if(auth.login(loginUserDto).isEmpty()){ //TODO AGGIUSTARE
-            //Text(text = "Login Effettuato!")
-            //}
-            //else{
-            //Text(text = "Password o Email sbagliate")
-            //}
+            /*
+            val auth = AuthApi()
+            if(auth.signUp(registrationUserDto).accessToken != null){ //TODO AGGIUSTARE
+                //Text(text = "Login Effettuato!")
+                navController.popBackStack(); navController.navigate("home")
+            }
+            else{
+                Text(text = "Password o Email sbagliate")
+            }
+
+             */
             Text("Register")
+        }
+
+        Button(
+            onClick = { navController.popBackStack(); navController.navigate("login") },
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Text("Already have an account? Go to Login page")
         }
     }
 }
