@@ -54,48 +54,37 @@ export class MyprofileComponent {
         this.userService.getAllInsertionsByUser(this.userId, this.page).subscribe(
           (data: PageBasicInsertionDto) => {
             this.myInsertion = data;
-            console.log(data)
           },
           (error) => {
             console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
           }
         );
-      if (this.myInsertion?.empty){
-        this.isAnyInsertion=true;
-      }
+        if (this.myInsertion?.empty) {
+          this.isAnyInsertion = true;
+        }
       })
 
-    //TODO orderService deve prendere gli ordini dell'utente pagiagble /////this.page
-    this.orderService.getAllOrders(this.userId).subscribe(
+    this.orderService.getOrderByUserId(this.userId, this.page).subscribe(
       (data: PageOrderDto) => {
         this.myOrder = data;
         console.log(data);
-        // Further processing if needed
+        console.log(this.myOrder)
+
+        if (this.myOrder?.empty) {
+          this.isAnyOrder = true;
+        }
       },
       (error) => {
         console.log('Si è verificato un errore durante il recupero degli ordini dell\'utente:', error);
-      })
-    if (this.myOrder?.empty){
-      this.isAnyOrder=true;
-    }
+      }
+    );
+    console.log(this.myOrder)
   }
-
 
   show(){
     this.showUpdateSection = !this.showUpdateSection;
   }
 
-  /*
-    loadmore() {
-      this.page += 1;
-      this.userService.getAllInsertionsByUser(this.id,this.page).subscribe((insertions: PageBasicInsertionDto) => {
-        // Aggiungo nuovi prodotti alla lista esistente invece di sostituirla
-        this.userInsertion?.content?.push(...insertions.content);
-        this.processImages(insertions.content);
-
-      });
-    }
-  */
 
 
   updatePassword() {

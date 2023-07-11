@@ -20,8 +20,9 @@ export class OrderService {
     return this.http.post<OrderDto>(`${this.apiUrl}`, order);
   }
 
-  getOrderById(id: number): Observable<OrderDto> {
-    return this.http.get<OrderDto>(`${this.apiUrl}/${id}`);
+  getOrderByUserId(id: number, page: number): Observable<PageOrderDto> {
+    const params = new HttpParams().set('page', page.toString());
+    return this.http.get<PageOrderDto>(`${this.apiUrl}/${id}`, { params });
   }
 
   getAllOrders(page: number): Observable<PageOrderDto> {

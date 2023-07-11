@@ -21,6 +21,8 @@ export class CartComponent implements OnInit {
 
   product: any[] = [];
   cartProduct: BasicInsertionDto[] | undefined;
+  selectedPaymentMethod: string | undefined;
+  paymentMethods: string[] = ['Carta di credito', 'PayPal', 'Bonifico bancario'];
   ordineCreato = false;
   totalCost = 0;
   orderSuccess = false;

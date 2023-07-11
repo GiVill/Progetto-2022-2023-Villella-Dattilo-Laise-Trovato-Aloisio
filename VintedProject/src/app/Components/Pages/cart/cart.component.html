@@ -1,14 +1,27 @@
-<div class="insertion-container" *ngIf="cartProduct">
-  <div class="body-content" style="margin-top: 30px">
-    <div class="card-container">
-      <div class="card-row">
-        <ng-container *ngFor="let item of cartProduct; let i = index;">
-          <app-cart-insertion-card [item]="item" class="card-item"></app-cart-insertion-card>
-        </ng-container>
-      </div>
-    </div>
-    <div class="button-container">
-      <button class="button" >Acquista</button>
+<div class="insertion-container"  style="margin: 5%" *ngIf="cartProduct">
+  <div class="card-container">
+    <div class="card-row">
+      <ng-container *ngFor="let item of cartProduct; let i = index;">
+        <app-cart-insertion-card [item]="item" class="card-item"></app-cart-insertion-card>
+      </ng-container>
     </div>
   </div>
+  <div style="margin: 10%">
+  <div class="payment-container">
+    <div class="payment-methods" >
+      <h2>Metodi di pagamento disponibili:</h2>
+      <ul >
+        <li style="margin: 5%" *ngFor="let method of paymentMethods">
+          <label>
+            <input type="radio" name="paymentMethod" [value]="method" [(ngModel)]="selectedPaymentMethod">
+            {{ method }}
+          </label>
+        </li>
+      </ul>
+    </div>
+    <div class="button-container">
+      <button class="button">Acquista</button>
+    </div>
+  </div>
+</div>
 </div>

@@ -17,6 +17,7 @@ import {BadComponent} from "./Components/Pages/Errors/badRequest/bad.component";
 import {RefusedComponent} from "./Components/Pages/Errors/refused/refused.component";
 
 
+
 const routes: Routes = [
   {path : '', component: HomePageComponent},
   {path : 'insertion/:id', component:InsertionPageComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
   {path: '403', component: NotAuthorizedComponent},
   {path: '400', component: BadComponent},
   {path: 'refused', component: RefusedComponent},
+
 
 
 ];
