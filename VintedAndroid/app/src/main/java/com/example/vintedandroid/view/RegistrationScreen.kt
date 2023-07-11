@@ -2,8 +2,10 @@ package com.example.vintedandroid.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -38,6 +40,10 @@ fun RegistrationScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        Text(text = "REGISTRATION(per ora non funziona, clicca su Register per continuare)", fontSize = 48.sp)
+        Spacer(modifier = Modifier.height(50.dp))
+
         TextField(
             value = emailField.value,
             onValueChange = { emailField.value = it },

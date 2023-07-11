@@ -9,6 +9,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
@@ -34,12 +35,14 @@ import com.google.android.material
 .Snackbar;
 import androidx.coordinatorlayout
 .widget.CoordinatorLayout;
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.vintedandroid.client.apis.InsertionApi
 import com.example.vintedandroid.client.models.BasicInsertionDto
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>) {
+fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>) {
 /*
     LazyRow(modifier = Modifier.fillMaxWidth()) {
         items(items) { item ->
@@ -53,11 +56,14 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>) {
     //val snackbar: Snackbar = Snackbar.make(containerLayout, "", Snackbar.LENGTH_LONG)
 
     val scrollState = rememberLazyListState()
+
     val scrollState1 = rememberLazyListState()
 
     val scrollState2 = rememberLazyListState()
 
     val scrollState3 = rememberLazyListState()
+
+
 
 
 
@@ -77,7 +83,7 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>) {
     val itemsWomen = InsertionApi().getByCategory("DONNA", 0)
     val itemsMan = InsertionApi().getByCategory("UOMO", 0)
     val itemsBaby = InsertionApi().getByCategory("BAMBINI", 0)
-    //val itemAll = InsertionApi().getAll()
+    val allItems = InsertionApi().all4(0)
 
 
 
@@ -92,69 +98,78 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>) {
 
      */
 
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        item {
-
-            // Header item here
-            // Add any Composable you want to use as the header
-        }
-        item {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .clickable(onClick = { /* Open item details activity */ }),
-                elevation = 4.dp
-            ) {
-                Text(text = "WOMEN")
-                LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState1) {
-                    items(itemsWomen.results) { item ->
-                        ItemCart(item, itemsInCart)
+    Box(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            item {
+                // Header item here
+                // Add any Composable you want to use as the header
+            }
+            item {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .clickable(onClick = { /* Open item details activity */ }),
+                    elevation = 4.dp
+                ) {
+                    Text(text = "WOMEN")
+                    LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState1) {
+                        items(itemsWomen.results) { item ->
+                            ItemCart(item, itemsInCart, navController, searchedProduct)
+                        }
                     }
                 }
             }
-        }
-        item {
-
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-        item {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .clickable(onClick = { /* Open item details activity */ }),
-                elevation = 4.dp
-            ) {
-                Text(text = "MAN", fontSize = 20.sp, textAlign = TextAlign.Center)
-                LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState2) {
-                    items(itemsMan.results) { item ->
-                        ItemCart(item, itemsInCart)
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            item {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .clickable(onClick = { /* Open item details activity */ }),
+                    elevation = 4.dp
+                ) {
+                    Text(text = "MAN", fontSize = 20.sp, textAlign = TextAlign.Center)
+                    LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState2) {
+                        items(itemsMan.results) { item ->
+                            ItemCart(item, itemsInCart, navController, searchedProduct)
+                        }
                     }
                 }
             }
-        }
-        item {
-
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-        item {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .clickable(onClick = { /* Open item details activity */ }),
-                elevation = 4.dp
-            ) {
-                Text(text = "BABY")
-                LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState3) {
-                    items(itemsBaby.results) { item ->
-                        ItemCart(item, itemsInCart)
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            item {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .clickable(onClick = { /* Open item details activity */ }),
+                    elevation = 4.dp
+                ) {
+                    Text(text = "BABY")
+                    LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState3) {
+                        items(itemsBaby.results) { item ->
+                            ItemCart(item, itemsInCart, navController, searchedProduct)
+                        }
                     }
                 }
+            }
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            item {
+                Text(text = "E molto altro!")
+            }
+            items(allItems.results) { item ->
+                ItemCart(item, itemsInCart, navController, searchedProduct)
             }
         }
     }
+
     /*
     Row(modifier = Modifier.fillMaxWidth()) {
         Text(text = "Woman")
@@ -194,7 +209,7 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>) {
 }
 
 @Composable
-fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto?>) {
+fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>) {
 
     var showDialog by remember { mutableStateOf(false) }
 
@@ -202,7 +217,7 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable(onClick = { /* Open item details activity */ }),
+            .clickable(onClick = { searchedProduct.value = item ;navController.popBackStack(); navController.navigate("product") }),
         elevation = 4.dp
     ) {
         Column(
@@ -268,6 +283,14 @@ fun HomeScreenPreview() {
         mutableListOf<BasicInsertionDto?>()
     }
 
-    HomeScreen(itemsInCart)
+    var searchedProduct = remember {
+        mutableStateOf(BasicInsertionDto(1L,"null", Float.MIN_VALUE,null,null,null,null,null,"",BasicInsertionDto.Brand.ADIDAS,BasicInsertionDto.Category.ABBIGLIAMENTO, 2L))
+
+    }
+
+    val navController = rememberNavController()
+
+
+    HomeScreen(itemsInCart, navController, searchedProduct)
 }
 

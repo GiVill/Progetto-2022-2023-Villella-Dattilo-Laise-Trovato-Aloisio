@@ -10,7 +10,9 @@ import android.os.StrictMode
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,23 +20,33 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarColors
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.vintedandroid.theme.VintedAndroidTheme
+import com.example.vintedandroid.view.LoginScreen
 import com.example.vintedandroid.view.SetupNavGraph
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,24 +75,42 @@ class MainActivity : ComponentActivity() {
 
                     val searchText = remember { mutableStateOf("") }
 
+
+
+
                     //SetupNavGraph(navController = navController)
 
-                    Scaffold(
-                        topBar = { ApplicationTopBar(searchText, navController) },
-                        bottomBar = { ApplicationBottomBar(navController) }) {
-                        Box(modifier = Modifier.padding(it)) {
+                    var controlloSuToken = true //questa variabile servirebbe per capire se all'avvio dell'app hai fatto il login oppure no. Per ora non si fa nessun controllo
+
+                    if(controlloSuToken) {
 
 
-                            CoroutineScope(Dispatchers.IO).launch {
-                                //val user1 = UserDatabaseDto(UUID.randomUUID().toString(), "ciao", "Boh", "ciaoBoh")
-                                //AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().insert(user1) //Inserimento di un utente
-                                //var c = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll() //Get di un utente
-                                //Log.i("tag", c.toString())
+
+                        Scaffold(
+                            topBar = { ApplicationTopBar(searchText, navController) },
+                            bottomBar = { ApplicationBottomBar(navController) }) {
+                            Box(modifier = Modifier.padding(it)) {
+
+
+
+
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    //val user1 = UserDatabaseDto(UUID.randomUUID().toString(), "ciao", "Boh", "ciaoBoh")
+                                    //AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().insert(user1) //Inserimento di un utente
+                                    //var c = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll() //Get di un utente
+                                    //Log.i("tag", c.toString())
+                                }
+                                SetupNavGraph(
+                                    navController = navController,
+                                    searchText = searchText,
+                                    application = application.applicationContext
+                                )
                             }
 
-                            SetupNavGraph(navController = navController, searchText = searchText, application = application.applicationContext)
                         }
-
+                    }
+                    else{
+                        LoginScreen(navController = navController) //Non funziona bene
                     }
                 } else {
                     Scaffold(){
@@ -94,11 +124,13 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxWidth()) {
                                 Text(text = "Please connect to the internet")
                                 Spacer(modifier = Modifier.width(3.dp))
+                                /*
                                 Icon(
                                     imageVector = Icons.Filled.Warning,
                                     contentDescription = "No Internet Connection",
                                     //tint = Color.Red
                                 )
+                                 */
                                 
                             }
                         }
@@ -112,12 +144,66 @@ class MainActivity : ComponentActivity() {
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ApplicationTopBar(searchText: MutableState<String>, navHostController: NavHostController) {
+
+    //var text by remember { mutableStateOf("") }
+    var active by remember { mutableStateOf(false) }
+    var searchHistory = remember{ mutableStateListOf("ciao", "ciao2") }
 
     TopAppBar(
         title = { },
         actions = {
+
+            SearchBar(
+                modifier = Modifier.fillMaxWidth(),
+                query = searchText.value,
+                onQueryChange = {
+                    searchText.value = it
+                },
+                onSearch = {
+                    searchHistory.add(searchText.value)
+                    active = false
+                },
+                active = active,
+                onActiveChange ={
+                    active = it
+                },
+                placeholder = {
+                    Text(text = "Search")
+                },
+                leadingIcon = {
+                    Icon(imageVector = Icons.Default.Search, contentDescription = "Search Icon")
+                },
+                trailingIcon = {
+                    if(active){
+                        Icon(
+                            modifier = Modifier.clickable{
+                                if(searchText.value.isNotEmpty()){
+                                    searchText.value = ""
+                                }else{
+                                    active = false
+                                }
+                            },
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Close Icon")
+                    }
+                },
+                colors = SearchBarDefaults.colors(Color.Gray)
+            ) {
+                searchHistory.forEach{
+                    Row(modifier = Modifier.padding(all = 14.dp)){
+                        Icon(
+                            modifier = Modifier.padding(end = 10.dp),
+                            imageVector = Icons.Default.History,
+                            contentDescription = "Hystory Icon"
+                        )
+                        Text(text = it)
+                    }
+                }
+            }
+            /*
             TextField(
                 value = searchText.value,
                 onValueChange = { searchText.value = it; },
@@ -127,6 +213,7 @@ fun ApplicationTopBar(searchText: MutableState<String>, navHostController: NavHo
                 singleLine = true,
                 placeholder = { Icon(Icons.Default.Search, contentDescription = "Search")}
             )
+             */
         }
     )
 

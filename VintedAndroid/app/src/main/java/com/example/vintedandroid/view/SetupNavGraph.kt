@@ -55,7 +55,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
     //NavHost(navController = navController, startDestination = ScreenController.Home.route ){
 
         composable(route = ScreenController.Home.route){
-            HomeScreen(itemsInCart)
+            HomeScreen(itemsInCart, navController, searchedProduct)
         }
         composable(route = ScreenController.Search.route) {
             SearchScreen(searchText, insertionApi, navController, searchedProduct)

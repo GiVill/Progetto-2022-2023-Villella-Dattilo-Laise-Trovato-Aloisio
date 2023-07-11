@@ -6,6 +6,7 @@ import java.lang.System;
 public final class MainActivityKt {
     
     @androidx.compose.runtime.Composable
+    @kotlin.OptIn(markerClass = {androidx.compose.material3.ExperimentalMaterial3Api.class})
     public static final void ApplicationTopBar(@org.jetbrains.annotations.NotNull
     androidx.compose.runtime.MutableState<java.lang.String> searchText, @org.jetbrains.annotations.NotNull
     androidx.navigation.NavHostController navHostController) {

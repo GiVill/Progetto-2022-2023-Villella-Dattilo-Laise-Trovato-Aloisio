@@ -10,6 +10,7 @@ public final class MainActivity extends androidx.activity.ComponentActivity {
     }
     
     @android.annotation.SuppressLint(value = {"CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter"})
+    @kotlin.OptIn(markerClass = {androidx.compose.material3.ExperimentalMaterial3Api.class})
     @java.lang.Override
     protected void onCreate(@org.jetbrains.annotations.Nullable
     android.os.Bundle savedInstanceState) {

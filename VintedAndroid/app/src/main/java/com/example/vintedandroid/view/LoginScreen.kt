@@ -50,7 +50,7 @@ fun LoginScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "LOGIN", fontSize = 48.sp)
+            Text(text = "LOGIN(per ora non funziona, clicca su accedi per continuare)", fontSize = 48.sp)
             Spacer(modifier = Modifier.height(50.dp))
 
             TextField(
@@ -79,7 +79,7 @@ fun LoginScreen(navController: NavHostController) {
                         password = passwordField.value.text
                     )
 
-                    val response = auth.login(loginUserDto)
+                    //val response = auth.login(loginUserDto)
 
                     //Log.i("tag", response.toString()) //response.contains("").toString()
 
