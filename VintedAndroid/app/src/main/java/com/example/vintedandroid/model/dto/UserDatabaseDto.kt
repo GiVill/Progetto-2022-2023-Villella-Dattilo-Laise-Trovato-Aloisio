@@ -21,7 +21,8 @@ data class UserDatabaseDto (
     @ColumnInfo(name="address_city")val addressCity: kotlin.String? = null,
     @ColumnInfo(name="address_cap")val addressCap: kotlin.Int? = null,
     @ColumnInfo(name="address_state")val addressState: kotlin.String? = null,
-    @ColumnInfo(name="address_region")val addressRegion: kotlin.String? = null
+    @ColumnInfo(name="address_region")val addressRegion: kotlin.String? = null,
+    @ColumnInfo(name="jwt")val jwt: kotlin.String? = null
 ) {
     /**
      *

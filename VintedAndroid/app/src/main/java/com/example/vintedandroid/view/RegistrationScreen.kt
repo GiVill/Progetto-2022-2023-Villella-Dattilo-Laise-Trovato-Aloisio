@@ -12,8 +12,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
@@ -23,7 +25,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.vintedandroid.client.apis.AuthApi
+import com.example.vintedandroid.client.models.LoginUserDto
 import com.example.vintedandroid.client.models.NewUserDto
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun RegistrationScreen(navController: NavHostController) {
@@ -31,6 +38,10 @@ fun RegistrationScreen(navController: NavHostController) {
     val emailField = remember { mutableStateOf(TextFieldValue()) }
     val nicknameField = remember { mutableStateOf(TextFieldValue()) }
     val passwordField = remember { mutableStateOf(TextFieldValue()) }
+
+    var loginUnsuccessful by remember {mutableStateOf(false)}
+    var buttonEnabled by remember { mutableStateOf(true) }
+
 
     Column(
         modifier = Modifier
@@ -67,14 +78,37 @@ fun RegistrationScreen(navController: NavHostController) {
         )
 
         Button(
-            onClick = { navController.popBackStack(); navController.navigate("home") },
-            modifier = Modifier.padding(8.dp)
+            onClick = {
+                    buttonEnabled = false
+                val registrationUserDto = NewUserDto(
+                    password = passwordField.value.text,
+                    nickName = nicknameField.value.text,
+                    email = emailField.value.text
+                )
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val auth = AuthApi()
+
+                        val t = auth.signUp(registrationUserDto)
+                        withContext(Dispatchers.Main) {
+                            if (t.access_token != null) {
+                                navController.popBackStack()
+                                navController.navigate("home")
+                            }
+                            else{
+                                loginUnsuccessful = true
+                                buttonEnabled = true
+                            }
+                        }
+                    }
+
+                //Log.i("tag", response.toString()) //response.contains("").toString()
+                navController.popBackStack(); navController.navigate("home")
+                      },
+            modifier = Modifier.padding(8.dp),
+            enabled = buttonEnabled
         ) {
-            val registrationUserDto = NewUserDto(
-                password = passwordField.value.text,
-                nickName = nicknameField.value.text,
-                email = emailField.value.text
-            )
+
+
             /*
             val auth = AuthApi()
             if(auth.signUp(registrationUserDto).accessToken != null){ //TODO AGGIUSTARE
