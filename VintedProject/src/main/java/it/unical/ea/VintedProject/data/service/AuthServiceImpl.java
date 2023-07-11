@@ -7,6 +7,7 @@ import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.AuthService;
 import it.unical.ea.VintedProject.dto.LoginUserDto;
 import it.unical.ea.VintedProject.dto.NewUserDto;
+import it.unical.ea.VintedProject.dto.UserDto;
 import it.unical.ea.VintedProject.security.TokenStore;
 import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
 import it.unical.ea.VintedProject.security.keycloak.TokenResponse;
@@ -48,7 +49,10 @@ public class AuthServiceImpl implements AuthService {
         // NON FARE ALCUN sout DEGLI UTENTI! Data la pesantezza verrà dato un errore col toString() e col  java.lang.StackOverflowError
         // System.out.println(u);
         if (u.isPresent() && passwordEncoder.matches(data.getPassword(), u.get().getPassword())){
-            return keycloakTokenClient.getToken(data.getEmail(), data.getPassword());
+            TokenResponse tokenResponse =keycloakTokenClient.getToken(data.getEmail(), data.getPassword());
+            UserDto userDto = modelMapper.map(u.get(),UserDto.class);
+            tokenResponse.setUserDto(userDto);
+            return tokenResponse;
         }
 
         throw new EntityNotFoundException(messageLang.getMessage("credentials.not.valid"));
