@@ -190,6 +190,6 @@ public class DbGenerator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        //createDb();
+        createDb();
     }
 }

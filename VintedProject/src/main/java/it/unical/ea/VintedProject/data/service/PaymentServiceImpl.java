@@ -60,9 +60,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || userId !=u.get().getId()){
-            //TODO: ECCEZIONE CON MESSAGGIO
-            System.out.println("NPOOOOOOOOOOOOOOO");
-            throw new EntityNotFoundException(messageLang.getMessage("user.without.payment",userId));
+            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",userId));
         }
 
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE);
@@ -93,17 +91,13 @@ public class PaymentServiceImpl implements PaymentService {
 
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || userId !=u.get().getId()){
-            //TODO: ECCEZIONE CON MESSAGGIO
-            System.out.println("NPOOOOOOOOOOOOOOO");
-            return;
+            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",userId));
         }
         Optional<Payment> payment = paymentDao.findById(paymentId);
 
         if(payment == null || !payment.get().getUser().getId().equals(userId))
         {
-            //TODO: ECCEZIONE CON MESSAGGIO
-            System.out.println("NPOOOOOOOOOOOOOOO");
-            return;
+            throw new EntityNotFoundException(messageLang.getMessage("payment.not.present",userId));
         }
         paymentDao.deleteById(paymentId);
     }

@@ -34,15 +34,15 @@ public class ImageController {
         return ResponseEntity.ok(imageService.insertInsertionImage(insertionId, img));
     }
 
-    @DeleteMapping("/images/delete/user/{id}")
-    public ResponseEntity<String> deleteImage(@PathVariable("id") Long id){
-        imageService.deleteImageUser(id);
+    @DeleteMapping("/images/user/{insertionId}")
+    public ResponseEntity<String> deleteImage(@PathVariable("insertionId") Long insertionId){
+        imageService.deleteImageUser(insertionId);
         return ResponseEntity.ok("ok");
     }
 
-    @DeleteMapping("/images/delete/insertion/{id}")
-    public ResponseEntity<String> deleteImageInsertion(@PathVariable("id") Long id){
-        imageService.deleteImageInsertion(id);
+    @DeleteMapping("/images/insertion/{insertionId}")
+    public ResponseEntity<String> deleteImageInsertion(@PathVariable("insertionId") Long insertionId){
+        imageService.deleteImageInsertion(insertionId);
         return ResponseEntity.ok("ok");
     }
 }

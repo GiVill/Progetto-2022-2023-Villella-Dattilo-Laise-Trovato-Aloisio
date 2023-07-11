@@ -35,10 +35,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
-    //private final OrderDao orderDao;
-    private final OrderService orderService;
     private final ModelMapper modelMapper;
-    private final BasicInsertionService basicInsertionService;
     private final static int SIZE_FOR_PAGE = 10;
     private final MessageLang messageLang;
 
@@ -64,14 +61,6 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user, UserDto.class);
     }
 
-    /*public List<Order> getOrdersByUser(Long userId) {
-        List<Order> orders = orderDao.findByUser(userId);
-        if (orders.isEmpty()) {
-            throw new EntityNotFoundException(messageLang.getMessage("user.order.not.present",userId));
-        }
-        return orders;
-    }*/
-
     @Override
     public List<User> findAll() {
         return userDao.findAll();
@@ -95,8 +84,7 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findByEmail(String email) {
         Optional<User> user = userDao.findUserByEmail(email);
         if(user.isEmpty()){
-            //TODO scrivere errore
-            throw new EntityNotFoundException(messageLang.getMessage("user.nickname.not.present",email));
+            throw new EntityNotFoundException(messageLang.getMessage("user.mail.not.present",email));
         }
         return user;
     }
@@ -105,9 +93,7 @@ public class UserServiceImpl implements UserService {
     public Boolean updateUserPassword(Long id, String newPassword) {
         Optional<User> u = findByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || id !=u.get().getId()){
-            //TODO: ECCEZIONE CON MESSAGGIO
-            System.out.println("NPOOOOOOOOOOOOOOO");
-            return false;
+            throw new EntityNotFoundException(messageLang.getMessage("wrong.user"));
         }
         //TODO L'update andrebbe fatta anche su Keycloak
         try{
@@ -124,9 +110,7 @@ public class UserServiceImpl implements UserService {
     public Boolean updateUserNickname(Long id, String newNickname) {
         Optional<User> u = findByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || id !=u.get().getId()){
-            //TODO: ECCEZIONE CON MESSAGGIO
-            System.out.println("NPOOOOOOOOOOOOOOO");
-            return false;
+            throw new EntityNotFoundException(messageLang.getMessage("wrong.user"));
         }
         //TODO L'update andrebbe fatta anche su Keycloak
         try{

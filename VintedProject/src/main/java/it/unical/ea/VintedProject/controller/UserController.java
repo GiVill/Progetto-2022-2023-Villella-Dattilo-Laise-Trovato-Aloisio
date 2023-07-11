@@ -30,17 +30,9 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final UserDao userDao;
 
     @Autowired
     private HttpServletRequest request;
-
-    //TODO: Forse questa GET si può eliminare?
-    @GetMapping("/swagger")
-    @PreAuthorize("permitAll()")
-    public void swagger() {
-        System.out.println("Swagger documentation is running at: http://localhost:8010/swagger-ui/index.html");
-    }
 
     //TODO: Forse questo @Operation si può eliminare?
     @Operation(
@@ -58,7 +50,7 @@ public class UserController {
             }
     )
     @GetMapping("/users")
-    @PreAuthorize("hasRole('admin')")
+    //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<List<UserDto>> all() {
         return ResponseEntity.ok(userService.getAllStored());
     }
@@ -73,14 +65,14 @@ public class UserController {
     @PostMapping("/users")
     public ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) { return ResponseEntity.ok(userService.saveDto(userDto)); }
 
-    @PutMapping("/update-users-password/{idUser}")
+    @PutMapping("/password/{idUser}")
     public ResponseEntity<Boolean> updateUserPassword(@PathVariable("idUser") Long id,@RequestBody @Valid String newPassword) { return ResponseEntity.ok(userService.updateUserPassword(id,newPassword));}
 
-    @PutMapping("/update-users-nickname/{idUser}")
+    @PutMapping("/nickname/{idUser}")
     public ResponseEntity<Boolean> updateUserNickname(@PathVariable("idUser") Long id,@RequestBody @Valid String newNickname) { return ResponseEntity.ok(userService.updateUserNickname(id,newNickname));}
 
     @DeleteMapping("/users/{idUser}")
-    @PreAuthorize("hasRole('admin')")
+    //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<Void> deleteUserById(@PathVariable("idUser") Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();

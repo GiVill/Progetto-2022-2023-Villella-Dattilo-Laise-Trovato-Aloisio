@@ -50,8 +50,6 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto getOrderById(Long orderId) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || !u.get().getOrders().contains(findById(orderId)) ){
-            //TODO: ECCEZIONE CON MESSAGGIO
-            System.out.println("NPOOOOOOOOOOOOOOO");
             throw  new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId));
         }
         Order order = orderDao.findById(orderId).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId)));
@@ -62,8 +60,6 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrderById(Long orderId) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || !u.get().getOrders().contains(findById(orderId)) ){
-            //TODO: ECCEZIONE CON MESSAGGIO
-            System.out.println("NPOOOOOOOOOOOOOOO");
             throw  new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId));
         }
         orderDao.deleteById(orderId);
@@ -85,8 +81,7 @@ public class OrderServiceImpl implements OrderService {
     public Page<OrderDto> findByUserId(Long UserId,int page){
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || !u.get().getId().equals(UserId) ){
-            //TODO modificare l'eccezione
-            throw new EntityNotFoundException(messageLang.getMessage("order.not.present",UserId));
+            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",UserId));
         }
         Page<Order> orders = orderDao.findByUser(u,PageRequest.of(page, SIZE_FOR_PAGE));
         List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());

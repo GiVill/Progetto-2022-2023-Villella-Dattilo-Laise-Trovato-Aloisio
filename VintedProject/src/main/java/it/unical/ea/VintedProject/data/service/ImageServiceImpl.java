@@ -48,9 +48,7 @@ public class ImageServiceImpl implements ImageService {
     public Boolean insertUserImage(MultipartFile img){
         Optional<User> u = userService.findByNickName(LoggedUserDetail.getInstance().getUsername());
         if(u.get().getNickName() == null){
-            //TODO: ECCEZIONE CON MESSAGGIO
-            System.out.println("NPOOOOOOOOOOOOOOO");
-            return null;
+            throw new EntityNotFoundException(messageLang.getMessage("user.not.found"));
         }
         try {
             String realPathToUploads = System.getProperty("user.dir") + File.separator + relativePathToUploads;

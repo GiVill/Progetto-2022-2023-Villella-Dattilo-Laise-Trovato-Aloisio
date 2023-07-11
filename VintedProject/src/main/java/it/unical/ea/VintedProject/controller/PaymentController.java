@@ -22,7 +22,6 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @GetMapping("/payments/{idPayment}")
-    //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<PaymentDto> getById(@PathVariable("idPayment") Long id){ return ResponseEntity.ok(paymentService.findById(id)); }
 
     @GetMapping("/payments")
@@ -32,17 +31,15 @@ public class PaymentController {
     }
 
     @PostMapping("/payments")
-    //@PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<PaymentDto> addPayment (@RequestBody @Valid PaymentDto payment) { return ResponseEntity.ok(paymentService.save(payment)); }
 
     @DeleteMapping("/payments/{idPayment}/{idUser}")
-    //@PreAuthorize("hasAnyRole('user','admin')")
     public HttpStatus deletePayment(@PathVariable("idPayment") Long paymentId,@PathVariable("idUser") Long userId) {
         paymentService.deletePayment(paymentId,userId);
         return HttpStatus.OK;
     }
 
-    @DeleteMapping("/payment/delete/admin/{paymentId}")
+    @DeleteMapping("/payment/admin/{paymentId}")
     @PreAuthorize("hasRole('admin')")
     public HttpStatus deletePaymentAdmin(@PathVariable("paymentId") Long paymentId) {
         paymentService.deletePaymentAdmin(paymentId);

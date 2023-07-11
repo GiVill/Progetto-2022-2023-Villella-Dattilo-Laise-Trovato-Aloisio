@@ -51,14 +51,11 @@ public class ChatServiceImpl implements ChatService {
     public List<Chat> allChatByUserId(Long id) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || !u.get().getId().equals(id)){
-            //TODO: modificare eccezione
-            System.out.println("NPOOOOOOOOOOOOOOO");
-            throw new EntityNotFoundException(messageLang.getMessage("user.without.payment",id));
+            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
         }
         List<Chat> list =  chatDao.findAllByIdUser1OrderByDateAsc(id);
         if(list.isEmpty()){
-            //TODO modificare eccezione
-            messageLang.getMessage("user.order.not.present",id);
+            throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
         }
         return list;
     }
@@ -67,8 +64,7 @@ public class ChatServiceImpl implements ChatService {
     public List<Chat> allChatByUserId2(Long id) {
         List<Chat> list =  chatDao.findAllByIdUser2OrderByDateAsc(id);
         if(list.isEmpty()){
-            //TODO modificare eccezione
-            messageLang.getMessage("user.order.not.present",id);
+            throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
         }
         return list;
     }
@@ -77,9 +73,7 @@ public class ChatServiceImpl implements ChatService {
     public List<ChatDto> allMessageByUserId(Long id1, Long id2) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || !u.get().getId().equals(id1)){
-            //TODO: modificare eccezione
-            System.out.println("NPOOOOOOOOOOOOOOO");
-            throw new EntityNotFoundException(messageLang.getMessage("user.without.payment",id1));
+            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id1));
         }
         List<ChatDto> list =  chatDao.findByIdUser1AndIdUser2OrderByDateAsc(id1, id2).stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
         List<ChatDto>  list2 = chatDao.findByIdUser2AndIdUser1OrderByDateAsc(id1,id2).stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
@@ -93,7 +87,7 @@ public class ChatServiceImpl implements ChatService {
 
 
         if(list.isEmpty()){
-            messageLang.getMessage("user.order.not.present",id1);
+            throw new EntityNotFoundException(messageLang.getMessage("chat.not.present",id1));
         }
         return unite;
     }

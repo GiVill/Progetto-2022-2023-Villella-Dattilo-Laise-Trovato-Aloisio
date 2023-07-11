@@ -46,9 +46,7 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     public Stream<BuyingOfferDto> getById(Long userId) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || !u.get().getId().equals(userId)){
-            //TODO: modificare eccezione
-            System.out.println("NPOOOOOOOOOOOOOOO");
-            throw new EntityNotFoundException(messageLang.getMessage("user.without.payment",userId));
+            throw new EntityNotFoundException(messageLang.getMessage("wrong.user"));
         }
         return buyingOfferDao.findById(userId).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class));
     }
@@ -68,9 +66,7 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     public void deleteOfferById(Long offerId) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || !u.get().getBuyingOffers().contains(buyingOfferDao.findById(offerId))){
-            //TODO: modificare eccezione
-            System.out.println("NPOOOOOOOOOOOOOOO");
-            throw new EntityNotFoundException(messageLang.getMessage("user.without.payment",offerId));
+            throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present",offerId));
         }
         buyingOfferDao.deleteById(offerId);
     }

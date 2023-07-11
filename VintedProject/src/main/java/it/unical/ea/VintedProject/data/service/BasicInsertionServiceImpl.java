@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -62,9 +63,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     public void deleteBasicInsertionById(Long insertionId) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || !u.get().getInsertions().contains(basicInsertionDao.findById(insertionId))){
-            //TODO: modificare eccezione
-            System.out.println("NPOOOOOOOOOOOOOOO");
-            throw new EntityNotFoundException(messageLang.getMessage("user.without.payment",insertionId));
+            throw new EntityNotFoundException(messageLang.getMessage("request.not.valid"));
         }
         basicInsertionDao.deleteById(insertionId);
     }
@@ -125,9 +124,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     public Boolean modifyById(Long insertionId, String title, Float price, String description) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || !u.get().getInsertions().contains(basicInsertionDao.findById(insertionId))){
-            //TODO: modificare eccezione
-            System.out.println("NPOOOOOOOOOOOOOOO");
-            throw new EntityNotFoundException(messageLang.getMessage("user.without.payment",insertionId));
+            throw new EntityNotFoundException(messageLang.getMessage("request.not.valid"));
         }
         try {
             BasicInsertion insertion = findById(insertionId);
