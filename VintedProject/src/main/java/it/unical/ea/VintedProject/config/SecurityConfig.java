@@ -65,6 +65,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/v1/users/{idUser}").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/v1/update-users-password/{idUser}").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/v1/update-users-nickname/{idUser}").permitAll()
+                .requestMatchers(HttpMethod.GET,"/v1/order/user/{idUser}").permitAll()
+                .requestMatchers(HttpMethod.GET,"/v1/insertion/user/{idUser}/{page}").permitAll()
                 //PAYMENT
                 .requestMatchers(HttpMethod.GET, "/v1/payments").permitAll()
                 .requestMatchers(HttpMethod.GET,"/v1/payments/{idPayment}").permitAll()

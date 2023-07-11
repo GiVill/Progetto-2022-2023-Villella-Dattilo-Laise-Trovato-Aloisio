@@ -1,11 +1,16 @@
 package it.unical.ea.VintedProject.data.service;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
+import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
+import it.unical.ea.VintedProject.data.service.interfaces.OrderService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
+import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.LoginUserDto;
+import it.unical.ea.VintedProject.dto.OrderDto;
 import it.unical.ea.VintedProject.dto.UserDto;
 import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
 import jakarta.persistence.EntityNotFoundException;
@@ -30,7 +35,9 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
     //private final OrderDao orderDao;
+    private final OrderService orderService;
     private final ModelMapper modelMapper;
+    private final BasicInsertionService basicInsertionService;
     private final static int SIZE_FOR_PAGE = 10;
     private final MessageLang messageLang;
 
@@ -107,6 +114,16 @@ public class UserServiceImpl implements UserService {
         }catch (Exception e){
             return false;
         }
+    }
+
+    @Override
+    public List<OrderDto> getOrderUser(Long id) {
+        return orderService.findByUserId(id);
+    }
+
+    @Override
+    public Page<BasicInsertionDto> getInsertionUser(Long id,int page) {
+        return basicInsertionService.findAllByUser(id,page);
     }
 
     @Override

@@ -14,4 +14,6 @@ public interface OrderDao extends JpaRepository<Order, Long> {
     //Return an Order using the id of a User
     List<Order> findByUser(Optional<User> user);
 
+    List<Order> findByUser(User user);
+
 }

@@ -1,7 +1,10 @@
 package it.unical.ea.VintedProject.data.service.interfaces;
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
+import it.unical.ea.VintedProject.dto.BasicInsertionDto;
+import it.unical.ea.VintedProject.dto.OrderDto;
 import it.unical.ea.VintedProject.dto.UserDto;
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -30,4 +33,8 @@ public interface UserService {
     Boolean updateUserPassword(Long id, String newPassword);
 
     Boolean updateUserNickname(Long id, String newNickname);
+
+    List<OrderDto> getOrderUser(Long id);
+
+    Page<BasicInsertionDto> getInsertionUser(Long id,int page);
 }

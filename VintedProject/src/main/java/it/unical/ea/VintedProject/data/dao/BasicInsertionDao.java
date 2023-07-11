@@ -1,6 +1,8 @@
 package it.unical.ea.VintedProject.data.dao;
 
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
+import it.unical.ea.VintedProject.data.entities.User;
+import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.enumeration.Brand;
 import it.unical.ea.VintedProject.dto.enumeration.Category;
 import org.springframework.data.domain.Page;
@@ -43,4 +45,6 @@ public interface BasicInsertionDao extends JpaRepository<BasicInsertion,Long> {
     Page<BasicInsertion> findByCategory(Category category, Pageable pageable);
 
     Page<BasicInsertion> findAllByIsPrivate(Boolean isPrivate, Pageable pageable);
+
+    List<BasicInsertionDto> findByUser(User user);
 }
