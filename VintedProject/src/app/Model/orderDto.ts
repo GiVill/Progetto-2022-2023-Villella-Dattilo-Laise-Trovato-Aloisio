@@ -12,6 +12,8 @@
 
 export interface OrderDto {
     id: number;
+    data: string
+    number: number;
     creationDate: string;
     total: number;
     //paymentId: number;

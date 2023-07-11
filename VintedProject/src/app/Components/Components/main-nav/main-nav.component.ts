@@ -44,9 +44,7 @@ export class MainNavComponent implements OnInit{
 
 
   logout(): void {
-    this.cookiesService.delete('username', '/');
-    this.cookiesService.delete('jwtToken', '/');
-    this.cookieService.checkUserCookie();
+    this.cookieService.deleteCookie()
     this.router.navigate(['/login']);
   }
 

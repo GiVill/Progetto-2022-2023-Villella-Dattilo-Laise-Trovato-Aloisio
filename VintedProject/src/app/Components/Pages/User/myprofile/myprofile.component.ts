@@ -10,6 +10,7 @@ import {ImageService} from "../../../../service/image.service";
 import {TokenService} from "../../../../service/token.service";
 import {PageOrderDto} from "../../../../Model/pageOrderDto";
 import {OrderService} from "../../../../service/order.service";
+import {CookiesService} from "../../../../service/cookies.service";
 
 @Component({
   selector: 'app-myprofile',
@@ -26,7 +27,7 @@ export class MyprofileComponent {
   isAnyOrder=false;
   newPassword: string = '';
   newNickname: string = '';
-  userId: number = Number(this.tokenservice.getUserStringFromToken);
+  userId: number = Number(this.cookieSevices.getUserId());
   isUpdatingPassword: boolean = false;
   isUpdatingNickname: boolean = false;
   showUpdateSection =false;
@@ -36,8 +37,8 @@ export class MyprofileComponent {
     private insertionService: InsertionService,
     private route: ActivatedRoute,
     private userService: UserService,
-    private tokenservice: TokenService,
-    private  orderService: OrderService
+    private  orderService: OrderService,
+    private cookieSevices: CookiesService,
   ) {}
 
 

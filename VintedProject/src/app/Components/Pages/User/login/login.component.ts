@@ -53,23 +53,33 @@ export class LoginComponent implements OnInit{
 
 
   logIn(): void {
-    this.authService.login(this.login.email,  this.login.password).subscribe(
-
+    this.authService.login(this.login.email, this.login.password).subscribe(
       response => {
+        console.log(response)
         const userCookie = this.cookieService.get('username');
         if (!userCookie) {
-          this.cookieService.set('username', this.login.email, 1, '/');
+          // Salva le informazioni dell'utente nei cookie
+          if (response.userDto.id != null) {
+          this.cookieService.set('userId', response.userDto.id.toString(), 1, '/');}
+          if (response.userDto.email != null) {
+            this.cookieService.set('userEmail', response.userDto.email, 1, '/');}
+          if (response.userDto.addressCity != null) {
+            this.cookieService.set('userCity', response.userDto.addressCity, 1, '/');}
+
+          this.cookieService.set('userFirstName', response.userDto.firstName, 1, '/');
+          this.cookieService.set('userLastName', response.userDto.lastName, 1, '/');
+          this.cookieService.set('userNickname', response.userDto.nickName, 1, '/');
+
           this.cookieService.set('jwtToken', response.access_token, 1, '/');
+
           this.cookiesService.checkUserCookie();
           this.User.getUserString();
           this.router.navigate(['/']);
         }
       },
       error => {
-        // Handle error
-        console.log(error)
-        // (!this.error.redirectToErrorPage(error))
-          this.snackBar.open("Credenziali errate!","OK");
+        console.log(error);
+        this.snackBar.open('Credenziali errate!', 'OK');
       }
     );
   }

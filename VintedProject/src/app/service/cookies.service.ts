@@ -15,6 +15,10 @@ export class CookiesService implements OnInit {
     private jwtHelper: JwtHelperService // Inietta il JwtHelperService
   ) {}
 
+  getUserId(){
+    return this.cookieService.get("userId",)
+  }
+
    checkUserToken() {
     const token = this.cookieService.get('jwtToken');
 
@@ -26,23 +30,20 @@ export class CookiesService implements OnInit {
         } else {
           // Token scaduto
           console.error('Token scaduto');
-          this.cookieService.delete('username', '/');
-          this.cookieService.delete('jwtToken', '/');
+          this.deleteCookie()
           this.router.navigate(['/login']);
           return false
         }
       } catch (error) {
         // Token non valido
         console.error('Token non valido:', error);
-        this.cookieService.delete('username', '/');
-        this.cookieService.delete('jwtToken', '/');
+        this.deleteCookie()
         this.router.navigate(['/login']);
         return false
       }
     } else {
       // Token mancante
-      this.cookieService.delete('username', '/');
-      this.cookieService.delete('jwtToken', '/');
+      this.deleteCookie()
       this.checkUserCookie();
       this.router.navigate(['/login']);
       return false
@@ -50,7 +51,7 @@ export class CookiesService implements OnInit {
   }
 
   checkUserCookie(): void {
-    const userCookie = this.cookieService.get('username');
+    const userCookie = this.cookieService.get('userEmail');
     if (userCookie) {
       this.logStringResult = userCookie;
     } else {
@@ -60,6 +61,18 @@ export class CookiesService implements OnInit {
 
   logStringResultfun() {
     return this.logStringResult;
+  }
+
+  deleteCookie(){
+    this.cookieService.delete('userId', '/');
+    this.cookieService.delete('userEmail', '/');
+    this.cookieService.delete('userCity', '/');
+    this.cookieService.delete('userFirstName', '/');
+    this.cookieService.delete('userLastName', '/');
+    this.cookieService.delete('userEmail', '/');
+    this.cookieService.delete('jwtToken', '/');
+    this.cookieService.delete('userNickname', '/');
+    this.checkUserCookie()
   }
 
   ngOnInit(): void {
