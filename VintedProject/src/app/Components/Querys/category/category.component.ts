@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {BasicInsertionDto} from "../../../Model/basicInsertionDto";
-import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
 import {HttpClient} from "@angular/common/http";
 import {InsertionService} from "../../../service/insertion.service";
 import {CookieService} from "ngx-cookie-service";
 import {ActivatedRoute} from "@angular/router";
-import {ImageService} from "../../../service/image.service";
+
 import {of, tap} from "rxjs";
+import {PageBasicInsertionDto} from "../../../model/pageBasicInsertionDto";
 
 @Component({
   selector: 'app-category',
@@ -41,7 +40,7 @@ export class CategoryComponent implements OnInit{
       return of(undefined); // Restituisci un observable di undefined
     }
 
-    return this.insertionService.findAllByCategory(pageNumber, this.category).pipe(
+    return this.insertionService.getByCategory( this.category, this.pageNumber,).pipe(
       tap((insertions: PageBasicInsertionDto) => {
         this.insertion = insertions;
       })

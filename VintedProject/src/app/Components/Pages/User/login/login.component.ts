@@ -1,13 +1,13 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
 import {AuthService} from "../../../../service/auth.service";
-import {LoginUserDto} from "../../../../Model/loginUserDto";
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
 import {MainNavComponent} from "../../../Components/main-nav/main-nav.component";
 import {CookiesService} from "../../../../service/cookies.service";
-import { NewUserDto } from 'src/app/Model/newUserDto';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {ErrorService} from "../../../../service/error.service";
+import {LoginUserDto} from "../../../../model/loginUserDto";
+import {NewUserDto} from "../../../../model/newUserDto";
 
 
 @Component({
@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit{
 
   isAllFilledRegistration: boolean = false;
 
+  passwordCheck: string = '';
+
 
   login: LoginUserDto = {
     email: '',
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit{
     nickName: '',
     email: '',
     password: '',
-    passwordCheck: ''
+
   };
 
 
@@ -53,24 +55,26 @@ export class LoginComponent implements OnInit{
 
 
   logIn(): void {
-    this.authService.login(this.login.email, this.login.password).subscribe(
+    this.authService.login(this.login).subscribe(
       response => {
         console.log(response)
         const userCookie = this.cookieService.get('username');
         if (!userCookie) {
           // Salva le informazioni dell'utente nei cookie
-          if (response.userDto.id != null) {
-          this.cookieService.set('userId', response.userDto.id.toString(), 1, '/');}
-          if (response.userDto.email != null) {
-            this.cookieService.set('userEmail', response.userDto.email, 1, '/');}
-          if (response.userDto.addressCity != null) {
-            this.cookieService.set('userCity', response.userDto.addressCity, 1, '/');}
+          if (response.userDto!.id != null) {
+          this.cookieService.set('userId', response.userDto!.id.toString(), 1, '/');}
+          if (response.userDto!.email != null) {
+            this.cookieService.set('userEmail', response.userDto!.email, 1, '/');}
+          if (response.userDto!.addressCity != null) {
+            this.cookieService.set('userCity', response.userDto!.addressCity, 1, '/');}
 
-          this.cookieService.set('userFirstName', response.userDto.firstName, 1, '/');
-          this.cookieService.set('userLastName', response.userDto.lastName, 1, '/');
-          this.cookieService.set('userNickname', response.userDto.nickName, 1, '/');
+          this.cookieService.set('userFirstName', response.userDto!.firstName, 1, '/');
+          this.cookieService.set('userLastName', response.userDto!.lastName, 1, '/');
+          this.cookieService.set('userNickname', response.userDto!.nickName, 1, '/');
 
-          this.cookieService.set('jwtToken', response.access_token, 1, '/');
+          if (response.accessToken != null) {
+            this.cookieService.set('jwtToken', response.accessToken, 1, '/');
+          }
 
           this.cookiesService.checkUserCookie();
           this.User.getUserString();
@@ -83,6 +87,8 @@ export class LoginComponent implements OnInit{
       }
     );
   }
+
+
 
   ngOnInit(): void {
     this.checkUserCookie()
@@ -125,9 +131,9 @@ export class LoginComponent implements OnInit{
 
   isRegistrationFormValid(): boolean {
     if (this.newUser.nickName.length==0 ||
-        this.newUser.email.length==0 ||
+        this.newUser.email!.length==0 ||
         this.newUser.password.length==0 ||
-        this.newUser.passwordCheck.length==0){
+        this.passwordCheck.length==0){
       return false;
     }
     return true;

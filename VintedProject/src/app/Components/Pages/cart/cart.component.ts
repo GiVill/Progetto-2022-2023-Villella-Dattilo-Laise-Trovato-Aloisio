@@ -3,11 +3,11 @@ import {CookieService} from "ngx-cookie-service";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import { Observable } from "rxjs";
-import {BasicInsertionDto} from "../../../Model/basicInsertionDto";
 import {InsertionService} from "../../../service/insertion.service";
 import {CartService} from "../../../service/cart.service";
 import {OrderService} from "../../../service/order.service";
 import {TokenService} from "../../../service/token.service";
+import {BasicInsertionDto} from "../../../model/basicInsertionDto";
 
 
 

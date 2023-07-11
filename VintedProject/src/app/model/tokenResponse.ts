@@ -9,9 +9,11 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { UserDto } from './userDto';
 
-export interface NewUserDto { 
-    password: string;
-    nickName: string;
-    email?: string;
+export interface TokenResponse { 
+    accessToken?: string;
+    refreshToken?: string;
+    tokenType?: string;
+    userDto?: UserDto;
 }

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {BasicInsertionDto} from "../../../Model/basicInsertionDto";
-import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
+
 import {InsertionService} from "../../../service/insertion.service";
 import {ActivatedRoute} from "@angular/router";
-import {ImageService} from "../../../service/image.service";
+import {PageBasicInsertionDto} from "../../../model/pageBasicInsertionDto";
+
 
 @Component({
   selector: 'app-brand',
@@ -22,7 +22,7 @@ export class BrandComponent implements OnInit{
     this.route.paramMap.subscribe((params) => {
       this.brandName = String(params.get('brandName'));});
 
-    this.insertionService.getInsertionByBrand(this.brandName,this.page).subscribe((insertions: PageBasicInsertionDto) => {
+    this.insertionService.getByCategory(this.brandName!,this.page).subscribe((insertions: PageBasicInsertionDto) => {
       this.Brandedinsertion = insertions;
     });
   }

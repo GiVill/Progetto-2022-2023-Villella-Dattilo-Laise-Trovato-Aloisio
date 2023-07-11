@@ -1,18 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-
 import {ActivatedRoute} from "@angular/router";
-
-import {Observable, switchMap} from "rxjs";
-
+import {switchMap} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
-import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
-import {UserDto} from "../../../../Model/userDto";
 import {InsertionService} from "../../../../service/insertion.service";
 import {CartService} from "../../../../service/cart.service";
 import {UserService} from "../../../../service/user.service";
-import {ImageService} from "../../../../service/image.service";
-import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
 import {OrderService} from "../../../../service/order.service";
+import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
+import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
+import {UserDto} from "../../../../model/userDto";
 
 
 @Component({
@@ -54,7 +50,7 @@ export class InsertionPageComponent implements OnInit {
           this.insertion = data;
           console.log(this.insertion);
           if (this.insertion?.userId) {
-            this.userService.getUserById(this.insertion.userId).subscribe(
+            this.userService.getById(this.insertion.userId).subscribe(
               (userData: UserDto) => {
                 this.user = userData;
                 console.log(this.user?.id); // Verifica qui
@@ -64,7 +60,7 @@ export class InsertionPageComponent implements OnInit {
               }
             );
 
-            this.userService.getAllInsertionsByUser(this.id, this.page).subscribe(
+            this.insertionService.getInsertionByUserId(this.id!, this.page).subscribe(
               (data: PageBasicInsertionDto) => {
                 this.userOtherInsertion = data;
               },
@@ -110,29 +106,6 @@ checkProductInCart(): void {
     }
   }}}
 
-  BuyNow() {
-    const order = {
-
-      creationDate: new Date().toISOString(),
-      insertionId: this.id,
-      userId: 2
-    };
-    console.log("cart", order);
-
-
-    // Call the order service to create the order
-    this.orderService.addOrder(order).subscribe(
-      response => {
-        console.log("Ordine creato con successo:", response);
-
-      },
-      error => {
-        console.log("cart", order); // Stampa l'oggetto orderDto invece di order
-        console.log("Errore durante la creazione dell'ordine:", error);
-
-      }
-    );
-  }
 
 }
 

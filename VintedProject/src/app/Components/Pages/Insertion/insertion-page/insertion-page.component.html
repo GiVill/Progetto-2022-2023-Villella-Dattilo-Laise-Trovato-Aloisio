@@ -44,7 +44,7 @@
         <div *ngFor="let item of userOtherInsertion?.content" class="card-item">
           <div class="user-insertion-card">
             <div class="user-image-container">
-              <img class="user-image" [src]="user?.photo ||  'assets/resources/vestito.jpg' " alt="User Image">
+              <img class="user-image" [src]="user?.imageName ||  'assets/resources/vestito.jpg' " alt="User Image">
             </div>
             <app-product-card [item]="item"></app-product-card>
           </div>

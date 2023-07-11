@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-export interface NewUserDto { 
-    password: string;
-    nickName: string;
-    email?: string;
+export interface NewMessageDto { 
+    idUser1?: number;
+    idUser2?: number;
+    message?: string;
 }

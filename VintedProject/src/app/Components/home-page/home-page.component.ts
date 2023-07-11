@@ -1,9 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BasicInsertionDto} from "../../Model/basicInsertionDto";
-import {PageBasicInsertionDto} from "../../Model/pageBasicInsertionDto";
 import {InsertionService} from "../../service/insertion.service";
+import {PageBasicInsertionDto} from "../../model/pageBasicInsertionDto";
 
-import {ImageService} from "../../service/image.service";
+
 
 @Component({
   selector: 'app-home-page',
@@ -18,14 +17,14 @@ export class HomePageComponent implements OnInit {
   constructor(private insertionService: InsertionService) { }
 
   ngOnInit(): void {
-    this.insertionService.getAllInsertions(this.page).subscribe((insertions: PageBasicInsertionDto) => {
+    this.insertionService.all4(this.page).subscribe((insertions: PageBasicInsertionDto) => {
 
       this.mostRequested = {
         ...insertions,
         content: insertions.content?.slice(0, 6)
       };
 
-      this.insertionService.getAllInsertions(this.page).subscribe((insertions: PageBasicInsertionDto) => {
+      this.insertionService.all4(this.page).subscribe((insertions: PageBasicInsertionDto) => {
         this.feed = {
           ...insertions,
           content: insertions.content?.slice(0, 6)

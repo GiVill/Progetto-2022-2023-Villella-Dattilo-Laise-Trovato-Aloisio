@@ -38,6 +38,14 @@ import { NotAuthorizedComponent } from './Components/Pages/Errors/not-authorized
 import { BadComponent} from "./Components/Pages/Errors/badRequest/bad.component";
 import { RefusedComponent } from './Components/Pages/Errors/refused/refused.component';
 import { OrderCardComponent } from './Components/Components/Cards/order-card/order-card.component';
+import {InsertionService} from "./service/insertion.service";
+import {AuthService} from "./service/auth.service";
+import {UserService} from "./service/user.service";
+import {CartService} from "./service/cart.service";
+import {PaymentService} from "./service/payment.service";
+import {OrderService} from "./service/order.service";
+import {OfferService} from "./service/offer.service";
+
 
 
 
@@ -66,6 +74,7 @@ import { OrderCardComponent } from './Components/Components/Cards/order-card/ord
     RefusedComponent,
     OrderCardComponent,
 
+
   ],
   imports: [
     BrowserModule,
@@ -92,7 +101,7 @@ import { OrderCardComponent } from './Components/Components/Cards/order-card/ord
       }
     })
   ],
-  providers: [CookieService,JwtHelperService],
+  providers: [CookieService,JwtHelperService,InsertionService,AuthService,UserService,CartService,PaymentService,OrderService,OfferService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

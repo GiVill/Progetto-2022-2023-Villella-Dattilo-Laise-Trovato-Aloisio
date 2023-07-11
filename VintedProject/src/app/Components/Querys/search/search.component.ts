@@ -2,11 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import {ActivatedRoute} from "@angular/router";
-import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
-import {BasicInsertionDto} from "../../../Model/basicInsertionDto";
 import {InsertionService} from "../../../service/insertion.service";
 import {of, tap} from "rxjs";
 import {ImageService} from "../../../service/image.service";
+import {PageBasicInsertionDto} from "../../../model/pageBasicInsertionDto";
 
 
 @Component({
@@ -43,7 +42,7 @@ export class SearchComponent implements OnInit {
       return of(undefined); // Restituisci un observable di undefined
     }
 
-    return this.insertionService.findAllByTitleLike(pageNumber, this.search).subscribe(
+    return this.insertionService.getByTitle( this.search, pageNumber).subscribe(
       (insertions: PageBasicInsertionDto) => {
         this.insertion = insertions;
       }

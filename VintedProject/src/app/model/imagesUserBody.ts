@@ -10,8 +10,6 @@
  * Do not edit the class manually.
  */
 
-export interface NewUserDto { 
-    password: string;
-    nickName: string;
-    email?: string;
+export interface ImagesUserBody { 
+    img?: Blob;
 }

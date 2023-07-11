@@ -1,12 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Observable, switchMap} from "rxjs";
-import {UserDto} from "../../../../Model/userDto";
-import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
+import {switchMap} from "rxjs";
 import {InsertionService} from "../../../../service/insertion.service";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../../service/user.service";
-import {ImageService} from "../../../../service/image.service";
-import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
+import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
+import {UserDto} from "../../../../model/userDto";
+;
 
 
 @Component({
@@ -34,13 +33,13 @@ export class ProfileComponent implements OnInit {
     this.route.paramMap.pipe(
       switchMap((params) => {
         this.id = Number(params.get('userid'));
-        return this.userService.getUserById(this.id);
+        return this.userService.getById(this.id);
       })
     ).subscribe(
       (user: UserDto) => {
         this.user = user;
         console.log(this.user)
-        this.userService.getAllInsertionsByUser(this.id, this.page).subscribe(
+        this.insertionService.getInsertionByUserId(this.id!, this.page).subscribe(
           (data: PageBasicInsertionDto) => {
             this.userInsertion = data;
             console.log(data)

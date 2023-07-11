@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {InsertionService} from "../../../../service/insertion.service";
 import {Router} from "@angular/router";
-import {CookieService} from "ngx-cookie-service";
 import {CookiesService} from "../../../../service/cookies.service";
-import {BasicInsertionDto, Brand, Category} from "../../../../Model/basicInsertionDto";
+import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
+import {Brand, Category} from "../../../../model/newInsertionDto";
+
 
 @Component({
   selector: 'app-create-insertion',
@@ -72,7 +73,7 @@ export class CreateInsertionComponent implements OnInit{
   creaInserzione() {
     console.log(this.inserzione)
     console.log(this.image)
-    this.insertionService.addInsertion(this.inserzione, this.image).subscribe(
+    this.insertionService.addInsertion(this.inserzione).subscribe(
 
 
       response => {

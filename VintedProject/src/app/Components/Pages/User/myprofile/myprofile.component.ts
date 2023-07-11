@@ -1,16 +1,13 @@
 import {Component, Input} from '@angular/core';
-import {UserDto} from "../../../../Model/userDto";
-import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
 import {InsertionService} from "../../../../service/insertion.service";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../../service/user.service";
 import {switchMap} from "rxjs";
-import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
-import {ImageService} from "../../../../service/image.service";
-import {TokenService} from "../../../../service/token.service";
-import {PageOrderDto} from "../../../../Model/pageOrderDto";
 import {OrderService} from "../../../../service/order.service";
 import {CookiesService} from "../../../../service/cookies.service";
+import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
+import {PageOrderDto} from "../../../../model/pageOrderDto";
+import {UserDto} from "../../../../model/userDto";
 
 @Component({
   selector: 'app-myprofile',
@@ -45,13 +42,13 @@ export class MyprofileComponent {
   ngOnInit(): void {
     this.route.paramMap.pipe(
       switchMap((params) => {
-        return this.userService.getUserById(this.userId);
+        return this.userService.getById(this.userId);
       })
     ).subscribe(
       (user: UserDto) => {
         this.user = user;
         //TODO Creare sto cazzo di get insertionBUserId e get orderByUserId //
-        this.userService.getAllInsertionsByUser(this.userId, this.page).subscribe(
+        this.insertionService.getInsertionByUserId(this.userId, this.page).subscribe(
           (data: PageBasicInsertionDto) => {
             this.myInsertion = data;
           },
@@ -64,7 +61,7 @@ export class MyprofileComponent {
         }
       })
 
-    this.orderService.getOrderByUserId(this.userId, this.page).subscribe(
+    this.orderService.getUserOrders(this.userId, this.page).subscribe(
       (data: PageOrderDto) => {
         this.myOrder = data;
         console.log(data);

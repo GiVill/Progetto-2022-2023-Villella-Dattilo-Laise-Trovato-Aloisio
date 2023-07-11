@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
-import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
 import {InsertionService} from "../../../../service/insertion.service";
-import {ImageService} from "../../../../service/image.service";
+import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
+
 
 
 @Component({
@@ -22,7 +21,7 @@ export class CatalogComponent implements OnInit {
   }
 
   loadInsertions(): void {
-    this.insertionService.getAllInsertions(this.page).subscribe((insertions: PageBasicInsertionDto) => {
+    this.insertionService.all4(this.page).subscribe((insertions: PageBasicInsertionDto) => {
       this.catalog = insertions;
       console.log(this.catalog);
     });
@@ -30,7 +29,7 @@ export class CatalogComponent implements OnInit {
 
   loadmore() {
     this.page += 1;
-    this.insertionService.getAllInsertions(this.page).subscribe((insertions: PageBasicInsertionDto) => {
+    this.insertionService.all4(this.page).subscribe((insertions: PageBasicInsertionDto) => {
       // Aggiungi i nuovi prodotti alla lista esistente invece di sostituirla
       if (this.catalog?.content && insertions.content) {
         this.catalog.content.push(...insertions.content);
