@@ -117,16 +117,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<OrderDto> getOrderUser(Long id) {
-        return orderService.findByUserId(id);
-    }
-
-    @Override
-    public Page<BasicInsertionDto> getInsertionUser(Long id,int page) {
-        return basicInsertionService.findAllByUser(id,page);
-    }
-
-    @Override
     public void deleteUserById(Long id) { userDao.deleteById(id); }
 
 }

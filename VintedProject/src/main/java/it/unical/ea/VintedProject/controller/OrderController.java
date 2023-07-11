@@ -41,9 +41,9 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("orders/user/{userId}")
-    public ResponseEntity<List<OrderDto>> getUserOrders(@PathVariable("userId") Long userId){
-        return ResponseEntity.ok(orderService.findByUserId(userId));
+    @GetMapping("orders/user/{userId}/{page}")
+    public ResponseEntity<Page<OrderDto>> getUserOrders(@PathVariable("userId") Long userId,@PathVariable("page") int page){
+        return ResponseEntity.ok(orderService.findByUserId(userId,page));
     }
 
 }

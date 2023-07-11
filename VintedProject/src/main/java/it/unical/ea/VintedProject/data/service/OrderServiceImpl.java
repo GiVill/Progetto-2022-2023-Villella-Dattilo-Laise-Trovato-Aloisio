@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,12 +67,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> findByUserId(Long UserId){
+    public Page<OrderDto> findByUserId(Long UserId,int page){
         Optional<User> u = userDao.findById(UserId);
         if (u != null){
-            List<Order> orders = orderDao.findByUser(u);
-            return orders.stream().map(s -> modelMapper.map(s,OrderDto.class)).collect(Collectors.toList());
+            Page<Order> orders = orderDao.findByUser(u,PageRequest.of(page, SIZE_FOR_PAGE));
+            List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());
+            return new PageImpl<>(collect);
         }
         return null;
     }
+
 }

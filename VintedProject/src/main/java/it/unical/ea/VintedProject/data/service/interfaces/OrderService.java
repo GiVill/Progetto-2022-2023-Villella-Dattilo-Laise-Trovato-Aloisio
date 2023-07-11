@@ -24,7 +24,8 @@ public interface OrderService {
 
     Order findById(Long id);
 
-    List<OrderDto> findByUserId(Long UserId);
+    Page<OrderDto> findByUserId(Long UserId,int page);
+
 
 }
 

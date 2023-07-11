@@ -94,18 +94,6 @@ public class UserController {
         return "This is a fallback method for Service user";
     }
 
-    @GetMapping("/order/user/{idUser}")
-    public ResponseEntity<List<OrderDto>> orderUser(@PathVariable("idUser")Long id){
-        return ResponseEntity.ok(userService.getOrderUser(id));
-    }
-
-    @GetMapping("insertion/user/{idUser}/{page}")
-    public ResponseEntity<Page<BasicInsertionDto>> insertionUser(@PathVariable("idUser") Long id,@PathVariable("page") int page){
-        return ResponseEntity.ok(userService.getInsertionUser(id, page));
-    }
-
-
-
     //@CircuitBreaker(name = SERVICE_A, fallbackMethod = "serviceAFallback")
     //@Retry(name = SERVICE_A)
     //@RateLimiter(name = SERVICE_A)

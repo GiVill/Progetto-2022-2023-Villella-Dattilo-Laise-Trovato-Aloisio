@@ -34,7 +34,4 @@ public interface UserService {
 
     Boolean updateUserNickname(Long id, String newNickname);
 
-    List<OrderDto> getOrderUser(Long id);
-
-    Page<BasicInsertionDto> getInsertionUser(Long id,int page);
 }
