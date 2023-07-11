@@ -58,32 +58,29 @@ public class UserController {
             }
     )
     @GetMapping("/users")
-    //@CircuitBreaker(name = SERVICE_A, fallbackMethod = "serviceAFallback")
-    //@PreAuthorize("hasAnyRole('user','admin')")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<List<UserDto>> all() {
         return ResponseEntity.ok(userService.getAllStored());
     }
 
 
     @GetMapping("/users/{idUser}")
-    //@PreAuthorize("permitAll()")//hasAnyRole('user','admin')
     public ResponseEntity<UserDto> getById(@PathVariable("idUser") Long id){
         UserDto userDto = userService.getById(id);
         return ResponseEntity.ok(userDto);
     }
 
     @PostMapping("/users")
-    //@PreAuthorize("permitAll()")//hasAnyRole('user','admin')
     public ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) { return ResponseEntity.ok(userService.saveDto(userDto)); }
 
     @PutMapping("/update-users-password/{idUser}")
-    public ResponseEntity<Boolean> updateUserPassword(@PathVariable("idUser") Long id, @RequestBody @Valid String newPassword) { return ResponseEntity.ok(userService.updateUserPassword(id, newPassword));}
+    public ResponseEntity<Boolean> updateUserPassword(@PathVariable("idUser") Long id,@RequestBody @Valid String newPassword) { return ResponseEntity.ok(userService.updateUserPassword(id,newPassword));}
 
     @PutMapping("/update-users-nickname/{idUser}")
-    public ResponseEntity<Boolean> updateUserNickname(@PathVariable("idUser") Long id, @RequestBody @Valid String newNickname) { return ResponseEntity.ok(userService.updateUserNickname(id, newNickname));}
+    public ResponseEntity<Boolean> updateUserNickname(@PathVariable("idUser") Long id,@RequestBody @Valid String newNickname) { return ResponseEntity.ok(userService.updateUserNickname(id,newNickname));}
 
     @DeleteMapping("/users/{idUser}")
-    //@PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<Void> deleteUserById(@PathVariable("idUser") Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();

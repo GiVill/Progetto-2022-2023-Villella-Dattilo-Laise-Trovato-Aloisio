@@ -10,7 +10,7 @@ public interface PaymentService {
 
     PaymentDto save(PaymentDto payment);
 
-    void deleteInsertion(Long id);
+    void deletePayment(Long paymentId,Long userId);
 
     List<PaymentDto> findAll();
 
@@ -20,4 +20,6 @@ public interface PaymentService {
 
     Page<PaymentDto> findAllByUser(Long userId, int page);
 
+    Page<PaymentDto> findAllForAdmin(Long userId, int page);
+    void deletePaymentAdmin(Long paymentId);
 }

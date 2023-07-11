@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.data.service;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
@@ -46,13 +47,27 @@ public class OrderServiceImpl implements OrderService {
     public Order save(Order order) { return orderDao.save(order); }
 
     @Override
-    public OrderDto getOrderById(Long id) {
-        Order order = orderDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("order.not.present",id)));
+    public OrderDto getOrderById(Long orderId) {
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null || !u.get().getOrders().contains(findById(orderId)) ){
+            //TODO: ECCEZIONE CON MESSAGGIO
+            System.out.println("NPOOOOOOOOOOOOOOO");
+            throw  new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId));
+        }
+        Order order = orderDao.findById(orderId).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId)));
         return modelMapper.map(order, OrderDto.class);
     }
 
     @Override
-    public void deleteOrderById(Long id) { orderDao.deleteById(id); }
+    public void deleteOrderById(Long orderId) {
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null || !u.get().getOrders().contains(findById(orderId)) ){
+            //TODO: ECCEZIONE CON MESSAGGIO
+            System.out.println("NPOOOOOOOOOOOOOOO");
+            throw  new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId));
+        }
+        orderDao.deleteById(orderId);
+    }
 
     @Override
     public Page<OrderDto> getAllPaged(int page) {
@@ -68,13 +83,25 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderDto> findByUserId(Long UserId,int page){
-        Optional<User> u = userDao.findById(UserId);
-        if (u != null){
-            Page<Order> orders = orderDao.findByUser(u,PageRequest.of(page, SIZE_FOR_PAGE));
-            List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());
-            return new PageImpl<>(collect);
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null || !u.get().getId().equals(UserId) ){
+            //TODO modificare l'eccezione
+            throw new EntityNotFoundException(messageLang.getMessage("order.not.present",UserId));
         }
-        return null;
+        Page<Order> orders = orderDao.findByUser(u,PageRequest.of(page, SIZE_FOR_PAGE));
+        List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());
+        return new PageImpl<>(collect);
+    }
+
+    @Override
+    public OrderDto getOrderByIdAdmin(Long orderId) {
+        Order order = orderDao.findById(orderId).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId)));
+        return modelMapper.map(order, OrderDto.class);
+    }
+
+    @Override
+    public void deleteOrderForAdmin(Long orderId) {
+        orderDao.deleteById(orderId);
     }
 
 }

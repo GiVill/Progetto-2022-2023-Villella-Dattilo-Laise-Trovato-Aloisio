@@ -69,7 +69,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/v1/payments").permitAll()
                 .requestMatchers(HttpMethod.GET,"/v1/payments/{idPayment}").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/payments").permitAll()
-                .requestMatchers(HttpMethod.DELETE,"/v1/payments/{idPayment}").permitAll()
+                .requestMatchers(HttpMethod.DELETE,"/v1/payments/{idPayment}/{idUser}").permitAll()
+                .requestMatchers(HttpMethod.DELETE,"/v1/payment/delete/admin/{paymentId}").hasRole("admin")
                 .requestMatchers(HttpMethod.GET,"/v1/payments/user/{userId}/{page}").permitAll()
                 //ORDERS
                 .requestMatchers(HttpMethod.POST, "/v1/orders").permitAll()

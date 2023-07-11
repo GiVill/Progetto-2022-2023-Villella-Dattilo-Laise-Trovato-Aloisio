@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.data.service;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.Order;
@@ -91,10 +92,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findByEmail(String email) {
+        Optional<User> user = userDao.findUserByEmail(email);
+        if(user.isEmpty()){
+            //TODO scrivere errore
+            throw new EntityNotFoundException(messageLang.getMessage("user.nickname.not.present",email));
+        }
+        return user;
+    }
+
+    @Override
     public Boolean updateUserPassword(Long id, String newPassword) {
+        Optional<User> u = findByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null || id !=u.get().getId()){
+            //TODO: ECCEZIONE CON MESSAGGIO
+            System.out.println("NPOOOOOOOOOOOOOOO");
+            return false;
+        }
         //TODO L'update andrebbe fatta anche su Keycloak
         try{
-            User user = userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", id)));
+            User user = userDao.findById(u.get().getId()).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", u.get().getId())));
             user.setPassword(newPassword);
             userDao.save(user);
             return true;
@@ -105,6 +122,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean updateUserNickname(Long id, String newNickname) {
+        Optional<User> u = findByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null || id !=u.get().getId()){
+            //TODO: ECCEZIONE CON MESSAGGIO
+            System.out.println("NPOOOOOOOOOOOOOOO");
+            return false;
+        }
         //TODO L'update andrebbe fatta anche su Keycloak
         try{
             User user = userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", id)));

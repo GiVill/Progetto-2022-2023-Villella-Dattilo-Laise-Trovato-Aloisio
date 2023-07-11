@@ -103,5 +103,7 @@ public class InsertionController {
         return ResponseEntity.ok(basicInsertionService.getPrivateInsertion(token));
     }
 
-
+    //TODO aggiornare il security config delle API tutte
+    //TODO verificare tutti i messaggi di errore delle eccezioni intendo
+    
 }

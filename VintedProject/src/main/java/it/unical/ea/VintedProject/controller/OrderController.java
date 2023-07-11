@@ -23,21 +23,30 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/orders/{id}")
-    //@PreAuthorize("hasAnyRole('user','admin')")
+    @PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<OrderDto> getOrderById(@PathVariable("id") Long id) { return ResponseEntity.ok(orderService.getOrderById(id)); }
+    @PreAuthorize("hasRole('admin')")
+    public ResponseEntity<OrderDto> getOrderByIdAdmin(@PathVariable("id") Long id) { return ResponseEntity.ok(orderService.getOrderByIdAdmin(id)); }
 
     @GetMapping("/orders")
-    //@PreAuthorize("hasAnyRole('user','admin')")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<Page<OrderDto>> all(@RequestParam("page") int page){ return ResponseEntity.ok(orderService.getAllPaged(page)); }
 
     @PostMapping("/orders")
-    //@PreAuthorize("hasAnyRole('user','admin')")
+    @PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<OrderDto> addOrder(@RequestBody @Valid OrderDto orderDto) { return ResponseEntity.ok(orderService.save(orderDto)); }
 
-    @DeleteMapping("/orders/{id}")
+    @DeleteMapping("/orders/{orderId}")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<Void> deleteOrderById(@PathVariable("id") Long id) {
-        orderService.deleteOrderById(id);
+    public ResponseEntity<Void> deleteOrderById(@PathVariable("orderId") Long orderId) {
+        orderService.deleteOrderById(orderId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/orders/admin/{orderId}")
+    @PreAuthorize("hasRole('admin')")
+    public ResponseEntity<Void> deleteOrderForAdmin(@PathVariable("orderId") Long orderId) {
+        orderService.deleteOrderForAdmin(orderId);
         return ResponseEntity.noContent().build();
     }
 
