@@ -18,7 +18,6 @@ import java.util.List;
 @Tag(name = "Chat") //Name displayed on swagger
 public class ChatController {
 
-    private final ChatDao chatDao;
     private final ChatService chatService;
 
     @GetMapping("/chat/user/{id}")

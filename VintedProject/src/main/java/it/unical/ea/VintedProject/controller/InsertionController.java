@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +31,7 @@ public class InsertionController {
     private final JwtAuthConverter converter;
 
     @GetMapping("/insertions")
-    //@PreAuthorize("hasAnyRole('user','admin')")
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<Page<BasicInsertionDto>> all(@RequestParam("page") int page){
         return ResponseEntity.ok(basicInsertionService.getAllPaged(page));
     }
@@ -41,30 +42,34 @@ public class InsertionController {
         return ResponseEntity.ok(basicInsertionService.saveDto(basicInsertionDto));
     }
 
-    @GetMapping("/insertions/{id}")
+    @GetMapping("/insertions/{insertionId}")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<BasicInsertionDto> getInsertionById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(basicInsertionService.getInsertionById(id));
+    public ResponseEntity<BasicInsertionDto> getInsertionById(@PathVariable("insertionId") Long insertionId) {
+        return ResponseEntity.ok(basicInsertionService.getInsertionById(insertionId));
     }
 
     @GetMapping("/insertions/user/{idUser}/{page}")
     //@PreAuthorize("permitAll()")//hasAnyRole('user','admin')
-    public ResponseEntity<Page<BasicInsertionDto>> getInsertionByUserId(@PathVariable("idUser") Long id, @PathVariable("page") int page){
-
-        System.out.println(page);
-
-        return ResponseEntity.ok(basicInsertionService.findAllByUser(id, page));
+    public ResponseEntity<Page<BasicInsertionDto>> getInsertionByUserId(@PathVariable("idUser") Long insertionId, @PathVariable("page") int page){
+        return ResponseEntity.ok(basicInsertionService.findAllByUser(insertionId, page));
     }
 
-    @DeleteMapping("/insertions/{id}")
+    @DeleteMapping("/insertions/{insertionId}")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<Void> deleteInsertionById(@PathVariable("id") Long id) {
-        basicInsertionService.deleteBasicInsertionById(id);
+    public ResponseEntity<Void> deleteInsertionById(@PathVariable("insertionId") Long insertionId) {
+        basicInsertionService.deleteBasicInsertionById(insertionId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/insertions/admin/{insertionId}")
+    @PreAuthorize("hasAnyRole('admin')")
+    public ResponseEntity<Void> deleteInsertionForAdmin(@PathVariable("insertionId") Long insertionId){
+        basicInsertionService.deleteBasicInsertionForAdmin(insertionId);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/insertions/{UserId}")
-    //@PreAuthorize("hasAnyRole('user','admin')")
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<Void> deleteAllInsertionByUserId(@RequestParam("UserId") Long userId) {
         basicInsertionService.deleteBasicInsertionById(userId);
         return ResponseEntity.noContent().build();
@@ -88,11 +93,18 @@ public class InsertionController {
         return ResponseEntity.ok(basicInsertionService.getByCategory(category,page));
     }
 
-    @PutMapping("/insertions/{InsertionId}")
-    public ResponseEntity<Boolean> modifyInsertionById(@PathVariable("InsertionId") Long insertionId, String title, Float price, String description){
+    @PutMapping("/insertions/{insertionId}")
+    public ResponseEntity<Boolean> modifyInsertionById(@PathVariable("insertionId") Long insertionId, String title, Float price, String description){
         return ResponseEntity.ok(basicInsertionService.modifyById(insertionId,title,price,description));
     }
 
+    @PutMapping("/insertions/admin/{insertionId}")
+    @PreAuthorize("hasAnyRole('admin')")
+    public ResponseEntity<Boolean> modifyInsertionByIdForAdmin(@PathVariable("insertionId") Long insertionId, String title, Float price, String description){
+        return ResponseEntity.ok(basicInsertionService.modifyByIdForAdmin(insertionId,title,price,description));
+    }
+
+    //TODO solo utente su proprie inserzioni??
     @GetMapping("/insertions/token/{idInsertion}")
     public ResponseEntity<String> generateCapabilities(@PathVariable("idInsertion") Long insertionId){
         return ResponseEntity.ok(basicInsertionService.generateToken(insertionId));

@@ -17,7 +17,7 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
 
     BasicInsertionDto saveDto(BasicInsertionDto basicInsertionDto);
 
-    void deleteBasicInsertionById(Long bId);
+    void deleteBasicInsertionById(Long insertionId);
 
     void deleteAllBasicInsertionByUserId(Long uId);
 
@@ -47,4 +47,7 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
     BasicInsertionDto getPrivateInsertion(String token);
 
 
+    void deleteBasicInsertionForAdmin(Long insertionId);
+
+    Boolean modifyByIdForAdmin(Long insertionId, String title, Float price, String description);
 }

@@ -2,8 +2,11 @@ package it.unical.ea.VintedProject.data.service;
 
 import com.nimbusds.jose.JOSEException;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
+import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
+import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.enumeration.Brand;
@@ -25,6 +28,7 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +38,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     //private final DressInsertionDao
 
     private final BasicInsertionDao basicInsertionDao;
+    private final UserDao userDao;
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 5;
 
@@ -54,8 +59,14 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     }
 
     @Override
-    public void deleteBasicInsertionById(Long bId) {
-        basicInsertionDao.deleteById(bId);
+    public void deleteBasicInsertionById(Long insertionId) {
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null || !u.get().getInsertions().contains(basicInsertionDao.findById(insertionId))){
+            //TODO: modificare eccezione
+            System.out.println("NPOOOOOOOOOOOOOOO");
+            throw new EntityNotFoundException(messageLang.getMessage("user.without.payment",insertionId));
+        }
+        basicInsertionDao.deleteById(insertionId);
     }
 
     @Override
@@ -112,6 +123,12 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     @Override
     public Boolean modifyById(Long insertionId, String title, Float price, String description) {
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null || !u.get().getInsertions().contains(basicInsertionDao.findById(insertionId))){
+            //TODO: modificare eccezione
+            System.out.println("NPOOOOOOOOOOOOOOO");
+            throw new EntityNotFoundException(messageLang.getMessage("user.without.payment",insertionId));
+        }
         try {
             BasicInsertion insertion = findById(insertionId);
             insertion.setTitle(title);
@@ -123,6 +140,8 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
             throw new EntityNotFoundException(messageLang.getMessage("insertion.not.present",insertionId));
         }
     }
+
+
 
     @Override
     public String generateToken(Long id) {
@@ -150,6 +169,25 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    @Override
+    public void deleteBasicInsertionForAdmin(Long insertionId) {
+        basicInsertionDao.deleteById(insertionId);
+    }
+
+    @Override
+    public Boolean modifyByIdForAdmin(Long insertionId, String title, Float price, String description) {
+        try {
+            BasicInsertion insertion = findById(insertionId);
+            insertion.setTitle(title);
+            insertion.setPrice(price);
+            insertion.setDescription(description);
+            basicInsertionDao.save(insertion);
+            return true;
+        }catch (Exception e){
+            throw new EntityNotFoundException(messageLang.getMessage("insertion.not.present",insertionId));
+        }
     }
 
 }

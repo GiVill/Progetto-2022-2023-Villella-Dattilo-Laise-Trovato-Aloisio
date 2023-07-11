@@ -2,11 +2,15 @@ package it.unical.ea.VintedProject.data.service;
 
 import it.unical.ea.VintedProject.config.compare.ChatDtoComparator;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.dao.ChatDao;
+import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.Chat;
+import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatService;
 import it.unical.ea.VintedProject.dto.ChatDto;
 import it.unical.ea.VintedProject.dto.NewMessageDto;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +27,7 @@ import java.util.stream.Collectors;
 public class ChatServiceImpl implements ChatService {
 
     private final ChatDao chatDao;
+    private final UserDao userDao;
     private final MessageLang messageLang;
     private final ModelMapper modelMapper;
 
@@ -43,8 +49,15 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<Chat> allChatByUserId(Long id) {
-       List<Chat> list =  chatDao.findAllByIdUser1OrderByDateAsc(id);
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null || !u.get().getId().equals(id)){
+            //TODO: modificare eccezione
+            System.out.println("NPOOOOOOOOOOOOOOO");
+            throw new EntityNotFoundException(messageLang.getMessage("user.without.payment",id));
+        }
+        List<Chat> list =  chatDao.findAllByIdUser1OrderByDateAsc(id);
         if(list.isEmpty()){
+            //TODO modificare eccezione
             messageLang.getMessage("user.order.not.present",id);
         }
         return list;
@@ -54,6 +67,7 @@ public class ChatServiceImpl implements ChatService {
     public List<Chat> allChatByUserId2(Long id) {
         List<Chat> list =  chatDao.findAllByIdUser2OrderByDateAsc(id);
         if(list.isEmpty()){
+            //TODO modificare eccezione
             messageLang.getMessage("user.order.not.present",id);
         }
         return list;
@@ -61,6 +75,12 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<ChatDto> allMessageByUserId(Long id1, Long id2) {
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null || !u.get().getId().equals(id1)){
+            //TODO: modificare eccezione
+            System.out.println("NPOOOOOOOOOOOOOOO");
+            throw new EntityNotFoundException(messageLang.getMessage("user.without.payment",id1));
+        }
         List<ChatDto> list =  chatDao.findByIdUser1AndIdUser2OrderByDateAsc(id1, id2).stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
         List<ChatDto>  list2 = chatDao.findByIdUser2AndIdUser1OrderByDateAsc(id1,id2).stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
 
