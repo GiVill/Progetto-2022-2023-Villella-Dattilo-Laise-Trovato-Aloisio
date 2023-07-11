@@ -11,6 +11,8 @@
  */
 package com.example.vintedandroid.client.models
 
+import java.time.LocalDate
+
 
 /**
  * 

@@ -55,7 +55,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
     //NavHost(navController = navController, startDestination = ScreenController.Home.route ){
 
         composable(route = ScreenController.Home.route){
-            HomeScreen(itemsInCart, navController, searchedProduct)
+            HomeScreen(itemsInCart, navController, searchedProduct, application)
         }
         composable(route = ScreenController.Search.route) {
             SearchScreen(searchText, insertionApi, navController, searchedProduct)
@@ -64,7 +64,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             AddScreen()
         }
         composable(route = ScreenController.Cart.route){
-            CartScreen(itemsInCart)
+            CartScreen(itemsInCart, application)
         }
         composable(route = ScreenController.Profile.route){
             ProfileScreen(user) //TODO cambiare user

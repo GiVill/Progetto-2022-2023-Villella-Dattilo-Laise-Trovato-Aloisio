@@ -4,13 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.vintedandroid.model.dao.CartDao
 import com.example.vintedandroid.model.dto.UserDatabaseDto
+import com.example.vintedandroid.model.dto.CartDto
 import com.example.vintedandroid.model.dao.UserDatabaseDao
 
 
-@Database(entities = [UserDatabaseDto::class], version = 1, exportSchema = false) //Il valore di version deve essere equivalente al numero di entities inserite
+@Database(entities = [UserDatabaseDto::class, CartDto::class], version = 3, exportSchema = false) //Il valore di version deve essere equivalente al numero di entities inserite
+//@TypeConverters(LocalDateConverter::class)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun userDatabaseDao(): UserDatabaseDao
+    abstract fun cartDao(): CartDao
+
 
     companion object {
         // A volatile variable is never cached, and it is modified/read from the main memory.

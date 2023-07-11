@@ -109,15 +109,9 @@ fun AppContent() {
             Text(text = "Pick Image From Gallery")
         }
 
-
-
-
         LazyVerticalGrid(
-
             columns = GridCells.Fixed(3)
-
         ) {
-
             items(selectImages) { uri ->
                 Image(
                     painter = rememberImagePainter(uri),
@@ -126,9 +120,7 @@ fun AppContent() {
                     modifier = Modifier
                         .padding(16.dp, 8.dp)
                         .size(100.dp)
-                        .clickable {
-
-                        }
+                        .clickable { /**/}
                 )
                 Button(
                     onClick = {
@@ -179,8 +171,6 @@ fun AppContent() {
                         }
 
                          */
-
-
                     },
                     modifier = Modifier
                         .wrapContentSize()
@@ -189,8 +179,12 @@ fun AppContent() {
                     Text(text = "Send Image!")
                 }
             }
+        }
 
-
+        Button(onClick = {
+            /*TODO*/
+        }) {
+            Text(text = "Crea inserzione")
         }
 
     }

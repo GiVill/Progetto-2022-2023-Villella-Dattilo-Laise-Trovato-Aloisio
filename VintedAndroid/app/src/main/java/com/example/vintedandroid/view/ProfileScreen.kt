@@ -42,6 +42,28 @@ fun ProfileScreen(user : UserDto) {
     var isEditing by remember { mutableStateOf(false) }
     var textValue by remember { mutableStateOf("") }
 
+    /*
+    var isDropdownOpen by remember { mutableStateOf(false) }
+    var text by remember { mutableStateOf("") }
+
+    Column {
+        Button(
+            onClick = { isDropdownOpen = !isDropdownOpen },
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text("Show Dropdown")
+        }
+
+        if (isDropdownOpen) {
+            TextField(
+                value = text,
+                onValueChange = { text = it },
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+    }
+     */
+
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
             text = stringResource(R.string.account_settings),
@@ -101,6 +123,7 @@ fun ProfileScreen(user : UserDto) {
 
             Card(onClick = { isEditing = true }) {
                 if (isEditing) {
+                    Spacer(modifier = Modifier.height(16.dp))
                     TextField(
                         value = textValue,
                         onValueChange = { newValue -> textValue = newValue },

@@ -1,10 +1,12 @@
 package com.example.vintedandroid.model.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.vintedandroid.model.dto.CartDto
 import com.example.vintedandroid.model.dto.UserDatabaseDto
 
 @Dao
@@ -14,6 +16,9 @@ interface UserDatabaseDao {
 
     @Update
     suspend fun update(userDatabaseDto: UserDatabaseDto)
+
+    @Delete
+    suspend fun delete(insertion: CartDto)
 
     @Query("select * from userDatabaseDto")
     fun getAll(): List<UserDatabaseDto>
