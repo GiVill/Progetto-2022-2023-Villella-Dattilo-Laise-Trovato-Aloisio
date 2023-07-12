@@ -6,6 +6,7 @@ import it.unical.ea.VintedProject.data.service.interfaces.AuthService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.LoginUserDto;
 import it.unical.ea.VintedProject.dto.NewUserDto;
+import it.unical.ea.VintedProject.dto.UserDto;
 import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
 import it.unical.ea.VintedProject.security.keycloak.TokenResponse;
 import jakarta.validation.Valid;
@@ -35,9 +36,18 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<TokenResponse> signUp(@RequestBody @Valid NewUserDto newUserDto){
-        TokenResponse  token = keycloakTokenClient.userRegister(newUserDto);
-        if(!Objects.equals(token, "ERRORE") && authService.signUp(newUserDto) ){
-            return  ResponseEntity.ok(token);
+        TokenResponse token = keycloakTokenClient.userRegister(newUserDto);
+        if(!Objects.equals(token, "ERRORE")  ){
+
+            UserDto userDto = authService.signUp(newUserDto);
+            if(userDto != null) {
+                System.out.println(token);
+                token.setUserDto(userDto);
+                System.out.println(token);
+                //TODO Probabilmente va aggiustato, andrebbe messo acnhe lo user nel TokenResponse
+                return ResponseEntity.ok(token);
+            }
+            return null;
         }
         return  ResponseEntity.ok(token);
     }

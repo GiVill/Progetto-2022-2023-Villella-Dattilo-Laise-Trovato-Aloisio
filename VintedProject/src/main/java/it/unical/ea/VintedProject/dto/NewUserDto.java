@@ -19,6 +19,9 @@ public class NewUserDto {
     @NotNull(message = "nickname.not.empty")
     private String nickName;
 
+    @NotNull(message = "password.not.empty") //TODO cambiare
+    private String firstName;
+
     @Email(message = "email.not.valid")
     private String email;
 

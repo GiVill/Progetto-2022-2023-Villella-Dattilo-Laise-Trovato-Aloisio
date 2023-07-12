@@ -25,7 +25,7 @@ public class PaymentController {
     public ResponseEntity<PaymentDto> getById(@PathVariable("idPayment") Long id){ return ResponseEntity.ok(paymentService.findById(id)); }
 
     @GetMapping("/payments")
-    @PreAuthorize("hasRole('admin')")
+    //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<List<PaymentDto>> all() {
         return ResponseEntity.ok(paymentService.findAll());
     }
@@ -40,7 +40,7 @@ public class PaymentController {
     }
 
     @DeleteMapping("/payment/admin/{paymentId}")
-    @PreAuthorize("hasRole('admin')")
+    //@PreAuthorize("hasRole('admin')")
     public HttpStatus deletePaymentAdmin(@PathVariable("paymentId") Long paymentId) {
         paymentService.deletePaymentAdmin(paymentId);
         return HttpStatus.OK;
@@ -52,7 +52,7 @@ public class PaymentController {
     }
 
     @GetMapping("/payments/admin/{userId}/{page}")
-    @PreAuthorize("hasRole('admin')")
+    //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<Page<PaymentDto>> getAllPaymentByAdmin(@PathVariable("userId") Long userId, @PathVariable("page") int page){
         return ResponseEntity.ok(paymentService.findAllForAdmin(userId, page));
     }

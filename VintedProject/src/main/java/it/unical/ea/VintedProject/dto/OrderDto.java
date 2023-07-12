@@ -19,7 +19,7 @@ public class OrderDto {
     private LocalDate date;
 
     @NotNull
-    private Integer number;
+    private Integer number; //Todo da togliere?
 
     @NotNull
     private Long paymentId;

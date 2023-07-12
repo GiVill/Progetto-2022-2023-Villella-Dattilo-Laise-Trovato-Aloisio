@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO Serve?
 public class TokenStore {
     private final String secretKey = "23778sah9021-12123-12s-as-12a-AS_12xoiJN-SHWQ98"; // Random key: this should not be public!
     private final static TokenStore instance = new TokenStore();

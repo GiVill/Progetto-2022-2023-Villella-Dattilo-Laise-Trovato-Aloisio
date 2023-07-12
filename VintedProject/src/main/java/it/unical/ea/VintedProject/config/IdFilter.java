@@ -15,6 +15,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 import static org.keycloak.representations.idm.CredentialRepresentation.SECRET;
+
+//TODO Serve?
 @AllArgsConstructor
 public class IdFilter extends OncePerRequestFilter {
     private JwtAuthConverter jwtAuthConverter;

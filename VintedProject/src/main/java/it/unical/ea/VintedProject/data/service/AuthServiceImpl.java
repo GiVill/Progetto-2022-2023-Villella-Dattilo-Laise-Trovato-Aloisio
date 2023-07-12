@@ -31,16 +31,16 @@ public class AuthServiceImpl implements AuthService {
     private final MessageLang messageLang;
 
     @Override
-    public Boolean signUp(NewUserDto newUserDto) {
+    public UserDto signUp(NewUserDto newUserDto) {
         System.out.println(newUserDto);
         User user = modelMapper.map(newUserDto, User.class);
         if(user != null){
             System.out.println("ENTRATO "+user.toString());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.save(user);
-            return true;
+            return modelMapper.map(user, UserDto.class);
         }
-        return false;
+        throw new EntityNotFoundException("non sono riuscito a fare la registrazione. PS: Questo messaggio non è stato internazionalizzato ed esploderà tra 3...2...1... papà");
     }
 
     @Override

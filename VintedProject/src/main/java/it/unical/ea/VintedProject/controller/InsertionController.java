@@ -28,7 +28,6 @@ import javax.ws.rs.Path;
 public class InsertionController {
 
     private final BasicInsertionService basicInsertionService;
-    private final JwtAuthConverter converter;
 
     @GetMapping("/insertions")
     //@PreAuthorize("hasAnyRole('admin')")

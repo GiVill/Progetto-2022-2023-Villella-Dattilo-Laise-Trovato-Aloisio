@@ -31,7 +31,7 @@ public class Order {
     private Payment payment;
 
     @Column(name = "NUMBER")
-    private Integer number;
+    private Integer number; //Todo da togliere?
 
     @OneToOne
     @JoinColumn(name = "INSERTION_ID", referencedColumnName = "ID")
