@@ -34,7 +34,7 @@ data class UserDto (
     val id: kotlin.String? = null,
     val nickName: kotlin.String,
     val firstName: kotlin.String,
-    val lastName: kotlin.String,
+    val lastName: kotlin.String? = null,
     val imageName: kotlin.String? = null,
     val email: kotlin.String? = null,
     val birthDate: kotlin.String? = null,

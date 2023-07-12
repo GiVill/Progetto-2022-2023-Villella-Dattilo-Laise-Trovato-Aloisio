@@ -1,5 +1,6 @@
 package com.example.vintedandroid.view
 
+import android.annotation.SuppressLint
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.semantics.Role.Companion.Image
@@ -25,10 +26,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.example.vintedandroid.client.models.BasicInsertionDto
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun ProductScreen(searchedProduct: MutableState<BasicInsertionDto>) {
 
-    val url = "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" //searchedProduct.value.imagePath
+    val url = "https://192.168.1.90:8010/vintedProject-api/v1/images/${searchedProduct.value.imageName}"//"https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" //searchedProduct.value.imagePath
 
     val painter: ImagePainter = rememberImagePainter(url)
 

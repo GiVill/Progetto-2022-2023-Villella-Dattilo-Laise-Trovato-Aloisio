@@ -2,6 +2,7 @@ package com.example.vintedandroid.view
 
 
 import android.annotation.SuppressLint
+import android.content.Context
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +24,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -33,14 +37,33 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.vintedandroid.R
 import com.example.vintedandroid.client.models.UserDto
+import com.example.vintedandroid.model.AppDatabase
+import com.example.vintedandroid.model.dto.CartDto
+import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.theme.Typography
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 //TODO: CAMBIARE USER CON INSERZIONE
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomBarProfile(navController: NavController, user : UserDto) {
+fun BottomBarProfile(navController: NavController, user : UserDto, application: Context) {
+
+    var userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
+
+    LaunchedEffect(Unit) {
+        if (userFromDB.isEmpty()) {
+            val databaseItems = withContext(Dispatchers.IO) {
+                AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll()
+            }
+            userFromDB.clear()
+            userFromDB.addAll(databaseItems)
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
@@ -121,14 +144,27 @@ fun BottomBarProfile(navController: NavController, user : UserDto) {
                 }
             }
 
-            Card(onClick = { /*TODO*/ }) {
+            Card(onClick = {
+                CoroutineScope(Dispatchers.Main).launch {
+
+                    if(userFromDB.isNotEmpty()) {
+                        //userFromDB.remove(userFromDB[0])
+                        AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().delete(userFromDB[0])
+                        AppDatabase.getInstance(context = application.applicationContext).cartDao().deleteAll()
+                    }
+                    withContext(Dispatchers.Main){
+                        navController.popBackStack(); navController.navigate("login")
+                    }
+                }
+
+            }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Filled.ExitToApp,
                         contentDescription = stringResource(R.string.default_account),
                         modifier = Modifier
                             .padding(10.dp)
                     )
-                    Text(text = "LogOut")
+                    Text(text = "Logout")
                     Spacer(modifier = Modifier.weight(1f))
                     Icon(Icons.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.default_account))
                 }
@@ -163,5 +199,5 @@ fun BottomBarProfilePreview() {
     val navController = rememberNavController()
 
     val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh")
-    BottomBarProfile(navController, user)
+    //BottomBarProfile(navController, user)
 }

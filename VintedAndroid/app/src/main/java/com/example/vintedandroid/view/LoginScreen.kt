@@ -31,102 +31,160 @@ import androidx.navigation.compose.rememberNavController
 import com.example.vintedandroid.client.apis.AuthApi
 import com.example.vintedandroid.client.models.LoginUserDto
 import com.example.vintedandroid.client.models.TokenResponse
+import com.example.vintedandroid.model.AppDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.content.Context
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.ui.focus.FocusState
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import com.example.vintedandroid.model.dto.UserDatabaseDto
+import com.example.vintedandroid.view.config.createPersonalizedTextfield
+import com.example.vintedandroid.view.config.createPersonalizedTextfieldPassword
+
 
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(navController: NavHostController, application: Context) {
     // Create a mutable state to hold the current text value
-    val emailField = remember { mutableStateOf(TextFieldValue()) }
+    var emailField = remember { mutableStateOf(TextFieldValue()) }
     val passwordField = remember { mutableStateOf(TextFieldValue()) }
+
+    var userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
+    var isLoaded by remember { mutableStateOf(false) }
+
+    val isSelected = remember { mutableStateOf(false) }
+    var showPassword by remember { mutableStateOf(false) }
 
     var loginUnsuccessful by remember {mutableStateOf(false)}
     var buttonEnabled by remember { mutableStateOf(true) }
+
+    LaunchedEffect(Unit) {
+        if (userFromDB.isEmpty()) {
+            val databaseItems = withContext(Dispatchers.IO) {
+                AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll()
+            }
+            //itemsFromDB.clear()
+            userFromDB.clear()
+            userFromDB.addAll(databaseItems)
+            isLoaded = true
+        }
+    }
 
     Box(modifier = Modifier
         .fillMaxSize()
         .padding(16.dp),
         contentAlignment = Alignment.Center) {
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "LOGIN", fontSize = 48.sp)
-            Spacer(modifier = Modifier.height(50.dp))
+        if(isLoaded){
+            Log.i("tag", "hello? => ${userFromDB.size}")
+            //if(userFromDB.isEmpty()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "LOGIN", fontSize = 48.sp)
+                    Spacer(modifier = Modifier.height(50.dp))
 
-            if (loginUnsuccessful) {
-                Text(
-                    text = "Login failed. Please try again.",
-                    modifier = Modifier.padding(16.dp),
-                    color = Color.Red
-                )
-            }
-
-            TextField(
-                value = emailField.value,
-                onValueChange = { emailField.value = it },
-                modifier = Modifier.padding(8.dp),
-                textStyle = MaterialTheme.typography.body1.copy(fontSize = 16.sp),
-                label = { Text("Insert Email") }
-            )
-            TextField(
-                value = passwordField.value,
-                onValueChange = { passwordField.value = it },
-                modifier = Modifier.padding(8.dp),
-                textStyle = MaterialTheme.typography.body1.copy(fontSize = 16.sp),
-                label = { Text("Insert Password") }
-            )
-
-
-
-            var loginResultText = ""
-
-            Button(
-                onClick = {
-                    buttonEnabled = false
-                    val loginUserDto = LoginUserDto(
-                        email = emailField.value.text,
-                        password = passwordField.value.text
-                    )
-                    CoroutineScope(Dispatchers.IO).launch {
-                        val auth = AuthApi()
-
-                        val t = auth.login(loginUserDto)
-                        withContext(Dispatchers.Main) {
-                            if (t.access_token != null) {
-                                navController.popBackStack()
-                                navController.navigate("home")
-                            }
-                            else{
-                                loginUnsuccessful = true
-                                buttonEnabled = true
-                            }
-                        }
+                    if (loginUnsuccessful) {
+                        Text(
+                            text = "Login failed. Please try again.",
+                            modifier = Modifier.padding(16.dp),
+                            color = Color.Red
+                        )
                     }
 
-                    //Log.i("tag", response.toString()) //response.contains("").toString()
-                },
-                modifier = Modifier.padding(8.dp),
-                enabled = buttonEnabled
-            ) {
-                Text("Login")
-            }
+                    createPersonalizedTextfield(textField = emailField, name = "Email")
+                    createPersonalizedTextfieldPassword(textField = passwordField)
+
+                    Button(
+                        onClick = {
+                            buttonEnabled = false
+                            val loginUserDto = LoginUserDto(
+                                email = emailField.value.text,
+                                password = passwordField.value.text
+                            )
+                            CoroutineScope(Dispatchers.IO).launch {
+                                val auth = AuthApi()
+
+                                val t = auth.login(loginUserDto)
+                                withContext(Dispatchers.Main) {
+                                    if (t.access_token != null) {
+                                        val loggedUser = t.userDto?.let {
+                                            UserDatabaseDto(
+                                                nickName = it.nickName,
+                                                firstName = t.userDto.firstName,
+                                                lastName = t.userDto.lastName,
+                                                password = null,
+                                                imageName = t.userDto.imageName,
+                                                birthDate = t.userDto.birthDate,
+                                                gender = t.userDto.gender,
+                                                addressStreet = t.userDto.addressStreet,
+                                                addressNumber = t.userDto.addressNumber,
+                                                addressCity = t.userDto.addressCity,
+                                                addressCap = t.userDto.addressCap,
+                                                addressState = t.userDto.addressState,
+                                                addressRegion = t.userDto.addressRegion,
+                                                accessToken = t.access_token
+                                            )
+                                        }
+                                        if (loggedUser != null) {
+                                            Log.i("tag", t.toString())
+                                            AppDatabase.getInstance(context = application.applicationContext)
+                                                .userDatabaseDao().insert(loggedUser)
 
 
-            Button(
-                onClick = { navController.popBackStack(); navController.navigate("register") },
-                modifier = Modifier.padding(8.dp)
-            ) {
-                Text("Need new account? Register!")
-            }
-        }
+
+                                            navController.popBackStack()
+                                            navController.navigate("home")
+                                        }
+
+                                    } else {
+                                        loginUnsuccessful = true
+                                        buttonEnabled = true
+                                    }
+                                }
+                            }
+
+                            //Log.i("tag", response.toString()) //response.contains("").toString()
+                        },
+                        modifier = Modifier.padding(8.dp),
+                        enabled = buttonEnabled
+                    ) {
+                        Text("Login")
+                    }
+
+
+                    Button(
+                        onClick = { navController.popBackStack(); navController.navigate("register") },
+                        modifier = Modifier.padding(8.dp)
+                    ) {
+                        Text("Need new account? Register!")
+                    }
+                }
+            //}else{
+            //    navController.popBackStack()
+            //    navController.navigate("home")
+            //}
+    }
     }
 }
 
@@ -134,5 +192,5 @@ fun LoginScreen(navController: NavHostController) {
 @Composable
 fun LoginScreenPreview() {
     val navController = rememberNavController()
-    LoginScreen(navController)
+    //LoginScreen(navController, )
 }

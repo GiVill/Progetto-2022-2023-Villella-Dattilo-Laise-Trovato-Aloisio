@@ -17,11 +17,13 @@ package com.example.vintedandroid.client.models
  * @param access_token
  * @param refresh_token
  * @param token_type
+ * @param userDto
  */
 data class TokenResponse (
 
     val access_token: kotlin.String? = null,
     val refresh_token: kotlin.String? = null,
-    val token_type: kotlin.String? = null
+    val token_type: kotlin.String? = null,
+    val userDto: UserDto? = null
 ) {
 }

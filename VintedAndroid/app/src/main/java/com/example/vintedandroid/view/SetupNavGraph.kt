@@ -67,10 +67,10 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             CartScreen(itemsInCart, application)
         }
         composable(route = ScreenController.Profile.route){
-            ProfileScreen(user) //TODO cambiare user
+            ProfileScreen(user, application) //TODO cambiare user
         }
         composable(route = ScreenController.BottomBarProfile.route){
-            BottomBarProfile(navController, user1) //TODO cambiare user1
+            BottomBarProfile(navController, user1, application) //TODO cambiare user1
         }
         composable(route = ScreenController.Favorite.route){
             FavoriteScreen()
@@ -85,10 +85,10 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             FeedbackScreen()
         }
         composable(route = ScreenController.Login.route){
-            LoginScreen(navController)
+            LoginScreen(navController, application)
         }
         composable(route = ScreenController.Register.route){
-            RegistrationScreen(navController)
+            RegistrationScreen(navController, application)
         }
         composable(route = ScreenController.Product.route){
             ProductScreen(searchedProduct)

@@ -94,14 +94,11 @@ class MainActivity : ComponentActivity() {
 
                     if(controlloSuToken) {
 
-
-
                         Scaffold(
                             topBar = { ApplicationTopBar(searchText, navController) },
                             bottomBar = { ApplicationBottomBar(navController) },
                             content = {
                             Box(modifier = Modifier.padding(it)) {
-
 
 
 
@@ -120,7 +117,7 @@ class MainActivity : ComponentActivity() {
                         } )
                     }
                     else{
-                        LoginScreen(navController = navController) //Non funziona bene
+                        LoginScreen(navController = navController, application) //Non funziona bene
                     }
                 } else {
                     Scaffold(){

@@ -11,6 +11,8 @@
  */
 package com.example.vintedandroid.client.models
 
+import okhttp3.MultipartBody
+
 
 /**
  * 
@@ -18,8 +20,8 @@ package com.example.vintedandroid.client.models
  */
 data class UserUserIdBody (
 
-    val img: kotlin.Array<kotlin.Byte>? = null
-) {
+    val img: MultipartBody? = null
+) {/*
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -37,4 +39,5 @@ data class UserUserIdBody (
     override fun hashCode(): Int {
         return img?.contentHashCode() ?: 0
     }
+    */
 }

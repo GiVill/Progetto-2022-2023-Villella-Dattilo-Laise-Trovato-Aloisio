@@ -1,4 +1,4 @@
-#Wed Jul 12 00:07:17 CEST 2023
+#Wed Jul 12 17:57:24 CEST 2023
 base.0=C\:\\Users\\frand\\Documents\\GitHub\\VintedProject-Android\\VintedAndroid\\VintedProject\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Users\\frand\\Documents\\GitHub\\VintedProject-Android\\VintedAndroid\\VintedProject\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
 base.10=C\:\\Users\\frand\\Documents\\GitHub\\VintedProject-Android\\VintedAndroid\\VintedProject\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex

@@ -22,6 +22,9 @@ interface CartDao {
     @Delete
     suspend fun delete(insertion: CartDto)
 
+    @Query("DELETE FROM cartDto")
+    suspend fun deleteAll();
+
     @Query("select * from cartDto")
     fun getAll(): List<CartDto>
 }

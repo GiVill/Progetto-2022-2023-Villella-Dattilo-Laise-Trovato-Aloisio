@@ -22,6 +22,7 @@ data class NewUserDto (
 
     val password: kotlin.String,
     val nickName: kotlin.String,
+    val firstName: kotlin.String,
     val email: kotlin.String? = null
 ) {
 }

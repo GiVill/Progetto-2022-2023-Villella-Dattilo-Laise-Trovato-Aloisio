@@ -18,11 +18,15 @@ interface UserDatabaseDao {
     suspend fun update(userDatabaseDto: UserDatabaseDto)
 
     @Delete
-    suspend fun delete(insertion: CartDto)
+    suspend fun delete(userDatabaseDto: UserDatabaseDto)
 
     @Query("select * from userDatabaseDto")
     fun getAll(): List<UserDatabaseDto>
 
+    @Query("SELECT * FROM userDatabaseDto LIMIT 1")
+    suspend fun getSingleUser(): UserDatabaseDto?
+
     @Query("select * from userDatabaseDto where id = :userId")
     fun getUserById(userId : Long ): UserDatabaseDto
+
 }

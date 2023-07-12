@@ -17,7 +17,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+//import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -36,16 +38,61 @@ import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.dto.CartDto
 import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.theme.Typography
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.UUID
+import android.content.Context
+import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import coil.compose.ImagePainter
+import coil.compose.rememberImagePainter
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun ProfileScreen(user : UserDto) {
+fun ProfileScreen(user : UserDto, application: Context) {
+
+    var isLoaded by remember { mutableStateOf(false) }
 
     var isEditing by remember { mutableStateOf(false) }
     var textValue by remember { mutableStateOf("") }
-
     var userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
+    //var userFromDB by remember { mutableStateOf(UserDatabaseDto(UUID.randomUUID().toString(),"","",null,null,null,null,null,null,null,null,null,null,null,null)) }
+
+
+    var isTextFieldVisible by remember { mutableStateOf(false) }
+    var value by remember { mutableStateOf("") }
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    var url = remember { mutableStateOf("https://192.168.1.90:8010/vintedProject-api/v1/images/") }//: String? = null
+
+
+    LaunchedEffect(Unit) {
+        if (userFromDB.isEmpty()) {
+            val databaseItems = withContext(Dispatchers.IO) {
+                AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll()
+            }
+            //itemsFromDB.clear()
+            userFromDB.clear()
+            userFromDB.addAll(databaseItems)
+            url.value = "${url.value}${userFromDB[0].imageName.toString()}"
+            isLoaded = true
+        }
+    }
+
+    val painter: ImagePainter = rememberImagePainter(url.value)
 
     /*
     var isDropdownOpen by remember { mutableStateOf(false) }
@@ -70,53 +117,66 @@ fun ProfileScreen(user : UserDto) {
      */
 
     Column(modifier = Modifier.fillMaxSize()) {
+        if(isLoaded){
         Text(
             text = stringResource(R.string.account_settings),
             modifier = Modifier.padding(10.dp),
             style = TextStyle(fontSize = Typography.titleLarge.fontSize)
         )
         Column {
-            Card(onClick = { /*TODO*/ },) {
-                Icon(
-                    Icons.Filled.AccountCircle,
-                    contentDescription = stringResource(R.string.default_account),
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .size(size = 48.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
+            Card {
+                if(userFromDB[0].imageName != null) {
+                    Image(
+                        painter = painter,
+                        contentDescription = null, // Provide a proper content description
+                        modifier = Modifier.fillMaxWidth(),
+                        contentScale = ContentScale.Crop
+                    )
+                }else {
+                    Icon(
+                        Icons.Filled.AccountCircle,
+                        contentDescription = stringResource(R.string.default_account),
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .size(size = 48.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Row(modifier = Modifier.align(CenterHorizontally)) {
-                        Column(modifier = Modifier
-                            .padding(10.dp)
-                            .weight(1f)) {
-                            Text(text = "Nickname:" )
+                        Column(
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .weight(1f)
+                        ) {
+                            Text(text = "Nickname:")
                             Divider()
-                            Text(text = "Firstname:" )
+                            Text(text = "Firstname:")
                             Divider()
-                            Text(text = "Lastname:" )
+                            Text(text = "Lastname:")
                             Divider()
-                            Text(text = "Email:" )
+                            Text(text = "Email:")
                             Divider()
-                            Text(text = "BirthDate:" )
+                            Text(text = "BirthDate:")
                             Divider()
-                            Text(text = "Address:" )
+                            Text(text = "Address:")
                         }
                         Column(
                             Modifier
                                 .padding(10.dp)
-                                .weight(1f)) {
-                            Text(text = user.nickName)
+                                .weight(1f)
+                        ) {
+                            Text(text = userFromDB[0].nickName)
                             Divider()
-                            Text(text = user.firstName )
+                            Text(text = userFromDB[0].firstName)
                             Divider()
-                            user.lastName?.let { Text(text = it) }
+                            userFromDB[0].lastName?.let { Text(text = it) }
                             Divider()
-                            user.email?.let { Text(text = it) }
+                            userFromDB[0].email?.let { Text(text = it) }
                             Divider()
-                            user.birthDate?.let { Text(text = it) }
+                            userFromDB[0].birthDate?.let { Text(text = it) }
                             Divider()
-                            Text(text = "${user.addressState} ${user.addressRegion} ${user.addressCity} ${user.addressCap} ${user.addressStreet} ${user.addressNumber}")
+                            Text(text = "${userFromDB[0].addressState} ${userFromDB[0].addressRegion} ${userFromDB[0].addressCity} ${userFromDB[0].addressCap} ${userFromDB[0].addressStreet} ${userFromDB[0].addressNumber}")
                         }
                     }
                 }
@@ -125,6 +185,37 @@ fun ProfileScreen(user : UserDto) {
             Divider()
 
             Spacer(modifier = Modifier.height(15.dp))
+
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Button(
+                    onClick = { isTextFieldVisible = !isTextFieldVisible },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "Modify Nickname")
+                }
+
+                if (isTextFieldVisible) {
+                    TextField(
+                        value = value,
+                        onValueChange = { newText ->
+                            value = newText
+                        },
+                        label = { Text(text = "Name") },
+                        placeholder = { Text(text = "Type your name") }
+                    )
+                }
+                Button(
+                    onClick = {
+                        // Perform the action when the send button is clicked
+                        performSendAction()
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "Send")
+                }
+            }
+
+            /*
 
             Card(onClick = { isEditing = true }) {
                 if (isEditing) {
@@ -135,35 +226,57 @@ fun ProfileScreen(user : UserDto) {
                         modifier = Modifier.padding(10.dp)
                     )
                 } else {
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(10.dp)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(10.dp)
+                    ) {
                         Text(text = "Modifica nickname")
                         Spacer(modifier = Modifier.weight(1f))
-                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.default_account))
+                        Icon(
+                            Icons.Filled.KeyboardArrowRight,
+                            contentDescription = stringResource(R.string.default_account)
+                        )
                     }
                 }
             }
 
+             */
+
             Card(onClick = { /*TODO*/ }) {
-                Row(verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(10.dp)) {
-                    Text(text = "Modifica email")
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(10.dp)
+                ) {
+                    Text(text = "Modify Email")
                     Spacer(modifier = Modifier.weight(1f))
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.default_account))
+                    Icon(
+                        Icons.Filled.KeyboardArrowRight,
+                        contentDescription = stringResource(R.string.default_account)
+                    )
                 }
             }
 
             Card(onClick = { /*TODO*/ }) {
-                Row(verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(10.dp)) {
-                    Text(text = "Modifica password")
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(10.dp)
+                ) {
+                    Text(text = "Modify Password")
                     Spacer(modifier = Modifier.weight(1f))
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.default_account))
+                    Icon(
+                        Icons.Filled.KeyboardArrowRight,
+                        contentDescription = stringResource(R.string.default_account)
+                    )
                 }
             }
         }
     }
+    }
 }
 
+private fun performSendAction() {
+    // Add your logic here to handle the send action
+}
 
 @Preview(showBackground = true)
 @Composable
@@ -171,5 +284,5 @@ fun ProfileScreenPreview() {
     val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh","","ciao@yahoo.it",
         "10-05-2001",UserDto.Gender.MALE,"via napoli",8,"Lamezia",21312,
         "Italy","asdojad")
-    ProfileScreen(user)
+    //ProfileScreen(user)
 }

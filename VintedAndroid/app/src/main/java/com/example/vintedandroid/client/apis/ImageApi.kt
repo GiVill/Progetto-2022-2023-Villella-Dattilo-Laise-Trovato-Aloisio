@@ -80,16 +80,15 @@ class ImageApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
     /**
      * 
      * 
-     * @param body  
-     * @param userId  
+     * @param body
      * @return kotlin.Boolean
      */
     @Suppress("UNCHECKED_CAST")
-    fun insertUserImage(body: UserUserIdBody, userId: kotlin.Long): kotlin.Boolean {
+    fun insertUserImage(body: UserUserIdBody): kotlin.Boolean {
         val localVariableBody: kotlin.Any? = body
         val localVariableConfig = RequestConfig(
                 RequestMethod.POST,
-                "/v1/images/user/{userId}".replace("{" + "userId" + "}", "$userId")
+                "/v1/images/user"
         )
         val response = request<kotlin.Boolean>(
                 localVariableConfig, localVariableBody

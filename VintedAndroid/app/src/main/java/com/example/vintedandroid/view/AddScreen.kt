@@ -43,6 +43,7 @@ import com.example.vintedandroid.client.models.UserUserIdBody
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -128,6 +129,29 @@ fun AppContent() {
                         Log.i("tag", "Questa è url => $uri, ${uri.path}")
 
                         val file = File(uri.path)
+
+                        val mediaType = "image/jpeg".toMediaTypeOrNull() // Use the appropriate media type for your file
+
+                        val requestBody = MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart(
+                                "file",
+                                file.name,
+                                RequestBody.create(mediaType, file)
+                            )
+                            .build()
+
+                        Log.i("tag", "bene")
+
+                        var b = UserUserIdBody(
+                            img = requestBody
+                        )
+
+                        var a = ImageApi()
+
+                        var c = a.insertUserImage(b)
+
+                        Log.i("tag", c.toString())
 
                         //.value = try {
                            // byteArray = fileToByteArray(file)
