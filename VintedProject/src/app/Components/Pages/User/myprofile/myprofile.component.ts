@@ -9,6 +9,7 @@ import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
 import {PageOrderDto} from "../../../../model/pageOrderDto";
 import {UserDto} from "../../../../model/userDto";
 
+
 @Component({
   selector: 'app-myprofile',
   templateUrl: './myprofile.component.html',
@@ -106,7 +107,7 @@ export class MyprofileComponent {
   updateNickname() {
     if (this.userId && this.newNickname) {
       this.isUpdatingNickname = true;
-      this.userService.updateUserNickname(this.newNickname, this.userId).subscribe(
+      this.userService.updateUserNickname(this.newNickname, this.userId, 'body', false).subscribe(
         (success: boolean) => {
           // Nickname update successful
           this.isUpdatingNickname = false;
@@ -114,13 +115,14 @@ export class MyprofileComponent {
           // Handle success response
         },
         (error: any) => {
-          console.log(error)
+          console.log(error);
           this.isUpdatingNickname = false;
           // Handle error response
         }
       );
     }
   }
+
 
 
 

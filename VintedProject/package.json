@@ -23,6 +23,8 @@
     "@auth0/angular-jwt": "^5.1.2",
     "angular-jwt": "^0.1.11",
     "jsonwebtoken": "^9.0.1",
+    "keycloak-angular": "^14.0.0",
+    "keycloak-js": "^21.1.2",
     "ngx-cookie-service": "^16.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

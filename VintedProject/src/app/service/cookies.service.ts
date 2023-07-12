@@ -21,8 +21,7 @@ export class CookiesService implements OnInit {
 
    checkUserToken() {
     const token = this.cookieService.get('jwtToken');
-
-    if (token) {
+     if (token) {
       try {
         const isTokenExpired = this.jwtHelper.isTokenExpired(token);
         if (!isTokenExpired) {
@@ -43,6 +42,7 @@ export class CookiesService implements OnInit {
       }
     } else {
       // Token mancante
+      console.log("Altro")
       this.deleteCookie()
       this.checkUserCookie();
       this.router.navigate(['/login']);

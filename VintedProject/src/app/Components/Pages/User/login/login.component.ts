@@ -35,9 +35,10 @@ export class LoginComponent implements OnInit{
 
 
   newUser: NewUserDto = {
+    firstName: '',
     nickName: '',
     email: '',
-    password: '',
+    password: ''
 
   };
 
@@ -57,7 +58,6 @@ export class LoginComponent implements OnInit{
   logIn(): void {
     this.authService.login(this.login).subscribe(
       response => {
-        console.log(response)
         const userCookie = this.cookieService.get('username');
         if (!userCookie) {
           // Salva le informazioni dell'utente nei cookie
@@ -67,15 +67,12 @@ export class LoginComponent implements OnInit{
             this.cookieService.set('userEmail', response.userDto!.email, 1, '/');}
           if (response.userDto!.addressCity != null) {
             this.cookieService.set('userCity', response.userDto!.addressCity, 1, '/');}
-
           this.cookieService.set('userFirstName', response.userDto!.firstName, 1, '/');
           this.cookieService.set('userLastName', response.userDto!.lastName, 1, '/');
           this.cookieService.set('userNickname', response.userDto!.nickName, 1, '/');
-
-          if (response.accessToken != null) {
-            this.cookieService.set('jwtToken', response.accessToken, 1, '/');
-          }
-
+          if (response.access_token != null) {
+            this.cookieService.set('jwtToken', response.access_token, 1, '/');
+          }else console.log("Non Arriva!")
           this.cookiesService.checkUserCookie();
           this.User.getUserString();
           this.router.navigate(['/']);
@@ -108,16 +105,16 @@ export class LoginComponent implements OnInit{
 
   signUp(): void {
     this.authService.signUp(this.newUser).subscribe(
-      response => {
+      () => {
         // Handle success
-        this.snackBar.open("Registrazione completata con successo!", "OK");
+        this.snackBar.open('Registrazione completata con successo!', 'OK');
         this.flipCard();
       },
-      error => {
-        console.log("ERRORE REGISTRAZIONE => ", error);
-        if (!this.error.redirectToErrorPage(error))
-          this.snackBar.open("Errore registrazione, riprova più tardi!", "OK");
-
+      (error: any) => {
+        console.log('ERRORE REGISTRAZIONE => ', error);
+        if (!this.error.redirectToErrorPage(error)) {
+          this.snackBar.open('Errore registrazione, riprova più tardi!', 'OK');
+        }
       }
     );
   }
