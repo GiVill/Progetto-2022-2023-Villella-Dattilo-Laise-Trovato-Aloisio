@@ -1,7 +1,6 @@
 package it.unical.ea.VintedProject.data.entities;
 
 import it.unical.ea.VintedProject.core.entitiesAuditTrailListener.UserListener;
-import it.unical.ea.VintedProject.dto.enumeration.Gender;
 import it.unical.ea.VintedProject.dto.enumeration.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -40,7 +39,7 @@ public class User {
     @Embedded
     private Address address;
 
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", unique = true)
     @Email
     private String email;
 
@@ -54,20 +53,15 @@ public class User {
     @Column(name = "PHONE_NUMBER")
     private Integer phoneNumber;
 
-    @Column(name = "BIRTH_DATE")
-    @Temporal(TemporalType.DATE)
-    private LocalDate birthDate;
-
     @Column(name = "REGISTRATION_DATE")
     @Temporal(TemporalType.DATE)
     private LocalDate registrationDate;
 
-    @Column(name = "GENDER")
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
     @Column(name = "IMAGE_NAME")
     private String imageName;
+
+    @Column(name = "PRIVATE")
+    private Boolean isPrivate;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Payment> payments;

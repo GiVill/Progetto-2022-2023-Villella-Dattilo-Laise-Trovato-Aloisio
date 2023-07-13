@@ -3,6 +3,7 @@ package it.unical.ea.VintedProject.controller;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.config.JwtAuthConverter;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
+import it.unical.ea.VintedProject.data.service.interfaces.ImageService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.UserDto;
@@ -28,6 +29,7 @@ import javax.ws.rs.Path;
 public class InsertionController {
 
     private final BasicInsertionService basicInsertionService;
+    private final ImageService imageService;
 
     @GetMapping("/insertions")
     //@PreAuthorize("hasAnyRole('admin')")
@@ -36,8 +38,13 @@ public class InsertionController {
     }
 
     @PostMapping("/insertions")
-    public ResponseEntity<BasicInsertionDto> addInsertion(@RequestBody BasicInsertionDto basicInsertionDto) {
-        return ResponseEntity.ok(basicInsertionService.saveDto(basicInsertionDto));
+    //@PreAuthorize("hasAnyRole('user','admin')")
+    public ResponseEntity<BasicInsertionDto> addInsertion(@RequestPart("insertion") @Valid BasicInsertionDto basicInsertionDto, @RequestPart("img") MultipartFile img) {
+        BasicInsertionDto newInsertion = basicInsertionService.saveDto(basicInsertionDto);
+        if (imageService.insertInsertionImage(newInsertion.getId(),img)) {
+            return ResponseEntity.ok(basicInsertionService.getInsertionById(newInsertion.getId()));
+        }
+        return ResponseEntity.ok(newInsertion);
     }
 
     @GetMapping("/insertions/{insertionId}")
@@ -92,6 +99,7 @@ public class InsertionController {
 
     @PutMapping("/insertions/admin/{insertionId}")
     //@PreAuthorize("hasAnyRole('admin')")
+    //TODO:RICONTROLLARE QUESTI CONTROLLER
     public ResponseEntity<Boolean> modifyInsertionByIdForAdmin(@PathVariable("insertionId") Long insertionId, String title, Float price, String description){
         return ResponseEntity.ok(basicInsertionService.modifyByIdForAdmin(insertionId,title,price,description));
     }

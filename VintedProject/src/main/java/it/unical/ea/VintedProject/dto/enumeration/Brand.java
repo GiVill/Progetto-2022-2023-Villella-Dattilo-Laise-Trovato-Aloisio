@@ -15,5 +15,6 @@ public enum Brand {
     Rebook,
     New_Balance,
     Asix,
-    Sony
+    Sony,
+    ALTRO
 }

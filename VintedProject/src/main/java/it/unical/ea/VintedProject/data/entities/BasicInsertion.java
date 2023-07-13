@@ -32,6 +32,9 @@ public class BasicInsertion {
     @Column(name = "TITLE")
     private String title;
 
+    @Column(name = "AVAILABLE")
+    private boolean available;
+
     @Column(name = "PRICE")
     private Float price;
 
@@ -39,33 +42,21 @@ public class BasicInsertion {
     @Temporal(TemporalType.DATE)
     private LocalDate creationDate;
 
-    @Column(name = "END_DATE")
-    @Temporal(TemporalType.DATE)
-    private LocalDate endDate;
-
     @Column(name = "DESCRIPTION")
     private String description;
 
     @Column(name = "IMAGE_NAME")
     private String imageName;
 
-    @Column(name = "CONDITION")
-    private String condition;
-
-    @Column
+    @Column(name = "PRIVATE")
     private Boolean isPrivate;
 
     @Column(name = "CATEGORY")
     @Enumerated(EnumType.STRING)
     private Category category;
 
-
-
     @Column(name = "BRAND")
     private Brand brand;
-
-
-    ////////////////////////////
 
     @ManyToMany(mappedBy = "favorites")
     Set<User> usersFavorites;
@@ -73,11 +64,11 @@ public class BasicInsertion {
     @OneToMany(mappedBy = "insertion", fetch = FetchType.LAZY)
     private List<BuyingOffer> buyingOffers;
 
-    @OneToOne(mappedBy = "insertion")
-    private Order order;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ORDERS_ID")
+    private Order order;
 }

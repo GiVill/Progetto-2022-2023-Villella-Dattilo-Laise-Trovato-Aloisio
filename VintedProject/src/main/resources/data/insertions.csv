@@ -1,15 +1,15 @@
-Tavolo da pranzo in legno massello;200;2023-05-17;Vendo tavolo da pranzo in legno massello, ottime condizioni.;true;DONNA;1
-Divano a due posti;300;2023-05-16;Divano a due posti in tessuto grigio, come nuovo.;false;DONNA;2
-Bicicletta da corsa;500;2023-05-15;Bicicletta da corsa in alluminio, modello professionale.;false;UOMO;3
-Smartphone Samsung Galaxy S21;800;2023-05-14;Vendo smartphone Samsung Galaxy S21, colore nero, perfetto stato.;false;DONNA;4
-Tavolino da salotto;50;2023-05-13;Tavolino da salotto in vetro temperato, ottimo stato.;false;BAMBINI;5
-Macchina fotografica Canon EOS 80D;900;2023-05-12;Macchina fotografica reflex Canon EOS 80D, completa di obiettivo e accessori.;false;UOMO;6
-Libreria in legno;150;2023-05-11;Libreria in legno con ripiani regolabili, ottime condizioni.;true;BAMBINI;7
-Scarpe da ginnastica Nike Air Max;120;2023-05-10;Scarpe da ginnastica Nike Air Max, misura 42, mai indossate.;false;BAMBINI;8
-Giacca in pelle;250;2023-05-09;Giacca in pelle nera, taglia M, ottimo stato.;false;UOMO;9
-Laptop Lenovo ThinkPad;700;2023-05-08;Laptop Lenovo ThinkPad, processore i7, 16 GB di RAM, SSD 512 GB.;false;DONNA;10
-Monitor Samsung 27 pollici;250;2023-05-07;Monitor Samsung da 27 pollici, risoluzione Full HD, perfettamente funzionante.;false;DONNA;5
-Borsa a tracolla in pelle;80;2023-05-06;Borsa a tracolla in pelle marrone, design elegante e pratico.;false;BAMBINI;5
-Orologio da polso Swatch;100;2023-05-05;Orologio da polso Swatch, modello colorato e alla moda.;false;UOMO;5
-Macchina per caffè espresso;150;2023-05-04;Macchina per caffè espresso con schiumatore per latte, usata poche volte.;false;DONNA;6
-Set di pentole in acciaio inox;200;2023-05-03;Set di pentole in acciaio inox, adatto per cucine moderne.;false;BAMBINI;6
+Tavolo da pranzo in legno massello;200;2023-05-17;Vendo tavolo da pranzo in legno massello, ottime condizioni.;true;1;1;
+Divano a due posti;300;2023-05-16;Divano a due posti in tessuto grigio, come nuovo.;false;2;2;
+Bicicletta da corsa;500;2023-05-15;Bicicletta da corsa in alluminio, modello professionale.;false;3;2;
+Smartphone Samsung Galaxy S21;800;2023-05-14;Vendo smartphone Samsung Galaxy S21, colore nero, perfetto stato.;false;4;2;
+Tavolino da salotto;50;2023-05-13;Tavolino da salotto in vetro temperato, ottimo stato.;false;5;2;
+Macchina fotografica Canon EOS 80D;900;2023-05-12;Macchina fotografica reflex Canon EOS 80D, completa di obiettivo e accessori.;false;6;2;
+Libreria in legno;150;2023-05-11;Libreria in legno con ripiani regolabili, ottime condizioni.;true;7;3;
+Scarpe da ginnastica Nike Air Max;120;2023-05-10;Scarpe da ginnastica Nike Air Max, misura 42, mai indossate.;false;8;6;
+Giacca in pelle;250;2023-05-09;Giacca in pelle nera, taglia M, ottimo stato.;false;9;5;
+Laptop Lenovo ThinkPad;700;2023-05-08;Laptop Lenovo ThinkPad, processore i7, 16 GB di RAM, SSD 512 GB.;false;10;1;
+Monitor Samsung 27 pollici;250;2023-05-07;Monitor Samsung da 27 pollici, risoluzione Full HD, perfettamente funzionante.;false;5;1;
+Borsa a tracolla in pelle;80;2023-05-06;Borsa a tracolla in pelle marrone, design elegante e pratico.;false;5;3;
+Orologio da polso Swatch;100;2023-05-05;Orologio da polso Swatch, modello colorato e alla moda.;false;5;2;
+Macchina per caffè espresso;150;2023-05-04;Macchina per caffè espresso con schiumatore per latte, usata poche volte.;false;6;3;
+Set di pentole in acciaio inox;200;2023-05-03;Set di pentole in acciaio inox, adatto per cucine moderne.;false;6;1;

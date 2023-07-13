@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -30,15 +31,11 @@ public class Order {
     @OneToOne(mappedBy = "order")
     private Payment payment;
 
-    @Column(name = "NUMBER")
-    private Integer number; //Todo da togliere?
-
-    @OneToOne
-    @JoinColumn(name = "INSERTION_ID", referencedColumnName = "ID")
-    private BasicInsertion insertion;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
+
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    private List<BasicInsertion> insertionList ;
 
 }

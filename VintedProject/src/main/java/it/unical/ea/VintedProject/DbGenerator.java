@@ -68,19 +68,19 @@ public class DbGenerator implements ApplicationRunner {
                     .parse(new InputStreamReader(usersRes.getInputStream()));
             for (CSVRecord record : usersCsv) {
                 insertUser(record.get(0), record.get(1), record.get(2),record.get(3),record.get(4),
-                        record.get(5),record.get(6),record.get(7));
-            }
-
-            CSVParser insertionsCsv = CSVFormat.DEFAULT.withDelimiter(';')
-                    .parse(new InputStreamReader(insertionsRes.getInputStream()));
-            for (CSVRecord record : insertionsCsv) {
-                insertInsertion(record.get(0), record.get(1), record.get(2), record.get(3),record.get(4), record.get(5));
+                        record.get(5));
             }
 
             CSVParser ordersCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(ordersRes.getInputStream()));
             for (CSVRecord record : ordersCsv) {
-                insertOrder(record.get(0), record.get(1), record.get(2), record.get(3));
+                insertOrder(record.get(0), record.get(1));
+            }
+
+            CSVParser insertionsCsv = CSVFormat.DEFAULT.withDelimiter(';')
+                    .parse(new InputStreamReader(insertionsRes.getInputStream()));
+            for (CSVRecord record : insertionsCsv) {
+                insertInsertion(record.get(0), record.get(1), record.get(2), record.get(3),record.get(4), record.get(5),record.get(6));
             }
 
 
@@ -132,7 +132,7 @@ public class DbGenerator implements ApplicationRunner {
     }
 
     private void insertInsertion(String title, String price, String creationDate, String description,
-                                 String isPro, String idUser) {
+                                 String isPro, String idUser, String idOrder) {
 
         BasicInsertion basicInsertion = new BasicInsertion();
         basicInsertion.setTitle(title);
@@ -141,15 +141,14 @@ public class DbGenerator implements ApplicationRunner {
         basicInsertion.setDescription(description);
         basicInsertion.setUser(userService.getUserById(Long.valueOf(idUser)));
         basicInsertion.setIsPrivate(Boolean.valueOf(isPro));
+        basicInsertion.setOrder(orderService.findById(Long.valueOf(idOrder)));
 
         insertionService.save(basicInsertion);
     }
 
-    private void insertOrder(String localDate, String number, String idInsertion, String idUser) {
+    private void insertOrder(String localDate, String idUser) {
         Order order = new Order();
         order.setDate(LocalDate.parse(localDate));
-        order.setNumber(Integer.valueOf(number));
-        order.setInsertion(insertionService.findById(Long.valueOf(idInsertion)));
         order.setUser(userService.getUserById(Long.valueOf(idUser)));
 
         orderService.save(order);
@@ -166,19 +165,17 @@ public class DbGenerator implements ApplicationRunner {
         paymentService.save(payment);
     }
 
-    private void insertUser(String nickname,String nickName, String firstName, String lastName,String email,String password,
-                            String phoneNumber, String birthDate) {
+    private void insertUser(String nickName, String firstName, String lastName,String email,String password,
+                            String phoneNumber) {
 
         Address address = new Address("via boh","666","Napoli","880434","Italy","Lombardia");
         User user = new User();
-        user.setNickName(nickName);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setNickName(nickName);
         user.setPassword(password);
         user.setPhoneNumber(Integer.valueOf(phoneNumber));
-        user.setBirthDate(LocalDate.parse(birthDate));
         user.setAddress(address);
 
         keycloakTokenClient.userRegister(modelMapper.map(user, NewUserDto.class));

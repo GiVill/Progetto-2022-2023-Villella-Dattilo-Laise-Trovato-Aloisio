@@ -18,31 +18,19 @@ import java.time.LocalDate;
 @ToString
 public class BasicInsertionDto {
 
-    @NotNull
     private Long id;
-
-    @NotNull
+    @NotNull(message = "title.not.empty")
     private String title;
-
-    @NotNull
+    @NotNull(message = "price.not.empty")
     private Float price;
-
+    @NotNull(message = "description.not.empty")
     private String description;
-
-    private String condition;
-
     private LocalDate creationDate;
-
     private Boolean isPrivate;
-
-    private LocalDate endDate;
-
     private String imageName;
-
     private Brand brand;
-
     private Category category;
-
-    @NotNull
+    private boolean available;
+    @NotNull(message = "userId.not.empty")
     private Long userId;
 }

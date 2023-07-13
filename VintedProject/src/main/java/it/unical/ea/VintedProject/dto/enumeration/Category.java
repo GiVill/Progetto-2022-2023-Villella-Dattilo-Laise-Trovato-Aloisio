@@ -8,5 +8,6 @@ public enum Category {
     SPORT,
     DONNA,
     UOMO,
-    BAMBINI
+    BAMBINI,
+    ALTRO
 }
