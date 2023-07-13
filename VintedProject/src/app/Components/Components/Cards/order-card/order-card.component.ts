@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Router} from "@angular/router";
 import {CartComponent} from "../../../Pages/cart/cart.component";
-import {OrderDto} from "../../../../model/orderDto";
+import {OrderDto} from "../../../../Model/orderDto";
 
 @Component({
   selector: 'app-order-card',

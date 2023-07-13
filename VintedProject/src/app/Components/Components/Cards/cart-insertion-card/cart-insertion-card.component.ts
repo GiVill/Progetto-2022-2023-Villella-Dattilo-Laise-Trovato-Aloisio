@@ -3,7 +3,7 @@ import {Component, Input} from '@angular/core';
 import {Router} from "@angular/router";
 
 import {CartComponent} from "../../../Pages/cart/cart.component";
-import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
+import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
 
 
 @Component({

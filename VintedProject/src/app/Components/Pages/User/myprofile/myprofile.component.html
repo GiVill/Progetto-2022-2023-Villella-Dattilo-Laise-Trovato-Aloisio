@@ -1,7 +1,7 @@
 <div class="profile-page">
   <div class="profile-header">
     <div class="profile-picture">
-      <img [src]="'https://localhost:8010/vintedProject-api/v1/images/{{user?.imagepath}}' ||  'assets/resources/vestito.jpg' " alt="Profile Picture" class="round-image">
+      <img [src]="'https://localhost:8010/vintedProject-api/v1/images/'+ user?.imageName ||'assets/resources/vestito.jpg'" alt="Profile Picture" class="round-image">
     </div>
     <div class="profile-info">
       <h1>Nome Utente</h1>

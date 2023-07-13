@@ -5,7 +5,7 @@ import {CookieService} from "ngx-cookie-service";
 import {ActivatedRoute} from "@angular/router";
 
 import {of, tap} from "rxjs";
-import {PageBasicInsertionDto} from "../../../model/pageBasicInsertionDto";
+import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
 
 @Component({
   selector: 'app-category',

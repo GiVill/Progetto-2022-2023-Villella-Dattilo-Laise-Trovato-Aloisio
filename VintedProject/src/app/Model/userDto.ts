@@ -12,7 +12,6 @@
 
 export interface UserDto { 
     id?: number;
-    nickName: string;
     firstName: string;
     lastName: string;
     imageName?: string;

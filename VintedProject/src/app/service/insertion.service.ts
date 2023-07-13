@@ -17,10 +17,10 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { BasicInsertionDto } from '../model/basicInsertionDto';
-import { PageBasicInsertionDto } from '../model/pageBasicInsertionDto';
-import { ServiceError } from '../model/serviceError';
-import { V1InsertionsBody } from '../model/v1InsertionsBody';
+import { BasicInsertionDto } from '../Model/basicInsertionDto';
+import { PageBasicInsertionDto } from '../Model/pageBasicInsertionDto';
+import { ServiceError } from '../Model/serviceError';
+import { V1InsertionsBody } from '../Model/v1InsertionsBody';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -109,16 +109,15 @@ export class InsertionService {
         );
     }
 
-  addInsertionProva(insertion: BasicInsertionDto, image : File){
-    console.log(insertion);
-    const insertionBlob = new Blob([JSON.stringify(insertion)], { type: 'application/json' });
-    const formData = new FormData();
-    formData.append('insertion', insertionBlob);
-    formData.append('img', image);
-    return this.httpClient.post<BasicInsertionDto>(`${this.basePath}/v1/insertions`,formData);
-  }
-
-
+    //AGGIUNTO A MANUZZA
+    addInsertionProva(insertion: BasicInsertionDto, image : File){
+      console.log(insertion);
+      const insertionBlob = new Blob([JSON.stringify(insertion)], { type: 'application/json' });
+      const formData = new FormData();
+      formData.append('insertion', insertionBlob);
+      formData.append('img', image);
+      return this.httpClient.post<BasicInsertionDto>(`${this.basePath}/v1/insertions`,formData);
+    }
 
     /**
      *
@@ -683,43 +682,17 @@ export class InsertionService {
     /**
      *
      *
-     * @param insertionId
-     * @param title
-     * @param price
-     * @param description
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public modifyInsertionById(insertionId: number, title: string, price: number, description: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public modifyInsertionById(insertionId: number, title: string, price: number, description: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public modifyInsertionById(insertionId: number, title: string, price: number, description: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public modifyInsertionById(insertionId: number, title: string, price: number, description: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public modifyInsertion(body: BasicInsertionDto, observe?: 'body', reportProgress?: boolean): Observable<BasicInsertionDto>;
+    public modifyInsertion(body: BasicInsertionDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BasicInsertionDto>>;
+    public modifyInsertion(body: BasicInsertionDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BasicInsertionDto>>;
+    public modifyInsertion(body: BasicInsertionDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (insertionId === null || insertionId === undefined) {
-            throw new Error('Required parameter insertionId was null or undefined when calling modifyInsertionById.');
-        }
-
-        if (title === null || title === undefined) {
-            throw new Error('Required parameter title was null or undefined when calling modifyInsertionById.');
-        }
-
-        if (price === null || price === undefined) {
-            throw new Error('Required parameter price was null or undefined when calling modifyInsertionById.');
-        }
-
-        if (description === null || description === undefined) {
-            throw new Error('Required parameter description was null or undefined when calling modifyInsertionById.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (title !== undefined && title !== null) {
-            queryParameters = queryParameters.set('title', <any>title);
-        }
-        if (price !== undefined && price !== null) {
-            queryParameters = queryParameters.set('price', <any>price);
-        }
-        if (description !== undefined && description !== null) {
-            queryParameters = queryParameters.set('description', <any>description);
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling modifyInsertion.');
         }
 
         let headers = this.defaultHeaders;
@@ -742,11 +715,16 @@ export class InsertionService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json'
         ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
-        return this.httpClient.request<boolean>('put',`${this.basePath}/v1/insertions/${encodeURIComponent(String(insertionId))}`,
+        return this.httpClient.request<BasicInsertionDto>('put',`${this.basePath}/v1/insertions/`,
             {
-                params: queryParameters,
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -758,43 +736,22 @@ export class InsertionService {
     /**
      *
      *
+     * @param body
      * @param insertionId
-     * @param title
-     * @param price
-     * @param description
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public modifyInsertionByIdForAdmin(insertionId: number, title: string, price: number, description: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public modifyInsertionByIdForAdmin(insertionId: number, title: string, price: number, description: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public modifyInsertionByIdForAdmin(insertionId: number, title: string, price: number, description: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public modifyInsertionByIdForAdmin(insertionId: number, title: string, price: number, description: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public modifyInsertionById(body: BasicInsertionDto, insertionId: number, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public modifyInsertionById(body: BasicInsertionDto, insertionId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public modifyInsertionById(body: BasicInsertionDto, insertionId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public modifyInsertionById(body: BasicInsertionDto, insertionId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling modifyInsertionById.');
+        }
 
         if (insertionId === null || insertionId === undefined) {
-            throw new Error('Required parameter insertionId was null or undefined when calling modifyInsertionByIdForAdmin.');
-        }
-
-        if (title === null || title === undefined) {
-            throw new Error('Required parameter title was null or undefined when calling modifyInsertionByIdForAdmin.');
-        }
-
-        if (price === null || price === undefined) {
-            throw new Error('Required parameter price was null or undefined when calling modifyInsertionByIdForAdmin.');
-        }
-
-        if (description === null || description === undefined) {
-            throw new Error('Required parameter description was null or undefined when calling modifyInsertionByIdForAdmin.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (title !== undefined && title !== null) {
-            queryParameters = queryParameters.set('title', <any>title);
-        }
-        if (price !== undefined && price !== null) {
-            queryParameters = queryParameters.set('price', <any>price);
-        }
-        if (description !== undefined && description !== null) {
-            queryParameters = queryParameters.set('description', <any>description);
+            throw new Error('Required parameter insertionId was null or undefined when calling modifyInsertionById.');
         }
 
         let headers = this.defaultHeaders;
@@ -817,11 +774,16 @@ export class InsertionService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json'
         ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
         return this.httpClient.request<boolean>('put',`${this.basePath}/v1/insertions/admin/${encodeURIComponent(String(insertionId))}`,
             {
-                params: queryParameters,
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

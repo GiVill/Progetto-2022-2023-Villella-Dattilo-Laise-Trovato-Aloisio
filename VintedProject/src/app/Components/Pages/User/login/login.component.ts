@@ -6,8 +6,8 @@ import {MainNavComponent} from "../../../Components/main-nav/main-nav.component"
 import {CookiesService} from "../../../../service/cookies.service";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {ErrorService} from "../../../../service/error.service";
-import {LoginUserDto} from "../../../../model/loginUserDto";
-import {NewUserDto} from "../../../../model/newUserDto";
+import {LoginUserDto} from "../../../../Model/loginUserDto";
+import {NewUserDto} from "../../../../Model/newUserDto";
 
 
 @Component({
@@ -68,7 +68,6 @@ export class LoginComponent implements OnInit{
             this.cookieService.set('userCity', response.userDto!.addressCity, 1, '/');}
           this.cookieService.set('userFirstName', response.userDto!.firstName, 1, '/');
           this.cookieService.set('userLastName', response.userDto!.lastName, 1, '/');
-          this.cookieService.set('userNickname', response.userDto!.nickName, 1, '/');
           if (response.access_token != null) {
             this.cookieService.set('jwtToken', response.access_token, 1, '/');
           }else console.log("Non Arriva!")

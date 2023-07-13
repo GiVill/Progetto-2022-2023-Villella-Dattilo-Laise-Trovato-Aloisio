@@ -6,9 +6,9 @@ import {InsertionService} from "../../../../service/insertion.service";
 import {CartService} from "../../../../service/cart.service";
 import {UserService} from "../../../../service/user.service";
 import {OrderService} from "../../../../service/order.service";
-import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
-import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
-import {UserDto} from "../../../../model/userDto";
+import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
+import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
+import {UserDto} from "../../../../Model/userDto";
 
 
 @Component({

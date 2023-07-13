@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {BuyingOffer} from "../Model/buying-offer.model";
+import { BuyingOfferDto } from '../Model/buyingOfferDto';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +13,16 @@ export class BuyingOfferService {
 
   constructor(private http: HttpClient) { }
 
-  getAllOffers(): Observable<BuyingOffer[]> {
-    return this.http.get<BuyingOffer[]>(`${this.apiUrl}`);
+  getAllOffers(): Observable<BuyingOfferDto[]> {
+    return this.http.get<BuyingOfferDto[]>(`${this.apiUrl}`);
   }
 
-  getOffersByUserId(userId: number): Observable<BuyingOffer[]> {
-    return this.http.get<BuyingOffer[]>(`${this.apiUrl}/${userId}`);
+  getOffersByUserId(userId: number): Observable<BuyingOfferDto[]> {
+    return this.http.get<BuyingOfferDto[]>(`${this.apiUrl}/${userId}`);
   }
 
-  addBuyingOffer(offer: BuyingOffer): Observable<BuyingOffer> {
-    return this.http.post<BuyingOffer>(`${this.apiUrl}`, offer);
+  addBuyingOffer(offer: BuyingOfferDto): Observable<BuyingOfferDto> {
+    return this.http.post<BuyingOfferDto>(`${this.apiUrl}`, offer);
   }
 
   deleteOfferById(offerId: number): Observable<any> {

@@ -5,9 +5,9 @@ import {UserService} from "../../../../service/user.service";
 import {switchMap} from "rxjs";
 import {OrderService} from "../../../../service/order.service";
 import {CookiesService} from "../../../../service/cookies.service";
-import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
-import {PageOrderDto} from "../../../../model/pageOrderDto";
-import {UserDto} from "../../../../model/userDto";
+import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
+import {PageOrderDto} from "../../../../Model/pageOrderDto";
+import {UserDto} from "../../../../Model/userDto";
 
 
 @Component({

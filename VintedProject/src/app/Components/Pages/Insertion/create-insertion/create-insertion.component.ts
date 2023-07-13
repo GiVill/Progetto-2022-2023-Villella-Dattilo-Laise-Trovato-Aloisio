@@ -3,9 +3,8 @@ import {InsertionService} from "../../../../service/insertion.service";
 import {Router} from "@angular/router";
 import {CookiesService} from "../../../../service/cookies.service";
 
-import {Brand, Category} from "../../../../model/newInsertionDto";
-import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
-import {V1InsertionsBody} from "../../../../model/v1InsertionsBody";
+import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
+import {V1InsertionsBody} from "../../../../Model/v1InsertionsBody";
 import {CookieService} from "ngx-cookie-service";
 
 
@@ -15,14 +14,13 @@ import {CookieService} from "ngx-cookie-service";
   styleUrls: ['./create-insertion.component.css']
 })
 export class CreateInsertionComponent implements OnInit{
+  categoryOptions: BasicInsertionDto.CategoryEnum[] = Object.values(BasicInsertionDto.CategoryEnum);
+  brandOptions: BasicInsertionDto.BrandEnum[] = Object.values(BasicInsertionDto.BrandEnum);
+
   image !: File
   inserzione : BasicInsertionDto = {
     description: "", price: 0, title: "", userId: Number(this.cookieService.getUserId())
   };
-  boby: V1InsertionsBody = {insertion:this.inserzione, img:this.image}
-  categoryOptions: Category.CategoryEnum[] = Object.values(Category.CategoryEnum);
-  brandOptions: Brand.BrandEnum[] = Object.values(Brand.BrandEnum);
-
   constructor(private router: Router,
               private insertionService: InsertionService,
               private cookieService: CookiesService)
@@ -50,8 +48,8 @@ export class CreateInsertionComponent implements OnInit{
   creaInserzione() {
     console.log(this.inserzione)
     console.log(this.image)
-    this.insertionService.addInsertionProva(this.inserzione, this.image).subscribe(
 
+    this.insertionService.addInsertionProva(this.inserzione,this.image).subscribe(
 
       response => {
         console.log(this.inserzione)

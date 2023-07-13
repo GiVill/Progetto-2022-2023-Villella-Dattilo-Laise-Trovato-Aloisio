@@ -2,8 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {InsertionService} from "../../../../service/insertion.service";
 import {UserService} from "../../../../service/user.service";
-import {UserDto} from "../../../../model/userDto";
-import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
+import {UserDto} from "../../../../Model/userDto";
+import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
 
 @Component({
   selector: 'app-user-insertion',

@@ -1,6 +1,6 @@
 <div class="main-container">
   <div class="image-container">
-    <img class="productImage" [src]="'https://localhost:8010/vintedProject-api/v1/images/{{insertion?.imageName}}' || 'assets/resources/vestito.jpg'">
+    <img class="productImage" [src]="'https://localhost:8010/vintedProject-api/v1/images/'+ insertion?.imageName ||'assets/resources/vestito.jpg'">
   </div>
 
   <div class="info-container">

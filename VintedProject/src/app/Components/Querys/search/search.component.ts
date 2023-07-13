@@ -5,7 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {InsertionService} from "../../../service/insertion.service";
 import {of, tap} from "rxjs";
 import {ImageService} from "../../../service/image.service";
-import {PageBasicInsertionDto} from "../../../model/pageBasicInsertionDto";
+import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
 
 
 @Component({

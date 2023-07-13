@@ -3,8 +3,8 @@ import {switchMap} from "rxjs";
 import {InsertionService} from "../../../../service/insertion.service";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../../service/user.service";
-import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
-import {UserDto} from "../../../../model/userDto";
+import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
+import {UserDto} from "../../../../Model/userDto";
 ;
 
 

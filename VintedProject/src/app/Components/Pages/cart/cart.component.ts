@@ -7,7 +7,7 @@ import {InsertionService} from "../../../service/insertion.service";
 import {CartService} from "../../../service/cart.service";
 import {OrderService} from "../../../service/order.service";
 import {TokenService} from "../../../service/token.service";
-import {BasicInsertionDto} from "../../../model/basicInsertionDto";
+import {BasicInsertionDto} from "../../../Model/basicInsertionDto";
 
 
 

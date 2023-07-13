@@ -13,7 +13,7 @@ import { UserDto } from './userDto';
 
 export interface TokenResponse {
     access_token?: string;
-    refreshToken?: string;
+    refresh_token?: string;
     tokenType?: string;
     userDto?: UserDto;
 }

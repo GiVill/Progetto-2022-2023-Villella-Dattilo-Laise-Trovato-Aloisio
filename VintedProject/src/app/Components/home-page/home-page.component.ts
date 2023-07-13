@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {InsertionService} from "../../service/insertion.service";
-import {PageBasicInsertionDto} from "../../model/pageBasicInsertionDto";
+import {PageBasicInsertionDto} from "../../Model/pageBasicInsertionDto";
 
 
 
