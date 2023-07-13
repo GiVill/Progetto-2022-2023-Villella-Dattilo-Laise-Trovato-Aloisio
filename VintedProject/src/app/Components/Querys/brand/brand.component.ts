@@ -12,7 +12,7 @@ import {PageBasicInsertionDto} from "../../../model/pageBasicInsertionDto";
 })
 export class BrandComponent implements OnInit{
   Brandedinsertion: PageBasicInsertionDto | undefined;
-  page = 1;
+  page = 0;
   brandName: string | undefined;
 
   constructor(private insertionService: InsertionService,
@@ -22,7 +22,7 @@ export class BrandComponent implements OnInit{
     this.route.paramMap.subscribe((params) => {
       this.brandName = String(params.get('brandName'));});
 
-    this.insertionService.getByCategory(this.brandName!,this.page).subscribe((insertions: PageBasicInsertionDto) => {
+    this.insertionService.getByBrand(this.brandName!,this.page).subscribe((insertions: PageBasicInsertionDto) => {
       this.Brandedinsertion = insertions;
     });
   }

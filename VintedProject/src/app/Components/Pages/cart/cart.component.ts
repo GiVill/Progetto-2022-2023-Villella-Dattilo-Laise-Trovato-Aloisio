@@ -104,7 +104,7 @@ export class CartComponent implements OnInit {
     this.cookieService.set('cartItems', JSON.stringify(updatedCartItems), 1, '/');
   }
 
-  /*createOrder(): void {
+  createOrder(): void {
     if (this.product.length === 0) {
       console.log("Nessun prodotto nel carrello. Impossibile creare l'ordine.");
       return;
@@ -126,7 +126,7 @@ export class CartComponent implements OnInit {
 
 
     // Call the order service to create the order
-    this.orderService.addOrder(order).subscribe(
+    /*this.orderService.addOrder(order).subscribe(
       response => {
         console.log("Ordine creato con successo:", response);
         this.ordineCreato = true;
@@ -144,7 +144,9 @@ export class CartComponent implements OnInit {
         this.orderError = true;
       }
     );
-  }*/
+    */
+
+  }
 
 
 
