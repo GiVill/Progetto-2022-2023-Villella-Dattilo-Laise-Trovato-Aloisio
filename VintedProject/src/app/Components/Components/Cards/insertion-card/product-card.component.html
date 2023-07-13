@@ -1,6 +1,6 @@
 <div>
   <div>
-    <img style=" max-height: 180px;"  [src]="'https://localhost:8010/vintedProject-api/v1/images/{{item.imagepath}}' ||'assets/resources/vestito.jpg'"  (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
+    <img style=" max-height: 180px;"  [src]="'https://localhost:8010/vintedProject-api/v1/images/{{item.imageName}}' ||'assets/resources/vestito.jpg'"  (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
   </div>
   <div style="padding-left: 2%;" (click)="onImageClick()" >
     <div class="product-card">

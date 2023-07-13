@@ -2,8 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {InsertionService} from "../../../../service/insertion.service";
 import {Router} from "@angular/router";
 import {CookiesService} from "../../../../service/cookies.service";
-import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
+
 import {Brand, Category} from "../../../../model/newInsertionDto";
+import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
+import {V1InsertionsBody} from "../../../../model/v1InsertionsBody";
+import {CookieService} from "ngx-cookie-service";
 
 
 @Component({
@@ -14,20 +17,9 @@ import {Brand, Category} from "../../../../model/newInsertionDto";
 export class CreateInsertionComponent implements OnInit{
   image !: File
   inserzione : BasicInsertionDto = {
-    id: 0,
-    title: "sfdfsd",
-    price: 213,
-    description: "dasd",
-    condition: "",
-    creationDate: "2023-07-10",
-    isPrivate: true,
-    endDate: "2023-07-10",
-    imageName: "",
-    brand: "Adidas",
-    category: "ABBIGLIAMENTO",
-    userId: 2
+    description: "", price: 0, title: "", userId: Number(this.cookieService.getUserId())
   };
-
+  boby: V1InsertionsBody = {insertion:this.inserzione, img:this.image}
   categoryOptions: Category.CategoryEnum[] = Object.values(Category.CategoryEnum);
   brandOptions: Brand.BrandEnum[] = Object.values(Brand.BrandEnum);
 
@@ -39,21 +31,6 @@ export class CreateInsertionComponent implements OnInit{
   caricaFoto(event: any) {
     const fileInput = event.target;
     const files = fileInput.files;
-
-    // Limita il numero di foto a 6
-    if (files.length > 6) {
-      alert('Puoi caricare al massimo 6 foto.');
-      return;
-    }
-
-    // Limita la dimensione delle foto a 1 MB ciascuna
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (file.size > 1024 * 1024) {
-        alert('Le foto devono avere una dimensione massima di 1 MB ciascuna.');
-        return;
-      }
-    }
 
     this.image = files[0]
 
@@ -73,7 +50,7 @@ export class CreateInsertionComponent implements OnInit{
   creaInserzione() {
     console.log(this.inserzione)
     console.log(this.image)
-    this.insertionService.addInsertion(this.inserzione).subscribe(
+    this.insertionService.addInsertionProva(this.inserzione, this.image).subscribe(
 
 
       response => {

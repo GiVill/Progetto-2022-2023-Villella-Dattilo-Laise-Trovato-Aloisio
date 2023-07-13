@@ -11,21 +11,20 @@
  */
 
 export interface BasicInsertionDto { 
-    id: number;
+    id?: number;
     title: string;
     price: number;
-    description?: string;
-    condition?: string;
+    description: string;
     creationDate?: string;
     isPrivate?: boolean;
-    endDate?: string;
     imageName?: string;
     brand?: BasicInsertionDto.BrandEnum;
     category?: BasicInsertionDto.CategoryEnum;
+    available?: boolean;
     userId: number;
 }
 export namespace BasicInsertionDto {
-    export type BrandEnum = 'Adidas' | 'Puma' | 'Nike' | 'Microsoft' | 'Xiaomi' | 'Nothing' | 'Guess' | 'Pumpling' | 'Fila' | 'Onze' | 'Gojiang' | 'Rebook' | 'New_Balance' | 'Asix' | 'Sony';
+    export type BrandEnum = 'Adidas' | 'Puma' | 'Nike' | 'Microsoft' | 'Xiaomi' | 'Nothing' | 'Guess' | 'Pumpling' | 'Fila' | 'Onze' | 'Gojiang' | 'Rebook' | 'New_Balance' | 'Asix' | 'Sony' | 'ALTRO';
     export const BrandEnum = {
         Adidas: 'Adidas' as BrandEnum,
         Puma: 'Puma' as BrandEnum,
@@ -41,9 +40,10 @@ export namespace BasicInsertionDto {
         Rebook: 'Rebook' as BrandEnum,
         NewBalance: 'New_Balance' as BrandEnum,
         Asix: 'Asix' as BrandEnum,
-        Sony: 'Sony' as BrandEnum
+        Sony: 'Sony' as BrandEnum,
+        ALTRO: 'ALTRO' as BrandEnum
     };
-    export type CategoryEnum = 'ELETTRONICA' | 'COLLEZIONI' | 'ABBIGLIAMENTO' | 'BARCHE' | 'SPORT' | 'DONNA' | 'UOMO' | 'BAMBINI';
+    export type CategoryEnum = 'ELETTRONICA' | 'COLLEZIONI' | 'ABBIGLIAMENTO' | 'BARCHE' | 'SPORT' | 'DONNA' | 'UOMO' | 'BAMBINI' | 'ALTRO';
     export const CategoryEnum = {
         ELETTRONICA: 'ELETTRONICA' as CategoryEnum,
         COLLEZIONI: 'COLLEZIONI' as CategoryEnum,
@@ -52,6 +52,7 @@ export namespace BasicInsertionDto {
         SPORT: 'SPORT' as CategoryEnum,
         DONNA: 'DONNA' as CategoryEnum,
         UOMO: 'UOMO' as CategoryEnum,
-        BAMBINI: 'BAMBINI' as CategoryEnum
+        BAMBINI: 'BAMBINI' as CategoryEnum,
+        ALTRO: 'ALTRO' as CategoryEnum
     };
 }

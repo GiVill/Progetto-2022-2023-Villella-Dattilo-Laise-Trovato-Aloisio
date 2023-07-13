@@ -8,7 +8,6 @@
       <p>Nome: {{ user?.firstName }}</p>
       <p>Cognome: {{ user?.lastName }}</p>
       <p>Email: {{ user?.email }}</p>
-      <p>Data di nascita: {{ user?.birthDate }}</p>
       <!-- Altre informazioni utente qui -->
     </div>
     <button mat-raised-button class="button" style="margin-left: 25%" [routerLink]="['/myprofile']" (click)="show()">Modifica informazioni</button>

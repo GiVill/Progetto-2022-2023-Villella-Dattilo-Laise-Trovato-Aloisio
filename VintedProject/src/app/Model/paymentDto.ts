@@ -24,9 +24,10 @@ export namespace PaymentDto {
         PAYPAL: 'PAYPAL' as PaymentMethodEnum,
         MARK: 'MARK' as PaymentMethodEnum
     };
-    export type StatusEnum = 'PENDING' | 'APPROVED';
+    export type StatusEnum = 'PENDING' | 'APPROVED' | 'REFUSED';
     export const StatusEnum = {
         PENDING: 'PENDING' as StatusEnum,
-        APPROVED: 'APPROVED' as StatusEnum
+        APPROVED: 'APPROVED' as StatusEnum,
+        REFUSED: 'REFUSED' as StatusEnum
     };
 }

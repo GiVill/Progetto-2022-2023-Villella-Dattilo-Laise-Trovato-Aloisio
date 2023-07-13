@@ -17,20 +17,10 @@ export interface UserDto {
     lastName: string;
     imageName?: string;
     email?: string;
-    birthDate?: string;
-    gender?: UserDto.GenderEnum;
     addressStreet?: string;
     addressNumber?: number;
     addressCity?: string;
     addressCap?: number;
     addressState?: string;
     addressRegion?: string;
-}
-export namespace UserDto {
-    export type GenderEnum = 'MALE' | 'FEMALE' | 'OTHER';
-    export const GenderEnum = {
-        MALE: 'MALE' as GenderEnum,
-        FEMALE: 'FEMALE' as GenderEnum,
-        OTHER: 'OTHER' as GenderEnum
-    };
 }

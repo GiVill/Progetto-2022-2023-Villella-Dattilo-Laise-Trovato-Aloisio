@@ -1,15 +1,16 @@
 import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core';
 import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
-import {AuthService} from "./service/auth.service";
-import {ImageService} from "./service/image.service";
-import {ChatService} from "./service/chat.service";
-import {InsertionService} from "./service/insertion.service";
-import {OfferService} from "./service/offer.service";
-import {OrderService} from "./service/order.service";
-import {UserService} from "./service/user.service";
-import {PaymentService} from "./service/payment.service";
 
+
+import { AuthService } from './api/auth.service';
+import { ChatService } from './api/chat.service';
+import { ImageService } from './api/image.service';
+import { InsertionService } from './api/insertion.service';
+import { OfferService } from './api/offer.service';
+import { OrderService } from './api/order.service';
+import { PaymentService } from './api/payment.service';
+import { UserService } from './api/user.service';
 
 @NgModule({
   imports:      [],

@@ -18,3 +18,4 @@ export * from './serviceError';
 export * from './sortObject';
 export * from './tokenResponse';
 export * from './userDto';
+export * from './v1InsertionsBody';

@@ -13,8 +13,7 @@
 export interface OrderDto { 
     id: number;
     date?: string;
-    number: number;
     paymentId: number;
-    insertionId: number;
+    insertionIdList?: Array<number>;
     userId: number;
 }
