@@ -28,12 +28,9 @@ public interface UserService {
 
     List<UserDto> getAllStored();
 
-    Optional<User> findByNickName(String nickName);
-
     Optional<User> findByEmail(String email);
 
     Boolean updateUserPassword(Long id, String newPassword);
 
-    Boolean updateUserNickname(Long id, String newNickname);
 
 }

@@ -21,6 +21,7 @@ public class ImageController {
 
     @GetMapping("/images/{imagePath}")
     public ResponseEntity<Resource> getImageById(@PathVariable("imagePath") String imagePath){
+        System.out.println(imagePath);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(imageService.getImage(imagePath));
     }
 

@@ -68,9 +68,6 @@ public class UserController {
     @PutMapping("/password/{idUser}")
     public ResponseEntity<Boolean> updateUserPassword(@PathVariable("idUser") Long id,@RequestBody @Valid String newPassword) { return ResponseEntity.ok(userService.updateUserPassword(id,newPassword));}
 
-    @PutMapping("/nickname/{idUser}")
-    public ResponseEntity<Boolean> updateUserNickname(@PathVariable("idUser") Long id,@RequestBody @Valid String newNickname) { return ResponseEntity.ok(userService.updateUserNickname(id,newNickname));}
-
     @DeleteMapping("/users/{idUser}")
     //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<Void> deleteUserById(@PathVariable("idUser") Long id) {

@@ -30,7 +30,7 @@ public class BasicInsertionDto {
     private String imageName;
     private Brand brand;
     private Category category;
-    private boolean available;
+    private Boolean available;
     @NotNull(message = "userId.not.empty")
     private Long userId;
 }

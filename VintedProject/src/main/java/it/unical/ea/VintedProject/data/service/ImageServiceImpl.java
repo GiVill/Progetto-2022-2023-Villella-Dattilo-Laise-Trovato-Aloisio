@@ -46,8 +46,8 @@ public class ImageServiceImpl implements ImageService {
     }
 
     public Boolean insertUserImage(MultipartFile img){
-        Optional<User> u = userService.findByNickName(LoggedUserDetail.getInstance().getUsername());
-        if(u.get().getNickName() == null){
+        Optional<User> u = userService.findByEmail(LoggedUserDetail.getInstance().getUsername());
+        if(u.get().getEmail() == null){
             throw new EntityNotFoundException(messageLang.getMessage("user.not.found"));
         }
         try {

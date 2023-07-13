@@ -26,9 +26,6 @@ public class User {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NICKNAME", unique = true)
-    private String nickName;
-
     @Column(name = "FIRSTNAME")
     private String firstName;
 

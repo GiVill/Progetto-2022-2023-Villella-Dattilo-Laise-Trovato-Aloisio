@@ -8,6 +8,7 @@ import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
+import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.enumeration.Brand;
 import it.unical.ea.VintedProject.dto.enumeration.Category;
@@ -26,10 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +37,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     //private final DressInsertionDao
 
     private final BasicInsertionDao basicInsertionDao;
+    private final UserService userService;
     private final UserDao userDao;
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 5;
@@ -121,23 +120,14 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     }
 
     @Override
-    public Boolean modifyById(Long insertionId, String title, Float price, String description) {
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getInsertions().contains(basicInsertionDao.findById(insertionId))){
-            throw new EntityNotFoundException(messageLang.getMessage("request.not.valid"));
+    public BasicInsertionDto modifyUserInsertion(BasicInsertionDto insertionDto) {
+        Optional<User> user = userService.findByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(user.isEmpty()||!Objects.equals(user.get().getId(), insertionDto.getUserId())){
+            throw new EntityNotFoundException(messageLang.getMessage("access.denied"));
         }
-        try {
-            BasicInsertion insertion = findById(insertionId);
-            insertion.setTitle(title);
-            insertion.setPrice(price);
-            insertion.setDescription(description);
-            basicInsertionDao.save(insertion);
-            return true;
-        }catch (Exception e){
-            throw new EntityNotFoundException(messageLang.getMessage("insertion.not.present",insertionId));
-        }
+        basicInsertionDao.save(modelMapper.map(insertionDto,BasicInsertion.class));
+        return insertionDto;
     }
-
 
 
     @Override
@@ -174,17 +164,13 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     }
 
     @Override
-    public Boolean modifyByIdForAdmin(Long insertionId, String title, Float price, String description) {
-        try {
-            BasicInsertion insertion = findById(insertionId);
-            insertion.setTitle(title);
-            insertion.setPrice(price);
-            insertion.setDescription(description);
-            basicInsertionDao.save(insertion);
+    public Boolean modifyInsertionById(Long insertionId, BasicInsertionDto insertionDto) {
+        if(basicInsertionDao.findById(insertionId).isPresent()){
+            basicInsertionDao.save(modelMapper.map(insertionDto,BasicInsertion.class));
             return true;
-        }catch (Exception e){
-            throw new EntityNotFoundException(messageLang.getMessage("insertion.not.present",insertionId));
         }
+        throw new EntityNotFoundException(messageLang.getMessage("insertion.not.present"));
     }
+
 
 }

@@ -28,6 +28,9 @@ public class Order {
     @Temporal(TemporalType.DATE)
     private LocalDate date;
 
+    @Column(name = "TOTAL")
+    private Float total;
+
     @OneToOne(mappedBy = "order")
     private Payment payment;
 

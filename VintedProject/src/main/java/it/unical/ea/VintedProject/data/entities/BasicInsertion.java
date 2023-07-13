@@ -33,7 +33,7 @@ public class BasicInsertion {
     private String title;
 
     @Column(name = "AVAILABLE")
-    private boolean available;
+    private Boolean available;
 
     @Column(name = "PRICE")
     private Float price;

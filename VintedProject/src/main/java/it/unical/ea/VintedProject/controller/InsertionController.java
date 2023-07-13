@@ -92,16 +92,15 @@ public class InsertionController {
         return ResponseEntity.ok(basicInsertionService.getByCategory(category,page));
     }
 
-    @PutMapping("/insertions/{insertionId}")
-    public ResponseEntity<Boolean> modifyInsertionById(@PathVariable("insertionId") Long insertionId, String title, Float price, String description){
-        return ResponseEntity.ok(basicInsertionService.modifyById(insertionId,title,price,description));
+    @PutMapping("/insertions/")
+    public ResponseEntity<BasicInsertionDto> modifyInsertion(@RequestBody BasicInsertionDto insertionDto){
+        return ResponseEntity.ok(basicInsertionService.modifyUserInsertion(insertionDto));
     }
 
     @PutMapping("/insertions/admin/{insertionId}")
     //@PreAuthorize("hasAnyRole('admin')")
-    //TODO:RICONTROLLARE QUESTI CONTROLLER
-    public ResponseEntity<Boolean> modifyInsertionByIdForAdmin(@PathVariable("insertionId") Long insertionId, String title, Float price, String description){
-        return ResponseEntity.ok(basicInsertionService.modifyByIdForAdmin(insertionId,title,price,description));
+    public ResponseEntity<Boolean> modifyInsertionById(@PathVariable("insertionId") Long insertionId, @RequestBody BasicInsertionDto insertionDto){
+        return ResponseEntity.ok(basicInsertionService.modifyInsertionById(insertionId,insertionDto));
     }
 
     //TODO solo utente su proprie inserzioni??

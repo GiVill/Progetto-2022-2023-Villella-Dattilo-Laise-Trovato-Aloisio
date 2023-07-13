@@ -72,15 +72,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByNickName(String nickName) {
-        Optional<User> user = userDao.findByNickName(nickName);
-        if(user.isEmpty()){
-            throw new EntityNotFoundException(messageLang.getMessage("user.nickname.not.present",nickName));
-        }
-        return user;
-    }
-
-    @Override
     public Optional<User> findByEmail(String email) {
         Optional<User> user = userDao.findUserByEmail(email);
         if(user.isEmpty()){
@@ -99,23 +90,6 @@ public class UserServiceImpl implements UserService {
         try{
             User user = userDao.findById(u.get().getId()).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", u.get().getId())));
             user.setPassword(newPassword);
-            userDao.save(user);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    @Override
-    public Boolean updateUserNickname(Long id, String newNickname) {
-        Optional<User> u = findByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || id !=u.get().getId()){
-            throw new EntityNotFoundException(messageLang.getMessage("wrong.user"));
-        }
-        //TODO L'update andrebbe fatta anche su Keycloak
-        try{
-            User user = userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", id)));
-            user.setNickName(newNickname);
             userDao.save(user);
             return true;
         }catch (Exception e){

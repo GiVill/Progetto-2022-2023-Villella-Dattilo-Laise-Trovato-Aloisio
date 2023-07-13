@@ -18,9 +18,6 @@ public interface UserDao extends JpaRepository<User,Long> {
     @Override
     Optional<User> findById(Long aLong);
 
-    //Return a SINGLE User fetched by Nickname
-    Optional<User> findByNickName(String nickName);
-
     //Find a SINGLE User using email
     Optional<User> findUserByEmail(String email);
 

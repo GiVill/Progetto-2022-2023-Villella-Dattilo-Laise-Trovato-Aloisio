@@ -13,8 +13,6 @@ import lombok.ToString;
 public class UserDto {
 
     private Long id;
-    @NotNull(message = "nickname.not.empty")
-    private String nickName;
     @NotNull(message = "firstname.not.empty")
     private String firstName;
     @NotNull(message = "lastname.not.empty")

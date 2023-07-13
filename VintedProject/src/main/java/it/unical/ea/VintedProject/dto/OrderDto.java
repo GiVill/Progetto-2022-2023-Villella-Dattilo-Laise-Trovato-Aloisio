@@ -25,6 +25,8 @@ public class OrderDto {
 
     private List<Long> insertionIdList;
 
+    private Float total;
+
     @NotNull
     private Long userId;
 
