@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit{
 
   newUser: NewUserDto = {
     password: '',
-    nickName: '',
     firstName: '',
     email: '',
   };
@@ -57,7 +56,7 @@ export class LoginComponent implements OnInit{
   logIn(): void {
     this.authService.login(this.login).subscribe(
       response => {
-        const userCookie = this.cookieService.get('username');
+        const userCookie = this.cookieService.get('userEmail');
         if (!userCookie) {
           // Salva le informazioni dell'utente nei cookie
           if (response.userDto!.id != null) {
@@ -125,8 +124,7 @@ export class LoginComponent implements OnInit{
   }
 
   isRegistrationFormValid(): boolean {
-    if (this.newUser.nickName.length==0 ||
-        this.newUser.email!.length==0 ||
+    if (this.newUser.email!.length==0 ||
         this.newUser.password.length==0 ||
         this.passwordCheck.length==0){
       return false;

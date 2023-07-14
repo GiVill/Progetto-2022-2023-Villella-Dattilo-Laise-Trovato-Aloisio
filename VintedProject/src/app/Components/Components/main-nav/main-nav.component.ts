@@ -25,7 +25,8 @@ export class MainNavComponent implements OnInit{
 
   ngOnInit(): void {
     this.cookieService.checkUserCookie()
-    this.getUserString()
+    this.logStringResult = this.cookieService.logStringResultfun()
+    //this.getUserString()
   }
 
   getUserString(){
@@ -46,6 +47,7 @@ export class MainNavComponent implements OnInit{
   logout(): void {
     this.cookieService.deleteCookie()
     this.router.navigate(['/login']);
+    this.getUserString()
   }
 
 

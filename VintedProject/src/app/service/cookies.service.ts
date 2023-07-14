@@ -19,36 +19,43 @@ export class CookiesService implements OnInit {
     return this.cookieService.get("userId",)
   }
 
-   checkUserToken() {
+  checkUserToken() {
     const token = this.cookieService.get('jwtToken');
-     if (token) {
+    if (token) {
       try {
         const isTokenExpired = this.jwtHelper.isTokenExpired(token);
         if (!isTokenExpired) {
-          return true
+          return true;
         } else {
           // Token scaduto
           console.error('Token scaduto');
-          this.deleteCookie()
-          this.router.navigate(['/login']);
-          return false
+          this.deleteCookie();
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 0);
+          return false;
         }
       } catch (error) {
         // Token non valido
         console.error('Token non valido:', error);
-        this.deleteCookie()
-        this.router.navigate(['/login']);
-        return false
+        this.deleteCookie();
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 0);
+        return false;
       }
     } else {
       // Token mancante
-      console.log("Altro")
-      this.deleteCookie()
+      console.log("Token mancante");
+      this.deleteCookie();
       this.checkUserCookie();
-      this.router.navigate(['/login']);
-      return false
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 0);
+      return false;
     }
   }
+
 
   checkUserCookie(): void {
     const userCookie = this.cookieService.get('userEmail');
@@ -71,7 +78,6 @@ export class CookiesService implements OnInit {
     this.cookieService.delete('userLastName', '/');
     this.cookieService.delete('userEmail', '/');
     this.cookieService.delete('jwtToken', '/');
-    this.cookieService.delete('userNickname', '/');
     this.checkUserCookie()
   }
 

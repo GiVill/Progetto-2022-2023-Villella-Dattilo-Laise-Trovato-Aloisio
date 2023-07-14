@@ -8,6 +8,9 @@ import {CartService} from "../../../service/cart.service";
 import {OrderService} from "../../../service/order.service";
 import {TokenService} from "../../../service/token.service";
 import {BasicInsertionDto} from "../../../Model/basicInsertionDto";
+import {PaymentService} from "../../../service/payment.service";
+import {PaymentDto} from "../../../Model/paymentDto";
+import {OrderDto} from "../../../Model/orderDto";
 
 
 
@@ -22,7 +25,7 @@ export class CartComponent implements OnInit {
   product: any[] = [];
   cartProduct: BasicInsertionDto[] | undefined;
   selectedPaymentMethod: string | undefined;
-  paymentMethods: string[] = ['Carta di credito', 'PayPal', 'Bonifico bancario'];
+  paymentMethods: PaymentDto.PaymentMethodEnum[] = Object.values(PaymentDto.PaymentMethodEnum);
   ordineCreato = false;
   totalCost = 0;
   orderSuccess = false;
@@ -37,7 +40,8 @@ export class CartComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private orderService: OrderService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private paymentService: PaymentService,
   ) {}
 
   ngOnInit(): void {
@@ -109,44 +113,53 @@ export class CartComponent implements OnInit {
       console.log("Nessun prodotto nel carrello. Impossibile creare l'ordine.");
       return;
     }
-
+    this.calculateTotalCost()
     // Extract the insertion IDs from the cart items
     const insertionIds: number[] = this.product.map(item => item.insertion_id);
     const token = this.cookieService.get('jwtToken');
     const userId: number = this.tokenService.getUserStringFromToken(token);
 
-    const order = {
-      id: null,
-      creationDate: new Date().toISOString(),
-      insertionId: insertionIds,
-      userId: userId
-    };
-    console.log("cart",order);
+    const payment: PaymentDto = {id: 0, orderId: 0, total: this.totalCost, userId: userId, paymentMethod: this.selectedPaymentMethod}
 
 
-
-    // Call the order service to create the order
-    /*this.orderService.addOrder(order).subscribe(
+    this.paymentService.addPayment(payment).subscribe(
       response => {
-        console.log("Ordine creato con successo:", response);
-        this.ordineCreato = true;
-        this.orderSuccess = true;
-        this.orderError = false;
+        console.log("Pagamento creato con successo:", response);
+        const paymentId= response.id;
+        const order: OrderDto = {
+          id: null,
+          paymentId: paymentId,
+          date: new Date().getDate().toString(),
+          insertionIdList: insertionIds,
+          userId: userId
+        };
 
-        // Clear the cart after successful order creation
-        this.clearCart();
-      },
-      error => {
-        console.log("cart",order); // Stampa l'oggetto orderDto invece di order
-        console.log("Errore durante la creazione dell'ordine:", error);
-        this.ordineCreato = false;
-        this.orderSuccess = false;
-        this.orderError = true;
-      }
-    );
-    */
+        console.log("cart", order);
+        this.orderService.addOrder(order).subscribe(
+          response => {
+            console.log("Ordine creato con successo:", response);
+            this.ordineCreato = true;
+            this.orderSuccess = true;
+            this.orderError = false;
+            //TODO Assegnare a questo pagamento l'id dell'ordine
+            // Clear cart
+            this.clearCart();
+          },
+          error => {
+            console.log("cart", order); // Stampa l'oggetto orderDto invece di order
+            console.log("Errore durante la creazione dell'ordine:", error);
+            this.ordineCreato = false;
+            this.orderSuccess = false;
+            this.orderError = true;
+          }
+        );
 
+      }, error => {
+        console.log("Errore durante la creazione del pagamento:", error);
+      })
   }
+
+
 
 
 
