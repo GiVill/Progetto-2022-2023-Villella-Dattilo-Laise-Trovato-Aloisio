@@ -15,13 +15,17 @@ public class PaymentDto {
     @NotNull
     private Long id;
 
+    @NotNull
     private PaymentMethod paymentMethod;
+
+    @NotNull
+    private float total;
 
     private Status status;
 
     @NotNull
     private Long userId;
 
-    @NotNull
+    //@NotNull
     private Long orderId;
 }

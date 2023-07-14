@@ -25,6 +25,9 @@ public class Payment {
     @Column(name = "PAYMENT_METHOD")
     private PaymentMethod paymentMethod;
 
+    @Column(name = "TOTAL")
+    private PaymentMethod total;
+
     @Column
     @Enumerated(EnumType.STRING)
     private Status status;
