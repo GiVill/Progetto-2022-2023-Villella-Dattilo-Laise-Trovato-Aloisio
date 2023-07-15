@@ -36,6 +36,9 @@ public class User {
     @Embedded
     private Address address;
 
+    @Column(name = "NICKNAME")
+    private String nickname;
+
     @Column(name = "EMAIL", unique = true)
     @Email
     private String email;

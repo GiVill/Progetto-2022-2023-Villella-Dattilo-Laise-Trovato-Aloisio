@@ -32,9 +32,8 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    //inserzione sulla quale e stata fatto il pagamento
-    @OneToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "ID")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ORDER_ID")
     private Order order;
 
     //utente che ha effettuato il pagamento

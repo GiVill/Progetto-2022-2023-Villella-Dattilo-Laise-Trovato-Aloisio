@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
@@ -32,6 +33,7 @@ public class Order {
     private Float total;
 
     @OneToOne(mappedBy = "order")
+    @Lazy
     private Payment payment;
 
     @ManyToOne(fetch = FetchType.LAZY)

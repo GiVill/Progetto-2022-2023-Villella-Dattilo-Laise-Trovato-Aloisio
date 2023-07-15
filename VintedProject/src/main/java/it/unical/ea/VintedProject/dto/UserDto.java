@@ -18,6 +18,7 @@ public class UserDto {
     @NotNull(message = "lastname.not.empty")
     private String lastName;
     private String imageName;
+    private String nickname;
     @Email(message = "email.not.valid")
     private String email;
     private String addressStreet;
