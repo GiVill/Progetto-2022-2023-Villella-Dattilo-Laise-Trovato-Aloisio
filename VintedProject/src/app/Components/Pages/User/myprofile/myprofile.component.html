@@ -1,32 +1,20 @@
 <div class="profile-page">
   <div class="profile-header">
     <div class="profile-picture">
-      <img [src]="'https://localhost:8010/vintedProject-api/v1/images/'+ user?.imageName ||'assets/resources/vestito.jpg'" alt="Profile Picture" class="round-image">
+      <img [src]="user?.imageName ? 'https://localhost:8010/vintedProject-api/v1/images/' + user?.imageName : 'assets/resources/vestito.jpg'" alt="Profile Picture" class="round-image">
     </div>
     <div class="profile-info">
-      <h1>Nome Utente</h1>
+      <h1>Informazioni personali:</h1>
       <p>Nome: {{ user?.firstName }}</p>
       <p>Cognome: {{ user?.lastName }}</p>
       <p>Email: {{ user?.email }}</p>
-      <!-- Altre informazioni utente qui -->
+      <p>Indirizzo: {{ user?.addressStreet}}, {{ user?.addressNumber }}</p>
+      <p> {{ user?.addressCity }} , {{ user?.addressCap }}</p>
+      <p> {{ user?.addressState }}</p>
     </div>
-    <button mat-raised-button class="button" style="margin-left: 25%" [routerLink]="['/myprofile']" (click)="show()">Modifica informazioni</button>
+    <button mat-raised-button class="button" style="margin-left: 25%" [routerLink]="['/myprofile']" (click)="showUpdateSection()">Modifica informazioni</button>
   </div>
-
-  <div class="update-section" *ngIf="showUpdateSection">
-    <h2>Aggiorna nickname e password</h2>
-    <div class="input-container">
-      <label for="nickname">Nuovo nickname:</label>
-      <input type="text" id="nickname" [(ngModel)]="newNickname">
-      <button mat-raised-button class="small-button" style="margin: 2%" (click)="updateNickname()">Salva</button>
-    <div class="input-container">
-      <label for="password">Nuova password:</label>
-      <input type="password" id="password" [(ngModel)]="newPassword">
-      <button mat-raised-button class="small-button" style="margin: 2%" (click)="updatePassword()">Salva</button>
-
-    </div>
-    </div>
-  </div>
+  <app-profile-edit *ngIf="showUpdateSectionFlag" [user]="user" (updatePassword)="updatePassword($event)" (updateNickname)="updateNickname($event)"></app-profile-edit>
 
 
   <div class="insertion-container" *ngIf="isAnyInsertion">

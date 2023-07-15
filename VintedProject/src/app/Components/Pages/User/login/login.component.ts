@@ -27,6 +27,8 @@ export class LoginComponent implements OnInit{
 
   passwordCheck: string = '';
 
+  isRegistrationMode: boolean = false;
+
 
   login: LoginUserDto = {
     email: '',
@@ -37,7 +39,13 @@ export class LoginComponent implements OnInit{
   newUser: NewUserDto = {
     password: '',
     firstName: '',
+    surname: '',
     email: '',
+    addressStreet: '',
+    addressNumber: 0,
+    addressCity: '',
+    addressCap: 0,
+
   };
 
 
@@ -86,6 +94,7 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
     this.checkUserCookie()
+
   }
 
   checkUserCookie(): void {
@@ -96,8 +105,9 @@ export class LoginComponent implements OnInit{
     }
   }
 
-  flipCard(): void {
-    this.isFlipped = !this.isFlipped;
+  flipCard() {
+    this.isFlipped = !this.isFlipped
+    this.isRegistrationMode = !this.isRegistrationMode;
   }
 
   signUp(): void {
@@ -125,7 +135,7 @@ export class LoginComponent implements OnInit{
 
   isRegistrationFormValid(): boolean {
     if (this.newUser.email!.length==0 ||
-        this.newUser.password.length==0 ||
+        this.newUser.password?.length==0 ||
         this.passwordCheck.length==0){
       return false;
     }

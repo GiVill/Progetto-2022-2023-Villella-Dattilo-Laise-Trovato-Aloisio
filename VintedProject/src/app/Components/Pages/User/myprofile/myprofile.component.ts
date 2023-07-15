@@ -1,8 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {InsertionService} from "../../../../service/insertion.service";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../../service/user.service";
-import {switchMap} from "rxjs";
+import {Observable, switchMap, tap} from "rxjs";
 import {OrderService} from "../../../../service/order.service";
 import {CookiesService} from "../../../../service/cookies.service";
 import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
@@ -15,59 +15,40 @@ import {UserDto} from "../../../../Model/userDto";
   templateUrl: './myprofile.component.html',
   styleUrls: ['./myprofile.component.css']
 })
-export class MyprofileComponent {
-
-  @Input() user: UserDto | undefined;
-  myInsertion: PageBasicInsertionDto | undefined;
-  myOrder: PageOrderDto | undefined
-  page= 0
-  isAnyInsertion=false;
-  isAnyOrder=false;
-  newPassword: string = '';
-  newNickname: string = '';
+export class MyprofileComponent implements OnInit{
+  user: UserDto | undefined;
+  myInsertion!: PageBasicInsertionDto;
+  myOrder: PageOrderDto | undefined;
+  page = 0;
+  isAnyInsertion = false;
+  isAnyOrder = false;
   userId: number = Number(this.cookieSevices.getUserId());
-  isUpdatingPassword: boolean = false;
-  isUpdatingNickname: boolean = false;
-  showUpdateSection =false;
-
+  showUpdateSectionFlag = false;
 
   constructor(
     private insertionService: InsertionService,
     private route: ActivatedRoute,
     private userService: UserService,
-    private  orderService: OrderService,
-    private cookieSevices: CookiesService,
+    private orderService: OrderService,
+    private cookieSevices: CookiesService
   ) {}
 
-
   ngOnInit(): void {
-    this.route.paramMap.pipe(
-      switchMap((params) => {
-        return this.userService.getById(this.userId);
-      })
-    ).subscribe(
-      (user: UserDto) => {
-        this.user = user;
-        //TODO Creare sto cazzo di get insertionBUserId e get orderByUserId //
-        this.insertionService.getInsertionByUserId(this.userId, this.page).subscribe(
-          (data: PageBasicInsertionDto) => {
-            this.myInsertion = data;
-          },
-          (error) => {
-            console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
-          }
-        );
-        if (this.myInsertion?.empty) {
-          this.isAnyInsertion = true;
-        }
-      })
+    this.userId = Number(this.cookieSevices.getUserId())
+    console.log(this.userId)
+    this.insertionService.getInsertionByUserId(this.userId!,this.page).subscribe((insertions: PageBasicInsertionDto) => {
+      this.myInsertion = insertions;
+    });
+    console.log(this.myInsertion)
+    //this.getUserOrders()
+  }
 
+
+
+  getUserOrders(): void {
     this.orderService.getUserOrders(this.userId, this.page).subscribe(
       (data: PageOrderDto) => {
         this.myOrder = data;
-        console.log(data);
-        console.log(this.myOrder)
-
         if (this.myOrder?.empty) {
           this.isAnyOrder = true;
         }
@@ -76,56 +57,40 @@ export class MyprofileComponent {
         console.log('Si è verificato un errore durante il recupero degli ordini dell\'utente:', error);
       }
     );
-    console.log(this.myOrder)
   }
 
-  show(){
-    this.showUpdateSection = !this.showUpdateSection;
+  showUpdateSection(): void {
+    this.showUpdateSectionFlag = !this.showUpdateSectionFlag;
   }
 
-
-
-  updatePassword() {
-    if (this.userId && this.newPassword) {
-      this.isUpdatingPassword = true;
-      this.userService.updateUserPassword(this.newPassword, this.userId).subscribe(
+  updatePassword(newPassword: string): void {
+    if (this.userId && newPassword) {
+      this.userService.updateUserPassword(newPassword, this.userId).subscribe(
         (success: boolean) => {
           // Password update successful
-          this.isUpdatingPassword = false;
-          this.newPassword = '';
-          // Handle success response
+          console.log('Password updated successfully.');
         },
         (error: any) => {
           // Password update failed
-          this.isUpdatingPassword = false;
-          console.log(error)
+          console.log('Failed to update password:', error);
         }
       );
     }
   }
 
-  updateNickname() {
-    if (this.userId && this.newNickname) {
-      this.isUpdatingNickname = true;
-      this.userService.updateUserNickname(this.newNickname, this.userId, 'body', false).subscribe(
+  updateNickname(newNickname: string): void {
+    if (this.userId && newNickname) {
+      this.userService.updateUserNickname(newNickname, this.userId, 'body', false).subscribe(
         (success: boolean) => {
           // Nickname update successful
-          this.isUpdatingNickname = false;
-          this.newNickname = '';
-          // Handle success response
+          console.log('Nickname updated successfully.');
         },
         (error: any) => {
-          console.log(error);
-          this.isUpdatingNickname = false;
-          // Handle error response
+          console.log('Failed to update nickname:', error);
         }
       );
     }
   }
-
-
-
-
 
 
 

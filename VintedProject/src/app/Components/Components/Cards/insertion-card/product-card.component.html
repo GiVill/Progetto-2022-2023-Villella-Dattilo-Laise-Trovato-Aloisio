@@ -1,13 +1,10 @@
-<div>
   <div>
-    <img style=" max-height: 180px;"  [src]="imageName"  (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
+    <img style="max-height: 25%; max-width: 20%; margin-left: 2%" [src]="imageName" (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
   </div>
-  <div style="padding-left: 2%;" (click)="onImageClick()" >
+  <div style="padding-left: 2%;" (click)="onImageClick()">
     <div class="product-card">
-      <!-- Visualizza i dettagli del prodotto -->
-      <h2>{{ item?.title }}</h2>
-      <p style="max-width: 250px">{{ item?.description }}</p>
-      <p>Prezzo: {{ item?.price }}</p>
+      <h2 style="text-align: left;">{{ item?.title }}</h2>
+      <p style="width: 15%">{{ item?.description }}</p>
+      <p>Prezzo: {{ item?.price }}€</p>
     </div>
   </div>
-</div>

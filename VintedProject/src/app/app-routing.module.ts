@@ -15,6 +15,8 @@ import {NotFoundComponent} from "./Components/Pages/Errors/not-found/not-found.c
 import {NotAuthorizedComponent} from "./Components/Pages/Errors/not-authorized/not-authorized.component";
 import {BadComponent} from "./Components/Pages/Errors/badRequest/bad.component";
 import {RefusedComponent} from "./Components/Pages/Errors/refused/refused.component";
+import {ProfileEditComponent} from "./Components/Pages/User/profile-edit/profile-edit.component";
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -40,7 +42,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes), FormsModule],
+    declarations: [
+        ProfileEditComponent
+    ],
+    exports: [RouterModule, ProfileEditComponent]
 })
 export class AppRoutingModule { }

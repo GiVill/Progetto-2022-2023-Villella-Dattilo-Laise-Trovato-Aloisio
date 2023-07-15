@@ -53,6 +53,7 @@ export class CartComponent implements OnInit {
     }
     this.loadProductDetails();
     console.log(this.product);
+    console.log(this.cookieService.get('userId'));
   }
 
   loadProductDetails(): void {
