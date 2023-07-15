@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-
 import {InsertionService} from "../../../service/insertion.service";
 import {ActivatedRoute} from "@angular/router";
 import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
@@ -25,6 +24,7 @@ export class BrandComponent implements OnInit{
     this.insertionService.getByBrand(this.brandName!,this.page).subscribe((insertions: PageBasicInsertionDto) => {
       this.Brandedinsertion = insertions;
     });
+    console.log(this.Brandedinsertion)
   }
 
 }

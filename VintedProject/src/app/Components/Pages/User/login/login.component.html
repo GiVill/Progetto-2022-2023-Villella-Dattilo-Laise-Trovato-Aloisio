@@ -18,10 +18,12 @@
       <h2>REGISTRAZIONE</h2>
       <form id="registration" style="display: flex;">
         <div id="secondColumn">
+          <label style="margin: 0 5px;margin-top: 10%;">Nickname:</label>
+          <input type="text" [(ngModel)]="newUser.nickName" name="registerNome">
           <label style="margin: 0 5px;margin-top: 10%;">Nome:</label>
           <input type="text" [(ngModel)]="newUser.firstName" name="registerNome">
           <label style="margin: 0 5px;margin-top: 10%;">Cognome:</label>
-          <input type="text" [(ngModel)]="newUser.surname" name="registerSur">
+          <input type="text" [(ngModel)]="newUser.lastName" name="registerSur">
           <label style="margin: 0 5px;margin-top: 10%;">Email:</label>
           <input type="email" style="margin: 0 5px;" [(ngModel)]="newUser.email" name="registerMail">
           <label style="margin: 0 5px; margin-top: 10%;">Password:</label>

@@ -34,15 +34,43 @@ export class MyprofileComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.userId = Number(this.cookieSevices.getUserId())
-    console.log(this.userId)
-    this.insertionService.getInsertionByUserId(this.userId!,this.page).subscribe((insertions: PageBasicInsertionDto) => {
-      this.myInsertion = insertions;
-    });
-    console.log(this.myInsertion)
-    //this.getUserOrders()
-  }
+    this.route.paramMap
+      .pipe(
+        switchMap((params) => {
+          return this.userService.getById(this.userId);
+        })
+      )
+      .subscribe(
+        (user: UserDto) => {
+          this.user = user;
+// TODO: Create the functions getInsertionByUserId and getUserOrders in the respective services
+          this.insertionService.getInsertionByUserId(this.userId, this.page).subscribe(
+            (data: PageBasicInsertionDto) => {
+              this.myInsertion = data;
+              if (this.myInsertion?.empty) {
+                this.isAnyInsertion = true;
+              }
+              console.log(this.myInsertion)
+            },
+            (error) => {
+              console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
+            }
+          );
 
+          this.orderService.getUserOrders(this.userId, this.page).subscribe(
+            (data: PageOrderDto) => {
+              this.myOrder = data;
+              if (this.myOrder?.empty) {
+                this.isAnyOrder = true;
+              }
+            },
+            (error) => {
+              console.log('Si è verificato un errore durante il recupero degli ordini dell\'utente:', error);
+            }
+          );
+        }
+      );
+  }
 
 
   getUserOrders(): void {

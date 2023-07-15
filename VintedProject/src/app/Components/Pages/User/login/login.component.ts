@@ -37,14 +37,15 @@ export class LoginComponent implements OnInit{
 
 
   newUser: NewUserDto = {
+    nickName: "",
     password: '',
     firstName: '',
-    surname: '',
+    lastName: '',
     email: '',
     addressStreet: '',
     addressNumber: 0,
     addressCity: '',
-    addressCap: 0,
+    addressCap: 0
 
   };
 

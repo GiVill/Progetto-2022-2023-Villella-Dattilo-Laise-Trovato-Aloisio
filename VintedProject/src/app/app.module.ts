@@ -50,6 +50,7 @@ import {OfferService} from "./service/offer.service";
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +74,7 @@ import {OfferService} from "./service/offer.service";
     BadComponent,
     RefusedComponent,
     OrderCardComponent,
+
 
 
   ],

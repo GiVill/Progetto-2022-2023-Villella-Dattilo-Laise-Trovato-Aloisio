@@ -17,26 +17,28 @@
   <app-profile-edit *ngIf="showUpdateSectionFlag" [user]="user" (updatePassword)="updatePassword($event)" (updateNickname)="updateNickname($event)"></app-profile-edit>
 
 
-  <div class="insertion-container" *ngIf="isAnyInsertion">
+
     <div class="body-content" style="margin-top: 30px">
       <div style="max-height: 700px;">
         <div class="header">
           <h2 class="font">Le mie inserzioni</h2>
           <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutte</button>
         </div>
-        <div class="card-container">
-          <div class="card-row" >
-            <div *ngFor="let item of myInsertion?.content" class="card-item">
-              <app-product-card [item]="item"></app-product-card>
+
+          <div class="body-content" style="margin-top: 30px">
+            <div class="card-container">
+              <div class="card-row">
+                <ng-container *ngFor="let item of myInsertion?.content; let i = index;">
+                  <app-product-card [item]="item" class="card-item"></app-product-card>
+                  <ng-container *ngIf="(i + 1) % 6 === 0" class="clearfix"></ng-container>
+                </ng-container>
+              </div>
             </div>
-            <button type="button" class="btn btn-secondary" style="height: 300px; min-width: 25%; min-height: 30%"  [routerLink]="['/catalog']">Vedi tutte</button>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="insertion-container" *ngIf="isAnyOrder">
+
+
     <div class="body-content" style="margin-top: 30px">
       <div style="max-height: 700px;">
         <div class="header">
@@ -45,13 +47,12 @@
         </div>
         <div class="card-container">
           <div class="card-row" >
-            <div *ngFor="let item of myOrder?.content" class="card-item">
-              <app-order-card [item]="item"></app-order-card>
-            </div>
-            <button type="button" class="btn btn-secondary" style="height: 300px; min-width: 25%; min-height: 30%"  [routerLink]="['/catalog']">Vedi tutti</button>
+            <ng-container *ngFor="let item of myOrder?.content; let i = index;">
+              <app-order-card [item]="item" class="card-item"></app-order-card>
+              <ng-container *ngIf="(i + 1) % 6 === 0" class="clearfix"></ng-container>
+            </ng-container>
           </div>
         </div>
       </div>
     </div>
-  </div>
 </div>

@@ -11,9 +11,10 @@
  */
 
 export interface NewUserDto {
+  nickName: string;
   password?: string;
   firstName: string;
-  surname: string;
+  lastName: string;
   email?: string;
   addressStreet?: string;
   addressNumber?: number;
