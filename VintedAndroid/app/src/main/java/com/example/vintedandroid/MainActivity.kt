@@ -157,6 +157,7 @@ class MainActivity : ComponentActivity() {
 
                                 CoroutineScope(Dispatchers.IO).launch {
 
+                                    /* Funziona, ma non va aperta qui la galleria
                                     // Inside your activity or fragment
                                     if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                                         ActivityCompat.requestPermissions(this@MainActivity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE)
@@ -164,6 +165,8 @@ class MainActivity : ComponentActivity() {
                                         // Permission already granted, proceed with opening the document
                                         openDocument()
                                     }
+
+                                     */
 
                                     //openDocument()
 
