@@ -1,7 +1,18 @@
 package com.example.vintedandroid.view
 
+import android.app.Activity.RESULT_OK
+import android.content.ContentResolver
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -37,6 +48,10 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Tab
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.layout.ContentScale
+import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat.checkSelfPermission
+import coil.compose.ImagePainter.State.Empty.painter
 import coil.compose.rememberImagePainter
 import com.example.vintedandroid.client.apis.ImageApi
 import com.example.vintedandroid.client.models.UserUserIdBody
@@ -49,17 +64,23 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.io.IOException
+import java.nio.file.Files
 
 
 @Composable
-fun AddScreen() {
-    AppContent()
+fun AddScreen(application: Context) {
+    AppContent(application)
 }
 
 @OptIn(ExperimentalCoilApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun AppContent() {
+fun AppContent(application: Context) {
+
+
+    val imageView = ImageView(application)
+
 
     var selectImages by remember { mutableStateOf(listOf<Uri>()) }
     val title = remember { mutableStateOf("") }
@@ -77,6 +98,9 @@ fun AppContent() {
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+
+
         Text(text = "Insert Title")
         TextField(
             value = title.value,
@@ -121,15 +145,44 @@ fun AppContent() {
                     modifier = Modifier
                         .padding(16.dp, 8.dp)
                         .size(100.dp)
-                        .clickable { /**/}
+                        .clickable { /**/ }
                 )
                 Button(
                     onClick = {
 
+
+
+
                         Log.i("tag", "Questa è url => $uri, ${uri.path}")
 
-                        val file = File(uri.path)
+                        //"/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/WhatsApp Images/IMG-20230712-WA0003.jpg"
+                        val file = File(uri.path)//uri.path
 
+                        Log.i("tag", "ok? ${uri.path}")
+
+                        val contentResolver: ContentResolver = application.contentResolver
+                        val imageUri: Uri = Uri.parse(uri.toString())
+
+                        try {
+                            val inputStream = contentResolver.openInputStream(imageUri)
+                            val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
+
+                            // You can now work with the 'bitmap' object as needed
+                            // For example, you can display it in an ImageView or manipulate it
+
+                            imageView.setImageBitmap(bitmap)
+
+                            // ...
+
+                            inputStream?.close()
+
+                            Log.i("tag", "ok? ${bitmap.toString()}")
+                        } catch (e: FileNotFoundException) {
+                            println("Image file not found.")
+                        } catch (e: Exception) {
+                            println("Error retrieving the image: ${e.message}")
+                        }
+/*
                         val mediaType = "image/jpeg".toMediaTypeOrNull() // Use the appropriate media type for your file
 
                         val requestBody = MultipartBody.Builder()
@@ -141,32 +194,42 @@ fun AppContent() {
                             )
                             .build()
 
-                        Log.i("tag", "bene")
+ */
 
-                        var b = UserUserIdBody(
-                            img = requestBody
-                        )
 
-                        var a = ImageApi()
+                        Log.i("tag", "bene1, $uri, ${uri.path}")
+                        if(file.exists()) {
+                            Log.i("tag", "AAAAAAAAAAAAAAAAA")
+                            var requestBody = file.readBytes().toTypedArray()
 
-                        var c = a.insertUserImage(b)
+                            // var requestBody = Files.readAllBytes(file.toPath())
 
-                        Log.i("tag", c.toString())
+                            Log.i("tag", "bene2")
 
-                        //.value = try {
-                           // byteArray = fileToByteArray(file)
-                        //} catch (e: IOException) {
+                            var b = UserUserIdBody(
+                                img = requestBody
+                            )
+
+                            var a = ImageApi()
+
+                            var c = a.insertUserImage(b)
+
+                            Log.i("tag", c.toString())
+
+                            //.value = try {
+                            // byteArray = fileToByteArray(file)
+                            //} catch (e: IOException) {
                             // Handle any potential exceptions, such as file not found or permission issues
-                        //    emptyArray()
-                        //}
+                            //    emptyArray()
+                            //}
 
-                        //val c: UserUserIdBody = byteArray
+                            //val c: UserUserIdBody = byteArray
 
-                        //val response = ImageApi().insertUserImage(by)
+                            //val response = ImageApi().insertUserImage(by)
 
-                        //val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
-                        //val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
-/*
+                            //val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+                            //val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
+                            /*
                         // Make the API call
                         CoroutineScope(Dispatchers.IO).launch {
                             try {
@@ -184,7 +247,7 @@ fun AppContent() {
                         }
                         */
 
-                        /*
+                            /*
                         val formData = formData {
                             append("image", imageFile)
                         }
@@ -195,6 +258,10 @@ fun AppContent() {
                         }
 
                          */
+                        }
+                        else{
+                            Log.i("tag", "NOOOOOOOOOOOOO")
+                        }
                     },
                     modifier = Modifier
                         .wrapContentSize()
@@ -243,8 +310,20 @@ private operator fun Any.getValue(nothing: Nothing?, property: KProperty<*>): An
 
  */
 
+/*
+@Composable
+fun pickImage() {
+
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    val context: LocalCont
+    
+}
+
+ */
+
+
 @Preview
 @Composable
 fun AddScreenPreview() {
-    AddScreen()
+    //AddScreen()
 }

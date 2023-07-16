@@ -20,8 +20,10 @@ import okhttp3.MultipartBody
  */
 data class UserUserIdBody (
 
-    val img: MultipartBody? = null
-) {/*
+    val img: kotlin.Array<kotlin.Byte>? = null
+    //val img: MultipartBody? = null
+) {
+    /*
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -40,4 +42,21 @@ data class UserUserIdBody (
         return img?.contentHashCode() ?: 0
     }
     */
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as UserUserIdBody
+
+        if (img != null) {
+            if (other.img == null) return false
+            if (!img.contentEquals(other.img)) return false
+        } else if (other.img != null) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return img?.contentHashCode() ?: 0
+    }
 }

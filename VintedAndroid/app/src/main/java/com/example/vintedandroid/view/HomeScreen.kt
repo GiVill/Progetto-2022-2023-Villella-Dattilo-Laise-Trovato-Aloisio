@@ -3,6 +3,7 @@ package com.example.vintedandroid.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,6 +21,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,6 +30,8 @@ import androidx.compose.ui.window.Dialog
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.ImagePainter
+import coil.compose.rememberImagePainter
 import com.example.vintedandroid.client.apis.InsertionApi
 import com.example.vintedandroid.client.models.BasicInsertionDto
 import com.example.vintedandroid.client.models.PageBasicInsertionDto
@@ -36,7 +40,6 @@ import com.example.vintedandroid.model.dto.CartDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @Composable
@@ -76,12 +79,18 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
 
     CoroutineScope(Dispatchers.IO).launch {itemsWomen = insertionApi.getByCategory("DONNA", 0); isLoaded = true}
     CoroutineScope(Dispatchers.IO).launch {itemsMan = insertionApi.getByCategory("UOMO", 0) ; isLoaded1 = true}
-    CoroutineScope(Dispatchers.IO).launch {allItems = insertionApi.all4(0) ; isLoaded2 = true}
+    CoroutineScope(Dispatchers.IO).launch {allItems = insertionApi.all4(2) ; isLoaded2 = true}
 
         Box(modifier = Modifier.fillMaxSize()) {
 
             if (isLoaded && isLoaded1 && isLoaded2) {
+
+
+                displayImage(allItems = allItems)
+
             LazyColumn(modifier = Modifier.fillMaxSize()) {
+
+
 
                 item {
                     // Header item here
@@ -137,10 +146,16 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(text = "E molto altro!", fontSize = 20.sp, textAlign = TextAlign.Center)
                     Spacer(modifier = Modifier.height(16.dp))
+
                     }
                 }
 
+
+
                             items(allItems.results) { item ->
+
+                                displayImage(item = item)
+
                                 ItemCart(item, itemsInCart, navController, searchedProduct, application)
                             }
 
@@ -192,8 +207,8 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
 @Composable
 fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>, application: Context ) {
 
-    var showDialog by remember { mutableStateOf(false) }
-
+    var showDialog by remember { mutableStateOf(false) } //${item.imageName}
+    
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -204,11 +219,18 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
             }),
         elevation = 4.dp
     ) {
+
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+
+
             Text(text = item.title)
+            displayImage(item = item)
             Spacer(modifier = Modifier.height(8.dp))
             item.description?.let { Text(text = it) }
             Spacer(modifier = Modifier.height(8.dp))
@@ -245,6 +267,51 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
         }
     }
 }
+
+@Composable
+fun displayImage(allItems: PageBasicInsertionDto) {
+
+    Box(modifier = Modifier.fillMaxWidth()) {
+
+
+    val url = "https://192.168.1.90:8010/vintedProject-api/v1/images/file_472864ab-51c9-4ff6-bab2-85a8871eb446.jpg"//${allItems.results[2].imageName}"
+        Log.i("tag", "ok, no? => $url")
+        val painter: ImagePainter = rememberImagePainter(url)//: String? = null
+
+
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Image(
+                painter = painter,
+                contentDescription = null, // Provide a proper content description
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = ContentScale.Fit
+            )}}
+}
+
+@Composable
+fun displayImage(item: BasicInsertionDto) {
+    Box(modifier = Modifier.fillMaxWidth()) {
+
+        val url = "https://192.168.1.90:8010/vintedProject-api/v1/images/file_472864ab-51c9-4ff6-bab2-85a8871eb446.jpg"//${item.imageName}"
+        Log.i("tag", "ok, no? => $url")
+        val painter: ImagePainter = rememberImagePainter(url)//: String? = null
+
+
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Image(
+                painter = painter,
+                contentDescription = null, // Provide a proper content description
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = ContentScale.Fit
+            )
+        }
+    }
+}
+
 
 fun converter(item: BasicInsertionDto): CartDto {
 

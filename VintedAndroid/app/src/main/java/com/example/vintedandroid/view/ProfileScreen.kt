@@ -65,16 +65,12 @@ fun ProfileScreen(user : UserDto, application: Context) {
 
     var isLoaded by remember { mutableStateOf(false) }
 
-    var isEditing by remember { mutableStateOf(false) }
-    var textValue by remember { mutableStateOf("") }
     var userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
     //var userFromDB by remember { mutableStateOf(UserDatabaseDto(UUID.randomUUID().toString(),"","",null,null,null,null,null,null,null,null,null,null,null,null)) }
 
 
     var isTextFieldVisible by remember { mutableStateOf(false) }
     var value by remember { mutableStateOf("") }
-
-    val keyboardController = LocalSoftwareKeyboardController.current
 
     var url = remember { mutableStateOf("https://192.168.1.90:8010/vintedProject-api/v1/images/") }//: String? = null
 

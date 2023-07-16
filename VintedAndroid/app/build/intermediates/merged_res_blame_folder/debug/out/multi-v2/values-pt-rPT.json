@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.vintedandroid.app-mergeDebugResources-63:/values-pt-rPT/values-pt-rPT.xml",
+            "outputFile": "com.example.vintedandroid.app-mergeDebugResources-64:/values-pt-rPT/values-pt-rPT.xml",
             "map": [
                 {
                     "source": "C:\\Users\\frand\\.gradle\\caches\\transforms-3\\6f49f6ceebb197fb36f1a6d334fec1f5\\transformed\\appcompat-1.1.0\\res\\values-pt-rPT\\values-pt-rPT.xml",

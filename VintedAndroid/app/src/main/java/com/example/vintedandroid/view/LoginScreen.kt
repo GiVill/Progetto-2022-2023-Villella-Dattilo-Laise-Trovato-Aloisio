@@ -67,9 +67,6 @@ fun LoginScreen(navController: NavHostController, application: Context) {
     var userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
     var isLoaded by remember { mutableStateOf(false) }
 
-    val isSelected = remember { mutableStateOf(false) }
-    var showPassword by remember { mutableStateOf(false) }
-
     var loginUnsuccessful by remember {mutableStateOf(false)}
     var buttonEnabled by remember { mutableStateOf(true) }
 

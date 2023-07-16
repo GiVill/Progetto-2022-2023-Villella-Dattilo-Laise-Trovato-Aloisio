@@ -1,22 +1,32 @@
 package com.example.vintedandroid
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -40,17 +50,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.vintedandroid.client.apis.InsertionApi
-import com.example.vintedandroid.client.models.BasicInsertionDto
-import com.example.vintedandroid.client.models.PageBasicInsertionDto
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.example.vintedandroid.theme.VintedAndroidTheme
 import com.example.vintedandroid.view.LoginScreen
 import com.example.vintedandroid.view.ScreenController
@@ -59,8 +74,43 @@ import com.example.vintedandroid.view.SetupNavGraph
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
+import java.io.FileNotFoundException
+import java.nio.ByteBuffer
+import android.Manifest
 class MainActivity : ComponentActivity() {
+
+    private val OPEN_DOCUMENT_REQUEST_CODE = 1
+    private val READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 1
+
+    fun openDocument() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/*"
+        }
+        startActivityForResult(intent, OPEN_DOCUMENT_REQUEST_CODE)
+    }
+
+    // Handle the permission request result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, proceed with opening the document
+                openDocument()
+            } else {
+                // Permission denied, handle accordingly (e.g., show an error message)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == OPEN_DOCUMENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            data?.data?.also { uri ->
+                // Perform operations on the document using its URI.
+            }
+        }
+    }
     @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,7 +151,32 @@ class MainActivity : ComponentActivity() {
                             Box(modifier = Modifier.padding(it)) {
 
 
+                                //val imageView = ImageView(application.applicationContext)  // Replace `context` with your actual context object
+                                val imagePath = "content://com.android.providers.downloads.documents/document/msf%3A1000009051"
+                                //displayImageInImageView(application.applicationContext, imagePath, imageView)
 
+                                CoroutineScope(Dispatchers.IO).launch {
+
+                                    // Inside your activity or fragment
+                                    if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                        ActivityCompat.requestPermissions(this@MainActivity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE)
+                                    } else {
+                                        // Permission already granted, proceed with opening the document
+                                        openDocument()
+                                    }
+
+                                    //openDocument()
+
+                                    //val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                    //ActivityCompat.requestPermissions(this, permissions, requestCode)
+/*
+                                    val byteObjects: Array<Byte?> =
+                                        imageToByteArray(application, imagePath)
+                                    Log.i("tag", "OK => ${byteObjects.toString()}")
+
+ */
+                                    //pickImage()
+                                }
                                 CoroutineScope(Dispatchers.IO).launch {
                                     //val user1 = UserDatabaseDto(UUID.randomUUID().toString(), "ciao", "Boh", "ciaoBoh")
                                     //AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().insert(user1) //Inserimento di un utente
@@ -148,6 +223,10 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
+
+
 
 }
 
@@ -371,6 +450,107 @@ private fun checkForInternet(context: Context): Boolean {
 }
 
 data class Item(val name: String, val description: String, val price: Float)
+/*
+@Composable
+fun pickImage() {
+
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    val context = LocalContext.current
+    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
+
+    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()){
+        uri:Uri? -> imageUri = uri
+    }
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+
+        imageUri?.let{
+            if(Build.VERSION.SDK_INT < 28){
+                bitmap.value = MediaStore.Images.Media.getBitmap(context.contentResolver, it)
+            }else{
+                val source = ImageDecoder.createSource(context.contentResolver, it)
+                bitmap.value =ImageDecoder.decodeBitmap(source)
+            }
+
+            bitmap.value?.let { btm ->
+                Image(
+                    bitmap = btm.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(400.dp)
+                        .padding(20.dp)
+                )
+            }
+            Log.i("tag", launcher.toString())
+            Log.i("tag", imageUri.toString())
+        }
+
+        Log.i("tag", imageUri.toString())
+
+        Spacer(modifier = Modifier.height(12.dp))
+        
+        Button(onClick = {launcher.launch("image/*");  Log.i("tag", launcher.toString())}) {
+            Text(text = "Pick Image")
+            
+        }
+        
+    }
+
+}*/*/
+
+/*
+fun displayImageInImageView(context: Context, imagePath: String, imageView: ImageView) {
+    Glide.with(context).load(imagePath).into(imageView)
+    /*
+    val contentResolver = context.contentResolver
+    val imageUri = Uri.parse(imagePath)
+
+    try {
+        val inputStream = contentResolver.openInputStream(imageUri)
+        val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
+
+        // Set the bitmap in the ImageView
+        imageView.setImageBitmap(bitmap)
+
+        inputStream?.close()
+        Log.i("tag", "UOOOU")
+    } catch (e: FileNotFoundException) {
+        Log.i("tag", "NOIN")
+
+        println("Image file not found.")
+    } catch (e: Exception) {
+        Log.i("tag", "NEIN")
+
+        println("Error retrieving the image: ${e.message}")
+    }
+
+     */
+}
+
+ */
+
+fun imageToByteArray(context: Context, imagePath: String): Array<Byte?> {
+    val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE)
+    val bitmap: Bitmap = Glide.with(context)
+        .asBitmap()
+        .apply(requestOptions)
+        .load(imagePath)
+        .submit()
+        .get()
+
+    return bitmap.toByteArray()
+}
+
+// Extension function to convert a Bitmap to a byte array
+fun Bitmap.toByteArray(): Array<Byte?> {
+    val byteBuffer = ByteBuffer.allocate(byteCount)
+    copyPixelsToBuffer(byteBuffer)
+    return byteBuffer.array().map { it }.toTypedArray()
+}
+
+
+
+
 
 @Preview(showBackground = true)
 @Composable

@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-31:12
+ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-34:12
 MERGED from [com.google.accompanist:accompanist-systemuicontroller:0.20.0] C:\Users\frand\.gradle\caches\transforms-3\855f8363c90722b1cb3a61992309192d\transformed\accompanist-systemuicontroller-0.20.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.navigation:navigation-compose:2.4.0-alpha08] C:\Users\frand\.gradle\caches\transforms-3\a7cd05cc09374533c65a2980893ca68b\transformed\navigation-compose-2.4.0-alpha08\AndroidManifest.xml:17:1-24:12
 MERGED from [io.coil-kt:coil-compose:1.3.2] C:\Users\frand\.gradle\caches\transforms-3\c1352872eb5f7c92fa5f16e10a6c13fc\transformed\coil-compose-1.3.2\AndroidManifest.xml:2:1-9:12
@@ -28,6 +28,7 @@ MERGED from [io.coil-kt:coil-compose-base:1.3.2] C:\Users\frand\.gradle\caches\t
 MERGED from [androidx.navigation:navigation-runtime-ktx:2.4.0-alpha08] C:\Users\frand\.gradle\caches\transforms-3\d9918a5c0db0617cdc34c0f5cf5e23cd\transformed\navigation-runtime-ktx-2.4.0-alpha08\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.navigation:navigation-runtime:2.4.0-alpha08] C:\Users\frand\.gradle\caches\transforms-3\f0d7a066bcb945d7e39036651d494f3e\transformed\navigation-runtime-2.4.0-alpha08\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\frand\.gradle\caches\transforms-3\7acbf4c06813079e4c74bf3ee310dff1\transformed\material-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.github.bumptech.glide:glide:4.12.0] C:\Users\frand\.gradle\caches\transforms-3\042c6ae73eb80ff93e43b417f73c72a4\transformed\glide-4.12.0\AndroidManifest.xml:2:1-12:12
 MERGED from [androidx.appcompat:appcompat:1.1.0] C:\Users\frand\.gradle\caches\transforms-3\6f49f6ceebb197fb36f1a6d334fec1f5\transformed\appcompat-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\frand\.gradle\caches\transforms-3\e761aec57a1238b0764a08821c70a2e3\transformed\viewpager2-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\frand\.gradle\caches\transforms-3\6c7e558dc8110e831bb0ba2f56c8059f\transformed\fragment-1.1.0\AndroidManifest.xml:17:1-24:12
@@ -75,6 +76,7 @@ MERGED from [com.jakewharton.threetenabp:threetenabp:1.3.1] C:\Users\frand\.grad
 MERGED from [androidx.sqlite:sqlite-framework:2.3.1] C:\Users\frand\.gradle\caches\transforms-3\bdcf008e0d588332901f7f2dbd1b9ad4\transformed\sqlite-framework-2.3.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.sqlite:sqlite:2.3.1] C:\Users\frand\.gradle\caches\transforms-3\34fef032a73bbdcd1fd579fe7e5016b0\transformed\sqlite-2.3.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\frand\.gradle\caches\transforms-3\eccc281657c4b8e0562e15f3dae03225\transformed\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.github.bumptech.glide:gifdecoder:4.12.0] C:\Users\frand\.gradle\caches\transforms-3\e495f10795d19ed51a01c2516ac46d3e\transformed\gifdecoder-4.12.0\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\frand\.gradle\caches\transforms-3\7014e397f0b223a3f0cb8d5afa029891\transformed\profileinstaller-1.3.0\AndroidManifest.xml:17:1-55:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\frand\.gradle\caches\transforms-3\036684e43e6a425c06bc530e8b037153\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\frand\.gradle\caches\transforms-3\887b750d2e1f6bd321642ef26d987a37\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
@@ -84,22 +86,22 @@ MERGED from [androidx.exifinterface:exifinterface:1.3.3] C:\Users\frand\.gradle\
 MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\frand\.gradle\caches\transforms-3\6524e8dab829d7e19fa075a73081c691\transformed\tracing-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\frand\.gradle\caches\transforms-3\9a985b56205ea3f71ce6daf27b5e7b10\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\frand\.gradle\caches\transforms-3\474395b82573a37f5ca266cd314e7c22\transformed\annotation-experimental-1.3.0\AndroidManifest.xml:17:1-22:12
-INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-34:12
 	package
 		INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-31:12
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-34:12
 		INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-31:12
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-34:12
 		INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml
 	xmlns:tools
 		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:3:5-51
 	android:versionCode
 		INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-31:12
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:1-34:12
 		INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:2:11-69
@@ -111,12 +113,22 @@ uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:5:5-78
 	android:name
 		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:5:22-76
+uses-permission#android.permission.WRITE_INTERNAL_STORAGE
+ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:6:5-81
+	android:name
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:6:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:7:5-79
+	android:name
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:7:22-77
 application
-ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:7:5-29:19
+ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:10:5-32:19
 MERGED from [androidx.compose.ui:ui-test-manifest:1.4.3] C:\Users\frand\.gradle\caches\transforms-3\06f8825e029556db0531f98e065c7618\transformed\ui-test-manifest-1.4.3\AndroidManifest.xml:22:5-26:19
 MERGED from [androidx.compose.ui:ui-test-manifest:1.4.3] C:\Users\frand\.gradle\caches\transforms-3\06f8825e029556db0531f98e065c7618\transformed\ui-test-manifest-1.4.3\AndroidManifest.xml:22:5-26:19
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\frand\.gradle\caches\transforms-3\7acbf4c06813079e4c74bf3ee310dff1\transformed\material-1.1.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\frand\.gradle\caches\transforms-3\7acbf4c06813079e4c74bf3ee310dff1\transformed\material-1.1.0\AndroidManifest.xml:22:5-20
+MERGED from [com.github.bumptech.glide:glide:4.12.0] C:\Users\frand\.gradle\caches\transforms-3\042c6ae73eb80ff93e43b417f73c72a4\transformed\glide-4.12.0\AndroidManifest.xml:10:5-20
+MERGED from [com.github.bumptech.glide:glide:4.12.0] C:\Users\frand\.gradle\caches\transforms-3\042c6ae73eb80ff93e43b417f73c72a4\transformed\glide-4.12.0\AndroidManifest.xml:10:5-20
 MERGED from [androidx.emoji2:emoji2:1.3.0] C:\Users\frand\.gradle\caches\transforms-3\163a060664166642c135defc581864c4\transformed\emoji2-1.3.0\AndroidManifest.xml:23:5-33:19
 MERGED from [androidx.emoji2:emoji2:1.3.0] C:\Users\frand\.gradle\caches\transforms-3\163a060664166642c135defc581864c4\transformed\emoji2-1.3.0\AndroidManifest.xml:23:5-33:19
 MERGED from [androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\frand\.gradle\caches\transforms-3\74e5e7ebab9e617da2dc9d07d0c4386b\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:23:5-33:19
@@ -129,6 +141,8 @@ MERGED from [androidx.room:room-runtime:2.5.1] C:\Users\frand\.gradle\caches\tra
 MERGED from [androidx.room:room-runtime:2.5.1] C:\Users\frand\.gradle\caches\transforms-3\91a9485871f2de6818223e25f587f23f\transformed\room-runtime-2.5.1\AndroidManifest.xml:23:5-29:19
 MERGED from [com.jakewharton.threetenabp:threetenabp:1.3.1] C:\Users\frand\.gradle\caches\transforms-3\3bba1c77811c393f30149f3f871fa8a0\transformed\threetenabp-1.3.1\AndroidManifest.xml:7:5-20
 MERGED from [com.jakewharton.threetenabp:threetenabp:1.3.1] C:\Users\frand\.gradle\caches\transforms-3\3bba1c77811c393f30149f3f871fa8a0\transformed\threetenabp-1.3.1\AndroidManifest.xml:7:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.12.0] C:\Users\frand\.gradle\caches\transforms-3\e495f10795d19ed51a01c2516ac46d3e\transformed\gifdecoder-4.12.0\AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.12.0] C:\Users\frand\.gradle\caches\transforms-3\e495f10795d19ed51a01c2516ac46d3e\transformed\gifdecoder-4.12.0\AndroidManifest.xml:9:5-20
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\frand\.gradle\caches\transforms-3\7014e397f0b223a3f0cb8d5afa029891\transformed\profileinstaller-1.3.0\AndroidManifest.xml:23:5-53:19
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\frand\.gradle\caches\transforms-3\7014e397f0b223a3f0cb8d5afa029891\transformed\profileinstaller-1.3.0\AndroidManifest.xml:23:5-53:19
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\frand\.gradle\caches\transforms-3\887b750d2e1f6bd321642ef26d987a37\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
@@ -138,45 +152,45 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\frand\.gradle\cach
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.9.0] C:\Users\frand\.gradle\caches\transforms-3\740b13c6aacf986a4a20be38916f32a7\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:15:9-35
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:18:9-35
 	android:label
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:13:9-38
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:16:9-38
 	android:fullBackupContent
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:11:9-54
-	android:roundIcon
 		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:14:9-54
+	android:roundIcon
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:17:9-54
 	tools:targetApi
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:17:9-29
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:20:9-29
 	android:icon
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:12:9-43
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:15:9-43
 	android:allowBackup
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:9:9-35
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:12:9-35
 	android:theme
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:16:9-51
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:19:9-51
 	android:networkSecurityConfig
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:8:9-69
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:11:9-69
 	android:dataExtractionRules
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:10:9-65
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:13:9-65
 activity#com.example.vintedandroid.MainActivity
-ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:18:9-28:20
+ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:21:9-31:20
 	android:label
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:21:13-42
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:24:13-42
 	android:exported
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:20:13-36
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:23:13-36
 	android:theme
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:22:13-55
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:25:13-55
 	android:name
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:19:13-41
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:22:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:23:13-27:29
+ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:26:13-30:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:24:17-69
+ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:27:17-69
 	android:name
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:24:25-66
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:27:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:26:17-77
+ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:29:17-77
 	android:name
-		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:26:27-74
+		ADDED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml:29:27-74
 uses-sdk
 INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\frand\Documents\GitHub\VintedProject-Android\VintedAndroid\VintedProject\VintedAndroid\app\src\main\AndroidManifest.xml
@@ -229,6 +243,8 @@ MERGED from [androidx.navigation:navigation-runtime:2.4.0-alpha08] C:\Users\fran
 MERGED from [androidx.navigation:navigation-runtime:2.4.0-alpha08] C:\Users\frand\.gradle\caches\transforms-3\f0d7a066bcb945d7e39036651d494f3e\transformed\navigation-runtime-2.4.0-alpha08\AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\frand\.gradle\caches\transforms-3\7acbf4c06813079e4c74bf3ee310dff1\transformed\material-1.1.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\frand\.gradle\caches\transforms-3\7acbf4c06813079e4c74bf3ee310dff1\transformed\material-1.1.0\AndroidManifest.xml:20:5-44
+MERGED from [com.github.bumptech.glide:glide:4.12.0] C:\Users\frand\.gradle\caches\transforms-3\042c6ae73eb80ff93e43b417f73c72a4\transformed\glide-4.12.0\AndroidManifest.xml:6:5-8:41
+MERGED from [com.github.bumptech.glide:glide:4.12.0] C:\Users\frand\.gradle\caches\transforms-3\042c6ae73eb80ff93e43b417f73c72a4\transformed\glide-4.12.0\AndroidManifest.xml:6:5-8:41
 MERGED from [androidx.appcompat:appcompat:1.1.0] C:\Users\frand\.gradle\caches\transforms-3\6f49f6ceebb197fb36f1a6d334fec1f5\transformed\appcompat-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.appcompat:appcompat:1.1.0] C:\Users\frand\.gradle\caches\transforms-3\6f49f6ceebb197fb36f1a6d334fec1f5\transformed\appcompat-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\frand\.gradle\caches\transforms-3\e761aec57a1238b0764a08821c70a2e3\transformed\viewpager2-1.0.0\AndroidManifest.xml:20:5-22:41
@@ -323,6 +339,8 @@ MERGED from [androidx.sqlite:sqlite:2.3.1] C:\Users\frand\.gradle\caches\transfo
 MERGED from [androidx.sqlite:sqlite:2.3.1] C:\Users\frand\.gradle\caches\transforms-3\34fef032a73bbdcd1fd579fe7e5016b0\transformed\sqlite-2.3.1\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\frand\.gradle\caches\transforms-3\eccc281657c4b8e0562e15f3dae03225\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\frand\.gradle\caches\transforms-3\eccc281657c4b8e0562e15f3dae03225\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.github.bumptech.glide:gifdecoder:4.12.0] C:\Users\frand\.gradle\caches\transforms-3\e495f10795d19ed51a01c2516ac46d3e\transformed\gifdecoder-4.12.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.12.0] C:\Users\frand\.gradle\caches\transforms-3\e495f10795d19ed51a01c2516ac46d3e\transformed\gifdecoder-4.12.0\AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\frand\.gradle\caches\transforms-3\7014e397f0b223a3f0cb8d5afa029891\transformed\profileinstaller-1.3.0\AndroidManifest.xml:21:5-44
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\frand\.gradle\caches\transforms-3\7014e397f0b223a3f0cb8d5afa029891\transformed\profileinstaller-1.3.0\AndroidManifest.xml:21:5-44
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\frand\.gradle\caches\transforms-3\036684e43e6a425c06bc530e8b037153\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44

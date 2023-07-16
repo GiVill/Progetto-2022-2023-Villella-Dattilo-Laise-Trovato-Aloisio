@@ -1,5 +1,6 @@
 package com.example.vintedandroid.view.config
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
@@ -26,7 +27,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun createPersonalizedTextfield(textField: MutableState<TextFieldValue>,name: String){
+fun createPersonalizedTextfield(textField: MutableState<TextFieldValue>, name: String){
 
     val isFieldSelected = remember { mutableStateOf(false) }
 

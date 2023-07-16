@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.vintedandroid.app-mergeDebugResources-63:/values-ar/values-ar.xml",
+            "outputFile": "com.example.vintedandroid.app-mergeDebugResources-64:/values-ar/values-ar.xml",
             "map": [
                 {
                     "source": "C:\\Users\\frand\\.gradle\\caches\\transforms-3\\2e32b04a44a594e7a9e92cf52e5d96b0\\transformed\\material3-1.1.0\\res\\values-ar\\values-ar.xml",
