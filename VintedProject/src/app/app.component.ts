@@ -9,6 +9,7 @@ import {CookieService} from "ngx-cookie-service";
 })
 export class AppComponent {
   title = 'Vinted-Front-End';
+  isAdmin: boolean = false;
   isUserLogged=false;
 
 

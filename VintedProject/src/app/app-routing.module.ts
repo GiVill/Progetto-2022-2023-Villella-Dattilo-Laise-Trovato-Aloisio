@@ -17,6 +17,7 @@ import {BadComponent} from "./Components/Pages/Errors/badRequest/bad.component";
 import {RefusedComponent} from "./Components/Pages/Errors/refused/refused.component";
 import {ProfileEditComponent} from "./Components/Pages/User/profile-edit/profile-edit.component";
 import {FormsModule} from "@angular/forms";
+import {DashboardComponent} from "./Components/Pages/Admin/dashboard/dashboard.component";
 
 
 
@@ -36,6 +37,7 @@ const routes: Routes = [
   {path: '403', component: NotAuthorizedComponent},
   {path: '400', component: BadComponent},
   {path: 'refused', component: RefusedComponent},
+  {path: 'dash', component: DashboardComponent},
 
 
 

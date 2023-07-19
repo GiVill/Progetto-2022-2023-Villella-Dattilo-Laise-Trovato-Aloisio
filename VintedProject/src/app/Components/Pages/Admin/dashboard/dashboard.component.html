@@ -1,0 +1,109 @@
+<div class="admin-dashboard">
+  <h1>Admin Dashboard</h1>
+
+  <div class="cards-container">
+    <div class="card">
+      <div class="card-header">
+        <h2>Actions</h2>
+      </div>
+      <div class="card-body">
+        <button class="action-button" (click)="deleteBasicInsertion()">Delete Basic Insertion</button>
+        <button class="action-button" (click)="getAllByUserId()">Get All by User ID</button>
+        <button class="action-button" (click)="getOrderById()">Get Order by ID</button>
+        <button class="action-button" (click)="deleteOrder()">Delete Order</button>
+        <button class="action-button" (click)="findAll()">Find All</button>
+        <button class="action-button" (click)="deletePayment()">Delete Payment</button>
+      </div>
+    </div>
+    <div class="card card-large">
+      <div class="card-header">
+        <h2>Input Fields</h2>
+      </div>
+      <div class="card-body">
+        <div class="input-field" *ngIf="activeButton === 'deleteBasicInsertion'">
+          <label for="insertionId">Insertion ID:</label>
+          <input type="number" id="insertionId" [(ngModel)]="insertionId">
+        </div>
+
+        <div class="input-field" *ngIf="activeButton === 'getAllByUserId'">
+          <label for="userId">User ID:</label>
+          <input type="number" id="userId" [(ngModel)]="userId">
+        </div>
+
+        <div class="input-field" *ngIf="activeButton === 'getOrderById'">
+          <label for="orderId">Order ID:</label>
+          <input type="number" id="orderId" [(ngModel)]="orderId">
+        </div>
+
+        <div class="input-field" *ngIf="activeButton === 'deleteOrder'">
+          <label for="orderId">Order ID:</label>
+          <input type="number" id="orderId" [(ngModel)]="orderId">
+        </div>
+
+        <div class="input-field" *ngIf="activeButton === 'findAll'">
+          <label for="userId">User ID:</label>
+          <input type="number" id="userId" [(ngModel)]="userId">
+          <label for="page">Page:</label>
+          <input type="number" id="page" [(ngModel)]="page">
+        </div>
+
+        <div class="input-field" *ngIf="activeButton === 'deletePayment'">
+          <label for="paymentId">Payment ID:</label>
+          <input type="number" id="paymentId" [(ngModel)]="paymentId">
+        </div>
+        <button class="search-button" (click)="search()">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <!-- Add other dynamic column headers based on the activeButton -->
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngIf="activeButton === 'deleteBasicInsertion' && insertionDtoArray.length > 0">
+        <tr *ngFor="let insertion of insertionDtoArray">
+          <td>{{ insertion.id }}</td>
+          <td>{{ insertion.id }}</td>
+          <td>{{ insertion.category }}</td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="activeButton === 'getAllByUserId' && userDtoArray.length > 0">
+        <tr *ngFor="let user of userDtoArray">
+          <td>{{ user.id }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.email }}</td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="activeButton === 'getOrderById' && orderDtoArray.length > 0">
+        <tr *ngFor="let order of orderDtoArray">
+          <td>{{ order.id }}</td>
+          <td>{{ order.total }}</td>
+          <td>{{ order.insertionIdList }}</td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="activeButton === 'findAll' && userDtoArray.length > 0">
+        <tr *ngFor="let user of userDtoArray">
+          <td>{{ user.id }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.email }}</td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+
+    <div class="no-data" *ngIf="activeButton">
+      No data available.
+    </div>
+
+    <div class="pagination">
+      <!-- Add pagination logic here -->
+    </div>
+  </div>
+</div>

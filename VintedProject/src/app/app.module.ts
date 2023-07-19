@@ -45,6 +45,7 @@ import {CartService} from "./service/cart.service";
 import {PaymentService} from "./service/payment.service";
 import {OrderService} from "./service/order.service";
 import {OfferService} from "./service/offer.service";
+import {DashboardComponent} from "./Components/Pages/Admin/dashboard/dashboard.component";
 
 
 
@@ -74,6 +75,7 @@ import {OfferService} from "./service/offer.service";
     BadComponent,
     RefusedComponent,
     OrderCardComponent,
+    DashboardComponent
 
 
 
