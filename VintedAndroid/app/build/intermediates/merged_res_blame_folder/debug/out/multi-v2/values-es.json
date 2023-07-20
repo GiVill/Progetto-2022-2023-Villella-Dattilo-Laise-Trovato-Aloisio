@@ -4,7 +4,7 @@
             "outputFile": "com.example.vintedandroid.app-mergeDebugResources-64:/values-es/values-es.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\frand\\.gradle\\caches\\transforms-3\\0a897c2f5b4a9b6e1a63e6a72c5c08c3\\transformed\\ui-1.4.3\\res\\values-es\\values-es.xml",
+                    "source": "C:\\Users\\Umberto\\.gradle\\caches\\transforms-3\\0a897c2f5b4a9b6e1a63e6a72c5c08c3\\transformed\\ui-1.4.3\\res\\values-es\\values-es.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,24 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\frand\\.gradle\\caches\\transforms-3\\740b13c6aacf986a4a20be38916f32a7\\transformed\\core-1.9.0\\res\\values-es\\values-es.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "84",
-                        "startColumns": "4",
-                        "startOffsets": "8595",
-                        "endColumns": "100",
-                        "endOffsets": "8691"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\frand\\.gradle\\caches\\transforms-3\\6f49f6ceebb197fb36f1a6d334fec1f5\\transformed\\appcompat-1.1.0\\res\\values-es\\values-es.xml",
+                    "source": "C:\\Users\\Umberto\\.gradle\\caches\\transforms-3\\6f49f6ceebb197fb36f1a6d334fec1f5\\transformed\\appcompat-1.1.0\\res\\values-es\\values-es.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -55,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\frand\\.gradle\\caches\\transforms-3\\2e32b04a44a594e7a9e92cf52e5d96b0\\transformed\\material3-1.1.0\\res\\values-es\\values-es.xml",
+                    "source": "C:\\Users\\Umberto\\.gradle\\caches\\transforms-3\\2e32b04a44a594e7a9e92cf52e5d96b0\\transformed\\material3-1.1.0\\res\\values-es\\values-es.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -69,6 +52,23 @@
                         "startOffsets": "2836,2953,3068,3187,3482,3560,3656,3770,3909,4023,4167,4248,4346,4439,4537,4644,4758,4861,4995,5124,5264,5437,5557,5673,5792,5919,6013,6105,6222,6353,6452,6562,6673,6805,6942,7049,7350,7522,8271,8513,8696,9076,9152,9232,9329,9431,9527,9622,9707,9814,9911,10010,10125,10201,10314",
                         "endColumns": "116,114,118,116,77,95,113,138,113,143,80,97,92,97,106,113,102,133,128,139,172,119,115,118,126,93,91,116,130,98,109,110,131,136,106,99,82,77,82,81,106,75,79,96,101,95,94,84,106,96,98,114,75,112,104",
                         "endOffsets": "2948,3063,3182,3299,3555,3651,3765,3904,4018,4162,4243,4341,4434,4532,4639,4753,4856,4990,5119,5259,5432,5552,5668,5787,5914,6008,6100,6217,6348,6447,6557,6668,6800,6937,7044,7144,7428,7595,8349,8590,8798,9147,9227,9324,9426,9522,9617,9702,9809,9906,10005,10120,10196,10309,10414"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Umberto\\.gradle\\caches\\transforms-3\\740b13c6aacf986a4a20be38916f32a7\\transformed\\core-1.9.0\\res\\values-es\\values-es.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "84",
+                        "startColumns": "4",
+                        "startOffsets": "8595",
+                        "endColumns": "100",
+                        "endOffsets": "8691"
                     }
                 }
             ]
