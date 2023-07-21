@@ -16,10 +16,10 @@
       </div>
       <div class="card-container">
         <div class="card-row" >
-          <div *ngFor="let item of mostRequested.content" class="card-item">
-            <app-product-card [item]="item"></app-product-card>
+          <div style="margin-bottom: 10px"  *ngFor="let item of mostRequested.content" class="card-item">
+            <app-profile-card [user]="getUserByUserId(item.userId)" [userId]="item.userId" [insertion]="item"></app-profile-card>
           </div>
-          <button type="button" class="btn btn-secondary" style="width: 300px; min-width: 200px;"  [routerLink]="['/catalog']">Vedi tutti i prodotti</button>
+          <button type="button" class="btn btn-secondary" style="width: 400px; min-width: 200px;"  [routerLink]="['/catalog']">Vedi tutti i prodotti</button>
         </div>
       </div>
     </div>
@@ -60,8 +60,8 @@
       </div>
       <div class="card-container">
         <div class="card-row">
-          <div *ngFor="let item of mostRequested.content" class="card-item">
-            <app-product-card [item]="item"></app-product-card>
+          <div style="margin-bottom: 10px" *ngFor="let item of mostRequested.content" class="card-item">
+            <app-profile-card [user]="getUserByUserId(item.userId)" [userId]="item.userId" [insertion]="item"></app-profile-card>
           </div>
 
         </div>

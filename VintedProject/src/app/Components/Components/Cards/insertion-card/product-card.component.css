@@ -1,3 +1,49 @@
 img {
   cursor: pointer;
 }
+
+.rounded-image {
+  height: 180px;
+  max-width: 250px;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+
+.product-card {
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack elements vertically */
+  height: 350px; /* Set a fixed height for the card */
+  width: 180px; /* Set a fixed width for the card */
+  background-color: #f1f1f1; /* Adjust the color as needed */
+  padding: 10px;
+  border-radius: 10px;
+  position: relative; /* Enable relative positioning */
+}
+
+.content-container {
+  flex: 1; /* Allow the content to take up the remaining space */
+}
+
+.title {
+  text-align: left;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px; /* Add some space below the title */
+}
+
+.description {
+  width: 100%;
+  margin-bottom: 10px; /* Add some space below the description */
+}
+
+.price-container {
+  position: absolute; /* Position the price container relative to the card */
+  bottom: 5px; /* Add some space from the bottom */
+  right: 5px; /* Add some space from the right */
+}
+
+.price {
+  font-size: 14px;
+  font-weight: bold;
+}

@@ -1,10 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {switchMap} from "rxjs";
 import {InsertionService} from "../../../../service/insertion.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../../service/user.service";
 import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
 import {UserDto} from "../../../../Model/userDto";
+import {CookieService} from "ngx-cookie-service";
+import {CookiesService} from "../../../../service/cookies.service";
 ;
 
 
@@ -14,6 +16,7 @@ import {UserDto} from "../../../../Model/userDto";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  users: UserDto[] = [];
   @Input() user: UserDto | undefined;
   userInsertion: PageBasicInsertionDto | undefined;
   page= 0
@@ -25,7 +28,9 @@ export class ProfileComponent implements OnInit {
   constructor(
     private insertionService: InsertionService,
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
+    private cookieservice: CookiesService,
   ) {}
 
 
@@ -33,6 +38,8 @@ export class ProfileComponent implements OnInit {
     this.route.paramMap.pipe(
       switchMap((params) => {
         this.id = Number(params.get('userid'));
+        if (this.id==Number(this.cookieservice.getUserId()))
+          this.router.navigate(['/myprofile'])
         return this.userService.getById(this.id);
       })
     ).subscribe(
@@ -42,30 +49,29 @@ export class ProfileComponent implements OnInit {
         this.insertionService.getInsertionByUserId(this.id!, this.page).subscribe(
           (data: PageBasicInsertionDto) => {
             this.userInsertion = data;
-            console.log(data)
-            //this.processImages(data.content);
+            const userIds = this.userInsertion.content!.map((insertion) => insertion.userId).filter((id, index, array) => array.indexOf(id) === index);
+            userIds.forEach((userId) => {
+                this.userService.getById(userId).subscribe((user: UserDto) => {
+                  this.users.push(user);
+                });
+
+
+              },
+              (error) => {
+                console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
+              }
+            );
           },
           (error) => {
-            console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
+            console.log('Si è verificato un errore durante il recupero dell\'utente:', error);
           }
         );
-      },
-      (error) => {
-        console.log('Si è verificato un errore durante il recupero dell\'utente:', error);
-      }
-    );
+      });
   }
 
-/*
-  loadmore() {
-    this.page += 1;
-    this.userService.getAllInsertionsByUser(this.id,this.page).subscribe((insertions: PageBasicInsertionDto) => {
-      // Aggiungo nuovi prodotti alla lista esistente invece di sostituirla
-      this.userInsertion?.content?.push(...insertions.content);
-      this.processImages(insertions.content);
-
-    });
+  getUserByUserId(userId: number): UserDto  {
+    return <UserDto>this.users.find(user => user.id === userId);
   }
-*/
+
 
 }

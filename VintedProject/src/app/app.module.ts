@@ -46,6 +46,7 @@ import {PaymentService} from "./service/payment.service";
 import {OrderService} from "./service/order.service";
 import {OfferService} from "./service/offer.service";
 import {DashboardComponent} from "./Components/Pages/Admin/dashboard/dashboard.component";
+import {ProfileCardComponent} from "./Components/Components/Cards/profile-card/profile-card.component";
 
 
 
@@ -75,7 +76,8 @@ import {DashboardComponent} from "./Components/Pages/Admin/dashboard/dashboard.c
     BadComponent,
     RefusedComponent,
     OrderCardComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProfileCardComponent
 
 
 

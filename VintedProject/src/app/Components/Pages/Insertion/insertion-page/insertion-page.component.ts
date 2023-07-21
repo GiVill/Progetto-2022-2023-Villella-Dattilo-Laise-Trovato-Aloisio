@@ -18,11 +18,12 @@ import {UserDto} from "../../../../Model/userDto";
 })
 
 export class InsertionPageComponent implements OnInit {
+  users: UserDto[] = [];
   insertion: BasicInsertionDto | undefined;
   user: UserDto | undefined;
-  page = 1;
+  page = 0;
   // @ts-ignore
-  userOtherInsertion: PageBasicInsertionDto | undefined;
+  userOtherInsertion!: PageBasicInsertionDto;
   id: number | undefined;
   modalOpen = false;
   modalImage: string | undefined;
@@ -53,33 +54,39 @@ export class InsertionPageComponent implements OnInit {
             this.userService.getById(this.insertion.userId).subscribe(
               (userData: UserDto) => {
                 this.user = userData;
-                console.log(this.user?.id); // Verifica qui
+                this.insertionService.getInsertionByUserId(Number(this.user.id), this.page).subscribe(
+                  (data: PageBasicInsertionDto) => {
+                    this.userOtherInsertion = data;
+                    const userIds = this.userOtherInsertion.content!.map((insertion) => insertion.userId).filter((id, index, array) => array.indexOf(id) === index);
+                    userIds.forEach((userId) => {
+                      this.userService.getById(userId).subscribe((user: UserDto) => {
+                        this.users.push(user);
+                      });
+                    });
+                  },
+                  (error) => {
+                    console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
+                  }
+                );
               },
               (error) => {
                 console.log('Si è verificato un errore durante il recupero dell\'utente:', error);
               }
             );
 
-            this.insertionService.getInsertionByUserId(this.id!, this.page).subscribe(
-              (data: PageBasicInsertionDto) => {
-                this.userOtherInsertion = data;
-              },
-              (error) => {
-                console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
-              }
-            );
           }
         },
         (error) => {
           console.log('Si è verificato un errore durante il recupero dell\'inserzione:', error);
         }
       );
+
     this.checkProductInCart();
   }
 
-  openModal(imageSrc: string | undefined): void {
+  openModal(): void {
     this.modalOpen = true;
-    this.modalImage = imageSrc;
+    this.modalImage = this.insertion?.imageName;
   }
 
   closeModal(): void {
@@ -105,6 +112,10 @@ checkProductInCart(): void {
       this.isProductInCart=true;
     }
   }}}
+
+  getUserByUserId(userId: number): UserDto  {
+    return <UserDto>this.users.find(user => user.id === userId);
+  }
 
 
 }

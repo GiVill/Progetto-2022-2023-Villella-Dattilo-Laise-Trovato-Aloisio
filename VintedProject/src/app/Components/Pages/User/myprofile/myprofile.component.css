@@ -112,6 +112,7 @@
   overflow-x: auto;
   padding: 0 20px;
   margin: 2px;
+  width: 150%;
 }
 
 .card-row {
@@ -123,6 +124,7 @@
 .card-item {
   flex: 1 1 auto;
   max-height: 8%;
+  width: 350px;
 }
 
 .button {
@@ -142,4 +144,26 @@
   justify-content: center;
 }
 
+.delete-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+  color: white;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
 
+.confirmation-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+}

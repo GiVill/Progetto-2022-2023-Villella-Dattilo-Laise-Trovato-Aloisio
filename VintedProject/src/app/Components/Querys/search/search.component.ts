@@ -6,6 +6,8 @@ import {InsertionService} from "../../../service/insertion.service";
 import {of, tap} from "rxjs";
 import {ImageService} from "../../../service/image.service";
 import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
+import {UserDto} from "../../../Model/userDto";
+import {UserService} from "../../../service/user.service";
 
 
 @Component({
@@ -14,10 +16,10 @@ import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
+  users: UserDto[] = [];
   search: string | undefined;
   pageNumber: number = 0;
-  insertion: PageBasicInsertionDto | undefined;
+  insertion!: PageBasicInsertionDto;
   disableLoadMore= false;
 
 
@@ -25,7 +27,7 @@ export class SearchComponent implements OnInit {
               private insertionService: InsertionService,
               private cookieService: CookieService,
               private route: ActivatedRoute,
-              private imageService: ImageService,
+              private userService: UserService
 
              ){}
 
@@ -45,8 +47,17 @@ export class SearchComponent implements OnInit {
     return this.insertionService.getByTitle( this.search, pageNumber).subscribe(
       (insertions: PageBasicInsertionDto) => {
         this.insertion = insertions;
-      }
-    );
+
+        const userIds =  this.insertion.content!.map((insertion) => insertion.userId).filter((id, index, array) => array.indexOf(id) === index);
+        userIds.forEach((userId) => {
+          this.userService.getById(userId).subscribe((user: UserDto) => {
+            this.users.push(user);
+          });
+        });
+  })}
+
+  getUserByUserId(userId: number): UserDto  {
+    return <UserDto>this.users.find(user => user.id === userId);
   }
 
 }
