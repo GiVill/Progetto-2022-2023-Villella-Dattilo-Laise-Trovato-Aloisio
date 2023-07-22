@@ -1,0 +1,15 @@
+.Div{
+  justify-content: space-between;
+  background-color: aqua;
+  height: 50%;
+  width: 100%;
+}
+.footer {
+  background-color: lightblue;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer p {
+  margin-bottom: 5px;
+}

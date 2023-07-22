@@ -47,6 +47,7 @@ import {OrderService} from "./service/order.service";
 import {OfferService} from "./service/offer.service";
 import {DashboardComponent} from "./Components/Pages/Admin/dashboard/dashboard.component";
 import {ProfileCardComponent} from "./Components/Components/Cards/profile-card/profile-card.component";
+import {BottomOfTheBarrelComponent} from "./Components/Components/bottom-of-the-barrel/bottom-of-the-barrel.component";
 
 
 
@@ -54,34 +55,34 @@ import {ProfileCardComponent} from "./Components/Components/Cards/profile-card/p
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainNavComponent,
-    ProductCardComponent,
-    InsertionPageComponent,
-    HomePageComponent,
-    BrandComponent,
-    SearchComponent,
-    CategoryComponent,
-    CatalogComponent,
-    UserInsertionComponent,
-    ProfileComponent,
-    CartComponent,
-    CartInsertionCardComponent,
-    LoginComponent,
-    CreateInsertionComponent,
-    MyprofileComponent,
-    NotFoundComponent,
-    NotAuthorizedComponent,
-    BadComponent,
-    RefusedComponent,
-    OrderCardComponent,
-    DashboardComponent,
-    ProfileCardComponent
+    declarations: [
+        AppComponent,
+        MainNavComponent,
+        ProductCardComponent,
+        InsertionPageComponent,
+        HomePageComponent,
+        BrandComponent,
+        SearchComponent,
+        CategoryComponent,
+        CatalogComponent,
+        UserInsertionComponent,
+        ProfileComponent,
+        CartComponent,
+        CartInsertionCardComponent,
+        LoginComponent,
+        CreateInsertionComponent,
+        MyprofileComponent,
+        NotFoundComponent,
+        NotAuthorizedComponent,
+        BadComponent,
+        RefusedComponent,
+        OrderCardComponent,
+        DashboardComponent,
+        ProfileCardComponent,
+        BottomOfTheBarrelComponent
 
 
-
-  ],
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -67,8 +67,8 @@ export class CartComponent implements OnInit {
       request.subscribe(
         (data: BasicInsertionDto) => {
           loadedProducts.push(data); // Add the loaded product to the array
-          console.log(data);
-          this.calculateTotalCost();
+          const productPrice = data.price ?? 0; // Replace `item.price` with the actual property name from BasicInsertionDto
+          this.totalCost += productPrice;
 
           // Check if all products have been loaded
           if (loadedProducts.length === productRequests.length) {
@@ -87,19 +87,26 @@ export class CartComponent implements OnInit {
     if (index !== -1) {
       this.product.splice(index, 1);
       this.saveCartItems(this.product);
-      this.calculateTotalCost();
-      this.removeProductFromCartProduct(insertionId);
+      this.removeProductFromCart(insertionId);
     }
   }
 
-  removeProductFromCartProduct(insertionId: number): void {
+  removeProductFromCart(insertionId: number): void {
     if (this.cartProduct) {
       const index = this.cartProduct.findIndex(item => item.id === insertionId);
       if (index !== -1) {
         this.cartProduct.splice(index, 1);
       }
     }
-  }
+   this.insertionService.getInsertionById(Number(insertionId)).subscribe((data: BasicInsertionDto) => {
+     const productPrice = data.price ?? 0;
+     this.totalCost -= productPrice;
+   });
+
+   }
+
+
+
 
 
 
@@ -114,15 +121,15 @@ export class CartComponent implements OnInit {
       console.log("Nessun prodotto nel carrello. Impossibile creare l'ordine.");
       return;
     }
-    this.calculateTotalCost()
-    // Extract the insertion IDs from the cart items
+
+
+
+    /////////////////////////////////////////////////////////////////////////
     const insertionIds: number[] = this.product.map(item => item.insertion_id);
     const token = this.cookieService.get('jwtToken');
     const userId: number = this.tokenService.getUserStringFromToken(token);
 
     const payment: PaymentDto = {id: 0, orderId: 0, total: this.totalCost, userId: userId, paymentMethod: this.selectedPaymentMethod}
-
-
     this.paymentService.addPayment(payment).subscribe(
       response => {
         console.log("Pagamento creato con successo:", response);
@@ -158,6 +165,8 @@ export class CartComponent implements OnInit {
       }, error => {
         console.log("Errore durante la creazione del pagamento:", error);
       })
+
+    ///////////////////////////////////////////////////////////////////////////
   }
 
 
@@ -173,19 +182,8 @@ export class CartComponent implements OnInit {
     this.cartProduct = undefined;
 
     // Recalculate the total cost
-    this.calculateTotalCost();
+    this.totalCost=0;
   }
 
 
-  calculateTotalCost(): void {
-    let totalCost = 0;
-
-    for (const item of this.product) {
-      const productPrice = item.product?.prezzo ?? 0;
-      const quantity = item.quantity;
-      totalCost += productPrice * quantity;
-    }
-
-    this.totalCost = totalCost;
-  }
 }
