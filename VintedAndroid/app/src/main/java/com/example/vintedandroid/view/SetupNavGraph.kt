@@ -4,15 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.vintedandroid.Item
 import com.example.vintedandroid.client.apis.InsertionApi
 import com.example.vintedandroid.client.models.BasicInsertionDto
 import com.example.vintedandroid.client.models.UserDto
@@ -34,25 +31,21 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
         mutableStateListOf<BasicInsertionDto?>()
     }
 
-    val searchString = remember {
-        mutableStateListOf<String>()
-    }
-
     var searchedProduct = remember {
         mutableStateOf(BasicInsertionDto(1L,"null", Float.MIN_VALUE,null,null,null,null,null,"",BasicInsertionDto.Brand.ADIDAS,BasicInsertionDto.Category.ABBIGLIAMENTO, 2L))
 
     }
 
+    /*
     //TODO user e user1 vanno cambiati!
     val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh","","ciao@yahoo.it",
         "10-05-2001", UserDto.Gender.MALE,"via napoli",8,"Lamezia",21312,
         "Italy","asdojad")
 
     val user1 = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh")
+*/
 
-
-    NavHost(navController = navController, startDestination = "login") {
-    //NavHost(navController = navController, startDestination = ScreenController.Home.route ){
+    NavHost(navController = navController, startDestination = ScreenController.Login.route) {
 
         composable(route = ScreenController.Home.route){
             HomeScreen(itemsInCart, navController, searchedProduct, application)
@@ -64,13 +57,13 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             AddScreen(application)
         }
         composable(route = ScreenController.Cart.route){
-            CartScreen(itemsInCart, application)
+            CartScreen(application)
         }
         composable(route = ScreenController.Profile.route){
-            ProfileScreen(user, application) //TODO cambiare user
+            ProfileScreen(application) //TODO cambiare user
         }
         composable(route = ScreenController.BottomBarProfile.route){
-            BottomBarProfile(navController, user1, application) //TODO cambiare user1
+            BottomBarProfile(navController, application) //TODO cambiare user1
         }
         composable(route = ScreenController.Favorite.route){
             FavoriteScreen()

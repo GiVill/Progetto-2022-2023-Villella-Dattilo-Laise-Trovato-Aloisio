@@ -74,7 +74,7 @@ fun AddScreen(application: Context) {
     AppContent(application)
 }
 
-@OptIn(ExperimentalCoilApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun AppContent(application: Context) {
 
@@ -199,12 +199,10 @@ fun AppContent(application: Context) {
 
                         Log.i("tag", "bene1, $uri, ${uri.path}")
                         if(file.exists()) {
-                            Log.i("tag", "AAAAAAAAAAAAAAAAA")
                             var requestBody = file.readBytes().toTypedArray()
 
                             // var requestBody = Files.readAllBytes(file.toPath())
 
-                            Log.i("tag", "bene2")
 
                             var b = UserUserIdBody(
                                 img = requestBody

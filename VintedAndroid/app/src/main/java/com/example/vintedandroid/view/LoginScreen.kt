@@ -1,5 +1,6 @@
 package com.example.vintedandroid.view
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -58,9 +59,10 @@ import com.example.vintedandroid.view.config.createPersonalizedTextfield
 import com.example.vintedandroid.view.config.createPersonalizedTextfieldPassword
 
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun LoginScreen(navController: NavHostController, application: Context) {
-    // Create a mutable state to hold the current text value
+
     var emailField = remember { mutableStateOf(TextFieldValue()) }
     val passwordField = remember { mutableStateOf(TextFieldValue()) }
 
@@ -70,14 +72,20 @@ fun LoginScreen(navController: NavHostController, application: Context) {
     var loginUnsuccessful by remember {mutableStateOf(false)}
     var buttonEnabled by remember { mutableStateOf(true) }
 
+    var test by remember {mutableStateOf(false)}
+
+
     LaunchedEffect(Unit) {
         if (userFromDB.isEmpty()) {
             val databaseItems = withContext(Dispatchers.IO) {
                 AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll()
             }
-            //itemsFromDB.clear()
+            //userFromDB.clear()
             userFromDB.clear()
-            userFromDB.addAll(databaseItems)
+            if(databaseItems.isNotEmpty()){
+                userFromDB.addAll(databaseItems)
+
+            }
             isLoaded = true
         }
     }
@@ -89,7 +97,10 @@ fun LoginScreen(navController: NavHostController, application: Context) {
 
         if(isLoaded){
             Log.i("tag", "hello? => ${userFromDB.size}")
-            //if(userFromDB.isEmpty()) {
+            Log.i("tag" ," AAAA => ${userFromDB.isEmpty()}")
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //if(userFromDB.isEmpty() && !test) {
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -148,10 +159,8 @@ fun LoginScreen(navController: NavHostController, application: Context) {
                                             AppDatabase.getInstance(context = application.applicationContext)
                                                 .userDatabaseDao().insert(loggedUser)
 
-
-
                                             navController.popBackStack()
-                                            navController.navigate("home")
+                                            navController.navigate(ScreenController.Home.route)
                                         }
 
                                     } else {
@@ -177,17 +186,11 @@ fun LoginScreen(navController: NavHostController, application: Context) {
                         Text("Need new account? Register!")
                     }
                 }
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //}else{
-            //    navController.popBackStack()
-            //    navController.navigate("home")
+            //    test = true
+            //    navController.popBackStack(); navController.navigate("home")
             //}
     }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    val navController = rememberNavController()
-    //LoginScreen(navController, )
 }

@@ -2,7 +2,9 @@ package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.StrictMode
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,6 +18,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -36,10 +39,12 @@ import com.example.vintedandroid.client.apis.InsertionApi
 import com.example.vintedandroid.client.models.BasicInsertionDto
 import com.example.vintedandroid.client.models.PageBasicInsertionDto
 import com.example.vintedandroid.model.AppDatabase
+import com.example.vintedandroid.model.application_status.internetChecker
 import com.example.vintedandroid.model.dto.CartDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @Composable
@@ -69,7 +74,6 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
             }
         }
 
-
      */
     var isLoaded by remember { mutableStateOf(false) }
     var isLoaded1 by remember { mutableStateOf(false) }
@@ -77,15 +81,41 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
 
     var insertionApi = InsertionApi()
 
-    CoroutineScope(Dispatchers.IO).launch {itemsWomen = insertionApi.getByCategory("DONNA", 0); isLoaded = true}
-    CoroutineScope(Dispatchers.IO).launch {itemsMan = insertionApi.getByCategory("UOMO", 0) ; isLoaded1 = true}
-    CoroutineScope(Dispatchers.IO).launch {allItems = insertionApi.all4(2) ; isLoaded2 = true}
+    CoroutineScope(Dispatchers.IO).launch {
+        val women = withContext(Dispatchers.IO) {
+            insertionApi.getByCategory("DONNA", 0)
+        }
+        if(women.empty != true) {
+            itemsWomen = women
+        }
+        isLoaded = true
+    }
+    CoroutineScope(Dispatchers.IO).launch {
+        val man = withContext(Dispatchers.IO) {
+            insertionApi.getByCategory("UOMO", 0)
+        }
+        if(man.empty != true) {
+            itemsMan = man
+        }
+        isLoaded1 = true
+    }
+    CoroutineScope(Dispatchers.IO).launch {
+        val items = withContext(Dispatchers.IO) {
+            insertionApi.all4(2)
+        }
+        if(items.empty != true) {
+            allItems = items
+        }
+            isLoaded2 = true
+    }
+
+    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitNetwork().build())
+
+    if (internetChecker(application)) {
 
         Box(modifier = Modifier.fillMaxSize()) {
 
             if (isLoaded && isLoaded1 && isLoaded2) {
-
-
                 displayImage(allItems = allItems)
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -201,7 +231,9 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
      */
 
 
-    }
+
+        }
+    } else { noConnectionScreen(application = application)  }
 }
 
 @Composable
@@ -215,7 +247,7 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
             .padding(16.dp)
             .clickable(onClick = {
                 searchedProduct.value =
-                    item;navController.popBackStack(); navController.navigate("product")
+                    item;navController.popBackStack(); navController.navigate(ScreenController.Product.route)
             }),
         elevation = 4.dp
     ) {
@@ -226,9 +258,6 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-
-
             Text(text = item.title)
             displayImage(item = item)
             Spacer(modifier = Modifier.height(8.dp))
@@ -268,6 +297,7 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun displayImage(allItems: PageBasicInsertionDto) {
 

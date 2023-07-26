@@ -3,6 +3,7 @@ package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -51,7 +52,7 @@ import java.util.UUID
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomBarProfile(navController: NavController, user : UserDto, application: Context) {
+fun BottomBarProfile(navController: NavController, application: Context) {
 
     var userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
 
@@ -61,7 +62,9 @@ fun BottomBarProfile(navController: NavController, user : UserDto, application: 
                 AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll()
             }
             userFromDB.clear()
-            userFromDB.addAll(databaseItems)
+            if(databaseItems.isNotEmpty()) {
+                userFromDB.addAll(databaseItems)
+            }
         }
     }
 
@@ -72,103 +75,134 @@ fun BottomBarProfile(navController: NavController, user : UserDto, application: 
             style = TextStyle(fontSize = Typography.titleLarge.fontSize)
         )
         Column() {
-            Card(onClick = { navController.popBackStack(); navController.navigate("profile") }) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Filled.AccountCircle,
-                        contentDescription = stringResource(R.string.default_account),
-                        modifier = Modifier
-                            .padding(10.dp)
-                            .size(size = 48.dp)
-                    )
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(text = user.nickName)
-                        Text(text = "Visualizza il mio profilo")
+            if(userFromDB.isNotEmpty()) {
+                Card(onClick = { navController.popBackStack(); navController.navigate("profile") }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            Icons.Filled.AccountCircle,
+                            contentDescription = stringResource(R.string.default_account),
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .size(size = 48.dp)
+                        )
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(text = userFromDB[0].nickName)
+                            Text(text = "Visualizza il mio profilo")
+                        }
+                        Spacer(modifier = Modifier.weight(1f))
+                        Icon(
+                            Icons.Filled.KeyboardArrowRight,
+                            contentDescription = stringResource(R.string.default_account)
+                        )
                     }
-                    Spacer(modifier = Modifier.weight(1f))
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.default_account))
+
                 }
 
-            }
+                Spacer(modifier = Modifier.height(15.dp))
 
-            Spacer(modifier = Modifier.height(15.dp))
-
-            Card(onClick = { navController.popBackStack(); navController.navigate("favorite") }) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Filled.Favorite,
-                        contentDescription = stringResource(R.string.default_account),
-                        modifier = Modifier
-                            .padding(10.dp)
-                    )
-                    Text(text = "Preferiti")
-                    Spacer(modifier = Modifier.weight(1f))
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.default_account))
-                }
-            }
-
-            Card(onClick = { navController.popBackStack(); navController.navigate("balance") }) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Filled.PlayArrow,
-                        contentDescription = stringResource(R.string.default_account),
-                        modifier = Modifier
-                            .padding(10.dp)
-                    )
-                    Text(text = "Saldo")
-                    Spacer(modifier = Modifier.weight(1f))
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.default_account))
-                }
-            }
-
-            Card(onClick = { navController.popBackStack(); navController.navigate("setting") }) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Filled.Settings,
-                        contentDescription = stringResource(R.string.default_account),
-                        modifier = Modifier
-                            .padding(10.dp)
-                    )
-                    Text(text = "Impostazioni")
-                    Spacer(modifier = Modifier.weight(1f))
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.default_account))
-                }
-            }
-
-            Card(onClick = { navController.popBackStack(); navController.navigate("feedback") }) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Filled.Info,
-                        contentDescription = stringResource(R.string.default_account),
-                        modifier = Modifier
-                            .padding(10.dp)
-                    )
-                    Text(text = "INVIA FEEDBACK (PER IL MEME)")
-                    Spacer(modifier = Modifier.weight(1f))
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.default_account))
-                }
-            }
-
-            Card(onClick = {
-                CoroutineScope(Dispatchers.Main).launch {
-
-                    if(userFromDB.isNotEmpty()) {
-                        //userFromDB.remove(userFromDB[0])
-                        AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().delete(userFromDB[0])
-                        AppDatabase.getInstance(context = application.applicationContext).cartDao().deleteAll()
-                    }
-                    withContext(Dispatchers.Main){
-                        navController.popBackStack(); navController.navigate("login")
+                Card(onClick = { navController.popBackStack(); navController.navigate("favorite") }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            Icons.Filled.Favorite,
+                            contentDescription = stringResource(R.string.default_account),
+                            modifier = Modifier
+                                .padding(10.dp)
+                        )
+                        Text(text = "Preferiti")
+                        Spacer(modifier = Modifier.weight(1f))
+                        Icon(
+                            Icons.Filled.KeyboardArrowRight,
+                            contentDescription = stringResource(R.string.default_account)
+                        )
                     }
                 }
 
-            }) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Filled.ExitToApp,
-                        contentDescription = stringResource(R.string.default_account),
-                        modifier = Modifier
-                            .padding(10.dp)
-                    )
-                    Text(text = "Logout")
-                    Spacer(modifier = Modifier.weight(1f))
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.default_account))
+                Card(onClick = { navController.popBackStack(); navController.navigate("balance") }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            Icons.Filled.PlayArrow,
+                            contentDescription = stringResource(R.string.default_account),
+                            modifier = Modifier
+                                .padding(10.dp)
+                        )
+                        Text(text = "Saldo")
+                        Spacer(modifier = Modifier.weight(1f))
+                        Icon(
+                            Icons.Filled.KeyboardArrowRight,
+                            contentDescription = stringResource(R.string.default_account)
+                        )
+                    }
                 }
+
+                Card(onClick = { navController.popBackStack(); navController.navigate("setting") }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            Icons.Filled.Settings,
+                            contentDescription = stringResource(R.string.default_account),
+                            modifier = Modifier
+                                .padding(10.dp)
+                        )
+                        Text(text = "Impostazioni")
+                        Spacer(modifier = Modifier.weight(1f))
+                        Icon(
+                            Icons.Filled.KeyboardArrowRight,
+                            contentDescription = stringResource(R.string.default_account)
+                        )
+                    }
+                }
+
+                Card(onClick = { navController.popBackStack(); navController.navigate("feedback") }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            Icons.Filled.Info,
+                            contentDescription = stringResource(R.string.default_account),
+                            modifier = Modifier
+                                .padding(10.dp)
+                        )
+                        Text(text = "INVIA FEEDBACK (PER IL MEME)")
+                        Spacer(modifier = Modifier.weight(1f))
+                        Icon(
+                            Icons.Filled.KeyboardArrowRight,
+                            contentDescription = stringResource(R.string.default_account)
+                        )
+                    }
+                }
+
+                Card(onClick = {
+                    CoroutineScope(Dispatchers.Main).launch {
+
+                        if (userFromDB.isNotEmpty()) {
+                            //userFromDB.remove(userFromDB[0])
+                            AppDatabase.getInstance(context = application.applicationContext)
+                                .userDatabaseDao().delete(userFromDB[0])
+                            AppDatabase.getInstance(context = application.applicationContext)
+                                .cartDao().deleteAll()
+                        }
+                        withContext(Dispatchers.Main) {
+                            navController.popBackStack(); navController.navigate("login")
+                        }
+                    }
+
+                }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            Icons.Filled.ExitToApp,
+                            contentDescription = stringResource(R.string.default_account),
+                            modifier = Modifier
+                                .padding(10.dp)
+                        )
+                        Text(text = "Logout")
+                        Spacer(modifier = Modifier.weight(1f))
+                        Icon(
+                            Icons.Filled.KeyboardArrowRight,
+                            contentDescription = stringResource(R.string.default_account)
+                        )
+                    }
+                }
+            }else{
+                Text(text = "NESSUN UTENTE LOGGATO")
             }
+
         }
     }
 }

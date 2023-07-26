@@ -17,10 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.vintedandroid.Item
-import com.example.vintedandroid.client.models.BasicInsertionDto
 import com.example.vintedandroid.model.AppDatabase
 import android.content.Context
 import androidx.compose.material.CircularProgressIndicator
@@ -29,8 +26,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.example.vintedandroid.client.models.PageBasicInsertionDto
 import com.example.vintedandroid.model.dto.CartDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +37,7 @@ import kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope.Empty
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun CartScreen(itemsInCart: MutableList<BasicInsertionDto?>, application: Context) {
+fun CartScreen(application: Context) {
 
     //var itemsFromDB: List<CartDto>? = null
     //var itemsFromDB by remember { mutableStateOf<List<CartDto>>(emptyList()) }
@@ -65,7 +60,6 @@ fun CartScreen(itemsInCart: MutableList<BasicInsertionDto?>, application: Contex
             isLoaded = true
         }
     }
-    //TODO BasicInsertionDto
 
     //val snackbar = Snackbar.make( "This is a simple popup", Snackbar.LENGTH_SHORT)
 
@@ -73,7 +67,7 @@ fun CartScreen(itemsInCart: MutableList<BasicInsertionDto?>, application: Contex
         if (isLoaded){
         if(itemsFromDB.isNotEmpty() == true){
             itemsFromDB!!.forEach { item ->
-                ItemsInCart(item, itemsFromDB, application, itemsFromDB)
+                ItemsInCart(item, application, itemsFromDB)
             }
         }
         else {
@@ -99,7 +93,7 @@ fun CartScreen(itemsInCart: MutableList<BasicInsertionDto?>, application: Contex
 }
 
 @Composable
-fun ItemsInCart(item : CartDto, itemsInCart: List<CartDto>?, application: Context, itemsFromDB: MutableList<CartDto>) {
+fun ItemsInCart(item : CartDto, application: Context, itemsFromDB: MutableList<CartDto>) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -131,15 +125,4 @@ fun ItemsInCart(item : CartDto, itemsInCart: List<CartDto>?, application: Contex
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun CartScreenPreview() {
-
-    val itemsInCart = remember {
-        mutableListOf<BasicInsertionDto?>()
-    }
-
-    //CartScreen(itemsInCart)
 }

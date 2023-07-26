@@ -43,9 +43,9 @@ fun SearchScreen(searchText: MutableState<String>, insertionApi: InsertionApi, n
         if (searchText.value != "") {
 
             coroutineScope.launch {
-                Log.i("tag", "Hai inserito questo testo => ${searchText.value}")
+                //Log.i("tag", "Hai inserito questo testo => ${searchText.value}")
                 searchResults = insertionApi.getByTitle(searchText.value, 0)
-                Log.i("tag", searchResults.toString());
+                //Log.i("tag", searchResults.toString());
             }
         }
     }
@@ -55,7 +55,7 @@ fun SearchScreen(searchText: MutableState<String>, insertionApi: InsertionApi, n
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         items(searchResults.results) { result ->
-            SearchResultCard(result = result, navController, searchedProduct)
+            SearchResultCard(result, navController, searchedProduct)
         }
     }
 
