@@ -1,5 +1,6 @@
 package com.example.vintedandroid.view
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,37 +31,22 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.vintedandroid.R
-import com.example.vintedandroid.client.models.UserDto
 import com.example.vintedandroid.model.AppDatabase
-import com.example.vintedandroid.model.dto.CartDto
 import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.theme.Typography
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.UUID
 import android.content.Context
 import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
+import com.example.vintedandroid.view.config.ImageConfiguration
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class, ExperimentalCoilApi::class)
 @Composable
@@ -71,10 +57,6 @@ fun ProfileScreen(application: Context) {
     //var userFromDB by remember { mutableStateOf(UserDatabaseDto(UUID.randomUUID().toString(),"","",null,null,null,null,null,null,null,null,null,null,null,null)) }
     var url = remember { mutableStateOf("https://192.168.1.90:8010/vintedProject-api/v1/images/") }//: String? = null
 
-    var isTextFieldVisible by remember { mutableStateOf(false) }
-    var value by remember { mutableStateOf("") }
-
-    //TODO
     //Prende dal db gli/lo user e li salva nella variabile userFromDB.
     LaunchedEffect(Unit) {
         if (userFromDB.isEmpty()) {
@@ -125,16 +107,7 @@ fun ProfileScreen(application: Context) {
             Column {
                 Card {
                     if (userFromDB[0].imageName != null) {
-                        if (painter.state != ImagePainter.State.Empty) {
-                            Image(
-                                painter = painter,
-                                contentDescription = null, // Provide a proper content description
-                                modifier = Modifier.fillMaxWidth(),
-                                contentScale = ContentScale.Crop
-                            )
-                        } else {
-                            Text(text = "Errore nel caricare l'immagine")
-                        }
+                        ImageConfiguration(painter = painter, imageScale = ContentScale.Crop)
                     } else {
                         Icon(
                             Icons.Filled.AccountCircle,
@@ -189,64 +162,14 @@ fun ProfileScreen(application: Context) {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                Card(modifier = Modifier.fillMaxWidth()) {
-
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Button(
-                            onClick = { isTextFieldVisible = !isTextFieldVisible },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(text = "Modify Nickname")
-                        }
-
-                        if (isTextFieldVisible) {
-                            TextField(
-                                value = value,
-                                onValueChange = { newText ->
-                                    value = newText
-                                },
-                                label = { Text(text = "Name") },
-                                placeholder = { Text(text = "Type your name") }
-                            )
-                        }
-                        Button(
-                            onClick = {
-                                // Perform the action when the send button is clicked
-                                performSendAction()
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(text = "Send")
-                        }
-                    }
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)) {
+                    modifyAccountInfoButton("Nickname")
+                    modifyAccountInfoButton("Email")
+                    modifyAccountInfoButton("Password")
                 }
-
-                /*
-
-            Card(onClick = { isEditing = true }) {
-                if (isEditing) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    TextField(
-                        value = textValue,
-                        onValueChange = { newValue -> textValue = newValue },
-                        modifier = Modifier.padding(10.dp)
-                    )
-                } else {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(10.dp)
-                    ) {
-                        Text(text = "Modifica nickname")
-                        Spacer(modifier = Modifier.weight(1f))
-                        Icon(
-                            Icons.Filled.KeyboardArrowRight,
-                            contentDescription = stringResource(R.string.default_account)
-                        )
-                    }
-                }
-            }
-
-             */
 
                 Card(onClick = { /*TODO*/ }) {
                     Row(
@@ -261,49 +184,59 @@ fun ProfileScreen(application: Context) {
                         )
                     }
                 }
-
-                Card(onClick = { /*TODO*/ }) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(10.dp)
-                    ) {
-                        Text(text = "Modify Password")
-                        Spacer(modifier = Modifier.weight(1f))
-                        Icon(
-                            Icons.Filled.KeyboardArrowRight,
-                            contentDescription = stringResource(R.string.default_account)
-                        )
-                    }
-                }
             }
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun modifyAccountInfoButton(subject: String){
+
+    var isTextFieldVisible by remember { mutableStateOf(false) }
+    var value by remember { mutableStateOf("") }
+
+    Card(modifier = Modifier.fillMaxWidth()) {//, onClick = {/*TODO*/}
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Button(
+                onClick = { isTextFieldVisible = !isTextFieldVisible },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Text(text = "Modify $subject")
+            }
+
+            if (isTextFieldVisible) {
+                TextField(
+                    value = value,
+                    onValueChange = { newText ->
+                        value = newText
+                    },
+                    label = { Text(text = "$subject") },
+                    placeholder = { Text(text = "Type your new $subject") }
+                )
+                Button(
+                    onClick = {
+                        // Perform the action when the send button is clicked
+                        performSendAction()
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "Send")
+                }
+            }
+
+        }
+    }
+}
+
 
 private fun performSendAction() {
     // Add your logic here to handle the send action
 }
 
-
-//TODO DA TESTARE
-@Composable
-private fun testForLaunchEffect(userFromDB: SnapshotStateList<UserDatabaseDto>, application: Context, url: MutableState<String>, isLoaded : MutableState<Boolean>){
-    //Prende dal db gli/lo user e li salva nella variabile userFromDB.
-    LaunchedEffect(Unit) {
-        if (userFromDB.isEmpty()) {
-            val databaseItems = withContext(Dispatchers.IO) {
-                AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll()
-            }
-            //itemsFromDB.clear()
-            userFromDB.clear()
-            userFromDB.addAll(databaseItems)
-            url.value = "${url.value}${userFromDB[0].imageName.toString()}"
-            isLoaded.value = true
-        }
-    }
-
-}
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
@@ -312,3 +245,4 @@ fun ProfileScreenPreview() {
         "Italy","asdojad")
     //ProfileScreen(user)
 }
+ */

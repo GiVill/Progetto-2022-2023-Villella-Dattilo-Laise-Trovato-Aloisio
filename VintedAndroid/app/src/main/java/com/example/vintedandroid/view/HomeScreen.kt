@@ -50,31 +50,13 @@ import kotlinx.coroutines.withContext
 @Composable
 fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>, application: Context) {
 
-    //val snackbar: Snackbar = Snackbar.make(containerLayout, "", Snackbar.LENGTH_LONG)
-
     val scrollState1 = rememberLazyListState()
-
     val scrollState2 = rememberLazyListState()
 
-    var itemsWomen by remember {
-        mutableStateOf(PageBasicInsertionDto())
-    }
-    var itemsMan by remember {
-        mutableStateOf(PageBasicInsertionDto())
-    }
-    var allItems by remember {
-        mutableStateOf(PageBasicInsertionDto())
-    }
+    var itemsWomen by remember { mutableStateOf(PageBasicInsertionDto()) }
+    var itemsMan by remember { mutableStateOf(PageBasicInsertionDto()) }
+    var allItems by remember { mutableStateOf(PageBasicInsertionDto()) }
 
-
-    /*
-        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-            items.forEach { item ->
-                ItemCart(item, itemsInCart)
-            }
-        }
-
-     */
     var isLoaded by remember { mutableStateOf(false) }
     var isLoaded1 by remember { mutableStateOf(false) }
     var isLoaded2 by remember { mutableStateOf(false) }
@@ -109,19 +91,19 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
             isLoaded2 = true
     }
 
-    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitNetwork().build())
+    //Non dovrebbe essere necessario
+    //StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitNetwork().build())
 
     if (internetChecker(application)) {
 
         Box(modifier = Modifier.fillMaxSize()) {
 
             if (isLoaded && isLoaded1 && isLoaded2) {
-                displayImage(allItems = allItems)
+                displayImage(allItems = allItems) //TODO Andrebbe sostituita con la classe apposita!
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
 
-
-
+                /*
                 item {
                     // Header item here
                     // Add any Composable you want to use as the header
@@ -146,6 +128,8 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
                     }
                     }
                 }
+                */
+                /*
                 item {
                     Box(modifier = Modifier.fillMaxWidth()){
 
@@ -170,29 +154,24 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
                     }
                     }
                 }
+                 */
 
                 item {
-                    Box(modifier = Modifier.fillMaxWidth()){
+                    Box(modifier = Modifier.fillMaxWidth().padding(6.dp)){
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text(text = "E molto altro!", fontSize = 20.sp, textAlign = TextAlign.Center)
+                    Text(text = "Articoli: ", fontSize = 20.sp, textAlign = TextAlign.Center) //text = "E molto altro!"
                     Spacer(modifier = Modifier.height(16.dp))
-
                     }
                 }
+                items(allItems.results) { item ->
 
+                    displayImage(item = item) //TODO Andrebbe sostituita con la classe apposita!
 
-
-                            items(allItems.results) { item ->
-
-                                displayImage(item = item)
-
-                                ItemCart(item, itemsInCart, navController, searchedProduct, application)
-                            }
+                    ItemCart(item, itemsInCart, navController, searchedProduct, application)
+                }
 
             }
-        }else{
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-        }
+        }else{ CircularProgressIndicator(modifier = Modifier.align(Alignment.Center)) }
 
         /*
     Row(modifier = Modifier.fillMaxWidth()) {
@@ -229,9 +208,6 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
         }
     }
      */
-
-
-
         }
     } else { noConnectionScreen(application = application)  }
 }
@@ -246,8 +222,7 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
             .fillMaxWidth()
             .padding(16.dp)
             .clickable(onClick = {
-                searchedProduct.value =
-                    item;navController.popBackStack(); navController.navigate(ScreenController.Product.route)
+                searchedProduct.value = item;navController.popBackStack(); navController.navigate(ScreenController.Product.route)
             }),
         elevation = 4.dp
     ) {
@@ -259,7 +234,7 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = item.title)
-            displayImage(item = item)
+            displayImage(item = item) //TODO Andrebbe sostituita con la classe apposita!
             Spacer(modifier = Modifier.height(8.dp))
             item.description?.let { Text(text = it) }
             Spacer(modifier = Modifier.height(8.dp))
@@ -268,13 +243,11 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
             Button(onClick = {
                 showDialog = true;
 
-
                 if (!itemsInCart.contains(item)) {
                     itemsInCart.add(item)
                     CoroutineScope(Dispatchers.IO).launch {
                         AppDatabase.getInstance(context = application.applicationContext).cartDao().insert(converter(item))
                     }
-                    //AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().insert(user1) //Inserimento di un utente
                     Log.i("cart", "Item added!")
                     itemsInCart.forEachIndexed { index, item ->
                         Log.i("cart", "Item $index: $item") //stampa tutto il carrello
@@ -297,6 +270,7 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
     }
 }
 
+//TODO Andrebbe sostituita con la classe apposita!
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun displayImage(allItems: PageBasicInsertionDto) {
@@ -320,6 +294,7 @@ fun displayImage(allItems: PageBasicInsertionDto) {
             )}}
 }
 
+//TODO Andrebbe sostituita con la classe apposita!
 @Composable
 fun displayImage(item: BasicInsertionDto) {
     Box(modifier = Modifier.fillMaxWidth()) {
@@ -327,7 +302,6 @@ fun displayImage(item: BasicInsertionDto) {
         val url = "https://192.168.1.90:8010/vintedProject-api/v1/images/file_472864ab-51c9-4ff6-bab2-85a8871eb446.jpg"//${item.imageName}"
         Log.i("tag", "ok, no? => $url")
         val painter: ImagePainter = rememberImagePainter(url)//: String? = null
-
 
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -380,24 +354,20 @@ fun PopupDialog(onDismiss: () -> Unit, content: @Composable () -> Unit) {
     }
 }
 
+/*
 @Composable
 @Preview(showBackground = true)
 fun HomeScreenPreview() {
 
-    val itemsInCart = remember {
-        mutableListOf<BasicInsertionDto?>()
-    }
+    val itemsInCart = remember { mutableListOf<BasicInsertionDto?>() }
 
     var searchedProduct = remember {
         mutableStateOf(BasicInsertionDto(1L,"null", Float.MIN_VALUE,null,null,null,null,null,"",BasicInsertionDto.Brand.ADIDAS,BasicInsertionDto.Category.ABBIGLIAMENTO, 2L))
 
     }
 
-
-
     val navController = rememberNavController()
-
 
     //HomeScreen(itemsInCart, navController, searchedProduct, )
 }
-
+ */

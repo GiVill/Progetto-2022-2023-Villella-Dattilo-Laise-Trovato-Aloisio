@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -74,7 +76,7 @@ fun BottomBarProfile(navController: NavController, application: Context) {
             modifier = Modifier.padding(10.dp),
             style = TextStyle(fontSize = Typography.titleLarge.fontSize)
         )
-        Column() {
+        Column {
             if(userFromDB.isNotEmpty()) {
                 Card(onClick = { navController.popBackStack(); navController.navigate("profile") }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -99,7 +101,11 @@ fun BottomBarProfile(navController: NavController, application: Context) {
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
+////////////////////////
+                //TODO DA VEDERE SE FUNZIONA CORRETTAMENTE
+                SimilarCard(navController = navController, text = "Favorite", navigateTo = ScreenController.Favorite.route)
 
+                /*
                 Card(onClick = { navController.popBackStack(); navController.navigate("favorite") }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
@@ -117,6 +123,11 @@ fun BottomBarProfile(navController: NavController, application: Context) {
                     }
                 }
 
+                 */
+////////////////////////
+                //TODO DA VEDERE SE FUNZIONA CORRETTAMENTE
+                SimilarCard(navController = navController, text = "Balance", navigateTo = ScreenController.Balance.route)
+                /*
                 Card(onClick = { navController.popBackStack(); navController.navigate("balance") }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
@@ -134,6 +145,8 @@ fun BottomBarProfile(navController: NavController, application: Context) {
                     }
                 }
 
+                 */
+//////////////////////
                 Card(onClick = { navController.popBackStack(); navController.navigate("setting") }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
@@ -200,7 +213,12 @@ fun BottomBarProfile(navController: NavController, application: Context) {
                     }
                 }
             }else{
-                Text(text = "NESSUN UTENTE LOGGATO")
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Text(text = "NO USER LOGGED")
+                    Button(onClick = { navController.popBackStack(); navController.navigate(ScreenController.Login.route) }){
+                        Text(text = "Go to Login page")
+                    }
+                }
             }
 
         }
@@ -226,6 +244,32 @@ fun BottomBarProfile(navController: NavController, application: Context) {
     }
      */
 
+//TODO DA VEDERE SE FUNZIONA CORRETTAMENTE
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SimilarCard(navController: NavController, text: String, navigateTo: String){
+
+    Card(onClick = { navController.popBackStack(); navController.navigate(navigateTo) }) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                Icons.Filled.Favorite, //TODO Questo dovrebbe essere variabile. Si potrebbe pensare di passare l'icona direttamente alla funzione
+                contentDescription = stringResource(R.string.default_account),
+                modifier = Modifier
+                    .padding(10.dp)
+            )
+            Text(text = text)
+            Spacer(modifier = Modifier.weight(1f))
+            Icon(
+                Icons.Filled.KeyboardArrowRight,
+                contentDescription = stringResource(R.string.default_account)
+            )
+        }
+    }
+
+}
+
+
+/*
 @Preview(showBackground = true)
 @Composable
 fun BottomBarProfilePreview() {
@@ -235,3 +279,4 @@ fun BottomBarProfilePreview() {
     val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh")
     //BottomBarProfile(navController, user)
 }
+ */

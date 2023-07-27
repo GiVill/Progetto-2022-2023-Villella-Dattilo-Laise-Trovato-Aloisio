@@ -33,20 +33,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope.Empty
 
-//import com.google.android.material.snackbar.Snackbar
-
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun CartScreen(application: Context) {
 
-    //var itemsFromDB: List<CartDto>? = null
-    //var itemsFromDB by remember { mutableStateOf<List<CartDto>>(emptyList()) }
     var itemsFromDB = remember { mutableStateListOf<CartDto>() }
-    /*
-    var itemsFromDB by remember {
-        mutableStateOf(PageBasicInsertionDto())
-    }
-     */
 
     var isLoaded by remember { mutableStateOf(false) }
 
@@ -60,8 +51,6 @@ fun CartScreen(application: Context) {
             isLoaded = true
         }
     }
-
-    //val snackbar = Snackbar.make( "This is a simple popup", Snackbar.LENGTH_SHORT)
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         if (isLoaded){
@@ -112,8 +101,6 @@ fun ItemsInCart(item : CartDto, application: Context, itemsFromDB: MutableList<C
             Text(text = "$${item.price}")
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = {
-                //snackbar.show()
-                //itemsInCart.remove(item)
                 CoroutineScope(Dispatchers.IO).launch {
                     itemsFromDB.remove(item)
                     AppDatabase.getInstance(context = application.applicationContext).cartDao().delete(item)

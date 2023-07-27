@@ -98,9 +98,6 @@ fun AppContent(application: Context) {
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-
-
         Text(text = "Insert Title")
         TextField(
             value = title.value,

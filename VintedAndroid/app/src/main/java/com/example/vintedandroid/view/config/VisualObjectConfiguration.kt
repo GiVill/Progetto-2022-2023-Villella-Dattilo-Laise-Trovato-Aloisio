@@ -21,13 +21,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun createPersonalizedTextfield(textField: MutableState<TextFieldValue>, name: String){
+fun createPersonalizedTextfield(textField: MutableState<TextFieldValue>, name: String, icon: ImageVector){
+
+    //L'ImageVector dovrebbe essere qualcosa del tipo --> Icons.Default.Email
 
     val isFieldSelected = remember { mutableStateOf(false) }
 
@@ -36,7 +39,7 @@ fun createPersonalizedTextfield(textField: MutableState<TextFieldValue>, name: S
         onValueChange = { input ->
             textField.value = input
         },
-        leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "$name Icon") },
+        leadingIcon = { Icon(imageVector = icon, contentDescription = "$name Icon") },
         trailingIcon = {
             if(isFieldSelected.value){
                 IconButton(

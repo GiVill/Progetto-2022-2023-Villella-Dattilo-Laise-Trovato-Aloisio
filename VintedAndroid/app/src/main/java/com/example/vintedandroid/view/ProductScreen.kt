@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import com.example.vintedandroid.client.models.BasicInsertionDto
 import com.example.vintedandroid.model.AppDatabase
+import com.example.vintedandroid.view.config.ImageConfiguration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,7 +46,6 @@ fun ProductScreen(searchedProduct: MutableState<BasicInsertionDto>) {
     val url = "https://192.168.1.90:8010/vintedProject-api/v1/images/${searchedProduct.value.imageName}"//"https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" //searchedProduct.value.imagePath
 
     val painter: ImagePainter = rememberImagePainter(url)
-
 
     Card(
         modifier = Modifier
@@ -61,14 +61,8 @@ fun ProductScreen(searchedProduct: MutableState<BasicInsertionDto>) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (painter.state != ImagePainter.State.Empty) {
-                Image(
-                    painter = painter,
-                    contentDescription = null, // Provide a proper content description
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.Fit
-                )
-            } else { Text(text = "Errore nel caricamento dell'immagine") }
+
+            ImageConfiguration(painter = painter, ContentScale.Fit)
 
                 Text(
                     text = searchedProduct.value.title,
@@ -90,16 +84,14 @@ fun ProductScreen(searchedProduct: MutableState<BasicInsertionDto>) {
                     onClick = { /* Handle button click here */ },
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
-                    Text(text = "Aggiungi al carrello")
+                    Text(text = "Add to Cart(Per ora non fa nulla)")
                 }
                 Button(
                     onClick = { /* Handle button click here */ },
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 ){
-                    Text(text = "Acquista")
+                    Text(text = "Buy(Per ora non fa nulla)")
                 }
-
-
         }
     }
     /*

@@ -2,6 +2,7 @@ package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.vintedandroid.model.application_status.internetChecker
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -39,8 +41,18 @@ fun noConnectionScreen(application :Context){
                     //tint = Color.Red
                 )
                  */
-                Button(onClick = { /*TODO*/ }, modifier = Modifier.padding(8.dp)) {
-                    Text(text = "Retry")
+                Button(onClick = {
+                    if (internetChecker(application)){
+                        Log.i("tag","Ora sei connesso. Questo è solo un Log")
+                        //Forse andrebbe fatto un navigate da qualche parte. (alla home?)
+                        //navController.popBackStack(); navController.navigate(ScreenController.Home.route)
+                    }
+                    else{
+
+                        Log.i("tag","Sei ancora disconnesso! Questo è solo un Log")
+                    }
+                }, modifier = Modifier.padding(8.dp)) {
+                    Text(text = "Retry(Per ora non fa nulla)")
                 }
             }
         }

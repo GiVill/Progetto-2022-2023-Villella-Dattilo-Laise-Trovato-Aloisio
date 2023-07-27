@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,6 +49,8 @@ fun RegistrationScreen(navController: NavHostController, application: Context) {
     var loginUnsuccessful by remember {mutableStateOf(false)}
     var buttonEnabled by remember { mutableStateOf(true) }
 
+    val auth = AuthApi()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,34 +63,28 @@ fun RegistrationScreen(navController: NavHostController, application: Context) {
         Text(text = "REGISTRATION", fontSize = 48.sp)
         Spacer(modifier = Modifier.height(50.dp))
 
-        createPersonalizedTextfield(textField = emailField, name = "Email")
-        createPersonalizedTextfield(textField = nicknameField, name = "Nickname")
-        createPersonalizedTextfield(textField = firstnameField, name = "Firstname")
+        createPersonalizedTextfield(textField = emailField, name = "Email", Icons.Default.Email)
+        createPersonalizedTextfield(textField = nicknameField, name = "Nickname", Icons.Default.Person)
+        createPersonalizedTextfield(textField = firstnameField, name = "Firstname", Icons.Default.Person)
         createPersonalizedTextfieldPassword(textField = passwordField)
 
         Button(
             onClick = {
                 buttonEnabled = false
-                val registrationUserDto = NewUserDto(
-                    password = passwordField.value.text,
-                    firstName = firstnameField.value.text,
-                    nickName = nicknameField.value.text,
-                    email = emailField.value.text
-                )
+                val registrationUserDto = createNewUserDto(passwordField.value.text, firstnameField.value.text, nicknameField.value.text, emailField.value.text)
                     CoroutineScope(Dispatchers.IO).launch {
-                        val auth = AuthApi()
 
                         val t = auth.signUp(registrationUserDto)
                         withContext(Dispatchers.Main) {
                             if (t.access_token != null) {
 
-                                val registratedUser = convertUserDTOtoUserDB(t)
+                                val registeredUser = convertUserDTOtoUserDB(t)
 
-                                if (registratedUser != null) {
-                                    AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().insert(registratedUser)
+                                if (registeredUser != null) {
+                                    AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().insert(registeredUser)
 
                                     navController.popBackStack()
-                                    navController.navigate("home")
+                                    navController.navigate(ScreenController.Home.route)
                                 }
                             }
                             else{
@@ -95,14 +94,14 @@ fun RegistrationScreen(navController: NavHostController, application: Context) {
                         }
                     }
 
-                navController.popBackStack(); navController.navigate("home")
+                navController.popBackStack(); navController.navigate(ScreenController.Home.route)
                       },
             modifier = Modifier.padding(8.dp),
             enabled = buttonEnabled
         ) { Text("Register") }
 
         Button(
-            onClick = { navController.popBackStack(); navController.navigate("login") },
+            onClick = { navController.popBackStack(); navController.navigate(ScreenController.Login.route) },
             modifier = Modifier.padding(8.dp)
         ) {
             Text("Already have an account? Go to Login page")
@@ -131,4 +130,13 @@ private fun convertUserDTOtoUserDB(t: TokenResponse) :UserDatabaseDto?{
         )
     }
 
+}
+
+private fun createNewUserDto(password: String, firstName: String, nickName: String, email: String): NewUserDto{
+    return NewUserDto(
+        password = password,
+        firstName = firstName,
+        nickName = nickName,
+        email = email
+    )
 }

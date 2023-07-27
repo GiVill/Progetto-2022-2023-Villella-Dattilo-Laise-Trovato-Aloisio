@@ -179,6 +179,7 @@ class MainActivity : ComponentActivity() {
                         } )
                     }
                     else{
+                        navController.navigate(ScreenController.Login.route)
                         LoginScreen(navController = navController, application) //Non funziona bene
                     }
                 } else {
@@ -308,6 +309,8 @@ fun ApplicationTopBar(searchText: MutableState<String>, navController: NavHostCo
 fun ApplicationBottomBar(navController: NavHostController) {//,selectedIndex: MutableState<Int>
 
     // TUTTI i navController.popBackStack(); ANDREBBERO gestiti diversamente, per ora sono ni
+
+    //TODO IN HOW MANY WAY I CAN HANDLE THE NAVIGATION IN JETPACK COMPOSE?
 
     BottomAppBar {
 
