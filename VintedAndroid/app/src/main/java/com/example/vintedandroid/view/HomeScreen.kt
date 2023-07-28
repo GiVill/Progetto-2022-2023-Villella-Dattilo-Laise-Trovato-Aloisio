@@ -41,6 +41,7 @@ import com.example.vintedandroid.client.models.PageBasicInsertionDto
 import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.application_status.internetChecker
 import com.example.vintedandroid.model.dto.CartDto
+import com.example.vintedandroid.view.config.ImageConfiguration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -64,46 +65,61 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
     var insertionApi = InsertionApi()
 
     CoroutineScope(Dispatchers.IO).launch {
+        Log.i("home", "Ciao")
         val women = withContext(Dispatchers.IO) {
+
             insertionApi.getByCategory("DONNA", 0)
+
         }
+        Log.i("home", "Ciao")
         if(women.empty != true) {
             itemsWomen = women
         }
         isLoaded = true
     }
     CoroutineScope(Dispatchers.IO).launch {
+        Log.i("home", "Ciao2")
         val man = withContext(Dispatchers.IO) {
             insertionApi.getByCategory("UOMO", 0)
         }
+        Log.i("home", "Ciao2")
         if(man.empty != true) {
             itemsMan = man
         }
         isLoaded1 = true
     }
     CoroutineScope(Dispatchers.IO).launch {
+        Log.i("home", "Ciao3")
         val items = withContext(Dispatchers.IO) {
             insertionApi.all4(2)
         }
+        Log.i("home", "Ciao3")
         if(items.empty != true) {
             allItems = items
         }
             isLoaded2 = true
     }
 
-    //Non dovrebbe essere necessario
-    //StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitNetwork().build())
-
     if (internetChecker(application)) {
 
         Box(modifier = Modifier.fillMaxSize()) {
 
             if (isLoaded && isLoaded1 && isLoaded2) {
-                displayImage(allItems = allItems) //TODO Andrebbe sostituita con la classe apposita!
 
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                //Dentro la LazyColumn non si possono mettere immagini a quanto pare, fuori si
+                ImageConfiguration(imageName = allItems.results[0].imageName, imageScale = ContentScale.Crop)
 
-                /*
+                //if(itemsWomen.empty != true && itemsMan.empty != true && allItems.empty != true) {
+
+                    //displayImage(allItems = allItems) //TODO Andrebbe sostituita con la classe apposita!
+
+                    //ImageConfiguration(imageName = "", painter, imageScale = ContentScale.Fit)
+
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+
+
+
+                        /*
                 item {
                     // Header item here
                     // Add any Composable you want to use as the header
@@ -129,7 +145,7 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
                     }
                 }
                 */
-                /*
+                        /*
                 item {
                     Box(modifier = Modifier.fillMaxWidth()){
 
@@ -156,22 +172,28 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
                 }
                  */
 
-                item {
-                    Box(modifier = Modifier.fillMaxWidth().padding(6.dp)){
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(text = "Articoli: ", fontSize = 20.sp, textAlign = TextAlign.Center) //text = "E molto altro!"
-                    Spacer(modifier = Modifier.height(16.dp))
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(6.dp)
+                            ) {
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Text(
+                                    text = "Articoli: ",
+                                    fontSize = 20.sp,
+                                    textAlign = TextAlign.Center
+                                ) //text = "E molto altro!"
+                                Spacer(modifier = Modifier.height(16.dp))
+                            }
+                        }
+                        items(allItems.results) { item ->
+                            ItemCart(item, itemsInCart, navController, searchedProduct, application)
+                        }
+
                     }
-                }
-                items(allItems.results) { item ->
-
-                    displayImage(item = item) //TODO Andrebbe sostituita con la classe apposita!
-
-                    ItemCart(item, itemsInCart, navController, searchedProduct, application)
-                }
-
-            }
-        }else{ CircularProgressIndicator(modifier = Modifier.align(Alignment.Center)) }
+                //} else{ Text(text="Error while connecting to the server") }
+        } else{ CircularProgressIndicator(modifier = Modifier.align(Alignment.Center)) }
 
         /*
     Row(modifier = Modifier.fillMaxWidth()) {
@@ -216,16 +238,24 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
 fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>, application: Context ) {
 
     var showDialog by remember { mutableStateOf(false) } //${item.imageName}
-    
+
+    //Box(modifier = Modifier.fillMaxWidth()){
+        ImageConfiguration(imageName = item.imageName, imageScale = ContentScale.Crop)
+    //}
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
             .clickable(onClick = {
-                searchedProduct.value = item;navController.popBackStack(); navController.navigate(ScreenController.Product.route)
+                searchedProduct.value = item;navController.popBackStack(); navController.navigate(
+                ScreenController.Product.route
+            )
             }),
         elevation = 4.dp
     ) {
+
+
 
         Column(
             modifier = Modifier
@@ -233,8 +263,10 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+
             Text(text = item.title)
-            displayImage(item = item) //TODO Andrebbe sostituita con la classe apposita!
+
             Spacer(modifier = Modifier.height(8.dp))
             item.description?.let { Text(text = it) }
             Spacer(modifier = Modifier.height(8.dp))
@@ -271,6 +303,7 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
 }
 
 //TODO Andrebbe sostituita con la classe apposita!
+/*
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun displayImage(allItems: PageBasicInsertionDto) {
@@ -293,7 +326,9 @@ fun displayImage(allItems: PageBasicInsertionDto) {
                 contentScale = ContentScale.Fit
             )}}
 }
+ */
 
+/*
 //TODO Andrebbe sostituita con la classe apposita!
 @Composable
 fun displayImage(item: BasicInsertionDto) {
@@ -315,6 +350,8 @@ fun displayImage(item: BasicInsertionDto) {
         }
     }
 }
+
+ */
 
 
 fun converter(item: BasicInsertionDto): CartDto {

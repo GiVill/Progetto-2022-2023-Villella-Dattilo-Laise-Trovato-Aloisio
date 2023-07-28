@@ -38,7 +38,6 @@ import kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope.Empty
 fun CartScreen(application: Context) {
 
     var itemsFromDB = remember { mutableStateListOf<CartDto>() }
-
     var isLoaded by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {

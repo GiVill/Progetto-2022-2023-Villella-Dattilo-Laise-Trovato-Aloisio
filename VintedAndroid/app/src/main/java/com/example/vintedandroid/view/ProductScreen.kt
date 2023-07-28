@@ -38,14 +38,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalCoilApi::class)
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun ProductScreen(searchedProduct: MutableState<BasicInsertionDto>) {
-
-    val url = "https://192.168.1.90:8010/vintedProject-api/v1/images/${searchedProduct.value.imageName}"//"https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" //searchedProduct.value.imagePath
-
-    val painter: ImagePainter = rememberImagePainter(url)
 
     Card(
         modifier = Modifier
@@ -62,50 +57,46 @@ fun ProductScreen(searchedProduct: MutableState<BasicInsertionDto>) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            ImageConfiguration(painter = painter, ContentScale.Fit)
+            ImageConfiguration(imageName = searchedProduct.value.imageName, imageScale = ContentScale.Fit)
 
-                Text(
-                    text = searchedProduct.value.title,
-                    modifier = Modifier.padding(16.dp), fontSize = 30.sp
-                )
-                searchedProduct.value.description?.let {
-                    Text(
-                        text = it,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-                searchedProduct.value.condition?.let {
-                    Text(
-                        text = it,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-                Button(
-                    onClick = { /* Handle button click here */ },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                ) {
-                    Text(text = "Add to Cart(Per ora non fa nulla)")
-                }
-                Button(
-                    onClick = { /* Handle button click here */ },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                ){
-                    Text(text = "Buy(Per ora non fa nulla)")
-                }
+            searchedProductDisplayInfo(searchedProduct = searchedProduct)
+            Button(
+                onClick = { /* Handle button click here */ },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(text = "Add to Cart(Per ora non fa nulla)")
+            }
+            Button(
+                onClick = { /* Handle button click here */ },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ){
+                Text(text = "Buy(Per ora non fa nulla)")
+            }
         }
     }
-    /*
-    Divider()
-    Text(text = searchedProduct.value.title)
-    Divider()
-    searchedProduct.value.description?.let { Text(text = it) }
-    Divider()
-    searchedProduct.value.condition?.let { Text(text = it) }
-    Divider()
-    Text(text = "${searchedProduct.value.price}")
-    Divider()
+}
 
-     */
+
+@Composable
+private fun searchedProductDisplayInfo(searchedProduct: MutableState<BasicInsertionDto>){
+
+    Text(
+        text = searchedProduct.value.title,
+        modifier = Modifier.padding(16.dp), fontSize = 30.sp
+    )
+    searchedProduct.value.description?.let {
+        Text(
+            text = it,
+            modifier = Modifier.padding(16.dp)
+        )
+    }
+    searchedProduct.value.condition?.let {
+        Text(
+            text = it,
+            modifier = Modifier.padding(16.dp)
+        )
+    }
+
 }
 
 /*

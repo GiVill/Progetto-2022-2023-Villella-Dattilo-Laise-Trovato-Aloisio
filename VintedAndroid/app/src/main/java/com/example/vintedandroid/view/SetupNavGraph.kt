@@ -33,7 +33,6 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
 
     var searchedProduct = remember {
         mutableStateOf(BasicInsertionDto(1L,"null", Float.MIN_VALUE,null,null,null,null,null,"",BasicInsertionDto.Brand.ADIDAS,BasicInsertionDto.Category.ABBIGLIAMENTO, 2L))
-
     }
 
     /*
@@ -60,10 +59,10 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             CartScreen(application)
         }
         composable(route = ScreenController.Profile.route){
-            ProfileScreen(application) //TODO cambiare user
+            ProfileScreen(application)
         }
         composable(route = ScreenController.BottomBarProfile.route){
-            BottomBarProfile(navController, application) //TODO cambiare user1
+            BottomBarProfile(navController, application)
         }
         composable(route = ScreenController.Favorite.route){
             FavoriteScreen()

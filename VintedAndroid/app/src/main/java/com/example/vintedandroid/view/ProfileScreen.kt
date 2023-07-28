@@ -54,8 +54,6 @@ fun ProfileScreen(application: Context) {
 
     var isLoaded by remember { mutableStateOf(false) }
     var userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
-    //var userFromDB by remember { mutableStateOf(UserDatabaseDto(UUID.randomUUID().toString(),"","",null,null,null,null,null,null,null,null,null,null,null,null)) }
-    var url = remember { mutableStateOf("https://192.168.1.90:8010/vintedProject-api/v1/images/") }//: String? = null
 
     //Prende dal db gli/lo user e li salva nella variabile userFromDB.
     LaunchedEffect(Unit) {
@@ -63,17 +61,13 @@ fun ProfileScreen(application: Context) {
             val databaseItems = withContext(Dispatchers.IO) {
                 AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll()
             }
-            //itemsFromDB.clear()
             userFromDB.clear()
             if(databaseItems.isNotEmpty()) {
                 userFromDB.addAll(databaseItems)
-                url.value = "${url.value}${userFromDB[0].imageName.toString()}"
             }
             isLoaded = true
         }
     }
-
-    val painter: ImagePainter = rememberImagePainter(url.value)
 
     /*
     var isDropdownOpen by remember { mutableStateOf(false) }
@@ -107,7 +101,8 @@ fun ProfileScreen(application: Context) {
             Column {
                 Card {
                     if (userFromDB[0].imageName != null) {
-                        ImageConfiguration(painter = painter, imageScale = ContentScale.Crop)
+                        //ImageConfiguration(painter = painter, imageScale = ContentScale.Crop)
+                        ImageConfiguration(imageName = userFromDB[0].imageName.toString(), imageScale = ContentScale.Fit)
                     } else {
                         Icon(
                             Icons.Filled.AccountCircle,

@@ -3,7 +3,6 @@ package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,25 +29,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.vintedandroid.R
-import com.example.vintedandroid.client.models.UserDto
 import com.example.vintedandroid.model.AppDatabase
-import com.example.vintedandroid.model.dto.CartDto
 import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.theme.Typography
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.UUID
 
 //TODO: CAMBIARE USER CON INSERZIONE
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -89,7 +85,7 @@ fun BottomBarProfile(navController: NavController, application: Context) {
                         )
                         Column(modifier = Modifier.weight(1f)) {
                             Text(text = userFromDB[0].nickName)
-                            Text(text = "Visualizza il mio profilo")
+                            Text(text = "See your profile")
                         }
                         Spacer(modifier = Modifier.weight(1f))
                         Icon(
@@ -101,125 +97,15 @@ fun BottomBarProfile(navController: NavController, application: Context) {
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
-////////////////////////
-                //TODO DA VEDERE SE FUNZIONA CORRETTAMENTE
-                SimilarCard(navController = navController, text = "Favorite", navigateTo = ScreenController.Favorite.route)
 
-                /*
-                Card(onClick = { navController.popBackStack(); navController.navigate("favorite") }) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            Icons.Filled.Favorite,
-                            contentDescription = stringResource(R.string.default_account),
-                            modifier = Modifier
-                                .padding(10.dp)
-                        )
-                        Text(text = "Preferiti")
-                        Spacer(modifier = Modifier.weight(1f))
-                        Icon(
-                            Icons.Filled.KeyboardArrowRight,
-                            contentDescription = stringResource(R.string.default_account)
-                        )
-                    }
-                }
+                SimilarButton(navController = navController, text = "Favorite", navigateTo = ScreenController.Favorite.route, Icons.Filled.Favorite)
+                SimilarButton(navController = navController, text = "Balance", navigateTo = ScreenController.Balance.route, icon = Icons.Filled.PlayArrow)
+                SimilarButton(navController = navController, text = "Settings", navigateTo = ScreenController.Setting.route, icon = Icons.Filled.Settings)
+                SimilarButton(navController = navController, text = "INVIA FEEDBACK (PER IL MEME)", navigateTo = ScreenController.Feedback.route, icon = Icons.Filled.Info)
 
-                 */
-////////////////////////
-                //TODO DA VEDERE SE FUNZIONA CORRETTAMENTE
-                SimilarCard(navController = navController, text = "Balance", navigateTo = ScreenController.Balance.route)
-                /*
-                Card(onClick = { navController.popBackStack(); navController.navigate("balance") }) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            Icons.Filled.PlayArrow,
-                            contentDescription = stringResource(R.string.default_account),
-                            modifier = Modifier
-                                .padding(10.dp)
-                        )
-                        Text(text = "Saldo")
-                        Spacer(modifier = Modifier.weight(1f))
-                        Icon(
-                            Icons.Filled.KeyboardArrowRight,
-                            contentDescription = stringResource(R.string.default_account)
-                        )
-                    }
-                }
+                logoutButton(userFromDB = userFromDB, application = application, navController = navController)
 
-                 */
-//////////////////////
-                Card(onClick = { navController.popBackStack(); navController.navigate("setting") }) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            Icons.Filled.Settings,
-                            contentDescription = stringResource(R.string.default_account),
-                            modifier = Modifier
-                                .padding(10.dp)
-                        )
-                        Text(text = "Impostazioni")
-                        Spacer(modifier = Modifier.weight(1f))
-                        Icon(
-                            Icons.Filled.KeyboardArrowRight,
-                            contentDescription = stringResource(R.string.default_account)
-                        )
-                    }
-                }
-
-                Card(onClick = { navController.popBackStack(); navController.navigate("feedback") }) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            Icons.Filled.Info,
-                            contentDescription = stringResource(R.string.default_account),
-                            modifier = Modifier
-                                .padding(10.dp)
-                        )
-                        Text(text = "INVIA FEEDBACK (PER IL MEME)")
-                        Spacer(modifier = Modifier.weight(1f))
-                        Icon(
-                            Icons.Filled.KeyboardArrowRight,
-                            contentDescription = stringResource(R.string.default_account)
-                        )
-                    }
-                }
-
-                Card(onClick = {
-                    CoroutineScope(Dispatchers.Main).launch {
-
-                        if (userFromDB.isNotEmpty()) {
-                            //userFromDB.remove(userFromDB[0])
-                            AppDatabase.getInstance(context = application.applicationContext)
-                                .userDatabaseDao().delete(userFromDB[0])
-                            AppDatabase.getInstance(context = application.applicationContext)
-                                .cartDao().deleteAll()
-                        }
-                        withContext(Dispatchers.Main) {
-                            navController.popBackStack(); navController.navigate("login")
-                        }
-                    }
-
-                }) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            Icons.Filled.ExitToApp,
-                            contentDescription = stringResource(R.string.default_account),
-                            modifier = Modifier
-                                .padding(10.dp)
-                        )
-                        Text(text = "Logout")
-                        Spacer(modifier = Modifier.weight(1f))
-                        Icon(
-                            Icons.Filled.KeyboardArrowRight,
-                            contentDescription = stringResource(R.string.default_account)
-                        )
-                    }
-                }
-            }else{
-                Card(modifier = Modifier.fillMaxWidth()) {
-                    Text(text = "NO USER LOGGED")
-                    Button(onClick = { navController.popBackStack(); navController.navigate(ScreenController.Login.route) }){
-                        Text(text = "Go to Login page")
-                    }
-                }
-            }
+            }else{ noUserLoggedIn(navController = navController) }
 
         }
     }
@@ -244,15 +130,14 @@ fun BottomBarProfile(navController: NavController, application: Context) {
     }
      */
 
-//TODO DA VEDERE SE FUNZIONA CORRETTAMENTE
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SimilarCard(navController: NavController, text: String, navigateTo: String){
+private fun SimilarButton(navController: NavController, text: String, navigateTo: String, icon :ImageVector){
 
     Card(onClick = { navController.popBackStack(); navController.navigate(navigateTo) }) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                Icons.Filled.Favorite, //TODO Questo dovrebbe essere variabile. Si potrebbe pensare di passare l'icona direttamente alla funzione
+                imageVector = icon,
                 contentDescription = stringResource(R.string.default_account),
                 modifier = Modifier
                     .padding(10.dp)
@@ -265,9 +150,51 @@ private fun SimilarCard(navController: NavController, text: String, navigateTo: 
             )
         }
     }
-
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun logoutButton(userFromDB : SnapshotStateList<UserDatabaseDto>, application: Context, navController: NavController){
+    Card(onClick = {
+        CoroutineScope(Dispatchers.Main).launch {
+
+            if (userFromDB.isNotEmpty()) {
+                //userFromDB.remove(userFromDB[0])
+                AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().delete(userFromDB[0])
+                AppDatabase.getInstance(context = application.applicationContext).cartDao().deleteAll()
+            }
+            withContext(Dispatchers.Main) {
+                navController.popBackStack(); navController.navigate("login")
+            }
+        }
+
+    }) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                Icons.Filled.ExitToApp,
+                contentDescription = stringResource(R.string.default_account),
+                modifier = Modifier
+                    .padding(10.dp)
+            )
+            Text(text = "Logout")
+            Spacer(modifier = Modifier.weight(1f))
+            Icon(
+                Icons.Filled.KeyboardArrowRight,
+                contentDescription = stringResource(R.string.default_account)
+            )
+        }
+    }
+}
+
+@Composable
+private fun noUserLoggedIn(navController: NavController){
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Text(text = "NO USER LOGGED")
+        Button(onClick = { navController.popBackStack(); navController.navigate(ScreenController.Login.route) }){
+            Text(text = "Go to Login page")
+        }
+    }
+}
 
 /*
 @Preview(showBackground = true)
