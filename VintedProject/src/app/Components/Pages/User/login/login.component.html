@@ -18,56 +18,47 @@
       <h2>REGISTRAZIONE</h2>
       <form id="registration" style="display: flex;">
         <div id="secondColumn">
-          <label style="margin: 0 5px;margin-top: 10%;">Nickname:</label>
-          <input type="text" [(ngModel)]="newUser.nickName" name="registerNome">
-          <label style="margin: 0 5px;margin-top: 10%;">Nome:</label>
-          <input type="text" [(ngModel)]="newUser.firstName" name="registerNome">
-          <label style="margin: 0 5px;margin-top: 10%;">Cognome:</label>
-          <input type="text" [(ngModel)]="newUser.lastName" name="registerSur">
-          <label style="margin: 0 5px;margin-top: 10%;">Email:</label>
-          <input type="email" style="margin: 0 5px;" [(ngModel)]="newUser.email" name="registerMail">
-          <label style="margin: 0 5px; margin-top: 10%;">Password:</label>
-          <input type="password" style="margin: 0 5px; " [(ngModel)]="newUser.password" name="registerPassword">
-          <label style="margin: 0 5px; margin-top: 10%;">Conferma password:</label>
-          <input type="password" style="margin: 0 5px; " [(ngModel)]="passwordCheck" name="registerConfirmPassword">
-          <hr style="margin-top: 20%; width: 99%; background-color: black; border-color: black " >
-          <label style="margin: 0 5px; margin-top: 10%;">Indirizzo:</label>
-          <input type="text" style="margin: 0 5px; " [(ngModel)]="newUser.addressStreet" name="registerAddressStreet">
-          <label style="margin: 0 5px; margin-top: 10%;">Numero civico:</label>
-          <input type="text" style="margin: 0 5px; " [(ngModel)]="newUser.addressNumber" name="registerAddressNumber">
-          <label style="margin: 0 5px; margin-top: 10%;">Città:</label>
-          <input type="text" style="margin: 0 5px; " [(ngModel)]="newUser.addressCity" name="registerAddressCity">
-          <label style="margin: 0 5px; margin-top: 10%;">CAP:</label>
-          <input type="text" style="margin: 0 5px; " [(ngModel)]="newUser.addressCap" name="registerAddressCap">
+          <label style="margin: 0 25%;margin-top: 3%;">Nickname:</label>
+          <input type="email" style="margin: 0 25%; width: 50%;" [(ngModel)]="newUser.nickName" name="registerNick" maxlength="15">
+
+          <label style="margin: 0 25%;margin-top: 5%;">Nome:</label>
+          <input type="email" style="margin: 0 25%; width: 50%;" [(ngModel)]="newUser.firstName" name="registerName" maxlength="12">
+
+          <label style="margin: 0 25%;margin-top: 5%;">Cognome:</label>
+          <input type="email" style="margin: 0 25%; width: 50%;" [(ngModel)]="newUser.lastName" name="registerSur" maxlength="12">
+
+          <label style="margin: 0 25%;margin-top: 5%;">Email:</label>
+          <input type="email" style="margin: 0 25%; width: 50%;" [(ngModel)]="newUser.email" name="registerMail" maxlength="20">
+
+          <label style="margin: 0 25%; margin-top: 5%;">Password:</label>
+          <input type="password" style="margin: 0 25%; width: 50%;" [(ngModel)]="newUser.password" name="registerPassword" maxlength="15">
+
+          <label style="margin: 0 25%; margin-top: 5%;">Conferma password:</label>
+          <input type="password" style="margin: 0 25%; width: 50%;" [(ngModel)]="passwordCheck" name="registerConfirmPassword" maxlength="15">
+
+          <hr style="margin-top: 8%; width: 99%; background-color: black; border-color: black " >
+          <div style="display: flex;">
+            <label style="margin: 0 5px; margin-top: 5%;">Indirizzo:</label>
+            <label style="margin: 0 5px; margin-top: 5%; margin-left: 63%">Civico:</label>
+          </div>
+          <div style="display: flex;">
+            <input type="text" style="margin: 0 5px; width: 72%;" [(ngModel)]="newUser.addressStreet" name="registerAddressStreet" maxlength="100">
+            <input type="text" style="margin: 0 5px; width: 9%;" [(ngModel)]="newUser.addressNumber" name="registerAddressNumber" maxlength="4">
+          </div>
+          <div style="display: flex;">
+          <label style="margin: 0 5px; margin-top: 5%;">Città::</label>
+            <label style="margin: 0 5px; margin-top: 5%; margin-left: 67%">CAP:</label>
+          </div>
+          <div style="display: flex;">
+            <input type="text" style="margin: 0 5px; width: 70%;" [(ngModel)]="newUser.addressCity" name="registerAddressCity" maxlength="50">
+            <input type="text" style="margin: 0 5px; width: 12%;" [(ngModel)]="newUser.addressCap" name="registerAddressCap" maxlength="5">
+          </div>
         </div>
       </form>
-      <button mat-flat-button style="margin-top: 12%; color: rgb(3, 90, 3);" [disabled]="!isRegistrationFormValid()" (click)="signUp()">Registrati</button>
-      <button mat-flat-button style="margin-top: 12%;" (click)="flipCard()">Passa all'accesso</button>
-    </div>
-</div>
-
-<!--<div class="container-wrapper">
-  <div class="container" style="background-color: greenyellow;">
-    <div class="input-field">
-      <div class="form-group">
-        <label for="loginuser">Username:</label>
-        <input type="email" [(ngModel)]="login.email" id="loginuser" name="loginuser">
+      <div style="display: flex;">
+      <button mat-flat-button style="margin-top: 12%; margin-right: 10%" (click)="flipCard()">Passa all'accesso</button>
+        <button mat-flat-button style="margin-top: 12%; color: rgb(3, 90, 3);" [disabled]="!isRegistrationFormValid()" (click)="signUp()">Registrati</button>
       </div>
-
-      <div class="form-group">
-        <label for="loginPass">Password:</label>
-        <input type="password" [(ngModel)]="login.password" id="loginPass" name="loginPass">
-      </div>
-
-
-      <button class="button" style="background-color: darkred;" (click)="logIn()">Login</button>
     </div>
   </div>
-
-  <div class="container">
-    <p></p>
-    <p>Non sei registrato? E moviti ja</p>
-    <button class="button" style="background-color: darkblue;"  [routerLink]="['/singin']">Registrati</button>
-  </div>
-</div>-->
 </div>

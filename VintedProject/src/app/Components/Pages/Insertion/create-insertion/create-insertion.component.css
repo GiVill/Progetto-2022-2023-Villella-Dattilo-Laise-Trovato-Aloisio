@@ -14,6 +14,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
@@ -22,7 +23,7 @@
 }
 
 .form-container {
-  max-width: 500px;
+  max-width: 600px;
   padding: 20px;
   border-radius: 5px;
   background-color: transparent;

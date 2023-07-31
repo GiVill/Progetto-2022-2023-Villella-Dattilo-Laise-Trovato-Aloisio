@@ -84,6 +84,7 @@ import {BottomOfTheBarrelComponent} from "./Components/Components/bottom-of-the-
 
     ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     MatMenuModule,

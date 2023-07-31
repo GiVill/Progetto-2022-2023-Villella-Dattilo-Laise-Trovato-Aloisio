@@ -2,10 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {InsertionService} from "../../../../service/insertion.service";
 import {Router} from "@angular/router";
 import {CookiesService} from "../../../../service/cookies.service";
-
+import { FormsModule } from '@angular/forms';
 import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
 import {V1InsertionsBody} from "../../../../Model/v1InsertionsBody";
 import {CookieService} from "ngx-cookie-service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -19,10 +20,11 @@ export class CreateInsertionComponent implements OnInit{
 
   image !: File
   inserzione : BasicInsertionDto = {
-    description: "", price: 0, title: "", userId: Number(this.cookieService.getUserId())
+    description: "", price: 0, title: "", isPrivate:false,  userId: Number(this.cookieService.getUserId())
   };
   constructor(private router: Router,
               private insertionService: InsertionService,
+              private snackBar: MatSnackBar,
               private cookieService: CookiesService)
                                                     { }
 
@@ -32,38 +34,56 @@ export class CreateInsertionComponent implements OnInit{
 
     this.image = files[0]
 
-    // Salva le foto nell'oggetto inserzione
-    //this.inserzione.foto = Array.from(files);
+  }
+  controllo(){
+    if (!this.inserzione.title) {
+      this.snackBar.open("Devi inserire un titolo all' inserzione", 'OK');
+      return false}
+    if (!this.inserzione.category) {
+      this.snackBar.open("Devi aggiungere una categoria all' inserzione", 'OK');
+      return false}
+    if (!this.inserzione.brand) {
+      this.snackBar.open("Devi aggiungere una categoria all' inserzione", 'OK');
+      return false}
+    if (!this.inserzione.price){
+      this.snackBar.open("Inserire un prezzo all' inserzione", 'OK');
+      return false}
+    return true
   }
 
   formValido() {
     return (
       this.inserzione.title &&
-      this.inserzione.description &&
+      this.inserzione.category &&
+      this.inserzione.brand &&
       this.inserzione.price > 0
-      //this.inserzione.foto.length > 0
     );
   }
 
+
   creaInserzione() {
-    console.log(this.inserzione)
-    console.log(this.image)
+    if( this.controllo()){
+      console.log(this.inserzione)
+      console.log(this.image)
 
-    this.insertionService.addInsertionProva(this.inserzione,this.image).subscribe(
+      this.insertionService.addInsertionProva(this.inserzione,this.image).subscribe(
 
-      response => {
-        console.log(this.inserzione)
-        console.log("OK => ",response)
-        // Handle success
-        this.router.navigate(['/']);
-      },
-      error => {
-        console.log("ERRORE REGISTRAZIONE => ",error)
-        console.log(this.inserzione)
-        // Handle error
-      }
-    );
+        response => {
+          console.log(this.inserzione)
+          console.log("OK => ",response)
+          // Handle success
+          this.snackBar.open("Inserzione creata con successo", 'OK');
+          this.router.navigate(['/']);
+        },
+        error => {
+          console.log("ERRORE REGISTRAZIONE => ",error)
+          console.log(this.inserzione)
+          this.snackBar.open("Errore. Riprovare.", 'OK');
+          // Handle error
+        }
+      );
 
+    }
   }
 
   ngOnInit(): void {
@@ -73,5 +93,7 @@ export class CreateInsertionComponent implements OnInit{
   }
 
 
-
+  privatez() {
+    this.inserzione.isPrivate=!this.inserzione.isPrivate
+  }
 }
