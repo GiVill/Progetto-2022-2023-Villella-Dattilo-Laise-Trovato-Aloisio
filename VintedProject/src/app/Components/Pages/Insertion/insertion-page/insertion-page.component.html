@@ -1,6 +1,6 @@
 <div class="main-container">
   <div class="image-container">
-    <img class="productImage" [src]="'https://localhost:8010/vintedProject-api/v1/images/'+ insertion?.imageName ||'assets/resources/vestito.jpg'" (click)="openModal()">
+    <img class="productImage" [src]="insertion?.imageName ? 'https://localhost:8010/vintedProject-api/v1/images/' + insertion?.imageName : 'assets/resources/vestito.jpg'"  (click)="openModal()">
   </div>
 
   <div class="info-container">
@@ -8,19 +8,21 @@
       <div style="width: 100%">
         <h1>{{ insertion?.title }}</h1>
         <p>
-          <strong>
-            Categoria {{ insertion?.category}} <br>
-            Brand {{ insertion?.brand}} <br>
-          </strong>
+
+          <strong> Categoria: </strong> {{ insertion?.category}} <br>
+          <strong>  Brand:  </strong> {{ insertion?.brand}} <br>
+          <strong>  Descrizione:  </strong> {{insertion?.description}}<br>
+
+
         </p>
       </div>
     </div>
     <div class="priceContainer">
       <p>
         <br>
-        Prezzo: {{ insertion?.price }}€ <br>
+        <strong> Prezzo:  </strong> {{ insertion?.price }}€ <br>
         <br>
-        5€ include la Protezione acquisti
+         La spedizione sono cazzi tuoi
       </p>
     </div>
     <div class="button-container">

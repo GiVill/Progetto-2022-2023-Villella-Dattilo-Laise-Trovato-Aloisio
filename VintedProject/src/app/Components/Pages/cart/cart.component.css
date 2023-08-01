@@ -41,9 +41,9 @@
   background-color: rgb(116, 116, 247);
   text-align: center;
   font-weight: bold;
-  height: 50px;
+  height: 80px;
   min-width: 80px;
-  margin: 20px;
+  margin: 30px;
   border-radius: 4px;
   vertical-align: top;
   cursor: pointer;
@@ -52,7 +52,7 @@
   justify-content: center;
   border: none;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 20px;
   font-family: Maison Neue;
   font-size: 14px;
   font-weight: bold;

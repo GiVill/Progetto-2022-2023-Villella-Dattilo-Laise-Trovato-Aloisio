@@ -22,7 +22,6 @@ export class InsertionPageComponent implements OnInit {
   insertion: BasicInsertionDto | undefined;
   user: UserDto | undefined;
   page = 0;
-  // @ts-ignore
   userOtherInsertion!: PageBasicInsertionDto;
   id: number | undefined;
   modalOpen = false;

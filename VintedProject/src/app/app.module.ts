@@ -20,7 +20,7 @@ import { CategoryComponent } from './Components/Querys/category/category.compone
 
 import {FormsModule} from "@angular/forms";
 import {MainNavComponent} from "./Components/Components/main-nav/main-nav.component";
-import {ProductCardComponent} from "./Components/Components/Cards/insertion-card/product-card.component";
+import {ProductCardComponent} from "./Components/Components/Cards/product-card/product-card.component";
 import {InsertionPageComponent} from "./Components/Pages/Insertion/insertion-page/insertion-page.component";
 import {UserInsertionComponent} from "./Components/Pages/User/user-insertion/user-insertion.component";
 import {CatalogComponent} from "./Components/Pages/Insertion/catalog/catalog.component";

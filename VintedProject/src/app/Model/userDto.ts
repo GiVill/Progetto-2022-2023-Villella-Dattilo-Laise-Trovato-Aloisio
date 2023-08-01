@@ -12,6 +12,7 @@
 
 export interface UserDto {
     id?: number;
+    //nickname?:string;
     firstName: string;
     lastName: string;
     imageName?: string;

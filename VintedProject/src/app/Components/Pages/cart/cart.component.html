@@ -6,14 +6,10 @@
       </ng-container>
     </div>
   </div>
-  <hr style="position: fixed; bottom: 20%; left: 20px; right: 20px; border: none; border-top: 1px solid #ccc;">
-  <div style="margin: 10%">
-    <div class="payment-container">
-      <div class="button-container" style="position: fixed; bottom: 20px; right: 20px;">
-        <h2 style="margin: 40px"> Totale: {{totalCost}}€</h2>
-        <button class="button" (click)="createOrder()">Acquista</button>
-      </div>
-      <div class="payment-methods" style="position: fixed; bottom: 20px; left: 20px;">
+  <hr style="position: absolute; bottom: 22%; left: 20px; right: 20px; border: none; border-top: 1px solid #ccc;">
+  <div style="margin: 8%">
+    <div class="payment-container" style="display: flex">
+      <div class="payment-methods" style=" bottom: 20px; left: 20px;">
         <h2>Metodi di pagamento disponibili:</h2>
         <ul>
           <li style="margin: 5%" *ngFor="let method of paymentMethods">
@@ -23,6 +19,10 @@
             </label>
           </li>
         </ul>
+      </div>
+      <div class="button-container" style=" margin-left: 800px; left: 10px">
+        <h2 style="margin: 50px"> Totale: {{totalCost}}€</h2>
+        <button class="button" (click)="createOrder()">Acquista</button>
       </div>
     </div>
   </div>

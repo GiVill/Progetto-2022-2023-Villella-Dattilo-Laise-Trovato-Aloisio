@@ -2,10 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {InsertionService} from "../../../../service/insertion.service";
 import {Router} from "@angular/router";
 import {CookiesService} from "../../../../service/cookies.service";
-import { FormsModule } from '@angular/forms';
 import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
-import {V1InsertionsBody} from "../../../../Model/v1InsertionsBody";
-import {CookieService} from "ngx-cookie-service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 
@@ -71,7 +68,7 @@ export class CreateInsertionComponent implements OnInit{
         response => {
           console.log(this.inserzione)
           console.log("OK => ",response)
-          // Handle success
+          //TODO
           this.snackBar.open("Inserzione creata con successo", 'OK');
           this.router.navigate(['/']);
         },
@@ -79,7 +76,7 @@ export class CreateInsertionComponent implements OnInit{
           console.log("ERRORE REGISTRAZIONE => ",error)
           console.log(this.inserzione)
           this.snackBar.open("Errore. Riprovare.", 'OK');
-          // Handle error
+          //TODO
         }
       );
 

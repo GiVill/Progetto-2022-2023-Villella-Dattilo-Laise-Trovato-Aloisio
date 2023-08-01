@@ -33,6 +33,7 @@ export class CategoryComponent implements OnInit{
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.category = String(params.get('categoryName'));
+      console.log(this.category)
       this.getProductsByCategory(0);
     });
   }
@@ -40,7 +41,8 @@ export class CategoryComponent implements OnInit{
 
   public getProductsByCategory(pageNumber: number) {
     if (!this.category || this.category.trim() === '') {
-      return of(undefined); // Restituisci un observable di undefined
+      console.log("OH NO")
+      return of(undefined);
     }
 
     return this.insertionService.getByCategory( this.category, this.pageNumber,).pipe(
