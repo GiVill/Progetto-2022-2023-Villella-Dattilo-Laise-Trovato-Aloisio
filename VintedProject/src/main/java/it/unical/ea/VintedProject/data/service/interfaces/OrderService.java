@@ -26,7 +26,8 @@ public interface OrderService {
 
     Page<OrderDto> findByUserId(Long UserId,int page);
 
-    OrderDto getOrderByIdAdmin(Long id);
+    Page<OrderDto> getOrderByIdAdmin(Long UserId,int page);
+
 
     void deleteOrderForAdmin(Long orderId);
 }
