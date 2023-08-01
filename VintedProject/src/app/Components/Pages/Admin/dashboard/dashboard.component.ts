@@ -8,6 +8,9 @@ import {InsertionService} from "../../../../service/insertion.service";
 import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
 import {UserService} from "../../../../service/user.service";
 import {PaymentService} from "../../../../service/payment.service";
+import {Observable} from "rxjs";
+import {PageableObject} from "../../../../Model/pageableObject";
+import {SortObject} from "../../../../Model/sortObject";
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +27,9 @@ export class DashboardComponent {
   userDtoArray: UserDto[] = [];
   orderDtoArray: OrderDto[] = [];
   paymentDtoArray: PaymentDto[] = [];
-  insertionDtoArray: BasicInsertionDto[] = [];
+  insertionDtoArray!: PageBasicInsertionDto
+
+
 
   constructor(private orderService : OrderService,
               private insertionService :InsertionService,
@@ -91,7 +96,16 @@ export class DashboardComponent {
   }
 
   searchGetAllByUserId() {
-   this.insertionService.getInsertionByUserId(this.userId, this.page)
+    console.log(this.userId)
+    this.insertionService.getInsertionByUserId(this.userId, this.page).subscribe(
+      (insertions: PageBasicInsertionDto) => {
+        this.insertionDtoArray = {
+          ...insertions
+        };
+        console.log(this.insertionDtoArray)
+      })
+    console.log(this.insertionDtoArray)
+    return this.insertionDtoArray
   }
 
 
@@ -161,7 +175,7 @@ export class DashboardComponent {
     this.userDtoArray = [];
     this.orderDtoArray = [];
     this.paymentDtoArray = [];
-    this.insertionDtoArray = [];
+    //this.insertionDtoArray= [];
   }
 }
 

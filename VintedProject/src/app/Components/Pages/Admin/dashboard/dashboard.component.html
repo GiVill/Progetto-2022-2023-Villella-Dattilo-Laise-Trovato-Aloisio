@@ -8,7 +8,7 @@
       </div>
       <div class="card-body">
         <button class="action-button" (click)="deleteBasicInsertion()">Delete Basic Insertion</button>
-        <button class="action-button" (click)="getAllByUserId()">Get All by User ID</button>
+        <button class="action-button" (click)="getAllByUserId()">Get All Insertion from User ID</button>
         <button class="action-button" (click)="getOrderById()">Get Order by ID</button>
         <button class="action-button" (click)="deleteOrder()">Delete Order</button>
         <button class="action-button" (click)="findAll()">Find All</button>
@@ -27,17 +27,17 @@
 
         <div class="input-field" *ngIf="activeButton === 'getAllByUserId'">
           <label for="userId">User ID:</label>
-          <input type="number" id="userId" [(ngModel)]="userId">
+          <input type="number"  [(ngModel)]="userId">
         </div>
 
         <div class="input-field" *ngIf="activeButton === 'getOrderById'">
-          <label for="orderId">Order ID:</label>
-          <input type="number" id="orderId" [(ngModel)]="orderId">
+          <label>Order ID:</label>
+          <input type="number"  [(ngModel)]="orderId">
         </div>
 
         <div class="input-field" *ngIf="activeButton === 'deleteOrder'">
-          <label for="orderId">Order ID:</label>
-          <input type="number" id="orderId" [(ngModel)]="orderId">
+          <label>Order ID:</label>
+          <input type="number"  [(ngModel)]="orderId">
         </div>
 
         <div class="input-field" *ngIf="activeButton === 'findAll'">
@@ -67,18 +67,18 @@
       </tr>
       </thead>
       <tbody>
-      <ng-container *ngIf="activeButton === 'deleteBasicInsertion' && insertionDtoArray.length > 0">
-        <tr *ngFor="let insertion of insertionDtoArray">
+      <ng-container *ngIf="activeButton === 'deleteBasicInsertion'">
+        <tr *ngFor="let insertion of insertionDtoArray?.content">
           <td>{{ insertion.id }}</td>
           <td>{{ insertion.id }}</td>
           <td>{{ insertion.category }}</td>
         </tr>
       </ng-container>
-      <ng-container *ngIf="activeButton === 'getAllByUserId' && userDtoArray.length > 0">
-        <tr *ngFor="let user of userDtoArray">
-          <td>{{ user.id }}</td>
-          <td>{{ user.firstName }}</td>
-          <td>{{ user.email }}</td>
+      <ng-container *ngIf="activeButton === 'getAllByUserId'">
+        <tr *ngFor="let insertion of insertionDtoArray?.content">
+          <td>{{ insertion.title }}</td>
+          <td>{{ insertion.description }}</td>
+          <td>{{ insertion.price }}</td>
         </tr>
       </ng-container>
       <ng-container *ngIf="activeButton === 'getOrderById' && orderDtoArray.length > 0">
@@ -98,9 +98,7 @@
       </tbody>
     </table>
 
-    <div class="no-data" *ngIf="activeButton">
-      No data available.
-    </div>
+    
 
     <div class="pagination">
       <!-- Add pagination logic here -->
