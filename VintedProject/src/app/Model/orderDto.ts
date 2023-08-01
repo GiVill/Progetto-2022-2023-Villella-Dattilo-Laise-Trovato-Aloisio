@@ -14,7 +14,7 @@ export interface OrderDto {
     id: number | null;
     date?: string;
     paymentId: number | null;
-    insertionIdList?: Number[];
+    insertionIdList: number[];
     total?: number;
     userId: number;
 }

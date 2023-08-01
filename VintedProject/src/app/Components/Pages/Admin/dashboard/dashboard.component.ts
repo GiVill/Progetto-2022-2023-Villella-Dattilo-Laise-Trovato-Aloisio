@@ -116,12 +116,12 @@ export class DashboardComponent {
 
 
   searchGetOrderUserById() {
-    this.orderService.getUserOrders(this.userId, this.page).subscribe(
+    this.orderService.getOrderByIdAdmin(this.userId, this.page).subscribe(
       (order: PageOrderDto) => {
         this.orderDtoArray = order;
       },
       (error) => {
-        this.snackBar.open('Non è stato possibile eliminare questo ordine', 'OK');
+        this.snackBar.open('Non è stato possibile recuperare gli ordini', 'OK');
 
         console.log("Error", error);
       }
@@ -131,11 +131,12 @@ export class DashboardComponent {
   searchDeleteOrder(orderId) {
    this.orderService.deleteOrderForAdmin(orderId).subscribe(
      response => {
+       this.snackBar.open('Ordine Eliminato', 'OK');
        console.log("Ordine Eliminato", response);
 
-       console.log("Ordine Eliminato", response);
      },
      error => {
+       this.snackBar.open('Non è stato possibile eliminare questo ordine', 'OK');
        console.log("Errore", error);
      }
    );

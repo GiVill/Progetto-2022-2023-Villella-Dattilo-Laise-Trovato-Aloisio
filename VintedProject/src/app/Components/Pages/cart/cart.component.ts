@@ -106,10 +106,6 @@ export class CartComponent implements OnInit {
    }
 
 
-
-
-
-
   private saveCartItems(cartItems: { insertion_id: number}[]): void {
     this.cookieService.delete('cartItems', '/');
     const updatedCartItems = cartItems.map(item => ({ insertion_id: item.insertion_id}));
@@ -121,14 +117,11 @@ export class CartComponent implements OnInit {
       console.log("Nessun prodotto nel carrello. Impossibile creare l'ordine.");
       return;
     }
-
-
-
     /////////////////////////////////////////////////////////////////////////
     const insertionIds: number[] = this.product.map(item => item.insertion_id);
     const token = this.cookieService.get('jwtToken');
     const userId: number = this.tokenService.getUserStringFromToken(token);
-
+    //TODO
     const payment: PaymentDto = {id: 0, orderId: 0, total: this.totalCost, userId: userId, paymentMethod: this.selectedPaymentMethod}
     this.paymentService.addPayment(payment).subscribe(
       response => {
@@ -150,7 +143,6 @@ export class CartComponent implements OnInit {
             this.orderSuccess = true;
             this.orderError = false;
             //TODO Assegnare a questo pagamento l'id dell'ordine
-            // Clear cart
             this.clearCart();
           },
           error => {

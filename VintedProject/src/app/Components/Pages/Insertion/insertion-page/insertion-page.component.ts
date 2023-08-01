@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {switchMap} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 import {InsertionService} from "../../../../service/insertion.service";
@@ -9,6 +9,8 @@ import {OrderService} from "../../../../service/order.service";
 import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
 import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
 import {UserDto} from "../../../../Model/userDto";
+import {CookiesService} from "../../../../service/cookies.service";
+import {ErrorService} from "../../../../service/error.service";
 
 
 @Component({
@@ -27,13 +29,17 @@ export class InsertionPageComponent implements OnInit {
   modalOpen = false;
   modalImage: string | undefined;
   isProductInCart=false;
+  isMyProduct=false;
 
   constructor(
     private insertionService: InsertionService,
     private route: ActivatedRoute,
     private cookieService: CookieService,
+    private cookiesService: CookiesService,
     private cartService: CartService,
     private userService: UserService,
+    private error: ErrorService,
+    private router: Router,
     private orderService: OrderService,) {
   }
 
@@ -53,6 +59,9 @@ export class InsertionPageComponent implements OnInit {
             this.userService.getById(this.insertion.userId).subscribe(
               (userData: UserDto) => {
                 this.user = userData;
+                if (Number(this.user?.id) == Number(this.cookiesService.getUserId())){
+                  this.isMyProduct=true;
+                }
                 this.insertionService.getInsertionByUserId(Number(this.user.id), this.page).subscribe(
                   (data: PageBasicInsertionDto) => {
                     this.userOtherInsertion = data;
@@ -64,6 +73,7 @@ export class InsertionPageComponent implements OnInit {
                     });
                   },
                   (error) => {
+
                     console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
                   }
                 );
@@ -76,8 +86,12 @@ export class InsertionPageComponent implements OnInit {
           }
         },
         (error) => {
+          if (!this.error.redirectToErrorPage(error)) {
+            this.error.redirectToErrorPage(error)
+          }
           console.log('Si è verificato un errore durante il recupero dell\'inserzione:', error);
         }
+
       );
 
     this.checkProductInCart();

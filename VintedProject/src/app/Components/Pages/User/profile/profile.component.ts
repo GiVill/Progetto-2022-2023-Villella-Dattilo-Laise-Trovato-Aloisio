@@ -7,6 +7,8 @@ import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
 import {UserDto} from "../../../../Model/userDto";
 import {CookieService} from "ngx-cookie-service";
 import {CookiesService} from "../../../../service/cookies.service";
+import {ErrorService} from "../../../../service/error.service";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 ;
 
 
@@ -30,6 +32,7 @@ export class ProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
+    private error: ErrorService,
     private cookieservice: CookiesService,
   ) {}
 
@@ -63,10 +66,20 @@ export class ProfileComponent implements OnInit {
             );
           },
           (error) => {
+
             console.log('Si è verificato un errore durante il recupero dell\'utente:', error);
           }
         );
-      });
+
+
+
+      },  (error) => {
+        if (!this.error.redirectToErrorPage(error)) {
+          this.error.redirectToErrorPage(error)
+        }
+      console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
+    }
+      );
   }
 
   getUserByUserId(userId: number): UserDto  {

@@ -34,32 +34,31 @@ export class CategoryComponent implements OnInit{
     this.route.paramMap.subscribe((params) => {
       this.category = String(params.get('categoryName'));
       console.log(this.category)
-      this.getProductsByCategory(0);
+      this.getProductsByCategory();
     });
   }
 
 
-  public getProductsByCategory(pageNumber: number) {
+  public getProductsByCategory() {
     if (!this.category || this.category.trim() === '') {
       console.log("OH NO")
-      return of(undefined);
     }
 
-    return this.insertionService.getByCategory( this.category, this.pageNumber,).pipe(
-      tap((insertions: PageBasicInsertionDto) => {
-        this.insertion = insertions;
-        const userIds = this.insertion.content?.map((insertion) => insertion.userId).filter((id, index, array) => array.indexOf(id) === index);
+    this.insertionService.getByCategory(this.category!,this.pageNumber).subscribe((insertions: PageBasicInsertionDto) => {
+      this.insertion = insertions;
 
-        if (userIds) {
-          // Fetch all users by their IDs and store them in the users array
-          userIds.forEach((userId) => {
-            this.userService.getById(userId).subscribe((user: UserDto) => {
-              this.users.push(user);
-            });
+      const userIds = this.insertion.content?.map((insertion) => insertion.userId).filter((id, index, array) => array.indexOf(id) === index);
+
+      if (userIds) {
+        // Fetch all users by their IDs and store them in the users array
+        userIds.forEach((userId) => {
+          this.userService.getById(userId).subscribe((user: UserDto) => {
+            this.users.push(user);
           });
-        }
-      })
-    );
+        });
+      }
+    });
+
   }
 
   getUserByUserId(userId: number): UserDto  {

@@ -316,48 +316,54 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getOrderByIdAdmin(orderId: number, observe?: 'body', reportProgress?: boolean): Observable<OrderDto>;
-    public getOrderByIdAdmin(orderId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<OrderDto>>;
-    public getOrderByIdAdmin(orderId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<OrderDto>>;
-    public getOrderByIdAdmin(orderId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getOrderByIdAdmin(userId: number, page: number, observe?: 'body', reportProgress?: boolean): Observable<PageOrderDto>;
+  public getOrderByIdAdmin(userId: number, page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOrderDto>>;
+  public getOrderByIdAdmin(userId: number, page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOrderDto>>;
+  public getOrderByIdAdmin(userId: number, page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (orderId === null || orderId === undefined) {
-            throw new Error('Required parameter orderId was null or undefined when calling getOrderByIdAdmin.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<OrderDto>('get',`${this.basePath}/v1/orders/admin/${encodeURIComponent(String(orderId))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+    if (userId === null || userId === undefined) {
+      throw new Error('Required parameter userId was null or undefined when calling getOrderByIdAdmin.');
     }
 
-    /**
+    if (page === null || page === undefined) {
+      throw new Error('Required parameter page was null or undefined when calling getOrderByIdAdmin.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // authentication (bearerAuth) required
+    if (this.configuration.accessToken) {
+      const accessToken = typeof this.configuration.accessToken === 'function'
+        ? this.configuration.accessToken()
+        : this.configuration.accessToken;
+      headers = headers.set('Authorization', 'Bearer ' + accessToken);
+    }
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+    ];
+
+    return this.httpClient.request<PageOrderDto>('get',`${this.basePath}/v1/orders/admin/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(page))}`,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+
+
+  /**
      *
      *
      * @param userId
