@@ -7,11 +7,12 @@
         <h2>Actions</h2>
       </div>
       <div class="card-body">
-        <button class="action-button" (click)="deleteBasicInsertion()">Delete Basic Insertion</button>
-        <button class="action-button" (click)="getAllByUserId()">Get All Insertion from User ID</button>
-        <button class="action-button" (click)="getOrderById()">Get Order by ID</button>
-        <button class="action-button" (click)="deleteOrder()">Delete Order</button>
-        <button class="action-button" (click)="findAll()">Find All</button>
+        <button class="action-button" (click)="getAllByUserId()">Get all Insertion from User</button>
+        <hr style=" bottom: 22%; left: 20px; right: 20px; border: none; border-top: 1px solid #ccc;">
+        <button class="action-button" (click)="getOrderById()">Get All Order from User</button>
+        <hr style=" bottom: 22%; left: 20px; right: 20px; border: none; border-top: 1px solid #ccc;">
+        <button class="action-button" (click)="findAll()">Get All from User</button>
+        <hr style=" bottom: 22%; left: 20px; right: 20px; border: none; border-top: 1px solid #ccc;">
         <button class="action-button" (click)="deletePayment()">Delete Payment</button>
       </div>
     </div>
@@ -20,88 +21,90 @@
         <h2>Input Fields</h2>
       </div>
       <div class="card-body">
-        <div class="input-field" *ngIf="activeButton === 'deleteBasicInsertion'">
-          <label for="insertionId">Insertion ID:</label>
-          <input type="number" id="insertionId" [(ngModel)]="insertionId">
-        </div>
 
         <div class="input-field" *ngIf="activeButton === 'getAllByUserId'">
           <label for="userId">User ID:</label>
-          <input type="number"  [(ngModel)]="userId">
+          <input type="text"  [(ngModel)]="userId">
         </div>
 
         <div class="input-field" *ngIf="activeButton === 'getOrderById'">
-          <label>Order ID:</label>
-          <input type="number"  [(ngModel)]="orderId">
+          <label>User ID:</label>
+          <input type="text"  [(ngModel)]="userId">
         </div>
 
-        <div class="input-field" *ngIf="activeButton === 'deleteOrder'">
-          <label>Order ID:</label>
-          <input type="number"  [(ngModel)]="orderId">
-        </div>
 
         <div class="input-field" *ngIf="activeButton === 'findAll'">
           <label for="userId">User ID:</label>
           <input type="number" id="userId" [(ngModel)]="userId">
           <label for="page">Page:</label>
-          <input type="number" id="page" [(ngModel)]="page">
+          <input type="text" id="page" [(ngModel)]="page">
         </div>
 
         <div class="input-field" *ngIf="activeButton === 'deletePayment'">
           <label for="paymentId">Payment ID:</label>
-          <input type="number" id="paymentId" [(ngModel)]="paymentId">
+          <input type="text" id="paymentId" [(ngModel)]="paymentId">
         </div>
         <button class="search-button" (click)="search()">Search</button>
       </div>
     </div>
   </div>
 
-  <div class="table-container">
+  <div class="table-container"  *ngIf="activeButton === 'getAllByUserId'">
     <table>
       <thead>
       <tr>
         <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <!-- Add other dynamic column headers based on the activeButton -->
+        <th>Titolo</th>
+        <th>Descrizione</th>
+        <th>Prezzo</th>
+        <th>Azione</th>
       </tr>
       </thead>
       <tbody>
-      <ng-container *ngIf="activeButton === 'deleteBasicInsertion'">
-        <tr *ngFor="let insertion of insertionDtoArray?.content">
-          <td>{{ insertion.id }}</td>
-          <td>{{ insertion.id }}</td>
-          <td>{{ insertion.category }}</td>
-        </tr>
-      </ng-container>
       <ng-container *ngIf="activeButton === 'getAllByUserId'">
         <tr *ngFor="let insertion of insertionDtoArray?.content">
+          <td>{{ insertion.id }}</td>
           <td>{{ insertion.title }}</td>
           <td>{{ insertion.description }}</td>
           <td>{{ insertion.price }}</td>
-        </tr>
-      </ng-container>
-      <ng-container *ngIf="activeButton === 'getOrderById' && orderDtoArray.length > 0">
-        <tr *ngFor="let order of orderDtoArray">
-          <td>{{ order.id }}</td>
-          <td>{{ order.total }}</td>
-          <td>{{ order.insertionIdList }}</td>
-        </tr>
-      </ng-container>
-      <ng-container *ngIf="activeButton === 'findAll' && userDtoArray.length > 0">
-        <tr *ngFor="let user of userDtoArray">
-          <td>{{ user.id }}</td>
-          <td>{{ user.firstName }}</td>
-          <td>{{ user.email }}</td>
+          <td > <button (click)="searchDeleteBasicInsertion(insertion.id)"> X </button> </td>
         </tr>
       </ng-container>
       </tbody>
     </table>
+  </div>
 
-    
+    <div class="table-container"  *ngIf="activeButton === 'getOrderById'">
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Data</th>
+          <th>Prodotti</th>
+          <th>Totale</th>
+          <th>Azione</th>
+        </tr>
+        </thead>
+        <tbody>
 
-    <div class="pagination">
+
+        <ng-container *ngIf="activeButton === 'getOrderById'">
+          <tr *ngFor="let order of orderDtoArray?.content">
+            <td>{{ order.id}}</td>
+            <td>{{ order.date }}</td>
+            <td>{{ order.insertionIdList }}</td>
+            <td>{{ order.total }}</td>
+            <td > <button (click)="searchDeleteOrder(order.id)"> X </button> </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+
+
+
+      <div class="pagination">
       <!-- Add pagination logic here -->
     </div>
   </div>
 </div>
+
