@@ -1,6 +1,5 @@
 package it.unical.ea.VintedProject.dto;
 
-import it.unical.ea.VintedProject.data.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -10,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class NewMessageDto {
 
-    private User idUser1;
-    private User idUser2;
+    private Long idUser1;
+    private Long idUser2;
     private String message;
 }
