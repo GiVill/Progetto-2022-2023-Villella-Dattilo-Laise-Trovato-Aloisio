@@ -1,7 +1,6 @@
 package it.unical.ea.VintedProject.data.entities;
 
 
-import it.unical.ea.VintedProject.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,15 +25,16 @@ public class Chat {
     private Long id;
 
     @Column(name = "user1")
-    private User idUser1;
+    private Long idUser1;
 
     @Column(name = "user2")
-    private User idUser2;
+    private Long idUser2;
 
     @Column(name = "message")
     private String message;
 
     @Column(name = "date")
     private LocalDateTime date;
+
 
 }
