@@ -37,11 +37,11 @@ export class LoginComponent implements OnInit{
 
 
   newUser: NewUserDto = {
-    nickName: "",
     password: '',
+    nickName: '',
     firstName: '',
-    lastName: '',
     email: '',
+    lastName: '',
     addressStreet: '',
     addressNumber: 0,
     addressCity: '',
@@ -114,7 +114,6 @@ export class LoginComponent implements OnInit{
   signUp(): void {
     this.authService.signUp(this.newUser).subscribe(
       () => {
-        // Handle success
         this.snackBar.open('Registrazione completata con successo!', 'OK');
         this.flipCard();
       },
