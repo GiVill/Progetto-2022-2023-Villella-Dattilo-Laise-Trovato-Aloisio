@@ -25,11 +25,15 @@
         <div class="input-field" *ngIf="activeButton === 'getAllByUserId'">
           <label for="userId">User ID:</label>
           <input type="text"  [(ngModel)]="userId">
+          <label>User Email:</label>
+          <input type="text"  [(ngModel)]="userEmail">
         </div>
 
         <div class="input-field" *ngIf="activeButton === 'getOrderById'">
           <label>User ID:</label>
           <input type="text"  [(ngModel)]="userId">
+          <label>User Email:</label>
+          <input type="text"  [(ngModel)]="userEmail">
         </div>
 
 
@@ -44,7 +48,7 @@
           <label for="paymentId">Payment ID:</label>
           <input type="text" id="paymentId" [(ngModel)]="paymentId">
         </div>
-        <button class="search-button" (click)="search()">Search</button>
+        <button class="search-button" (click)="action()">Search</button>
       </div>
     </div>
   </div>
@@ -57,7 +61,7 @@
         <th>Titolo</th>
         <th>Descrizione</th>
         <th>Prezzo</th>
-        <th>Azione</th>
+        <th>Elimina</th>
       </tr>
       </thead>
       <tbody>
@@ -66,8 +70,8 @@
           <td>{{ insertion.id }}</td>
           <td>{{ insertion.title }}</td>
           <td>{{ insertion.description }}</td>
-          <td>{{ insertion.price }}</td>
-          <td > <button (click)="searchDeleteBasicInsertion(insertion.id)"> X </button> </td>
+          <td>{{ insertion.price }}€</td>
+          <td > <button (click)="actionDeleteBasicInsertion(insertion.id)"> X </button> </td>
         </tr>
       </ng-container>
       </tbody>
@@ -82,7 +86,7 @@
           <th>Data</th>
           <th>Prodotti</th>
           <th>Totale</th>
-          <th>Azione</th>
+          <th>Elimina</th>
         </tr>
         </thead>
         <tbody>
@@ -93,8 +97,8 @@
             <td>{{ order.id}}</td>
             <td>{{ order.date }}</td>
             <td>{{ order.insertionIdList }}</td>
-            <td>{{ order.total }}</td>
-            <td > <button (click)="searchDeleteOrder(order.id)"> X </button> </td>
+            <td>{{ order.total }}€</td>
+            <td > <button (click)="actionDeleteOrder(order.id)"> X </button> </td>
           </tr>
         </ng-container>
         </tbody>

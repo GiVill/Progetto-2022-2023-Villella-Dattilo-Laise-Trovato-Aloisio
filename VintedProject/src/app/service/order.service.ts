@@ -213,7 +213,62 @@ export class OrderService {
         );
     }
 
-    /**
+
+  /**
+   *
+   *
+   * @param userEmail
+   * @param page
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getOrderByIdAdminByEmail(userEmail: string, page: number, observe?: 'body', reportProgress?: boolean): Observable<PageOrderDto>;
+  public getOrderByIdAdminByEmail(userEmail: string, page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOrderDto>>;
+  public getOrderByIdAdminByEmail(userEmail: string, page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOrderDto>>;
+  public getOrderByIdAdminByEmail(userEmail: string, page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+    if (userEmail === null || userEmail === undefined) {
+      throw new Error('Required parameter userEmail was null or undefined when calling getOrderByIdAdminByEmail.');
+    }
+
+    if (page === null || page === undefined) {
+      throw new Error('Required parameter page was null or undefined when calling getOrderByIdAdminByEmail.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // authentication (bearerAuth) required
+    if (this.configuration.accessToken) {
+      const accessToken = typeof this.configuration.accessToken === 'function'
+        ? this.configuration.accessToken()
+        : this.configuration.accessToken;
+      headers = headers.set('Authorization', 'Bearer ' + accessToken);
+    }
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+    ];
+
+    return this.httpClient.request<PageOrderDto>('get',`${this.basePath}/v1/orders/admin/email/${encodeURIComponent(String(userEmail))}/${encodeURIComponent(String(page))}`,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+
+  /**
      *
      *
      * @param orderId
@@ -351,7 +406,7 @@ export class OrderService {
     const consumes: string[] = [
     ];
 
-    return this.httpClient.request<PageOrderDto>('get',`${this.basePath}/v1/orders/admin/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(page))}`,
+    return this.httpClient.request<PageOrderDto>('get',`${this.basePath}/v1/orders/admin/id/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(page))}`,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,

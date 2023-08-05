@@ -30,6 +30,7 @@ export class DashboardComponent {
   orderDtoArray!: PageOrderDto;
   paymentDtoArray: PaymentDto[] = [];
   insertionDtoArray!: PageBasicInsertionDto
+  userEmail!: string;
 
 
 
@@ -85,22 +86,36 @@ export class DashboardComponent {
     this.clearDataArrays();
   }
 
-  searchGetAllByUserId() {
+  actionGetAllByUserId() {
     console.log(this.userId);
-    this.insertionService.getInsertionByUserId(this.userId, this.page).subscribe(
-      (insertions: PageBasicInsertionDto) => {
-        this.insertionDtoArray = { ...insertions };
-        console.log(this.insertionDtoArray);
-      },
-      (error) => {
-        console.log("Error", error);
-      }
-    );
+    if (this.userId){
+      this.insertionService.getInsertionByUserId(this.userId, this.page).subscribe(
+        (insertions: PageBasicInsertionDto) => {
+          this.insertionDtoArray = { ...insertions };
+          console.log(this.insertionDtoArray);
+        },
+        (error) => {
+          console.log("Error", error);
+        }
+      );
+    }else{
+      console.log(this.userEmail);
+      this.insertionService.getInsertionByUserEmail(this.userEmail, this.page).subscribe(
+        (insertions: PageBasicInsertionDto) => {
+          this.insertionDtoArray = { ...insertions };
+          console.log(this.insertionDtoArray);
+        },
+        (error) => {
+          console.log("Error", error);
+        }
+      );
+    }
   }
-  searchDeleteBasicInsertion(InsertionId) {
+
+  actionDeleteBasicInsertion(InsertionId) {
     this.insertionService.deleteInsertionForAdmin(InsertionId).subscribe(
       response => {
-        this.searchGetAllByUserId()
+        this.actionGetAllByUserId()
         this.snackBar.open('Inserzione Eliminata', 'OK');
 
         console.log("Inserzione Eliminata", response);
@@ -115,20 +130,33 @@ export class DashboardComponent {
 
 
 
-  searchGetOrderUserById() {
-    this.orderService.getOrderByIdAdmin(this.userId, this.page).subscribe(
-      (order: PageOrderDto) => {
-        this.orderDtoArray = order;
-      },
-      (error) => {
-        this.snackBar.open('Non è stato possibile recuperare gli ordini', 'OK');
+  actionGetOrderUserById() {
+    if (this.userId) {
+      this.orderService.getOrderByIdAdmin(this.userId, this.page).subscribe(
+        (order: PageOrderDto) => {
+          this.orderDtoArray = order;
+        },
+        (error) => {
+          this.snackBar.open('Non è stato possibile recuperare gli ordini', 'OK');
 
-        console.log("Error", error);
-      }
-    );
+          console.log("Error", error);
+        }
+      );
+    }else{
+      this.orderService.getOrderByIdAdminByEmail(this.userEmail, this.page).subscribe(
+        (order: PageOrderDto) => {
+          this.orderDtoArray = order;
+        },
+        (error) => {
+          this.snackBar.open('Non è stato possibile recuperare gli ordini', 'OK');
+
+          console.log("Error", error);
+        }
+      );
+    }
   }
 
-  searchDeleteOrder(orderId) {
+  actionDeleteOrder(orderId) {
    this.orderService.deleteOrderForAdmin(orderId).subscribe(
      response => {
        this.snackBar.open('Ordine Eliminato', 'OK');
@@ -146,7 +174,7 @@ export class DashboardComponent {
 
   }
 
-  searchDeletePayment() {
+  actionDeletePayment() {
     this.paymentService.deletePaymentAdmin(this.orderId).subscribe(
       response => {
         console.log("Pagamento Eliminato", response);
@@ -157,25 +185,25 @@ export class DashboardComponent {
     );
   }
 
-  search() {
+  action() {
     switch (this.activeButton) {
       case 'deleteBasicInsertion':
-        this.searchDeleteBasicInsertion(this.insertionId);
+        this.actionDeleteBasicInsertion(this.insertionId);
         break;
       case 'getAllByUserId':
-        this.searchGetAllByUserId();
+        this.actionGetAllByUserId();
         break;
       case 'getOrderById':
-        this.searchGetOrderUserById();
+        this.actionGetOrderUserById();
         break;
       case 'deleteOrder':
-        this.searchDeleteOrder(this.orderId);
+        this.actionDeleteOrder(this.orderId);
         break;
       case 'findAll':
         this.searchFindAll();
         break;
       case 'deletePayment':
-        this.searchDeletePayment();
+        this.actionDeletePayment();
         break;
       default:
         break;
