@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
+import {CookiesService} from "../../../../service/cookies.service";
+import {InsertionService} from "../../../../service/insertion.service";
 
 @Component({
   selector: 'app-product-card',
@@ -12,8 +14,11 @@ export class ProductCardComponent implements OnInit{
 
   imageName !: String;
   isHovered = false;
+  myid= Number(this.cookiesService.getUserId());
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private cookiesService: CookiesService,
+              private insertionService: InsertionService) { }
   ngOnInit(): void {
     if(this.item?.imageName != null){
       this.imageName = 'https://localhost:8010/vintedProject-api/v1/images/' + this.item.imageName
@@ -28,6 +33,16 @@ export class ProductCardComponent implements OnInit{
 
   onImageClick(): void {
     this.router.navigate(['/insertion', this.item?.id]);
+  }
+
+  share(){
+    this.insertionService.generateCapabilities(Number(this.item?.id)).subscribe(response => {
+        console.log("Capability generata", response);
+        //TODO
+      },
+      error => {
+        console.log("Errore durante la generazione", error);
+      })
   }
 
 

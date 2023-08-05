@@ -1,6 +1,8 @@
 <div class="product-card">
   <div class="image-container">
     <img class="rounded-image" [src]="imageName" (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
+    <button *ngIf="item?.isPrivate && item?.userId==myid" style="display: flex; bottom: 2px; margin: 5px" (click)="share()" >Condividi con codice privato</button>
+
   </div>
   <div class="content-container" (click)="onImageClick()">
     <h2 class="title">{{ item?.title }}</h2>
