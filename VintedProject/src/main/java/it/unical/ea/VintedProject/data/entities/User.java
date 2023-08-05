@@ -82,6 +82,13 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "BASICINSERTION_ID"))
     Set<BasicInsertion> favorites;
 
+    @ManyToMany(mappedBy = "idUser1")
+    private List<Chat> sender;
+
+    // Relazione ManyToMany tra User e Chat per i receiver
+    @ManyToMany(mappedBy = "idUser2")
+    private List<Chat> receiver;
+
     /*
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Chat> chats;

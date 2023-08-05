@@ -23,6 +23,9 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -99,6 +102,7 @@ public class DbGenerator implements ApplicationRunner {
                     .parse(new InputStreamReader(chatRes.getInputStream()));
             for (CSVRecord record : chatCsv) {
                 System.out.println(record.get(0)+ record.get(1) +record.get(2)+ record.get(3));
+                //insertChat(userService.getUserById(Long.valueOf(record.get(0))), userService.getUserById(Long.valueOf(record.get(1))), record.get(2), record.get(3));
                 insertChat(record.get(0), record.get(1), record.get(2), record.get(3));
             }
 
@@ -110,15 +114,7 @@ public class DbGenerator implements ApplicationRunner {
         }
     }
 
-    private void insertChat(String id1, String id2, String message, String date) {
-        Chat chat = new Chat();
-        chat.setIdUser1(Long.valueOf(id1));
-        chat.setIdUser2(Long.valueOf(id2));
-        chat.setMessage(message);
-        chat.setDate(LocalDateTime.parse(date));
 
-        chatService.save(chat);
-    }
 
     private void insertBuyingoffert(String price, String idInsertion, String idUser) {
         BuyingOffer buyingOffer = new BuyingOffer();
@@ -183,9 +179,27 @@ public class DbGenerator implements ApplicationRunner {
 
         userService.save(user);
     }
+    private void insertChat(String id1, String id2, String message, String date) {
+        Chat chat = new Chat();
+        User user1 = userService.getUserById(Long.valueOf(id1));
+        User user2 = userService.getUserById(Long.valueOf(id2));
+
+        List<User> users1 = new ArrayList<>();
+        users1.add(user1);
+        chat.setIdUser1(users1);
+
+        List<User> users2 = new ArrayList<>();
+        users2.add(user2);
+
+        chat.setIdUser2(users2);
+        chat.setMessage(message);
+        chat.setDate(LocalDateTime.parse(date));
+
+        chatService.save(chat);
+    }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        //createDb();
+        createDb();
     }
 }

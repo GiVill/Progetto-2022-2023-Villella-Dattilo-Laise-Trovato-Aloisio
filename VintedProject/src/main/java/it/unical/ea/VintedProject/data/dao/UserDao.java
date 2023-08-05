@@ -21,4 +21,5 @@ public interface UserDao extends JpaRepository<User,Long> {
     //Find a SINGLE User using email
     Optional<User> findUserByEmail(String email);
 
+    User findById(User idUser2);
 }
