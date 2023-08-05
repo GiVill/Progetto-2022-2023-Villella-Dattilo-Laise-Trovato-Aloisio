@@ -27,10 +27,16 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrderById(orderId));
     }
 
-    @GetMapping("/orders/admin/{userId}/{page}")
+    @GetMapping("/orders/admin/id/{userId}/{page}")
     //@PreAuthorize("hasRole('<admin')")
     public ResponseEntity<Page<OrderDto>> getOrderByIdAdmin(@PathVariable("userId") Long UserId,@PathVariable("page") int page) {
         return ResponseEntity.ok(orderService.getOrderByIdAdmin(UserId, page));
+    }
+
+    @GetMapping("/orders/admin/email/{userEmail}/{page}")
+    //@PreAuthorize("hasRole('<admin')")
+    public ResponseEntity<Page<OrderDto>> getOrderByIdAdminByEmail(@PathVariable("userEmail") String email,@PathVariable("page") int page) {
+        return ResponseEntity.ok(orderService.getOrderByIdAdminByEmail(email, page));
     }
 
     @GetMapping("/orders")

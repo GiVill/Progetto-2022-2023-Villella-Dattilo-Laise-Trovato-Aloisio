@@ -28,6 +28,8 @@ public interface OrderService {
 
     Page<OrderDto> getOrderByIdAdmin(Long UserId,int page);
 
+    Page<OrderDto> getOrderByIdAdminByEmail(String userEmail,int page);
+
 
     void deleteOrderForAdmin(Long orderId);
 }

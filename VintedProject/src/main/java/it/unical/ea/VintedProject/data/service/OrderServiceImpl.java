@@ -88,9 +88,19 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public  Page<OrderDto> getOrderByIdAdmin(Long UserId, int page) {
         Optional<User> u = userDao.findById(UserId);
-        System.out.println("Sono dentro");
         if(u.get().getEmail() == null ){
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present",UserId));
+        }
+        Page<Order> orders = orderDao.findByUser(u,PageRequest.of(page, SIZE_FOR_PAGE));
+        List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());
+        return new PageImpl<>(collect);
+    }
+
+    @Override
+    public Page<OrderDto> getOrderByIdAdminByEmail(String userEmail, int page) {
+        Optional<User> u = userDao.findUserByEmail(userEmail);
+        if(u.get().getEmail() == null ){
+            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",userEmail));
         }
         Page<Order> orders = orderDao.findByUser(u,PageRequest.of(page, SIZE_FOR_PAGE));
         List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());

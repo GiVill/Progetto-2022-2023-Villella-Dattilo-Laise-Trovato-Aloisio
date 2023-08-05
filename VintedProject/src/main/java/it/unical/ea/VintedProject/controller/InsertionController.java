@@ -52,10 +52,16 @@ public class InsertionController {
         return ResponseEntity.ok(basicInsertionService.getInsertionById(insertionId));
     }
 
-    @GetMapping("/insertions/user/{idUser}/{page}")
+    @GetMapping("/insertions/user/id/{idUser}/{page}")
     public ResponseEntity<Page<BasicInsertionDto>> getInsertionByUserId(@PathVariable("idUser") Long insertionId, @PathVariable("page") int page){
         return ResponseEntity.ok(basicInsertionService.findAllByUser(insertionId, page));
     }
+
+    @GetMapping("/insertions/user/email/{userEmail}/{page}")
+    public ResponseEntity<Page<BasicInsertionDto>> getInsertionByUserEmail(@PathVariable("userEmail") String email, @PathVariable("page") int page){
+        return ResponseEntity.ok(basicInsertionService.findAllByUserEmail(email, page));
+    }
+
 
     @DeleteMapping("/insertions/{insertionId}")
     public ResponseEntity<Void> deleteInsertionById(@PathVariable("insertionId") Long insertionId) {

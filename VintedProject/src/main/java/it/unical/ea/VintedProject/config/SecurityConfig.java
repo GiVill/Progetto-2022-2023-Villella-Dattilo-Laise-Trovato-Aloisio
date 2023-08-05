@@ -77,7 +77,8 @@ public class SecurityConfig {
                 //ORDERS
                 .requestMatchers(HttpMethod.POST, "/v1/orders").permitAll()                     //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.GET, "/v1/orders/{orderId}").permitAll()            //.hasAnyRole(USER,ADMIN)
-                .requestMatchers(HttpMethod.GET, "/v1/orders/admin/{userId}/{page}").permitAll()      //.hasRole(ADMIN)
+                .requestMatchers(HttpMethod.GET, "/v1/orders/admin/id/{userId}/{page}").permitAll()      //.hasRole(ADMIN)
+                .requestMatchers(HttpMethod.GET, "/v1/orders/admin/email/{userEmail}/{page}").permitAll()   //.hasRole(ADMIN)
                 .requestMatchers(HttpMethod.GET, "/v1/orders").permitAll()                      //.hasRole(ADMIN)
                 .requestMatchers(HttpMethod.DELETE, "/v1/orders/{orderId}").permitAll()         //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.DELETE, "/v1/orders/admin/{orderId}").permitAll()   //.hasRole(ADMIN)
@@ -86,7 +87,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/v1/insertions").permitAll()                              //?
                 .requestMatchers(HttpMethod.POST, "/v1/insertions").permitAll()                             //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.GET, "/v1/insertions/{insertionId}").permitAll()                //.hasAnyRole(USER,ADMIN)
-                .requestMatchers(HttpMethod.GET,"/v1/insertions/user/{idUser}/{page}").permitAll()          //.hasAnyRole(USER,ADMIN)
+                .requestMatchers(HttpMethod.GET,"/v1/insertions/user/id/{idUser}/{page}").permitAll()       //.hasAnyRole(USER,ADMIN)
+                .requestMatchers(HttpMethod.GET,"/v1/insertions/user/email/{userEmail}/{page}").permitAll() //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.DELETE, "/v1/insertions/{insertionId}").permitAll()             //.hasRole(ADMIN)
                 .requestMatchers(HttpMethod.DELETE, "/v1/insertions/admin/{insertionId}").permitAll()       //.hasRole(ADMIN)
                 .requestMatchers(HttpMethod.DELETE, "/v1/insertions/{userId}").permitAll()                  //.hasAnyRole(USER,ADMIN)

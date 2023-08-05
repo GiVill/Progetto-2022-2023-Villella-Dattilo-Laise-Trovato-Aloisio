@@ -23,6 +23,8 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
 
     Page<BasicInsertionDto> findAllByUser(Long uId, int page);
 
+    Page<BasicInsertionDto> findAllByUserEmail(String email, int page);
+
     Page<BasicInsertionDto> getAllPaged(int page);
 
     Page<BasicInsertionDto> getAllByTitleStartWith(String title, int page);

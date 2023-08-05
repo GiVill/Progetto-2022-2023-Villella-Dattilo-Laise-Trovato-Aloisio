@@ -80,6 +80,13 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     }
 
     @Override
+    public Page<BasicInsertionDto> findAllByUserEmail(String email, int page) {
+        PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE);
+        List<BasicInsertionDto> collect = basicInsertionDao.findAllByUserEmail(email, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        return new PageImpl<>(collect);
+    }
+
+    @Override
     public Page<BasicInsertionDto> getAllPaged(int page) {
         Page<BasicInsertion> basicInsertions = basicInsertionDao.findAll(PageRequest.of(page, SIZE_FOR_PAGE));
         List<BasicInsertionDto> collect = basicInsertions.stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
