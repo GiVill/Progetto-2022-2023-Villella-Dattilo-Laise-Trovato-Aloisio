@@ -16,10 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -96,8 +93,10 @@ public class ChatServiceImpl implements ChatService {
     public void insertMessageChat(NewMessageDto newMessageDto) {
         //Chat chat = modelMapper.map(newMessageDto, Chat.class);
         Chat chat = new Chat();
-        chat.setIdUser1(newMessageDto.getIdUser1());
-        chat.setIdUser2(newMessageDto.getIdUser2());
+        chat.setIdUser1((List<User>) userDao.findById(newMessageDto.getIdUser2()));
+
+        chat.setIdUser2((List<User>) userDao.findById(newMessageDto.getIdUser2()));
+
         chat.setMessage(newMessageDto.getMessage());
         chat.setDate(LocalDateTime.now());
         chatDao.save(chat);

@@ -10,6 +10,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -24,11 +26,18 @@ public class Chat {
     @Column(name ="ID")
     private Long id;
 
-    @Column(name = "user1")
-    private Long idUser1;
+    @ManyToMany
+    @JoinTable(name = "CHAT_SENDER",
+            joinColumns = @JoinColumn(name = "chat_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> idUser1;
 
-    @Column(name = "user2")
-    private Long idUser2;
+    // Relazione ManyToMany tra Chat e User per i receiver
+    @ManyToMany
+    @JoinTable(name = "CHAT_RECEIVER",
+            joinColumns = @JoinColumn(name = "chat_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> idUser2;
 
     @Column(name = "message")
     private String message;
