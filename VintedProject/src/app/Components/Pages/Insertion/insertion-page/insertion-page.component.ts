@@ -130,6 +130,10 @@ checkProductInCart(): void {
     return <UserDto>this.users.find(user => user.id === userId);
   }
 
+  chat(){
+    this.router.navigate(['/chat', this.user?.id]);
+
+  }
 
 }
 

@@ -48,6 +48,10 @@ import {OfferService} from "./service/offer.service";
 import {DashboardComponent} from "./Components/Pages/Admin/dashboard/dashboard.component";
 import {ProfileCardComponent} from "./Components/Components/Cards/profile-card/profile-card.component";
 import {BottomOfTheBarrelComponent} from "./Components/Components/bottom-of-the-barrel/bottom-of-the-barrel.component";
+import {TranslateModule} from "@ngx-translate/core";
+import {StreamAutocompleteTextareaModule, StreamChatModule} from "stream-chat-angular";
+import {ChatComponent} from "./Components/Pages/chat/chat.component";
+import {ChatService} from "./service/chat.service";
 
 
 
@@ -79,7 +83,8 @@ import {BottomOfTheBarrelComponent} from "./Components/Components/bottom-of-the-
         OrderCardComponent,
         DashboardComponent,
         ProfileCardComponent,
-        BottomOfTheBarrelComponent
+        BottomOfTheBarrelComponent,
+        ChatComponent
 
 
     ],
@@ -109,7 +114,7 @@ import {BottomOfTheBarrelComponent} from "./Components/Components/bottom-of-the-
       }
     })
   ],
-  providers: [CookieService,JwtHelperService,InsertionService,AuthService,UserService,CartService,PaymentService,OrderService,OfferService],
+  providers: [CookieService,ChatService,JwtHelperService,InsertionService,AuthService,UserService,CartService,PaymentService,OrderService,OfferService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

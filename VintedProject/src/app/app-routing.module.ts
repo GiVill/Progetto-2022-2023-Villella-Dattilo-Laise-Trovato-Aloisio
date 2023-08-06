@@ -18,6 +18,7 @@ import {RefusedComponent} from "./Components/Pages/Errors/refused/refused.compon
 import {ProfileEditComponent} from "./Components/Pages/User/profile-edit/profile-edit.component";
 import {FormsModule} from "@angular/forms";
 import {DashboardComponent} from "./Components/Pages/Admin/dashboard/dashboard.component";
+import {ChatComponent} from "./Components/Pages/chat/chat.component";
 
 
 
@@ -38,6 +39,8 @@ const routes: Routes = [
   {path: '400', component: BadComponent},
   {path: 'refused', component: RefusedComponent},
   {path: 'dash', component: DashboardComponent},
+  {path: 'chat', component: ChatComponent},
+  {path: 'newchat/:usedid', component: ChatComponent},
 
 
 

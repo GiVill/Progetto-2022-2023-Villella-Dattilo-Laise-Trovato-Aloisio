@@ -29,7 +29,7 @@
       <button class="btn buy-button" *ngIf="!isProductInCart && !isMyProduct" (click)="addToCart()">Acquista</button>
       <p class="btn buy-button disabled" style="text-align: center; color: black" *ngIf="isProductInCart">Prodotto nel carrello</p>
       <button class="btn second-button" *ngIf="!isMyProduct">Fai un'offerta</button>
-      <button class="btn second-button" *ngIf=" !isMyProduct">Contatta il venditore</button>
+      <button class="btn second-button" *ngIf=" !isMyProduct" (click)="chat()">Contatta il venditore</button>
     </div>
     <div class="image-thumbnails">
       <div *ngFor="let image of insertion?.imageName" class="thumbnail" (click)="openModal()">
