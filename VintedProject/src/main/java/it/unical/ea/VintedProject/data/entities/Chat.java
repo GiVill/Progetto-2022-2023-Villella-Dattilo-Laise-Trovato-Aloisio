@@ -32,6 +32,9 @@ public class Chat {
     @Column(name = "reciver")
     private Long reciver;
 
+    @Column(name = "nickname")
+    private String nickname;
+
     @Column(name = "message")
     private String message;
 
@@ -40,7 +43,7 @@ public class Chat {
 
 }
 
-/*  Per avere gli Id invece che gli utenti
+/*  Per avere gli id invece che gli utenti
     @ManyToMany
     @JoinTable(name = "CHAT_SENDER",
             joinColumns = @JoinColumn(name = "chat_id"),

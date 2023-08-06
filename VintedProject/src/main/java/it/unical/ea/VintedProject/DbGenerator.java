@@ -103,7 +103,7 @@ public class DbGenerator implements ApplicationRunner {
             for (CSVRecord record : chatCsv) {
                 //System.out.println(record.get(0)+ record.get(1) +record.get(2)+ record.get(3));
                 //insertChat(userService.getUserById(Long.valueOf(record.get(0))), userService.getUserById(Long.valueOf(record.get(1))), record.get(2), record.get(3));
-                insertChat(record.get(0), record.get(1), record.get(2), record.get(3));
+                insertChat(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4));
             }
 
 
@@ -179,10 +179,11 @@ public class DbGenerator implements ApplicationRunner {
 
         userService.save(user);
     }
-    private void insertChat(String id1, String id2, String message, String date) {
+    private void insertChat(String id1, String id2,String nickname, String message, String date) {
         Chat chat = new Chat();
         chat.setSender(Long.valueOf(id1));
         chat.setReciver(Long.valueOf(id2));
+        chat.setNickname(nickname);
         chat.setMessage(message);
         chat.setDate(LocalDateTime.parse(date));
 
@@ -191,6 +192,6 @@ public class DbGenerator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        createDb();
+        //createDb();
     }
 }

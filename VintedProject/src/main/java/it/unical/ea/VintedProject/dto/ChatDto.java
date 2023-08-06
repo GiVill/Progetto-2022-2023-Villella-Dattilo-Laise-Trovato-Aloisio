@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @ToString
 public class ChatDto {
     private Long id;
-    private Long idUser1;
+    private Long reciver;
+    private String nickname;
     private String message;
     private LocalDateTime date;
 }
