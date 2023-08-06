@@ -14,21 +14,21 @@ import java.util.List;
 
 public interface ChatDao extends JpaRepository<Chat,Long>, JpaSpecificationExecutor<Chat> {
 
-    List<Chat> findAllByIdUser1(Long id);
+    List<Chat> findAllBySender(Long id);
 
-    List<Chat> findAllByIdUser1OrderByDateAsc(Long id);
+    List<Chat> findAllBySenderOrderByDateAsc(Long id);
 
     //non so se verra utilizzata
-    List<Chat> findAllByIdUser2(Long id);
+    List<Chat> findAllByReciver(Long id);
 
-    List<Chat> findAllByIdUser2OrderByDateAsc(Long id);
+    List<Chat> findAllByReciverOrderByDateAsc(Long id);
 
-    List<String> findAllByIdUser1AndIdUser2(Long user1, Long user2);
+    List<String> findAllBySenderAndReciver(Long user1, Long user2);
 
 
 
-    List<Chat> findByIdUser1AndIdUser2OrderByDateAsc(Long sender, Long reciver);
+    List<Chat> findBySenderAndReciverOrderByDateAsc(Long sender, Long reciver);
 
-    List<Chat> findByIdUser2AndIdUser1OrderByDateAsc(Long sender, Long reciver);
+    List<Chat> findByReciverAndSenderOrderByDateAsc(Long sender, Long reciver);
 
 }

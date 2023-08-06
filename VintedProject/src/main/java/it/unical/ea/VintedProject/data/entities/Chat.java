@@ -26,6 +26,21 @@ public class Chat {
     @Column(name ="ID")
     private Long id;
 
+    @Column(name = "sender")
+    private Long sender;
+
+    @Column(name = "reciver")
+    private Long reciver;
+
+    @Column(name = "message")
+    private String message;
+
+    @Column(name = "date")
+    private LocalDateTime date;
+
+}
+
+/*  Per avere gli Id invece che gli utenti
     @ManyToMany
     @JoinTable(name = "CHAT_SENDER",
             joinColumns = @JoinColumn(name = "chat_id"),
@@ -38,12 +53,4 @@ public class Chat {
             joinColumns = @JoinColumn(name = "chat_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> idUser2;
-
-    @Column(name = "message")
-    private String message;
-
-    @Column(name = "date")
-    private LocalDateTime date;
-
-
-}
+*/

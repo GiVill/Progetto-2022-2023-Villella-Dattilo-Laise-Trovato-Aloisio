@@ -50,7 +50,7 @@ public class ChatServiceImpl implements ChatService {
         if(u.get().getEmail() == null || !u.get().getId().equals(id)){
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
         }
-        List<Chat> list =  chatDao.findAllByIdUser1OrderByDateAsc(id);
+        List<Chat> list =  chatDao.findAllBySenderOrderByDateAsc(id);
         if(list.isEmpty()){
             throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
         }
@@ -59,7 +59,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<Chat> allChatByUserId2(Long id) {
-        List<Chat> list =  chatDao.findAllByIdUser2OrderByDateAsc(id);
+        List<Chat> list =  chatDao.findAllByReciverOrderByDateAsc(id);
         if(list.isEmpty()){
             throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
         }
@@ -72,8 +72,8 @@ public class ChatServiceImpl implements ChatService {
         if(u.get().getEmail() == null || !u.get().getId().equals(id1)){
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id1));
         }
-        List<ChatDto> list =  chatDao.findByIdUser1AndIdUser2OrderByDateAsc(id1, id2).stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
-        List<ChatDto>  list2 = chatDao.findByIdUser2AndIdUser1OrderByDateAsc(id1,id2).stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
+        List<ChatDto> list =  chatDao.findBySenderAndReciverOrderByDateAsc(id1, id2).stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
+        List<ChatDto>  list2 = chatDao.findByReciverAndSenderOrderByDateAsc(id1,id2).stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
 
         List<ChatDto> unite = new ArrayList<ChatDto>();
 
@@ -93,10 +93,8 @@ public class ChatServiceImpl implements ChatService {
     public void insertMessageChat(NewMessageDto newMessageDto) {
         //Chat chat = modelMapper.map(newMessageDto, Chat.class);
         Chat chat = new Chat();
-        chat.setIdUser1((List<User>) userDao.findById(newMessageDto.getIdUser2()));
-
-        chat.setIdUser2((List<User>) userDao.findById(newMessageDto.getIdUser2()));
-
+        chat.setSender(newMessageDto.getSender());
+        chat.setReciver(newMessageDto.getReciver());
         chat.setMessage(newMessageDto.getMessage());
         chat.setDate(LocalDateTime.now());
         chatDao.save(chat);

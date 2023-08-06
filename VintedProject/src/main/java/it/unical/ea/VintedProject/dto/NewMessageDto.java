@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 public class NewMessageDto {
 
-    private User idUser1;
-    private User idUser2;
+    private Long sender;
+    private Long reciver;
     private String message;
 }
