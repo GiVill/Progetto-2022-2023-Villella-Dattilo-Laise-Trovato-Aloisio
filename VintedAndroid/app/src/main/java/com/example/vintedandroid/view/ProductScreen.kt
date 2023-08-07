@@ -1,6 +1,7 @@
 package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
@@ -40,7 +41,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun ProductScreen(searchedProduct: MutableState<BasicInsertionDto>) {
+fun ProductScreen(searchedProduct: MutableState<BasicInsertionDto>, application: Context, itemsInCart: MutableList<BasicInsertionDto?>) {
 
     Card(
         modifier = Modifier
@@ -57,14 +58,30 @@ fun ProductScreen(searchedProduct: MutableState<BasicInsertionDto>) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            ImageConfiguration(imageName = searchedProduct.value.imageName, imageScale = ContentScale.Fit)
+            //ImageConfiguration(imageName = searchedProduct.value.imageName, imageScale = ContentScale.Fit)
 
             searchedProductDisplayInfo(searchedProduct = searchedProduct)
             Button(
-                onClick = { /* Handle button click here */ },
+                onClick = {
+                    if (!itemsInCart.contains(searchedProduct.value)) {
+                        itemsInCart.add(searchedProduct.value)
+                        CoroutineScope(Dispatchers.IO).launch {
+                            AppDatabase.getInstance(context = application.applicationContext).cartDao().insert(converter(searchedProduct.value))
+                        }
+                        Log.i("cart", "Item added!")
+                        itemsInCart.forEachIndexed { index, item ->
+                            Log.i("cart", "Item $index: $item") //stampa tutto il carrello
+                        }
+                    } else {
+                        Log.i("cart", "Cannot add the item because is already in the cart!")
+                        itemsInCart.forEachIndexed { index, item ->
+                            Log.i("cart", "Item $index: $item") //stampa tutto il carrello
+                        }
+                    }
+                          },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                Text(text = "Add to Cart(Per ora non fa nulla)")
+                Text(text = "Add to Cart")
             }
             Button(
                 onClick = { /* Handle button click here */ },

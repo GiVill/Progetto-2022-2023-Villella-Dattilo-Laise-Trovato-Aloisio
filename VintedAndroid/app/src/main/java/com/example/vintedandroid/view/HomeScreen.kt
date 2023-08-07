@@ -111,15 +111,8 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
 
                 //if(itemsWomen.empty != true && itemsMan.empty != true && allItems.empty != true) {
 
-                    //displayImage(allItems = allItems) //TODO Andrebbe sostituita con la classe apposita!
-
-                    //ImageConfiguration(imageName = "", painter, imageScale = ContentScale.Fit)
-
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
-
-
-
-                        /*
+                /*
                 item {
                     // Header item here
                     // Add any Composable you want to use as the header
@@ -210,7 +203,7 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
                     ItemCart(item, itemsInCart)
                 }
             }
-        Text(text = "Baby ciuati")
+        Text(text = "Baby ")
 
             LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState3) {
                 items(itemsBaby.results) { item ->
@@ -237,7 +230,7 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
 @Composable
 fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>, application: Context ) {
 
-    var showDialog by remember { mutableStateOf(false) } //${item.imageName}
+    var showDialog by remember { mutableStateOf(false) }
 
     //Box(modifier = Modifier.fillMaxWidth()){
         ImageConfiguration(imageName = item.imageName, imageScale = ContentScale.Crop)
@@ -248,15 +241,10 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
             .fillMaxWidth()
             .padding(16.dp)
             .clickable(onClick = {
-                searchedProduct.value = item;navController.popBackStack(); navController.navigate(
-                ScreenController.Product.route
-            )
+                searchedProduct.value = item;navController.popBackStack(); navController.navigate(ScreenController.Product.route)
             }),
         elevation = 4.dp
     ) {
-
-
-
         Column(
             modifier = Modifier
                 .padding(16.dp)
@@ -266,7 +254,6 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
 
 
             Text(text = item.title)
-
             Spacer(modifier = Modifier.height(8.dp))
             item.description?.let { Text(text = it) }
             Spacer(modifier = Modifier.height(8.dp))
@@ -328,32 +315,6 @@ fun displayImage(allItems: PageBasicInsertionDto) {
 }
  */
 
-/*
-//TODO Andrebbe sostituita con la classe apposita!
-@Composable
-fun displayImage(item: BasicInsertionDto) {
-    Box(modifier = Modifier.fillMaxWidth()) {
-
-        val url = "https://192.168.1.90:8010/vintedProject-api/v1/images/file_472864ab-51c9-4ff6-bab2-85a8871eb446.jpg"//${item.imageName}"
-        Log.i("tag", "ok, no? => $url")
-        val painter: ImagePainter = rememberImagePainter(url)//: String? = null
-
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Image(
-                painter = painter,
-                contentDescription = null, // Provide a proper content description
-                modifier = Modifier.fillMaxWidth(),
-                contentScale = ContentScale.Fit
-            )
-        }
-    }
-}
-
- */
-
-
 fun converter(item: BasicInsertionDto): CartDto {
 
     return CartDto(
@@ -373,7 +334,6 @@ fun converter(item: BasicInsertionDto): CartDto {
     )
 
 }
-
 
 @Composable
 fun PopupDialog(onDismiss: () -> Unit, content: @Composable () -> Unit) {

@@ -216,6 +216,7 @@ private fun convertUserDTOtoUserDB(t: TokenResponse) :UserDatabaseDto?{
 
     return t.userDto?.let {
         UserDatabaseDto(
+            id = it.id,
             nickName = it.nickName,
             firstName = t.userDto.firstName,
             lastName = t.userDto.lastName,

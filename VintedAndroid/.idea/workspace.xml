@@ -15,7 +15,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[adb-11e97e6e-A1Isi0._adb-tls-connect._tcp]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/home/fra/.android/avd/Pixel_3a_API_34_extension_level_7_x86_64.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -92,8 +92,8 @@
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/fra/GitHub/VintedProject-Android/VintedProject/VintedAndroid&quot;,
-    &quot;memory.settings.postsync.last.time.stamp&quot;: &quot;1690477712629&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;memory.settings&quot;
+    &quot;memory.settings.postsync.last.time.stamp&quot;: &quot;1691420075688&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">

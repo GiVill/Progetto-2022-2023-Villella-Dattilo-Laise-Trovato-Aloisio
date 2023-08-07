@@ -31,7 +31,7 @@ package com.example.vintedandroid.client.models
  */
 data class UserDto (
 
-    val id: kotlin.String? = null,
+    val id: Long? = null,
     val nickName: kotlin.String,
     val firstName: kotlin.String,
     val lastName: kotlin.String? = null,

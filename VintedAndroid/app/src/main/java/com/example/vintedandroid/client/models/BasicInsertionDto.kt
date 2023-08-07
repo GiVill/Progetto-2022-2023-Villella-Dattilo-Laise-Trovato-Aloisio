@@ -42,7 +42,7 @@ data class BasicInsertionDto (
     val imageName: kotlin.String? = null,
     val brand: Brand? = null,
     val category: Category? = null,
-    val userId: kotlin.Long
+    val userId: kotlin.Long?
 ) {
     /**
     * 

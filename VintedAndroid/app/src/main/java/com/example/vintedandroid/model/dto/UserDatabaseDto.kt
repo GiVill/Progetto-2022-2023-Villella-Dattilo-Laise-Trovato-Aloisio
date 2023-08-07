@@ -9,7 +9,7 @@ import java.util.UUID
 @Entity(tableName = "userDatabaseDto")
 data class UserDatabaseDto (
 
-    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    @PrimaryKey val id: Long?,
     @ColumnInfo(name="nick_name")val nickName: kotlin.String,
     @ColumnInfo(name="first_name")val firstName: kotlin.String,
     @ColumnInfo(name="last_name")val lastName: kotlin.String? = null,

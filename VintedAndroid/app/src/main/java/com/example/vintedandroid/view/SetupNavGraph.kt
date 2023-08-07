@@ -83,7 +83,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             RegistrationScreen(navController, application)
         }
         composable(route = ScreenController.Product.route){
-            ProductScreen(searchedProduct)
+            ProductScreen(searchedProduct,application,itemsInCart)
         }
 
     }

@@ -40,24 +40,36 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Tab
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.checkSelfPermission
 import coil.compose.ImagePainter.State.Empty.painter
 import coil.compose.rememberImagePainter
 import com.example.vintedandroid.client.apis.ImageApi
+import com.example.vintedandroid.client.apis.InsertionApi
+import com.example.vintedandroid.client.models.BasicInsertionDto
+import com.example.vintedandroid.client.models.LoginUserDto
 import com.example.vintedandroid.client.models.UserUserIdBody
+import com.example.vintedandroid.model.AppDatabase
+import com.example.vintedandroid.model.dto.UserDatabaseDto
+import com.example.vintedandroid.view.config.createPersonalizedTextfield
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -79,8 +91,13 @@ fun AddScreen(application: Context) {
 fun AppContent(application: Context) {
 
 
+    val titleField = remember { mutableStateOf(TextFieldValue()) }
+    val descriptionField = remember { mutableStateOf(TextFieldValue()) }
+    //val priceField = remember { mutableStateOf(TextFieldValue()) }
+
     val imageView = ImageView(application)
 
+    val price = remember { mutableStateOf("") }
 
     var selectImages by remember { mutableStateOf(listOf<Uri>()) }
     val title = remember { mutableStateOf("") }
@@ -89,15 +106,50 @@ fun AppContent(application: Context) {
     //val byteArray = remember { mutableStateOf(emptyArray<Byte>()) }
     //val byteArray = Array<Byte>();
 
-    val galleryLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) {
-            selectImages = it
+    val userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
+    var isLoaded = remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if (userFromDB.isEmpty()) {
+            val databaseItems = withContext(Dispatchers.IO) {
+                AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll()
+            }
+            userFromDB.clear()
+            if(databaseItems.isNotEmpty()){
+                userFromDB.addAll(databaseItems)
+            }
+            isLoaded.value = true
         }
+    }
+
+    val galleryLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { selectImages = it }
 
     Column(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        createPersonalizedTextfield(textField = titleField, name = "Insert Title", icon = Icons.Default.Email)
+        createPersonalizedTextfield(textField = descriptionField, name = "Insert Description", icon = Icons.Default.Email)
+        //createPersonalizedTextfield(textField = priceField, name = "Insert Price", icon = Icons.Default.Email)
+
+        /*
+        TextField(value = text,
+            onValueChange = { text = "it"},
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
+
+         */
+
+        val pattern = remember { Regex("^\\d+\$") }
+        Text(text="aaa")
+        TextField(
+            value = price.value,
+            onValueChange = { if (it.isEmpty() || it.matches(pattern)) { price.value = it } },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
+/*
         Text(text = "Insert Title")
         TextField(
             value = title.value,
@@ -121,6 +173,8 @@ fun AppContent(application: Context) {
             singleLine = true,
             placeholder = { Icon(Icons.Default.Tab, contentDescription = "Title") }
         )
+
+ */
 
         Button(
             onClick = { galleryLauncher.launch("image/*") },
@@ -146,9 +200,6 @@ fun AppContent(application: Context) {
                 )
                 Button(
                     onClick = {
-
-
-
 
                         Log.i("tag", "Questa è url => $uri, ${uri.path}")
 
@@ -268,13 +319,45 @@ fun AppContent(application: Context) {
         }
 
         Button(onClick = {
-            /*TODO*/
+            var c = InsertionApi()
+
+            if(isLoaded.value) {
+
+                var body = convertBasicInsertionDTO(
+                    titleField.value.text,
+                    descriptionField.value.text,
+                    price.value.toFloat(),
+                    userFromDB[0].id
+                )
+
+                c.addInsertion(body)
+
+            }
         }) {
             Text(text = "Crea inserzione")
         }
 
     }
 }
+
+private fun convertBasicInsertionDTO(title: String, description: String, price: Float, id: Long?): BasicInsertionDto {
+    return BasicInsertionDto(
+        id = Long.MIN_VALUE,
+        title= title,
+        description= description,
+        price= price,
+        condition = "",
+        creationDate= null,
+        isPrivate= false,
+        endDate=  null,
+        imageName = "",
+        brand= BasicInsertionDto.Brand.ADIDAS,
+        category= BasicInsertionDto.Category.ABBIGLIAMENTO,
+        userId= id
+    )
+}
+
+
 /*
 fun <T> Array(): Array<T> {
 
