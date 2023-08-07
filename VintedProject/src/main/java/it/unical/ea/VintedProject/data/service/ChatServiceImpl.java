@@ -51,10 +51,16 @@ public class ChatServiceImpl implements ChatService {
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
         }
         List<Chat> list =  chatDao.findAllBySenderOrderByDateAsc(id);
+
+
         if(list.isEmpty()){
             throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
         }
-        return list;
+        Set<Chat> uniqueChats = new HashSet<>(list);
+        List<Chat> uniqueList = new ArrayList<>(uniqueChats);
+        uniqueList.sort(Comparator.comparing(Chat::getDate));
+
+        return uniqueList;
     }
 
     @Override
