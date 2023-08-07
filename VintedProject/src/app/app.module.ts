@@ -38,20 +38,21 @@ import { NotAuthorizedComponent } from './Components/Pages/Errors/not-authorized
 import { BadComponent} from "./Components/Pages/Errors/badRequest/bad.component";
 import { RefusedComponent } from './Components/Pages/Errors/refused/refused.component';
 import { OrderCardComponent } from './Components/Components/Cards/order-card/order-card.component';
-import {InsertionService} from "./service/insertion.service";
-import {AuthService} from "./service/auth.service";
-import {UserService} from "./service/user.service";
-import {CartService} from "./service/cart.service";
-import {PaymentService} from "./service/payment.service";
-import {OrderService} from "./service/order.service";
-import {OfferService} from "./service/offer.service";
+import {InsertionService} from "./api/insertion.service";
+import {AuthService} from "./api/auth.service";
+import {UserService} from "./api/user.service";
+import {CartService} from "./api/cart.service";
+import {PaymentService} from "./api/payment.service";
+import {OrderService} from "./api/order.service";
+import {OfferService} from "./api/offer.service";
 import {DashboardComponent} from "./Components/Pages/Admin/dashboard/dashboard.component";
 import {ProfileCardComponent} from "./Components/Components/Cards/profile-card/profile-card.component";
 import {BottomOfTheBarrelComponent} from "./Components/Components/bottom-of-the-barrel/bottom-of-the-barrel.component";
 import {TranslateModule} from "@ngx-translate/core";
 import {StreamAutocompleteTextareaModule, StreamChatModule} from "stream-chat-angular";
 import {ChatComponent} from "./Components/Pages/chat/chat.component";
-import {ChatService} from "./service/chat.service";
+import {ChatService} from "./api/chat.service";
+import {Configuration} from "./configuration";
 
 
 
@@ -84,7 +85,8 @@ import {ChatService} from "./service/chat.service";
         DashboardComponent,
         ProfileCardComponent,
         BottomOfTheBarrelComponent,
-        ChatComponent
+        ChatComponent,
+
 
 
     ],

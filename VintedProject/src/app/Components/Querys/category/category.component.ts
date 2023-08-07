@@ -1,13 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {PageBasicInsertionDto} from "../../../model/pageBasicInsertionDto";
+import {UserDto} from "../../../model/userDto";
+import {UserService} from "../../../api/user.service";
+import {Component, OnInit} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {InsertionService} from "../../../service/insertion.service";
+import {InsertionService} from "../../../api/insertion.service";
 import {CookieService} from "ngx-cookie-service";
 import {ActivatedRoute} from "@angular/router";
-
-import {of, tap} from "rxjs";
-import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
-import {UserDto} from "../../../Model/userDto";
-import {UserService} from "../../../service/user.service";
 
 @Component({
   selector: 'app-category',

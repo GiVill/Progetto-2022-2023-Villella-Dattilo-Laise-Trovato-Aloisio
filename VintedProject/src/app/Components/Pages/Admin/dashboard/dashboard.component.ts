@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
-import {UserDto} from "../../../../Model/userDto";
-import {PaymentDto} from "../../../../Model/paymentDto";
-import {OrderDto} from "../../../../Model/orderDto";
-import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
-import {OrderService} from "../../../../service/order.service";
-import {InsertionService} from "../../../../service/insertion.service";
-import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
-import {UserService} from "../../../../service/user.service";
-import {PaymentService} from "../../../../service/payment.service";
-import {Observable} from "rxjs";
-import {PageableObject} from "../../../../Model/pageableObject";
-import {SortObject} from "../../../../Model/sortObject";
-import {PageOrderDto} from "../../../../Model/pageOrderDto";
-import {MatSnackBar, SimpleSnackBar} from "@angular/material/snack-bar";
+import {UserDto} from "../../../../model/userDto";
+import {PageOrderDto} from "../../../../model/pageOrderDto";
+import {PaymentDto} from "../../../../model/paymentDto";
+import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
+import {OrderService} from "../../../../api/order.service";
+import {InsertionService} from "../../../../api/insertion.service";
+import {UserService} from "../../../../api/user.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {PaymentService} from "../../../../api/payment.service";
 
 @Component({
   selector: 'app-dashboard',

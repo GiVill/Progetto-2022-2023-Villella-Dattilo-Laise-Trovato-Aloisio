@@ -1,17 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
+import {BasicInsertionDto} from "../../../model/basicInsertionDto";
+import {PaymentDto} from "../../../model/paymentDto";
 import {CookieService} from "ngx-cookie-service";
+import {InsertionService} from "../../../api/insertion.service";
+import {CartService} from "../../../api/cart.service";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import { Observable } from "rxjs";
-import {InsertionService} from "../../../service/insertion.service";
-import {CartService} from "../../../service/cart.service";
-import {OrderService} from "../../../service/order.service";
-import {TokenService} from "../../../service/token.service";
-import {BasicInsertionDto} from "../../../Model/basicInsertionDto";
-import {PaymentService} from "../../../service/payment.service";
-import {PaymentDto} from "../../../Model/paymentDto";
-import {OrderDto} from "../../../Model/orderDto";
-
+import {OrderService} from "../../../api/order.service";
+import {TokenService} from "../../../api/token.service";
+import {PaymentService} from "../../../api/payment.service";
+import {Observable} from "rxjs";
+import {OrderDto} from "../../../model/orderDto";
 
 
 @Component({
@@ -122,6 +121,7 @@ export class CartComponent implements OnInit {
     const token = this.cookieService.get('jwtToken');
     const userId: number = this.tokenService.getUserStringFromToken(token);
     //TODO
+    /*
     const payment: PaymentDto = {id: 0, orderId: 0, total: this.totalCost, userId: userId, paymentMethod: this.selectedPaymentMethod}
     this.paymentService.addPayment(payment).subscribe(
       response => {
@@ -159,6 +159,7 @@ export class CartComponent implements OnInit {
       })
 
     ///////////////////////////////////////////////////////////////////////////
+  }*/
   }
 
 

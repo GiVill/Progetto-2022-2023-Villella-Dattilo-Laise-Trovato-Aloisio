@@ -15,16 +15,16 @@ import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
-import { Observable }                                        from 'rxjs';
+import {Observable, tap} from 'rxjs';
 
-import { ServiceError } from '../Model/serviceError';
-
+import { LoginUserDto } from '../model/loginUserDto';
+import { NewUserDto } from '../model/newUserDto';
+import { ServiceError } from '../model/serviceError';
+import { TokenDto } from '../model/tokenDto';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-import { TokenResponse } from '../Model/tokenResponse';
-import { LoginUserDto } from '../Model/loginUserDto';
-import { NewUserDto } from '../Model/newUserDto';
+import {CookiesService} from "./cookies.service";
 
 
 @Injectable()
@@ -33,6 +33,7 @@ export class AuthService {
     protected basePath = 'https://localhost:8010/vintedProject-api';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
+    private cookiesService!: CookiesService;
 
     constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
@@ -120,63 +121,51 @@ export class AuthService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public login(body: LoginUserDto, observe?: 'body', reportProgress?: boolean): Observable<TokenResponse>;
-    public login(body: LoginUserDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TokenResponse>>;
-    public login(body: LoginUserDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TokenResponse>>;
-    public login(body: LoginUserDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public login(body: LoginUserDto): Observable<TokenDto> {
+      if (!body) {
+        throw new Error('Required parameter "body" was null or undefined when calling login.');
+      }
 
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling login.');
-        }
+      const headers = this.defaultHeaders;
 
-        let headers = this.defaultHeaders;
+      // authentication (bearerAuth) required
+      if (this.configuration.accessToken) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.configuration.accessToken()
+          : this.configuration.accessToken;
+        headers.set('Authorization', 'Bearer ' + accessToken);
+      }
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
+      // Set the Accept header
+      headers.set('Accept', 'application/json');
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
+      // Set the Content-Type header
+      headers.set('Content-Type', 'application/json');
 
-        return this.httpClient.request<TokenResponse>('post',`${this.basePath}/v1/login`,
-            {
-                body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+      return this.httpClient.post<TokenDto>(`${this.basePath}/v1/login`, body, {
+        headers: headers,
+        withCredentials: this.configuration.withCredentials
+      }).pipe(
+        tap((response: TokenDto) => {
+          if (response && response.accessToken) {
+            // Save the access token in the configuration
+            this.configuration.accessToken = response.accessToken;
+          }
+        })
+      );
     }
 
-    /**
+
+  /**
      *
      *
      * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public signUp(body: NewUserDto, observe?: 'body', reportProgress?: boolean): Observable<TokenResponse>;
-    public signUp(body: NewUserDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TokenResponse>>;
-    public signUp(body: NewUserDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TokenResponse>>;
+    public signUp(body: NewUserDto, observe?: 'body', reportProgress?: boolean): Observable<TokenDto>;
+    public signUp(body: NewUserDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TokenDto>>;
+    public signUp(body: NewUserDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TokenDto>>;
     public signUp(body: NewUserDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
@@ -210,7 +199,7 @@ export class AuthService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<TokenResponse>('post',`${this.basePath}/v1/sign-up`,
+        return this.httpClient.request<TokenDto>('post',`${this.basePath}/v1/sign-up`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

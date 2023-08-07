@@ -1,9 +1,8 @@
-import {Component, Input} from '@angular/core';
-import {OrderDto} from "../../../../Model/orderDto";
+import {Component, Input} from "@angular/core";
+import {UserDto} from "../../../../model/userDto";
+import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
 import {Router} from "@angular/router";
-import {CartComponent} from "../../../Pages/cart/cart.component";
-import {UserDto} from "../../../../Model/userDto";
-import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
+
 
 @Component({
   selector: 'app-profile-card',

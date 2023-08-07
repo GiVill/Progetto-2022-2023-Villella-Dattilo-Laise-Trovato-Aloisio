@@ -14,8 +14,8 @@ import { PaymentDto } from './paymentDto';
 import { SortObject } from './sortObject';
 
 export interface PagePaymentDto { 
-    totalElements?: number;
     totalPages?: number;
+    totalElements?: number;
     size?: number;
     content?: Array<PaymentDto>;
     number?: number;

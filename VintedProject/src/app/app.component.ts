@@ -11,6 +11,7 @@ export class AppComponent {
   title = 'Vinted-Front-End';
   isAdmin: boolean = false;
   isUserLogged=false;
+  userToken
 
 
 }

@@ -11,7 +11,8 @@
  */
 
 export interface NewMessageDto { 
-    idUser1?: number;
-    idUser2?: number;
+    sender?: number;
+    reciver?: number;
+    nickname?: string;
     message?: string;
 }

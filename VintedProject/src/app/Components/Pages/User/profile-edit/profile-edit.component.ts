@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {UserDto} from "../../../../Model/userDto";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {UserDto} from "../../../../model/userDto";
 
 @Component({
   selector: 'app-profile-edit',

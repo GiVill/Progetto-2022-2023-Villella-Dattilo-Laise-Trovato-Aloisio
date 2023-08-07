@@ -1,14 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {switchMap} from "rxjs";
-import {InsertionService} from "../../../../service/insertion.service";
+import {UserDto} from "../../../../model/userDto";
+import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
+import {InsertionService} from "../../../../api/insertion.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../../../service/user.service";
-import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
-import {UserDto} from "../../../../Model/userDto";
-import {CookieService} from "ngx-cookie-service";
-import {CookiesService} from "../../../../service/cookies.service";
-import {ErrorService} from "../../../../service/error.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
+import {UserService} from "../../../../api/user.service";
+import {ErrorService} from "../../../../api/error.service";
+import {CookiesService} from "../../../../api/cookies.service";
 ;
 
 

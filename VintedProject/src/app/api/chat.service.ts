@@ -17,13 +17,14 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { Chat } from '../Model/chat';
-import { ChatDto } from '../Model/chatDto';
-import { NewMessageDto } from '../Model/newMessageDto';
-import { ServiceError } from '../Model/serviceError';
+import { Chat } from '../model/chat';
+import { ChatDto } from '../model/chatDto';
+import { NewMessageDto } from '../model/newMessageDto';
+import { ServiceError } from '../model/serviceError';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
+import {CookiesService} from "./cookies.service";
 
 
 @Injectable()
@@ -33,7 +34,8 @@ export class ChatService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+
+    constructor(protected httpClient: HttpClient, private CookiesService : CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -128,14 +130,17 @@ export class ChatService {
         }
 
         let headers = this.defaultHeaders;
+             // authentication (bearerAuth) required
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+      //TODO Qui
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'

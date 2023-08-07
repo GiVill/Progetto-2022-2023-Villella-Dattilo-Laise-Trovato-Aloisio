@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {InsertionService} from "../../service/insertion.service";
-import {PageBasicInsertionDto} from "../../Model/pageBasicInsertionDto";
-import {UserDto} from "../../Model/userDto";
-import {UserService} from "../../service/user.service";
+import {UserDto} from "../../model/userDto";
+import {PageBasicInsertionDto} from "../../model/pageBasicInsertionDto";
+import {InsertionService} from "../../api/insertion.service";
+import {UserService} from "../../api/user.service";
 
 
 

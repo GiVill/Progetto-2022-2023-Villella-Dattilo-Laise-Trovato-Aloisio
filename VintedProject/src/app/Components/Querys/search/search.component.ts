@@ -1,13 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {Component, OnInit} from "@angular/core";
+import {UserDto} from "../../../model/userDto";
+import {PageBasicInsertionDto} from "../../../model/pageBasicInsertionDto";
+import {HttpClient} from "@angular/common/http";
+import {InsertionService} from "../../../api/insertion.service";
 import {CookieService} from "ngx-cookie-service";
 import {ActivatedRoute} from "@angular/router";
-import {InsertionService} from "../../../service/insertion.service";
-import {of, tap} from "rxjs";
-import {ImageService} from "../../../service/image.service";
-import {PageBasicInsertionDto} from "../../../Model/pageBasicInsertionDto";
-import {UserDto} from "../../../Model/userDto";
-import {UserService} from "../../../service/user.service";
+import {UserService} from "../../../api/user.service";
+import {of} from "rxjs";
 
 
 @Component({

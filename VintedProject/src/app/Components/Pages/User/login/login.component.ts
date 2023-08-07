@@ -1,13 +1,14 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
-import {AuthService} from "../../../../service/auth.service";
+import {Component, OnInit, Renderer2} from "@angular/core";
+import {LoginUserDto} from "../../../../model/loginUserDto";
+import {NewUserDto} from "../../../../model/newUserDto";
+import {AuthService} from "../../../../api/auth.service";
 import {CookieService} from "ngx-cookie-service";
-import {Router} from "@angular/router";
+import {CookiesService} from "../../../../api/cookies.service";
 import {MainNavComponent} from "../../../Components/main-nav/main-nav.component";
-import {CookiesService} from "../../../../service/cookies.service";
-import { MatSnackBar } from '@angular/material/snack-bar';
-import {ErrorService} from "../../../../service/error.service";
-import {LoginUserDto} from "../../../../Model/loginUserDto";
-import {NewUserDto} from "../../../../Model/newUserDto";
+import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ErrorService} from "../../../../api/error.service";
+import {Configuration} from "../../../../configuration";
 
 
 @Component({
@@ -18,15 +19,7 @@ import {NewUserDto} from "../../../../Model/newUserDto";
 export class LoginComponent implements OnInit{
 
   isFlipped: boolean = false;
-
-  passwordsMatch: boolean = true;
-
-  isAllFilledLogin: boolean = false;
-
-  isAllFilledRegistration: boolean = false;
-
   passwordCheck: string = '';
-
   isRegistrationMode: boolean = false;
 
 
@@ -48,6 +41,25 @@ export class LoginComponent implements OnInit{
     addressCap: 0
 
   };
+  private configuration: Configuration ={
+    accessToken: "",
+    apiKeys: {},
+    basePath: "",
+    password: "",
+    username: "",
+    withCredentials: false,
+    isJsonMime(mime: string): boolean {
+      return false;
+    },
+    selectHeaderAccept(accepts: string[]): string | undefined {
+      return undefined;
+    },
+    selectHeaderContentType(contentTypes: string[]): string | undefined {
+      return undefined;
+    }
+
+  };
+
 
 
   constructor(private authService: AuthService,
@@ -55,9 +67,9 @@ export class LoginComponent implements OnInit{
               private cookiesService: CookiesService,
               private User: MainNavComponent,
               private router: Router,
-              private renderer: Renderer2,
               private snackBar: MatSnackBar,
               private error: ErrorService,
+
 ) { }
 
 
@@ -65,6 +77,7 @@ export class LoginComponent implements OnInit{
   logIn(): void {
     this.authService.login(this.login).subscribe(
       response => {
+        console.log(response)
         const userCookie = this.cookieService.get('userEmail');
         if (!userCookie) {
           // Salva le informazioni dell'utente nei cookie
@@ -76,11 +89,12 @@ export class LoginComponent implements OnInit{
             this.cookieService.set('userCity', response.userDto!.addressCity, 1, '/');}
           this.cookieService.set('userFirstName', response.userDto!.firstName, 1, '/');
           this.cookieService.set('userLastName', response.userDto!.lastName, 1, '/');
-          if (response.access_token != null) {
-            this.cookieService.set('jwtToken', response.access_token, 1, '/');
+          if (response.accessToken != null) {
+            this.cookieService.set('jwtToken', response.accessToken, 1, '/');
           }else console.log("Non Arriva!")
           this.cookiesService.checkUserCookie();
           this.User.getUserString();
+          this.configuration.accessToken=this.cookiesService.getTokent;
           this.router.navigate(['/']);
         }
       },
@@ -89,6 +103,7 @@ export class LoginComponent implements OnInit{
         this.snackBar.open('Credenziali errate!', 'OK');
       }
     );
+    console.log(this.configuration.accessToken)
   }
 
 

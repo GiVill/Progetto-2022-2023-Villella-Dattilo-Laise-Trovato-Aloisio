@@ -2,15 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {switchMap} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
-import {InsertionService} from "../../../../service/insertion.service";
-import {CartService} from "../../../../service/cart.service";
-import {UserService} from "../../../../service/user.service";
-import {OrderService} from "../../../../service/order.service";
-import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
-import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
-import {UserDto} from "../../../../Model/userDto";
-import {CookiesService} from "../../../../service/cookies.service";
-import {ErrorService} from "../../../../service/error.service";
+import {InsertionService} from "../../../../api/insertion.service";
+import {CartService} from "../../../../api/cart.service";
+import {UserService} from "../../../../api/user.service";
+import {OrderService} from "../../../../api/order.service";
+import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
+import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
+import {UserDto} from "../../../../model/userDto";
+import {CookiesService} from "../../../../api/cookies.service";
+import {ErrorService} from "../../../../api/error.service";
 
 
 @Component({

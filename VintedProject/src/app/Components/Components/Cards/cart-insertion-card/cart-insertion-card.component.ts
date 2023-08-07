@@ -1,9 +1,7 @@
-import {Component, Input} from '@angular/core';
-
+import {Component, Input} from "@angular/core";
+import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
 import {Router} from "@angular/router";
-
 import {CartComponent} from "../../../Pages/cart/cart.component";
-import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
 
 
 @Component({

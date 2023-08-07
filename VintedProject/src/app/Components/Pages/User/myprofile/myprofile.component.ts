@@ -1,13 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {InsertionService} from "../../../../service/insertion.service";
+import {InsertionService} from "../../../../api/insertion.service";
 import {ActivatedRoute} from "@angular/router";
-import {UserService} from "../../../../service/user.service";
+import {UserService} from "../../../../api/user.service";
 import {Observable, switchMap, tap} from "rxjs";
-import {OrderService} from "../../../../service/order.service";
-import {CookiesService} from "../../../../service/cookies.service";
-import {PageBasicInsertionDto} from "../../../../Model/pageBasicInsertionDto";
-import {PageOrderDto} from "../../../../Model/pageOrderDto";
-import {UserDto} from "../../../../Model/userDto";
+import {OrderService} from "../../../../api/order.service";
+import {CookiesService} from "../../../../api/cookies.service";
+import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
+import {PageOrderDto} from "../../../../model/pageOrderDto";
+import {UserDto} from "../../../../model/userDto";
 
 
 @Component({
@@ -109,17 +109,17 @@ export class MyprofileComponent implements OnInit{
 
   updateNickname(newNickname: string): void {
     if (this.userId && newNickname) {
-      this.userService.updateUserNickname(newNickname, this.userId, 'body', false).subscribe(
-        (success: boolean) => {
-          // Nickname update successful
-          console.log('Nickname updated successfully.');
-        },
-        (error: any) => {
-          console.log('Failed to update nickname:', error);
-        }
-      );
-    }
-  }
+      /* this.userService.updateUserNickname(newNickname, this.userId, 'body', false).subscribe(
+         (success: boolean) => {
+           // Nickname update successful
+           console.log('Nickname updated successfully.');
+         },
+         (error: any) => {
+           console.log('Failed to update nickname:', error);
+         }
+       );
+     }*/
+    }}
 
 
 

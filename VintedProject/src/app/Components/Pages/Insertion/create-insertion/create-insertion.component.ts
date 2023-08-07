@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {InsertionService} from "../../../../service/insertion.service";
+import {InsertionService} from "../../../../api/insertion.service";
 import {Router} from "@angular/router";
-import {CookiesService} from "../../../../service/cookies.service";
-import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
+import {CookiesService} from "../../../../api/cookies.service";
+import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {V1InsertionsBody} from "../../../../model/v1InsertionsBody";
 
 
 @Component({
@@ -16,8 +17,10 @@ export class CreateInsertionComponent implements OnInit{
   brandOptions: BasicInsertionDto.BrandEnum[] = Object.values(BasicInsertionDto.BrandEnum);
 
   image !: File
-  inserzione : BasicInsertionDto = {
-    description: "", price: 0, title: "", isPrivate:false,  userId: Number(this.cookieService.getUserId())
+  inserzione : V1InsertionsBody = {
+    insertion:{
+    description: "", price: 0, title: "", isPrivate:false,  userId: Number(this.cookieService.getUserId())},
+    img:this.image
   };
   constructor(private router: Router,
               private insertionService: InsertionService,
@@ -33,16 +36,16 @@ export class CreateInsertionComponent implements OnInit{
 
   }
   controllo(){
-    if (!this.inserzione.title) {
+    if (!this.inserzione.insertion.title) {
       this.snackBar.open("Devi inserire un titolo all' inserzione", 'OK');
       return false}
-    if (!this.inserzione.category) {
+    if (!this.inserzione.insertion.category) {
       this.snackBar.open("Devi aggiungere una categoria all' inserzione", 'OK');
       return false}
-    if (!this.inserzione.brand) {
+    if (!this.inserzione.insertion.brand) {
       this.snackBar.open("Devi aggiungere una categoria all' inserzione", 'OK');
       return false}
-    if (!this.inserzione.price){
+    if (!this.inserzione.insertion.price){
       this.snackBar.open("Inserire un prezzo all' inserzione", 'OK');
       return false}
     return true
@@ -50,10 +53,10 @@ export class CreateInsertionComponent implements OnInit{
 
   formValido() {
     return (
-      this.inserzione.title &&
-      this.inserzione.category &&
-      this.inserzione.brand &&
-      this.inserzione.price > 0
+      this.inserzione.insertion.title &&
+      this.inserzione.insertion.category &&
+      this.inserzione.insertion.brand &&
+      this.inserzione.insertion.price > 0
     );
   }
 
@@ -63,7 +66,7 @@ export class CreateInsertionComponent implements OnInit{
       console.log(this.inserzione)
       console.log(this.image)
 
-      this.insertionService.addInsertionProva(this.inserzione,this.image).subscribe(
+      this.insertionService.addInsertion(this.inserzione).subscribe(
 
         response => {
           console.log(this.inserzione)
@@ -91,6 +94,6 @@ export class CreateInsertionComponent implements OnInit{
 
 
   privatez() {
-    this.inserzione.isPrivate=!this.inserzione.isPrivate
+    this.inserzione.insertion.isPrivate=!this.inserzione.insertion.isPrivate
   }
 }

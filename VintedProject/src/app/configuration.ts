@@ -1,3 +1,5 @@
+import {CookiesService} from "./api/cookies.service";
+
 export interface ConfigurationParameters {
     apiKeys?: {[ key: string ]: string};
     username?: string;
@@ -11,15 +13,16 @@ export class Configuration {
     apiKeys?: {[ key: string ]: string};
     username?: string;
     password?: string;
-    accessToken?: string | (() => string);
+    accessToken?: string | (() => string) ;
     basePath?: string;
     withCredentials?: boolean;
+     private cookiesService?: CookiesService
 
     constructor(configurationParameters: ConfigurationParameters = {}) {
         this.apiKeys = configurationParameters.apiKeys;
         this.username = configurationParameters.username;
         this.password = configurationParameters.password;
-        this.accessToken = configurationParameters.accessToken;
+        this.accessToken = this.cookiesService?.getTokent()
         this.basePath = configurationParameters.basePath;
         this.withCredentials = configurationParameters.withCredentials;
     }

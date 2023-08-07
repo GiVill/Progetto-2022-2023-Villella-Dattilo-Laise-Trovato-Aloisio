@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ChatDto} from "../../../Model/chatDto";
-import { ChatService} from "../../../service/chat.service";
-import {NewMessageDto} from "../../../Model/newMessageDto";
-import {CookiesService} from "../../../service/cookies.service"; // Import your service
+import {Component, OnInit} from "@angular/core";
+import {ChatDto} from "../../../model/chatDto";
+import {ChatService} from "../../../api/chat.service";
+import {CookiesService} from "../../../api/cookies.service";
+import {NewMessageDto} from "../../../model/newMessageDto";
+
 
 @Component({
   selector: 'app-chat',
@@ -15,6 +16,7 @@ export class ChatComponent implements OnInit {
   messages: Array<ChatDto> = [];
   newMessage: string = '';
   myId= Number(this.cookiesService.getUserId())
+
 
   constructor(private chatService: ChatService,
               private cookiesService: CookiesService) {}
@@ -50,17 +52,24 @@ export class ChatComponent implements OnInit {
   sendMessage(): void {
     if (this.newMessage.trim() !== '') {
       const newMessageDto: NewMessageDto = {
-        idUser1: this.myId,
-        idUser2: this.selectedUser.reciver,
+        sender: this.myId,
+        reciver: this.selectedUser.reciver,
+        nickname: this.selectedUser.nickname,
         message: this.newMessage
       };
       console.log(newMessageDto)
       this.chatService.insertMessage(newMessageDto).subscribe(
+
         (response: string) => {
-          this.loadMessages(this.selectedUser.reciver!);
-          this.newMessage = '';
+          console.log(response)
+          if (response=="ok") {
+            this.loadMessages(this.selectedUser.reciver!);
+            this.newMessage = '';
+          }
         },
         (error) => {
+            this.loadMessages(this.selectedUser.reciver!);
+            this.newMessage = '';
           console.error('Error sending message:', error);
         }
       );

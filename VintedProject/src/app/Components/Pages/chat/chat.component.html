@@ -2,7 +2,7 @@
   <div class="user-list">
     <ul>
       <li *ngFor="let user of users" (click)="onSelectUser(user)">
-        {{ user.id}}
+        <button class="button btn" style="margin: 10px">{{ user.nickname}}</button>
       </li>
     </ul>
   </div>

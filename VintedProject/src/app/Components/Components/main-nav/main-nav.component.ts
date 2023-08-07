@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {CookieService} from "ngx-cookie-service";
 import {AppComponent} from "../../../app.component";
-import {CookiesService} from "../../../service/cookies.service";
+import {CookieService} from "ngx-cookie-service";
+import {CookiesService} from "../../../api/cookies.service";
 
 @Component({
   selector: 'app-main-nav',

@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-import {BasicInsertionDto} from "../../../../Model/basicInsertionDto";
-import {CookiesService} from "../../../../service/cookies.service";
-import {InsertionService} from "../../../../service/insertion.service";
+import {Component, Input, OnInit} from "@angular/core";
+import {BasicInsertionDto} from "../../../../model/basicInsertionDto";
+import {Router} from "@angular/router";
+import {CookiesService} from "../../../../api/cookies.service";
+import {InsertionService} from "../../../../api/insertion.service";
 
 @Component({
   selector: 'app-product-card',
