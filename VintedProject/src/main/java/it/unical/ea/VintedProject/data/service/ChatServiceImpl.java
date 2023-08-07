@@ -92,9 +92,16 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public void insertMessageChat(NewMessageDto newMessageDto) {
         //Chat chat = modelMapper.map(newMessageDto, Chat.class);
+
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null || !u.get().getId().equals(newMessageDto.getSender())){
+            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",newMessageDto.getSender()));
+        }
+
         Chat chat = new Chat();
         chat.setSender(newMessageDto.getSender());
         chat.setReciver(newMessageDto.getReciver());
+        chat.setNickname(newMessageDto.getNickname());
         chat.setMessage(newMessageDto.getMessage());
         chat.setDate(LocalDateTime.now());
         chatDao.save(chat);
