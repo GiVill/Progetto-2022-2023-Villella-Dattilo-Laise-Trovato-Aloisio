@@ -1,21 +1,16 @@
 package it.unical.ea.VintedProject.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import it.unical.ea.VintedProject.data.service.UserServiceImpl;
 import it.unical.ea.VintedProject.data.service.interfaces.AuthService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.LoginUserDto;
 import it.unical.ea.VintedProject.dto.NewUserDto;
 import it.unical.ea.VintedProject.dto.UserDto;
 import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
-import it.unical.ea.VintedProject.security.keycloak.TokenResponse;
+import it.unical.ea.VintedProject.security.keycloak.TokenDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.jboss.resteasy.annotations.Body;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
@@ -35,8 +30,8 @@ public class AuthController {
 
 
     @PostMapping("/sign-up")
-    public ResponseEntity<TokenResponse> signUp(@RequestBody @Valid NewUserDto newUserDto){
-        TokenResponse token = keycloakTokenClient.userRegister(newUserDto);
+    public ResponseEntity<TokenDto> signUp(@RequestBody @Valid NewUserDto newUserDto){
+        TokenDto token = keycloakTokenClient.userRegister(newUserDto);
         if(!Objects.equals(token, "ERRORE")  ){
 
             UserDto userDto = authService.signUp(newUserDto);
@@ -53,7 +48,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody @Valid LoginUserDto data){
+    public ResponseEntity<TokenDto> login(@RequestBody @Valid LoginUserDto data){
         return ResponseEntity.ok(authService.doLogin(data));
     }
 
