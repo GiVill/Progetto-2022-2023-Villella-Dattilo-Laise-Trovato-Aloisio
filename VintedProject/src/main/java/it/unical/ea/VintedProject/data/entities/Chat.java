@@ -47,13 +47,12 @@ public class Chat {
         if (this == o) return true;
         if (!(o instanceof Chat)) return false;
         Chat chat = (Chat) o;
-        return Objects.equals(sender, chat.sender) &&
-                Objects.equals(reciver, chat.reciver);
+        return Objects.equals(reciver, chat.reciver);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sender, reciver);
+        return Objects.hash(reciver);
     }
 }
 

@@ -56,18 +56,33 @@ public class ChatServiceImpl implements ChatService {
         if(list.isEmpty()){
             throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
         }
+
         Set<Chat> uniqueChats = new HashSet<>(list);
         List<Chat> uniqueList = new ArrayList<>(uniqueChats);
         uniqueList.sort(Comparator.comparing(Chat::getDate));
-
+        for(Chat i : uniqueList){
+            System.out.println(i.getReciver());
+        }
         return uniqueList;
     }
 
+    //TODO si puo cancellare
     @Override
     public List<Chat> allChatByUserId2(Long id) {
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null || !u.get().getId().equals(id)){
+            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
+        }
         List<Chat> list =  chatDao.findAllByReciverOrderByDateAsc(id);
         if(list.isEmpty()){
             throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
+        }
+
+        Set<Chat> uniqueChats = new HashSet<>(list);
+        List<Chat> uniqueList = new ArrayList<>(uniqueChats);
+        uniqueList.sort(Comparator.comparing(Chat::getDate));
+        for(Chat i : uniqueList){
+            System.out.println(i.getId());
         }
         return list;
     }
