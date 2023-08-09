@@ -15,6 +15,7 @@ export class ChatComponent implements OnInit {
   selectedUser!: ChatDto
   messages: Array<ChatDto> = [];
   newMessage: string = '';
+  selectedUserId?: number | null = null;
   myId= Number(this.cookiesService.getUserId())
 
 
@@ -81,6 +82,7 @@ export class ChatComponent implements OnInit {
     this.selectedUser = user;
     console.log("After selecting user:", this.selectedUser);
     this.loadMessages(user.reciver!);
+    this.selectedUserId = user.id;
   }
 
 }

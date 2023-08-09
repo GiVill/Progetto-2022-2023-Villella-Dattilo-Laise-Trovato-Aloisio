@@ -13,6 +13,11 @@
   padding: 1rem;
 }
 
+.selected-user {
+  background-color: #077782 !important; /* Cambia il colore di sfondo come preferisci */
+  color: white;
+}
+
 .messages {
   max-height: 70vh;
   overflow-y: auto;
@@ -36,7 +41,7 @@
   & button {
     margin-left: 1rem;
     padding: 0.5rem 1rem;
-    background-color: #007bff;
+    background-color: #007b0f;
     color: white;
     border: none;
     border-radius: 4px;
@@ -46,7 +51,7 @@
 
 
 .btn {
-  background-color: #077782;
+  background-color: #0ABFCC;
   color: white;
   padding: 15px 30px;
   border: none;
@@ -54,5 +59,26 @@
   cursor: pointer;
   font-weight: bold;
   margin-bottom: 10px;
+}
+
+.mess-container {
+  border-radius: 5px;
+  padding: 8px 12px;
+  max-width: 70%;
+  margin:0.5%
+}
+
+.own-message {
+  background-color: lightskyblue;
+  float: right;
+  clear: both;
+  text-align: left;
+}
+
+.other-message {
+  background-color: gray;
+  float: left;
+  clear: both;
+  text-align: left;
 }
 
