@@ -1,22 +1,30 @@
 <div class="chat-container">
-  <div class="user-list">
-    <ul>
-      <li *ngFor="let user of users" (click)="onSelectUser(user)">
-        <button class="button btn" [ngClass]="{'selected-user': user === selectedUser}" style="margin: 10px">{{ user.nickname}}</button>
-      </li>
-    </ul>
-  </div>
-  <div class="chat-window">
-    <div *ngIf="selectedUser" class="messages">
-      <div *ngFor="let message of messages" class="message">
-        <div class="mess-container" [ngClass]="{'own-message': message.reciver !== myId, 'other-message': message.reciver === myId}">
-          <p>{{ message.message }}</p>
+  <ng-container *ngIf="noChat; else chatContent">
+    <div class="no-chat-message-container">
+      <p>Non ci sono chat al momento</p>
+    </div>
+  </ng-container>
+
+  <ng-template #chatContent>
+    <div class="user-list">
+      <ul>
+        <li *ngFor="let user of users" (click)="onSelectUser(user)">
+          <button class="button btn" [ngClass]="{'selected-user': user === selectedUser}" style="margin: 10px">{{ user.nickname}}</button>
+        </li>
+      </ul>
+    </div>
+    <div class="chat-window">
+      <div *ngIf="selectedUser" class="messages">
+        <div *ngFor="let message of messages" class="message">
+          <div class="mess-container" [ngClass]="{'own-message': message.reciver !== myId, 'other-message': message.reciver === myId}">
+            <p>{{ message.message }}</p>
+          </div>
         </div>
       </div>
+      <div *ngIf="selectedUser" class="message-input">
+        <input [(ngModel)]="newMessage" placeholder="Type a message..." (keyup.enter)="sendMessage()" />
+        <button (click)="sendMessage()">Send</button>
+      </div>
     </div>
-    <div *ngIf="selectedUser" class="message-input">
-      <input [(ngModel)]="newMessage" placeholder="Type a message..." (keyup.enter)="sendMessage()" />
-      <button (click)="sendMessage()">Send</button>
-    </div>
-  </div>
+  </ng-template>
 </div>

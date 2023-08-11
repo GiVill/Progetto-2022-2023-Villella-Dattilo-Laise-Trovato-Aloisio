@@ -11,6 +11,12 @@ import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
 import {UserDto} from "../../../../model/userDto";
 import {CookiesService} from "../../../../api/cookies.service";
 import {ErrorService} from "../../../../api/error.service";
+import {BuyingOfferService} from "../../../../api/buying-offer.service";
+import {BuyingOfferDto} from "../../../../model/buyingOfferDto";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {OfferService} from "../../../../api/offer.service";
+import {NewMessageDto} from "../../../../model/newMessageDto";
+import {ChatService} from "../../../../api/chat.service";
 
 
 @Component({
@@ -21,7 +27,7 @@ import {ErrorService} from "../../../../api/error.service";
 
 export class InsertionPageComponent implements OnInit {
   users: UserDto[] = [];
-  insertion: BasicInsertionDto | undefined;
+  insertion?: BasicInsertionDto;
   user: UserDto | undefined;
   page = 0;
   userOtherInsertion!: PageBasicInsertionDto;
@@ -30,17 +36,22 @@ export class InsertionPageComponent implements OnInit {
   modalImage: string | undefined;
   isProductInCart=false;
   isMyProduct=false;
-
+  offerModalOpen = false;
+  offerAmount: number | undefined;
+  messageModalOpen:boolean  = false;
+  message: string = "";
   constructor(
     private insertionService: InsertionService,
     private route: ActivatedRoute,
     private cookieService: CookieService,
     private cookiesService: CookiesService,
     private cartService: CartService,
+    private buyngOffer: OfferService,
     private userService: UserService,
     private error: ErrorService,
     private router: Router,
-    private orderService: OrderService,) {
+    private chatService: ChatService,
+   private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -105,6 +116,8 @@ export class InsertionPageComponent implements OnInit {
   closeModal(): void {
     this.modalOpen = false;
     this.modalImage = undefined;
+    this.closeOfferModal()
+
   }
 
   addToCart() {
@@ -131,9 +144,88 @@ checkProductInCart(): void {
   }
 
   chat(){
-    this.router.navigate(['/chat', this.user?.id]);
-
+    this.router.navigate(['/newchat', this.user?.id]);
   }
+
+  closeModalOnClick(event: any): void {
+    if (event.target.classList.contains('offer-message-modal')) {
+      this.closeOfferModal();
+      this.closeMessageModal();
+    }
+  }
+
+  openOfferModal(): void {
+    this.offerModalOpen = true;
+  }
+
+  closeOfferModal(): void {
+    this.offerModalOpen = false;
+    this.offerAmount = undefined;
+  }
+
+  openMessageModal() {
+    this.messageModalOpen=true;
+  }
+
+  closeMessageModal() {
+    this.messageModalOpen=false;
+  }
+
+
+  submitOffer(): void {
+    if (this.offerAmount !== undefined && this.offerAmount > 0) {
+      const buyingOffer: BuyingOfferDto = {
+        userId: Number(this.cookiesService.getUserId()),
+        insertionId: this.insertion?.id,
+        price: this.offerAmount
+        // ... altri campi se necessario
+      };
+
+      this.buyngOffer.addBuyingOffer(buyingOffer).subscribe(
+        (response) => {
+          console.log('Offerta inviata con successo:', response);
+          this.closeOfferModal();
+        },
+        (error) => {
+          console.error('Errore durante l\'invio dell\'offerta:', error);
+          this.snackBar.open("Errore nell'invio dell'offerta")
+        }
+      );
+    } else {
+      console.error('L\'importo dell\'offerta deve essere maggiore di 0');
+      this.snackBar.open("l'offerta deve essere maggiore di 0")
+    }
+  }
+
+  submitMessage() {
+    if (this.message.trim() !== '') {
+      const newMessageDto: NewMessageDto = {
+        sender: Number(this.cookiesService.getUserId()),
+        reciver: this.user?.id,
+        nickname: this.user?.nickname,
+        message: this.message
+      };
+      console.log(newMessageDto)
+      this.chatService.insertMessage(newMessageDto).subscribe(
+
+        (response: string) => {
+          console.log(response)
+            this.snackBar.open("Messaggio inviato")
+            this.closeMessageModal()
+        },
+        (error) => {
+          if (error.statusText=="OK") {
+            this.snackBar.open("Messaggio inviato")
+            this.closeMessageModal()
+          }else {
+            this.snackBar.open("Errore nell'invio del messaggio")
+            this.closeModal()
+          }
+        }
+      );
+    }
+  }
+
 
 }
 

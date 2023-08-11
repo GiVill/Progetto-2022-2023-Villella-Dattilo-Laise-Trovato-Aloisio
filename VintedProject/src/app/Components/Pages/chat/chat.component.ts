@@ -11,6 +11,7 @@ import {NewMessageDto} from "../../../model/newMessageDto";
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+  noChat: Boolean = false;
   users?: Array<ChatDto> = [];
   selectedUser!: ChatDto
   messages: Array<ChatDto> = [];
@@ -35,6 +36,7 @@ export class ChatComponent implements OnInit {
       console.log(users);
       this.loadMessages(this.selectedUser.id!);
     } catch (error) {
+      this.noChat=true;
       console.error('Error fetching users:', error);
     }
   }
@@ -69,9 +71,12 @@ export class ChatComponent implements OnInit {
           }
         },
         (error) => {
+          if (error.statusText=="OK") {
             this.loadMessages(this.selectedUser.reciver!);
             this.newMessage = '';
-          console.error('Error sending message:', error);
+          }else {
+            console.error('Error sending message:', error);
+          }
         }
       );
     }

@@ -28,8 +28,8 @@
     <div class="button-container">
       <button class="btn buy-button" *ngIf="!isProductInCart && !isMyProduct" (click)="addToCart()">Acquista</button>
       <p class="btn buy-button disabled" style="text-align: center; color: black" *ngIf="isProductInCart">Prodotto nel carrello</p>
-      <button class="btn second-button" *ngIf="!isMyProduct">Fai un'offerta</button>
-      <button class="btn second-button" *ngIf=" !isMyProduct" (click)="chat()">Contatta il venditore</button>
+      <button class="btn second-button" *ngIf="!isMyProduct" (click)="openOfferModal()">Fai un'offerta</button>
+      <button class="btn second-button" *ngIf=" !isMyProduct" (click)="openMessageModal()">Contatta il venditore</button>
     </div>
     <div class="image-thumbnails">
       <div *ngFor="let image of insertion?.imageName" class="thumbnail" (click)="openModal()">
@@ -57,8 +57,29 @@
 </div>
 <div style="height: 20px"></div>
 
-<!-- Finestra modale -->
+<!-- Finestra modale immegine -->
 <div class="modal" *ngIf="modalOpen" (click)="closeModal()">
   <span class="close" (click)="closeModal()">&times;</span>
   <img [src]="modalImage ? 'https://localhost:8010/vintedProject-api/v1/images/' + modalImage : 'assets/resources/vestito.jpg'" alt="Modal Image">
+</div>
+
+<div class="offer-message-modal" *ngIf="messageModalOpen" (click)="closeModalOnClick($event)">
+  <div class="message">
+    <h2 style="color: black">Scrivi un messaggio</h2>
+    <textarea class="message-input" [(ngModel)]="message" placeholder="messaggio..." (click)="$event.stopPropagation()"></textarea>
+    <p>Una volta mandato il messaggio lo troverai nell'apposita pagina... {{ insertion?.price }}€</p>
+    <button class="btn" (click)="submitMessage()">Invia messaggio</button>
+    <button class="btn" (click)="closeMessageModal()">Annulla</button>
+  </div>
+</div>
+
+<!-- Finestra modale offerta -->
+<div class="offer-message-modal" *ngIf="offerModalOpen" (click)="closeModalOnClick($event)">
+  <div class="offer">
+    <h2 style="color: black">Quanto vuoi offrire?</h2>
+    <input type="number" [(ngModel)]="offerAmount" placeholder="Offerta in €" (click)="$event.stopPropagation()">
+    <p>Il prezzo originario è di {{ insertion?.price }}€</p>
+    <button class="btn" (click)="submitOffer()">Invia offerta</button>
+    <button class="btn" (click)="closeOfferModal()">Annulla</button>
+  </div>
 </div>
