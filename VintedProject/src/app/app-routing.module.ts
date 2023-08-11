@@ -40,7 +40,6 @@ const routes: Routes = [
   {path: 'refused', component: RefusedComponent},
   {path: 'dash', component: DashboardComponent},
   {path: 'chat', component: ChatComponent},
-  {path: 'newchat/:usedid', component: ChatComponent},
 
 
 

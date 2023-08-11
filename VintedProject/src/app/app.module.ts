@@ -17,7 +17,6 @@ import { BrandComponent } from './Components/Querys/brand/brand.component';
 import { CookieService } from 'ngx-cookie-service';
 import { SearchComponent } from './Components/Querys/search/search.component';
 import { CategoryComponent } from './Components/Querys/category/category.component';
-
 import {FormsModule} from "@angular/forms";
 import {MainNavComponent} from "./Components/Components/main-nav/main-nav.component";
 import {ProductCardComponent} from "./Components/Components/Cards/product-card/product-card.component";
@@ -48,11 +47,9 @@ import {OfferService} from "./api/offer.service";
 import {DashboardComponent} from "./Components/Pages/Admin/dashboard/dashboard.component";
 import {ProfileCardComponent} from "./Components/Components/Cards/profile-card/profile-card.component";
 import {BottomOfTheBarrelComponent} from "./Components/Components/bottom-of-the-barrel/bottom-of-the-barrel.component";
-import {TranslateModule} from "@ngx-translate/core";
-import {StreamAutocompleteTextareaModule, StreamChatModule} from "stream-chat-angular";
 import {ChatComponent} from "./Components/Pages/chat/chat.component";
 import {ChatService} from "./api/chat.service";
-import {Configuration} from "./configuration";
+import {OfferCardComponent} from "./Components/Components/Cards/offer-card/offer-card.component";
 
 
 
@@ -60,36 +57,36 @@ import {Configuration} from "./configuration";
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        MainNavComponent,
-        ProductCardComponent,
-        InsertionPageComponent,
-        HomePageComponent,
-        BrandComponent,
-        SearchComponent,
-        CategoryComponent,
-        CatalogComponent,
-        UserInsertionComponent,
-        ProfileComponent,
-        CartComponent,
-        CartInsertionCardComponent,
-        LoginComponent,
-        CreateInsertionComponent,
-        MyprofileComponent,
-        NotFoundComponent,
-        NotAuthorizedComponent,
-        BadComponent,
-        RefusedComponent,
-        OrderCardComponent,
-        DashboardComponent,
-        ProfileCardComponent,
-        BottomOfTheBarrelComponent,
-        ChatComponent,
+  declarations: [
+    AppComponent,
+    MainNavComponent,
+    ProductCardComponent,
+    InsertionPageComponent,
+    HomePageComponent,
+    BrandComponent,
+    SearchComponent,
+    CategoryComponent,
+    CatalogComponent,
+    UserInsertionComponent,
+    ProfileComponent,
+    CartComponent,
+    CartInsertionCardComponent,
+    LoginComponent,
+    CreateInsertionComponent,
+    MyprofileComponent,
+    NotFoundComponent,
+    NotAuthorizedComponent,
+    BadComponent,
+    RefusedComponent,
+    OfferCardComponent,
+    OrderCardComponent,
+    DashboardComponent,
+    ProfileCardComponent,
+    BottomOfTheBarrelComponent,
+    ChatComponent,
 
 
-
-    ],
+  ],
   imports: [
     FormsModule,
     BrowserModule,

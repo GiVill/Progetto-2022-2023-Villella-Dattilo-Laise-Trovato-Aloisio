@@ -62,10 +62,10 @@ export class OfferService {
      *
      *
      * @param idOffer
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
+     * @param observe? set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress? flag to report request and response progress.
      */
-    public _delete(idOffer: number, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public _delete(idOffer: number | undefined, observe?: "body", reportProgress?: boolean): Observable<string>;
     public _delete(idOffer: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
     public _delete(idOffer: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
     public _delete(idOffer: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
@@ -267,7 +267,7 @@ export class OfferService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public allId(idUser: number, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse200>;
+    public allId(idUser: number, observe?: 'body', reportProgress?: boolean): Observable<BuyingOfferDto>;
     public allId(idUser: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse200>>;
     public allId(idUser: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse200>>;
     public allId(idUser: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
@@ -280,10 +280,10 @@ export class OfferService {
 
         // authentication (bearerAuth) required
         if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+          const accessToken = typeof this.configuration.accessToken === 'function'
+            ? this.configuration.accessToken()
+            : this.configuration.accessToken;
+          headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [

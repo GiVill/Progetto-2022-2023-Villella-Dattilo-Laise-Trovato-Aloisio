@@ -175,14 +175,17 @@ checkProductInCart(): void {
   submitOffer(): void {
     if (this.offerAmount !== undefined && this.offerAmount > 0) {
       const buyingOffer: BuyingOfferDto = {
-        userId: Number(this.cookiesService.getUserId()),
+        id: 0,
+        price: this.offerAmount,
+        status: "PENDING",
         insertionId: this.insertion?.id,
-        price: this.offerAmount
-        // ... altri campi se necessario
+        userId: Number(this.cookiesService.getUserId()),
       };
-
+      console.log(buyingOffer)
       this.buyngOffer.addBuyingOffer(buyingOffer).subscribe(
         (response) => {
+          this.snackBar.open("Offerta inviata con successo. Puoi verificare lo stato nel tuo profilo")
+
           console.log('Offerta inviata con successo:', response);
           this.closeOfferModal();
         },

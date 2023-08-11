@@ -1,13 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component,OnInit} from '@angular/core';
 import {InsertionService} from "../../../../api/insertion.service";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../../api/user.service";
-import {Observable, switchMap, tap} from "rxjs";
+import {switchMap} from "rxjs";
 import {OrderService} from "../../../../api/order.service";
 import {CookiesService} from "../../../../api/cookies.service";
 import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
 import {PageOrderDto} from "../../../../model/pageOrderDto";
 import {UserDto} from "../../../../model/userDto";
+import {BuyingOfferDto} from "../../../../model/buyingOfferDto";
+import {OfferService} from "../../../../api/offer.service";
+
 
 
 @Component({
@@ -19,6 +22,13 @@ export class MyprofileComponent implements OnInit{
   user: UserDto | undefined;
   myInsertion!: PageBasicInsertionDto;
   myOrder: PageOrderDto | undefined;
+  myOffer?: BuyingOfferDto[] = [{
+    "id": 7,
+    "price": 60,
+    "status": "APPROVED",
+    "insertionId": 2,
+    "userId": 7
+  }];
   page = 0;
   isAnyInsertion = false;
   isAnyOrder = false;
@@ -30,6 +40,7 @@ export class MyprofileComponent implements OnInit{
     private route: ActivatedRoute,
     private userService: UserService,
     private orderService: OrderService,
+    private offerService: OfferService,
     private cookieSevices: CookiesService
   ) {}
 
@@ -70,6 +81,16 @@ export class MyprofileComponent implements OnInit{
           );
         }
       );
+
+    /*this.offerService.allId(this.userId).subscribe(
+      (value: BuyingOfferDto) => {
+        this.myOffer?.push(value);
+        console.log(this.myOffer)
+      },
+      (error) => {
+        console.log('Si è verificato un errore durante il recupero delle offerte dell\'utente:', error);
+      }
+    );*/
 
   }
 

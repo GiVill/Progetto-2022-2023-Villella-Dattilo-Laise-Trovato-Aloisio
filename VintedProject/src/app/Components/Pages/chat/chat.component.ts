@@ -24,7 +24,12 @@ export class ChatComponent implements OnInit {
               private cookiesService: CookiesService) {}
 
   ngOnInit(): void {
-    this.loadUsers();
+    this.loadUsers().then(() => {
+      if (this.users && this.users.length > 0) {
+        this.selectedUser = this.users[0];
+        this.loadMessages(this.selectedUser.reciver!);
+      }
+    });
   }
   async loadUsers(): Promise<void> {
     try {
@@ -34,12 +39,15 @@ export class ChatComponent implements OnInit {
         this.selectedUser = users[0];
       }
       console.log(users);
-      this.loadMessages(this.selectedUser.id!);
+      this.loadMessages(this.selectedUser.reciver!);
+
     } catch (error) {
       this.noChat=true;
       console.error('Error fetching users:', error);
     }
+
   }
+
   loadMessages(userId: number): void {
     this.chatService.allChatMessage(this.myId, userId).subscribe(
       (messages: Array<ChatDto>) => {
@@ -49,7 +57,6 @@ export class ChatComponent implements OnInit {
         console.error('Error fetching messages:', error);
       }
     );
-    console.log(this.selectedUser)
   }
 
   sendMessage(): void {
