@@ -12,18 +12,21 @@
         <p>Non ci sono chat al momento</p>
       </div>
     </ng-container>
-  </div><ng-template #chatContent>
-  <div class="messages">
-    <div *ngFor="let message of messages" class="message">
-      <div class="mess-container" [ngClass]="{'own-message': message.reciver !== myId, 'other-message': message.reciver === myId}">
-        <p>{{ message.message }}</p>
+  </div>
+  <ng-template #chatContent>
+      <div>
+    <div class="messages">
+      <div *ngFor="let message of messages" class="message">
+        <div class="mess-container" [ngClass]="{'own-message': message.reciver !== myId, 'other-message': message.reciver === myId}">
+          <p>{{ message.message }}</p>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="message-input">
-    <input [(ngModel)]="newMessage" placeholder="Type a message..." (keyup.enter)="sendMessage()" />
-    <button (click)="sendMessage()">Send</button>
-  </div>
-</ng-template>
+    <div class="message-input">
+      <input [(ngModel)]="newMessage" placeholder="Type a message..." (keyup.enter)="sendMessage()" />
+      <button (click)="sendMessage()">Send</button>
+    </div>
+      </div>
+  </ng-template>
 </div>
 

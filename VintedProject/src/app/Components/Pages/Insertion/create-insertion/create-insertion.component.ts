@@ -15,7 +15,6 @@ import {V1InsertionsBody} from "../../../../model/v1InsertionsBody";
 export class CreateInsertionComponent implements OnInit{
   categoryOptions: BasicInsertionDto.CategoryEnum[] = Object.values(BasicInsertionDto.CategoryEnum);
   brandOptions: BasicInsertionDto.BrandEnum[] = Object.values(BasicInsertionDto.BrandEnum);
-
   image !: File
   inserzione : V1InsertionsBody = {
     insertion:{
@@ -31,9 +30,7 @@ export class CreateInsertionComponent implements OnInit{
   caricaFoto(event: any) {
     const fileInput = event.target;
     const files = fileInput.files;
-
     this.image = files[0]
-
   }
   controllo(){
     if (!this.inserzione.insertion.title) {
@@ -65,7 +62,8 @@ export class CreateInsertionComponent implements OnInit{
     if( this.controllo()){
       console.log(this.inserzione)
       console.log(this.image)
-
+      this.inserzione.img=this.image
+      console.log(this.inserzione)
       this.insertionService.addInsertion(this.inserzione).subscribe(
 
         response => {
@@ -76,7 +74,7 @@ export class CreateInsertionComponent implements OnInit{
           this.router.navigate(['/']);
         },
         error => {
-          console.log("ERRORE REGISTRAZIONE => ",error)
+          console.log("ERRORE REGISTRAZIONE INSERZIONE => ",error)
           console.log(this.inserzione)
           this.snackBar.open("Errore. Riprovare.", 'OK');
           //TODO

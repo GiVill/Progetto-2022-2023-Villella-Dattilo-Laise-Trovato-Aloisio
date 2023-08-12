@@ -47,3 +47,78 @@ img {
   font-size: 14px;
   font-weight: bold;
 }
+
+.btn {
+  background-color: #077782;
+  color: white;
+  padding: 5px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.offer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 9999;
+  left: 25%;
+  top: 20%;
+  height: 50%;
+  width: 50%;
+  border: 1px;
+  border-color: red;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255);
+  color: white;
+}
+
+.offer-modal h2 {
+  color: black;
+  margin-bottom: 10px;
+}
+
+.offer-modal input {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.offer-modal button {
+  background-color: #077782;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.offer-modal button:last-child {
+  margin-top: 0;
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+
+.offer-message-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 9999;
+  left: 0%;
+  top: 0%;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0,0.9);
+  color: white;
+}

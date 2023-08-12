@@ -2,6 +2,7 @@
   <div class="image-container">
     <img class="rounded-image" [src]="imageName" (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
     <button *ngIf="item?.isPrivate && item?.userId==myid" style="display: flex; bottom: 2px; margin: 5px" (click)="share()" >Condividi con codice privato</button>
+    <button *ngIf="item?.userId==myid" style="display: flex; bottom: 2px; margin: 5px" (click)="openOfferModal()" > Visualizza offerte</button>
 
   </div>
   <div class="content-container" (click)="onImageClick()">
@@ -10,5 +11,27 @@
   </div>
   <div class="price-container">
     <p class="price">Prezzo: {{ item?.price }}€</p>
+  </div>
+</div>
+
+<!-- Finestra modale offerta -->
+<div class="offer-message-modal" *ngIf="offerModalOpen" (click)="closeOfferModal($event)">
+  <div class="offer">
+    <h2 style="color: black">Lista delle offerte per l'inserzione "{{item?.title}}":</h2>
+    <div *ngFor="let offer of offers!">
+      <div style="background-color: rgba( 0, 0,0,0.2); min-width: 120%; border-radius: 5px" >
+        <div style="margin: 10%">
+          <p style="color: black">Stato offerta: {{offer.status}}</p>
+          <p style="color: black">Prezzo offerto: {{offer.price}}€</p>
+          <div style="display: flex">
+          <button class=" btn">ACCETTA</button>
+          <button class=" btn">RIFIUTA</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3 style="color: black">Prezzo originale: {{item?.price}}€</h3>
+    <button class="btn" (click)="closeOfferModal($event)">Annulla</button>
+    <h4 style="color: red">Attenzione, accettando un offerta le altre verranno rifuitate automaticamente.</h4>
   </div>
 </div>

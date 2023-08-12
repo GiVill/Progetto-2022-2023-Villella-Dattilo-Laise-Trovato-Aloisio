@@ -37,6 +37,22 @@
           </div>
         </div>
 
+      <div class="body-content" style="margin-top: 30px">
+        <div style="max-height: 700px;">
+          <div class="header">
+            <h2 class="font">Le mie Offerte</h2>
+            <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutti</button>
+          </div>
+          <div class="card-container">
+            <div class="card-row" >
+              <ng-container *ngFor="let item of myOffer; let i = index;">
+                <app-offer-card [item]="item" class="card-item"></app-offer-card>
+                <ng-container *ngIf="(i + 1) % 5 === 0" class="card-item"></ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
     <div class="body-content" style="margin-top: 30px">
@@ -56,22 +72,7 @@
       </div>
     </div>
 
-      <div class="body-content" style="margin-top: 30px">
-        <div style="max-height: 700px;">
-          <div class="header">
-            <h2 class="font">Le mie Offerte</h2>
-            <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutti</button>
-          </div>
-          <div class="card-container">
-            <div class="card-row" >
-              <ng-container *ngFor="let item of myOffer; let i = index;">
-                <app-offer-card [item]="item" class="card-item"></app-offer-card>
-                <ng-container *ngIf="(i + 1) % 5 === 0" class="card-item"></ng-container>
-              </ng-container>
-            </div>
-          </div>
-        </div>
-      </div>
+
     </div>
 </div>
 

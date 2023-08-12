@@ -267,7 +267,7 @@ export class OfferService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public allId(idUser: number, observe?: 'body', reportProgress?: boolean): Observable<BuyingOfferDto>;
+    public allId(idUser: number, observe?: 'body', reportProgress?: boolean): Observable<BuyingOfferDto[]>;
     public allId(idUser: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse200>>;
     public allId(idUser: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse200>>;
     public allId(idUser: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
