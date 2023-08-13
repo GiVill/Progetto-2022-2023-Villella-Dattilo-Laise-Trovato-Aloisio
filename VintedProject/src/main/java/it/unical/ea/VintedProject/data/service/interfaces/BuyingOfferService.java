@@ -16,6 +16,8 @@ public interface BuyingOfferService {
 
     Stream<BuyingOfferDto> getById(Long userId);
 
+    List<BuyingOfferDto> getByInsertionId(Long insertionId);
+
     List<BuyingOfferDto> findAll();
 
     Stream<BuyingOfferDto> getAllByUserIdForAdmin(Long userId);

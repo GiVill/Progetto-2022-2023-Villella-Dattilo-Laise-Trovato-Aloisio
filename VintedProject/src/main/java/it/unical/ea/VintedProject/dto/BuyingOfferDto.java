@@ -11,7 +11,6 @@ import lombok.ToString;
 @ToString
 public class BuyingOfferDto {
 
-    @NotNull
     private Long id;
 
     @NotNull

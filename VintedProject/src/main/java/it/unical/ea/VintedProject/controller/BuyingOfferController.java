@@ -30,9 +30,14 @@ public class BuyingOfferController {
         return ResponseEntity.ok(buyingOfferService.findAll());
     }
 
-    @GetMapping("/offers/{idUser}")
+    @GetMapping("/offers/user/{idUser}")
     public ResponseEntity<Stream<BuyingOfferDto>> allId(@PathVariable("idUser") Long userId) {
         return ResponseEntity.ok(buyingOfferService.getById(userId));
+    }
+
+    @GetMapping("/offers/insertion/{insertionId}")
+    public ResponseEntity<List<BuyingOfferDto>> allInsertionId(@PathVariable("insertionId") Long insertionId) {
+        return ResponseEntity.ok(buyingOfferService.getByInsertionId(insertionId));
     }
 
     @GetMapping("/offers/admin/{userId}")

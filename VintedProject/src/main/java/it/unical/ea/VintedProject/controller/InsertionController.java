@@ -39,7 +39,7 @@ public class InsertionController {
 
     @PostMapping("/insertions")
     //@PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<BasicInsertionDto> addInsertion(@RequestPart("insertion") @Valid BasicInsertionDto basicInsertionDto, @RequestPart("img") MultipartFile img) {
+    public ResponseEntity<BasicInsertionDto> addInsertion(@RequestPart("insertion") @Valid BasicInsertionDto basicInsertionDto, @RequestPart ("img") MultipartFile img) {
         BasicInsertionDto newInsertion = basicInsertionService.saveDto(basicInsertionDto);
         if (imageService.insertInsertionImage(newInsertion.getId(),img)) {
             return ResponseEntity.ok(basicInsertionService.getInsertionById(newInsertion.getId()));

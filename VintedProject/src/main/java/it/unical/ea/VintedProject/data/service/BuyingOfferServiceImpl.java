@@ -52,6 +52,16 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     }
 
     @Override
+    //@PreAuthorize("has")
+    public List<BuyingOfferDto> getByInsertionId(Long insertionId) {
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null){
+            throw new EntityNotFoundException(messageLang.getMessage("wrong.user"));
+        }
+        return buyingOfferDao.findByInsertionId(insertionId).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
     @PreAuthorize("has")
     public List<BuyingOfferDto> findAll() {
         return buyingOfferDao.findAll().stream().map(s -> modelMapper.map(s, BuyingOfferDto.class)).collect(Collectors.toList());
@@ -68,6 +78,7 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
         if(u.get().getEmail() == null || !u.get().getBuyingOffers().contains(buyingOfferDao.findById(offerId))){
             throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present",offerId));
         }
+        System.out.println(offerId);
         buyingOfferDao.deleteById(offerId);
     }
 
