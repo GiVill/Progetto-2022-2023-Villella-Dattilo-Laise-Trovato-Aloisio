@@ -57,9 +57,10 @@ export class ProductCardComponent implements OnInit{
 
 
   offer() {
-    this.offerService.allId(Number(this.item?.id)).subscribe(
+    this.offerService.allInsertionId(Number(this.item?.id)).subscribe(
       (data: BuyingOfferDto[]) => {
         this.offers = data;
+        this.sortOffersByPriceDescending();
         console.log(data)
       },
       (error) => {
@@ -73,7 +74,33 @@ export class ProductCardComponent implements OnInit{
     this.offer();
   }
 
-  closeOfferModal($event: MouseEvent): void {
-    this.offerModalOpen = false;
+  closeOfferModal(event: any): void {
+    if (event.target.classList.contains('offer-message-modal')) {
+      this.offerModalOpen = false;
+    }
+
+  }
+
+  sortOffersByPriceDescending() {
+    this.offers?.sort((a, b) => b.price - a.price); // Ordina le offerte per prezzo decrescente
+  }
+
+  acceptOffer() {
+
+  }
+
+  deleteOffer(id: number | undefined) {
+    console.log(id)
+    this.offerService._delete(Number(id)).subscribe(response => {
+        this.offer()
+        this.snackBar.open("Offerta rifiutata" , "OK")
+      },
+      error => {
+        if (error.status == 200){
+          this.offer()
+          this.snackBar.open("Offerta rifiutata" , "OK")
+        }
+        this.snackBar.open("Errore durante l'eliminazione dell'offerta" , "Riprovare")
+      })
   }
 }

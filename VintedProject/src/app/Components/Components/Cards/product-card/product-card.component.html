@@ -14,24 +14,27 @@
   </div>
 </div>
 
-<!-- Finestra modale offerta -->
 <div class="offer-message-modal" *ngIf="offerModalOpen" (click)="closeOfferModal($event)">
   <div class="offer">
     <h2 style="color: black">Lista delle offerte per l'inserzione "{{item?.title}}":</h2>
-    <div *ngFor="let offer of offers!">
-      <div style="background-color: rgba( 0, 0,0,0.2); min-width: 120%; border-radius: 5px" >
-        <div style="margin: 10%">
-          <p style="color: black">Stato offerta: {{offer.status}}</p>
-          <p style="color: black">Prezzo offerto: {{offer.price}}€</p>
-          <div style="display: flex">
-          <button class=" btn">ACCETTA</button>
-          <button class=" btn">RIFIUTA</button>
+    <div class="offer-list" *ngIf="offers">
+      <div class="offer-column" *ngFor="let offer of offers; let i = index">
+        <div class="offer-item">
+          <div class="offer-details">
+            <p style="color: black">Stato offerta: {{offer.status}}</p>
+            <p style="color: black">Prezzo offerto: {{offer.price}}€</p>
+            <div class="offer-buttons">
+              <button class="btn" (click)="acceptOffer()" >ACCETTA</button>
+              <button class="btn" (click)="deleteOffer(offer.id)">RIFIUTA</button>
+            </div>
           </div>
         </div>
+        <div *ngIf="(i + 1) % 3 === 0 || i === offers.length - 1" class="clearfix"></div>
       </div>
     </div>
     <h3 style="color: black">Prezzo originale: {{item?.price}}€</h3>
     <button class="btn" (click)="closeOfferModal($event)">Annulla</button>
-    <h4 style="color: red">Attenzione, accettando un offerta le altre verranno rifuitate automaticamente.</h4>
+    <h4 style="color: red">Attenzione, accettando un'offerta le altre verranno rifiutate automaticamente.</h4>
   </div>
 </div>
+

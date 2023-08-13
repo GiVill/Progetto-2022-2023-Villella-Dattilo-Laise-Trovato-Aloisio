@@ -118,7 +118,40 @@ img {
   left: 0%;
   top: 0%;
   height: 100%;
-  width: 100%;
+  width: 105%;
   background-color: rgba(0, 0, 0,0.9);
   color: white;
+}
+
+
+.offer-list {
+  margin-left: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-height: 300px; /* Imposta l'altezza massima desiderata */
+  overflow-y: auto;
+}
+
+.offer-column {
+  width: calc(33.33% - 20px); /* Larghezza di ogni colonna (1/3) con margine */
+}
+
+.clearfix {
+  clear: both;
+}
+
+.offer-item {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 8px;
+  margin-bottom: 10px; /* Aggiunge uno spazio tra le offerte */
+}
+
+.offer-details {
+  color: black;
+}
+
+.offer-buttons {
+  display: flex;
 }

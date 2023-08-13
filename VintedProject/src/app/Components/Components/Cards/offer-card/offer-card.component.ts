@@ -53,7 +53,7 @@ export class OfferCardComponent implements OnInit{
 
 
   deleteOffer() {
-    this.offerService._delete(this.item?.id).subscribe((response) => {
+    this.offerService._delete(Number(this.item?.id)).subscribe((response) => {
       this.snackBar.open("Offerta eliminata", )
       },
       (error) => {
