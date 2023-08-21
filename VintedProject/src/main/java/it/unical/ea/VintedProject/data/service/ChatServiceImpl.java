@@ -19,6 +19,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.list;
+
 @Service
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
@@ -94,7 +96,21 @@ public class ChatServiceImpl implements ChatService {
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id1));
         }
         List<ChatDto> list =  chatDao.findBySenderAndReciverOrderByDateAsc(id1, id2).stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
-        List<ChatDto>  list2 = chatDao.findByReciverAndSenderOrderByDateAsc(id1,id2).stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
+
+        //TODO Verificare se funziona (Setta l'ultimo messaggio caricato come seen=true)
+        List<ChatDto> list2 = chatDao.findByReciverAndSenderOrderByDateAsc(id1, id2)
+                .stream()
+                .map(s -> {
+                    ChatDto chatDto = modelMapper.map(s, ChatDto.class);
+                    if (!list.isEmpty() && s.equals(list.get(list.size() - 1))) {
+                        chatDto.setSeen(true);
+                        s.setSeen(true);
+                        chatDao.save(s);
+                    }
+                    return chatDto;
+                })
+                .collect(Collectors.toList());
+
 
         List<ChatDto> unite = new ArrayList<ChatDto>();
 

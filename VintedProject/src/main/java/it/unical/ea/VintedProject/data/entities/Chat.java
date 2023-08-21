@@ -42,6 +42,9 @@ public class Chat {
     @Column(name = "date")
     private LocalDateTime date;
 
+    @Column(name = "seen")
+    private Boolean seen=false;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

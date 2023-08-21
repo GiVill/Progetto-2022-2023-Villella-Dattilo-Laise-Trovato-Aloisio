@@ -15,4 +15,5 @@ public class ChatDto {
     private String nickname;
     private String message;
     private LocalDateTime date;
+    private Boolean seen;
 }
