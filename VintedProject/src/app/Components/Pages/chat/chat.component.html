@@ -19,6 +19,7 @@
       <div *ngFor="let message of messages" class="message">
         <div class="mess-container" [ngClass]="{'own-message': message.reciver !== myId, 'other-message': message.reciver === myId}">
           <p>{{ message.message }}</p>
+          <p *ngIf="message.seen" style="font-size: xx-small"> Letto </p>
         </div>
       </div>
     </div>

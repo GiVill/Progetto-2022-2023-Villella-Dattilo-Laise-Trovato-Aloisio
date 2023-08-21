@@ -24,6 +24,7 @@ import { V1InsertionsBody } from '../model/v1InsertionsBody';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
+import {CookiesService} from "./cookies.service";
 
 
 @Injectable()
@@ -33,7 +34,7 @@ export class InsertionService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, private CookiesService : CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -73,11 +74,10 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -132,7 +132,6 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
         if (this.configuration.accessToken) {
             const accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
@@ -187,10 +186,10 @@ export class InsertionService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -236,10 +235,10 @@ export class InsertionService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -284,10 +283,10 @@ export class InsertionService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -332,10 +331,10 @@ export class InsertionService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -538,7 +537,6 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
         if (this.configuration.accessToken) {
             const accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
@@ -591,7 +589,6 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
         if (this.configuration.accessToken) {
             const accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
@@ -644,7 +641,6 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
         if (this.configuration.accessToken) {
             const accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
@@ -693,10 +689,10 @@ export class InsertionService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -741,10 +737,10 @@ export class InsertionService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -800,10 +796,10 @@ export class InsertionService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header

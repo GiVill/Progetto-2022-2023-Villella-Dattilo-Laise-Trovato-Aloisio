@@ -75,10 +75,7 @@ export class ProductCardComponent implements OnInit{
   }
 
   closeOfferModal(event: any): void {
-    if (event.target.classList.contains('offer-message-modal')) {
-      this.offerModalOpen = false;
-    }
-
+    this.offerModalOpen = false;
   }
 
   sortOffersByPriceDescending() {
@@ -102,5 +99,6 @@ export class ProductCardComponent implements OnInit{
         }
         this.snackBar.open("Errore durante l'eliminazione dell'offerta" , "Riprovare")
       })
+    //TODO Risolvere l'errore
   }
 }

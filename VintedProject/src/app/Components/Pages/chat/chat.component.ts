@@ -52,6 +52,7 @@ export class ChatComponent implements OnInit {
     this.chatService.allChatMessage(this.myId, userId).subscribe(
       (messages: Array<ChatDto>) => {
         this.messages = messages;
+        console.log(messages)
       },
       (error) => {
         console.error('Error fetching messages:', error);

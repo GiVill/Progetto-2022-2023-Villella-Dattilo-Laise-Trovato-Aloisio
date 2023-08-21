@@ -22,25 +22,25 @@ img {
 }
 
 .content-container {
-  flex: 1; /* Allow the content to take up the remaining space */
+  flex: 1;
 }
 
 .title {
   text-align: left;
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 5px; /* Add some space below the title */
+  margin-bottom: 5px;
 }
 
 .description {
   width: 100%;
-  margin-bottom: 10px; /* Add some space below the description */
+  margin-bottom: 10px;
 }
 
 .price-container {
-  position: absolute; /* Position the price container relative to the card */
-  bottom: 5px; /* Add some space from the bottom */
-  right: 5px; /* Add some space from the right */
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }
 
 .price {
