@@ -30,6 +30,8 @@ public interface OrderService {
 
     Page<OrderDto> getOrderByIdAdminByEmail(String userEmail,int page);
 
+    Page<OrderDto> getOrderByPaymeth(String method,int page);
+
 
     void deleteOrderForAdmin(Long orderId);
 }

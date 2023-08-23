@@ -31,8 +31,6 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     @Override
     public BuyingOfferDto save(BuyingOfferDto offer) {
         BuyingOffer buyingOffer = modelMapper.map(offer,BuyingOffer.class);
-        buyingOfferDao.save(buyingOffer);
-
         BuyingOffer o = buyingOfferDao.save(buyingOffer);
         return modelMapper.map(o,BuyingOfferDto.class);
     }

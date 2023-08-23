@@ -64,9 +64,6 @@ public class User {
     private Boolean isPrivate;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Payment> payments;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<BuyingOffer> buyingOffers;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

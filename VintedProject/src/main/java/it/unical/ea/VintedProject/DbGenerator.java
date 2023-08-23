@@ -40,8 +40,9 @@ public class DbGenerator implements ApplicationRunner {
     @Value("classpath:data/users.csv")
     private Resource usersRes;
 
+    /*
     @Value("classpath:data/payments.csv")
-    private Resource paymentsRes;
+    private Resource paymentsRes;*/
 
     @Value("classpath:data/orders.csv")
     private Resource ordersRes;
@@ -56,7 +57,6 @@ public class DbGenerator implements ApplicationRunner {
     private Resource chatRes;
 
     protected final UserService userService;
-    protected final PaymentService paymentService;
     protected final BasicInsertionService insertionService;
     protected final OrderService orderService;
     protected final BuyingOfferService buyingOfferService;
@@ -76,7 +76,7 @@ public class DbGenerator implements ApplicationRunner {
             CSVParser ordersCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(ordersRes.getInputStream()));
             for (CSVRecord record : ordersCsv) {
-                insertOrder(record.get(0), record.get(1));
+                insertOrder(record.get(0), record.get(1),record.get(2),record.get(3));
             }
 
             CSVParser insertionsCsv = CSVFormat.DEFAULT.withDelimiter(';')
@@ -86,11 +86,11 @@ public class DbGenerator implements ApplicationRunner {
             }
 
 
-            CSVParser paymentsCsv = CSVFormat.DEFAULT.withDelimiter(';')
+           /* CSVParser paymentsCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(paymentsRes.getInputStream()));
             for (CSVRecord record : paymentsCsv) {
                 insertPayment(record.get(0), record.get(1));
-            }
+            }*/
 
             CSVParser buyingoffertsCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(buyingoffertsRes.getInputStream()));
@@ -141,15 +141,17 @@ public class DbGenerator implements ApplicationRunner {
         insertionService.save(basicInsertion);
     }
 
-    private void insertOrder(String localDate, String idUser) {
+    private void insertOrder(String localDate, String idUser, String status, String paypal) {
         Order order = new Order();
         order.setDate(LocalDate.parse(localDate));
         order.setUser(userService.getUserById(Long.valueOf(idUser)));
+        order.setStatus(Status.valueOf(status));
+        order.setPaymentMethod(PaymentMethod.valueOf(paypal));
 
         orderService.save(order);
 
     }
-
+/*
     private void insertPayment(String idOrder, String idUser) {
         Payment payment = new Payment();
         payment.setPaymentMethod(PaymentMethod.PAYPAL);
@@ -159,7 +161,7 @@ public class DbGenerator implements ApplicationRunner {
 
         paymentService.save(payment);
     }
-
+*/
     private void insertUser(String nickName,String firstName, String lastName,String email,String password,
                             String phoneNumber) {
 
@@ -192,6 +194,6 @@ public class DbGenerator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-       // createDb();
+        //createDb();
     }
 }

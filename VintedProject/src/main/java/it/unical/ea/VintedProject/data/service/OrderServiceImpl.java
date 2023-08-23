@@ -107,6 +107,16 @@ public class OrderServiceImpl implements OrderService {
         return new PageImpl<>(collect);
     }
 
+
+
+    @Override
+    public Page<OrderDto> getOrderByPaymeth(String method, int page) {
+        //TODO AGGIUNGERE I CONTROLLI
+        Page<Order> orders = orderDao.findAllByPaymentMethod(method,PageRequest.of(page,SIZE_FOR_PAGE));
+        List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());
+        return new PageImpl<>(collect);
+    }
+
     @Override
     public void deleteOrderForAdmin(Long orderId) {
         orderDao.deleteById(orderId);

@@ -2,6 +2,8 @@ package it.unical.ea.VintedProject.data.entities;
 
 
 import it.unical.ea.VintedProject.core.entitiesAuditTrailListener.OrderListener;
+import it.unical.ea.VintedProject.dto.enumeration.PaymentMethod;
+import it.unical.ea.VintedProject.dto.enumeration.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,9 +34,13 @@ public class Order {
     @Column(name = "TOTAL")
     private Float total;
 
-    @OneToOne(mappedBy = "order")
-    @Lazy
-    private Payment payment;
+    @Column(name = "PAYMENT_METHOD")
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
@@ -44,3 +50,8 @@ public class Order {
     private List<BasicInsertion> insertionList ;
 
 }
+/*
+    @OneToOne(mappedBy = "order")
+    @Lazy
+    private Payment payment;
+ */

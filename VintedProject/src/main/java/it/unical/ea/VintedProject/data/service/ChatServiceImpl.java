@@ -98,15 +98,21 @@ public class ChatServiceImpl implements ChatService {
         List<ChatDto> list =  chatDao.findBySenderAndReciverOrderByDateAsc(id1, id2).stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
 
         //TODO Verificare se funziona (Setta l'ultimo messaggio caricato come seen=true)
-        List<ChatDto> list2 = chatDao.findByReciverAndSenderOrderByDateAsc(id1, id2)
+        List<ChatDto> list2 = chatDao.findByReciverAndSenderOrderByDateAsc(id2, id1)
                 .stream()
                 .map(s -> {
                     ChatDto chatDto = modelMapper.map(s, ChatDto.class);
-                    if (!list.isEmpty() && s.equals(list.get(list.size() - 1))) {
-                        chatDto.setSeen(true);
+                    String mex =s.getMessage();
+                    ChatDto message = list.get(list.size()-1);
+                    System.out.println(mex.equals(message.getMessage()));
+                    System.out.println(!list.isEmpty());
+                    if (!list.isEmpty() && mex.equals(message.getMessage())) {
+                        System.out.println("ENTRO");
+                        message.setSeen(true);
                         s.setSeen(true);
                         chatDao.save(s);
                     }
+                    System.out.println(s+" "+list.get(list.size()-1));
                     return chatDto;
                 })
                 .collect(Collectors.toList());

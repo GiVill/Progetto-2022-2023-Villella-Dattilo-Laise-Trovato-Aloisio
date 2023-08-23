@@ -18,4 +18,6 @@ public interface OrderDao extends JpaRepository<Order, Long> {
 
     List<Order> findByUser(User user);
 
+    Page<Order> findAllByPaymentMethod(String method,Pageable page);
+
 }
