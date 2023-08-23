@@ -14,7 +14,7 @@ ul {
 
 .mainDiv{
   display: flex;
-  background-color: rgb(249, 244, 244);
+  background-color: white;
   justify-content: space-between;
   height: 70px;
 }
@@ -30,7 +30,7 @@ ul {
 
 .secondDiv{
   justify-content: space-between;
-  background-color: lightblue;
+  background-color: #0d9263;
 }
 
 .spacer{

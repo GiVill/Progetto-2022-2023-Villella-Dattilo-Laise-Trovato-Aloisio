@@ -126,8 +126,8 @@ img {
 
 .offer-list {
   margin-left: 10px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+
   gap: 20px;
   max-height: 300px; /* Imposta l'altezza massima desiderata */
   overflow-y: auto;

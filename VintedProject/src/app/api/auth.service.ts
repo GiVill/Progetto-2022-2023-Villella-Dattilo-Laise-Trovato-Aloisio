@@ -25,6 +25,7 @@ import { TokenDto } from '../model/tokenDto';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import {CookiesService} from "./cookies.service";
+import {TokenResponse} from "../model/tokenResponse";
 
 
 @Injectable()
@@ -67,10 +68,7 @@ export class AuthService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getRefreshToken(body: string, observe?: 'body', reportProgress?: boolean): Observable<string>;
-    public getRefreshToken(body: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-    public getRefreshToken(body: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
-    public getRefreshToken(body: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getRefreshToken(body: string, observe?: 'body', reportProgress?: boolean): Observable<TokenDto>{
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling getRefreshToken.');
@@ -103,7 +101,7 @@ export class AuthService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<string>('post',`${this.basePath}/v1/get-refresh-token`,
+        return this.httpClient.request<TokenDto>('post',`${this.basePath}/v1/get-refresh-token`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

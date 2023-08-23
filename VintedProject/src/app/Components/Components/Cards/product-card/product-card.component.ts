@@ -6,6 +6,7 @@ import {InsertionService} from "../../../../api/insertion.service";
 import {BuyingOfferDto} from "../../../../model/buyingOfferDto";
 import {OfferService} from "../../../../api/offer.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {ClipboardService} from "ngx-clipboard";
 
 @Component({
   selector: 'app-product-card',
@@ -25,7 +26,8 @@ export class ProductCardComponent implements OnInit{
               private cookiesService: CookiesService,
               private offerService: OfferService,
               private snackBar: MatSnackBar,
-              private insertionService: InsertionService) { }
+              private insertionService: InsertionService,
+              private clipboardService: ClipboardService) { }
   ngOnInit(): void {
     if(this.item?.imageName != null){
       this.imageName = 'https://localhost:8010/vintedProject-api/v1/images/' + this.item.imageName
@@ -45,11 +47,12 @@ export class ProductCardComponent implements OnInit{
   share(){
     this.insertionService.generateCapabilities(Number(this.item?.id)).subscribe(response => {
         console.log("Capability generata", response);
-        //TODO
+        this.clipboardService.copyFromContent(String(response))
       },
       error => {
       if (error.status == 200){
         this.snackBar.open("Codice copiato nella clipboard.")
+        this.clipboardService.copyFromContent("localhost:4200/private/"+String(error.error.text))
       }
         console.log("Errore durante la generazione", error);
       })

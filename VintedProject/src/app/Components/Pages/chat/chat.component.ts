@@ -24,6 +24,9 @@ export class ChatComponent implements OnInit {
               private cookiesService: CookiesService) {}
 
   ngOnInit(): void {
+    if (!this.cookiesService.checkUserToken()){
+        this.cookiesService.getRefreshToken()
+    }
     this.loadUsers().then(() => {
       if (this.users && this.users.length > 0) {
         this.selectedUser = this.users[0];

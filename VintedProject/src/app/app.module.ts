@@ -50,6 +50,8 @@ import {BottomOfTheBarrelComponent} from "./Components/Components/bottom-of-the-
 import {ChatComponent} from "./Components/Pages/chat/chat.component";
 import {ChatService} from "./api/chat.service";
 import {OfferCardComponent} from "./Components/Components/Cards/offer-card/offer-card.component";
+import {PrivateComponent} from "./Components/Pages/Insertion/private/private.component";
+import {ClipboardModule} from "ngx-clipboard";
 
 
 
@@ -72,6 +74,7 @@ import {OfferCardComponent} from "./Components/Components/Cards/offer-card/offer
     CartComponent,
     CartInsertionCardComponent,
     LoginComponent,
+    PrivateComponent,
     CreateInsertionComponent,
     MyprofileComponent,
     NotFoundComponent,
@@ -84,6 +87,7 @@ import {OfferCardComponent} from "./Components/Components/Cards/offer-card/offer
     ProfileCardComponent,
     BottomOfTheBarrelComponent,
     ChatComponent,
+
 
 
   ],
@@ -113,7 +117,7 @@ import {OfferCardComponent} from "./Components/Components/Cards/offer-card/offer
       }
     })
   ],
-  providers: [CookieService,ChatService,JwtHelperService,InsertionService,AuthService,UserService,CartService,PaymentService,OrderService,OfferService],
+  providers: [CookieService,ChatService,ClipboardModule,JwtHelperService,InsertionService,AuthService,UserService,CartService,PaymentService,OrderService,OfferService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

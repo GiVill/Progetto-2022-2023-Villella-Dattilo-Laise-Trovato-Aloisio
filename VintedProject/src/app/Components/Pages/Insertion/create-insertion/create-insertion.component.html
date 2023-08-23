@@ -7,24 +7,24 @@
       <form (ngSubmit)="creaInserzione()">
         <div class="form-group">
           <label for="titolo">Titolo*:</label>
-          <input type="text" id="titolo" name="titolo" [(ngModel)]="inserzione.insertion.title" required>
+          <input type="text" id="titolo" name="titolo" [(ngModel)]="inserzione.title" required>
         </div>
 
         <div class="form-group">
           <label for="descrizione">Descrizione:</label>
-          <input type="text" id="descrizione" name="descrizione" style="height: 50%;" [(ngModel)]="inserzione.insertion.description" class="fixed-height-textarea">
+          <input type="text" id="descrizione" name="descrizione" style="height: 50%;" [(ngModel)]="inserzione.description" class="fixed-height-textarea">
         </div>
 
         <div class="form-group">
           <label for="Categoria">Categoria*:</label>
-          <select id="Categoria" name="Categoria" style="width: 109%" [(ngModel)]="inserzione.insertion.category" required>
+          <select id="Categoria" name="Categoria" style="width: 109%" [(ngModel)]="inserzione.category" required>
             <option *ngFor="let category of categoryOptions" [value]="category">{{ category }}</option>
           </select>
         </div>
 
         <div class="form-group">
           <label for="Brand">Brand*:</label>
-          <select id="Brand" name="Brand" style="width: 109%" [(ngModel)]="inserzione.insertion.brand" required>
+          <select id="Brand" name="Brand" style="width: 109%" [(ngModel)]="inserzione.brand" required>
             <option *ngFor="let brand of brandOptions" [value]="brand">{{ brand }}</option>
           </select>
         </div>
@@ -42,7 +42,7 @@
         <div style="display: flex">
         <div class="form-group">
           <label style=" margin-top: 10%" for="prezzo">Prezzo*:</label>
-          <input type="text" id="prezzo" name="prezzo" style="width: 20%;" [(ngModel)]="inserzione.insertion.price" required> €
+          <input type="text" id="prezzo" name="prezzo" style="width: 20%;" [(ngModel)]="inserzione.price" required> €
         </div>
         <button type="submit" style="margin-top: 10%" [disabled]="!formValido()">Crea Inserzione</button>
         </div>

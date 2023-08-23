@@ -57,8 +57,14 @@ export class InsertionService {
         }
         return false;
     }
-
-
+  addInsertion(insertion: BasicInsertionDto, image : File){
+    console.log(insertion);
+    const insertionBlob = new Blob([JSON.stringify(insertion)], { type: 'application/json' });
+    const formData = new FormData();
+    formData.append('insertion', insertionBlob);
+    formData.append('img', image);
+    return this.httpClient.post<BasicInsertionDto>(`${this.basePath}/v1/insertions`,formData);
+  }
     /**
      *
      *
@@ -66,48 +72,6 @@ export class InsertionService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addInsertion(body?: V1InsertionsBody, observe?: 'body', reportProgress?: boolean): Observable<BasicInsertionDto>;
-    public addInsertion(body?: V1InsertionsBody, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BasicInsertionDto>>;
-    public addInsertion(body?: V1InsertionsBody, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BasicInsertionDto>>;
-    public addInsertion(body?: V1InsertionsBody, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-
-        let headers = this.defaultHeaders;
-
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<BasicInsertionDto>('post',`${this.basePath}/v1/insertions`,
-            {
-                body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
 
     /**
      *

@@ -91,6 +91,9 @@ export class LoginComponent implements OnInit{
           this.cookieService.set('userLastName', response.userDto!.lastName, 1, '/');
           if (response.accessToken != null) {
             this.cookieService.set('jwtToken', response.accessToken, 1, '/');
+            if (response.refreshToken != null) {
+              this.cookieService.set('refreshToken', response.refreshToken, 1, '/');
+            }
           }else console.log("Non Arriva!")
           this.cookiesService.checkUserCookie();
           this.User.getUserString();
@@ -156,6 +159,7 @@ export class LoginComponent implements OnInit{
     }
     return true;
   }
+
 
 
 }

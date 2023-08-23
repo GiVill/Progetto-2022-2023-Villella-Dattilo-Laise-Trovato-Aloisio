@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {AuthService} from "./auth.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class CookiesService implements OnInit {
     private router: Router,
     private cookieService: CookieService,
     private authService: AuthService,
-    private jwtHelper: JwtHelperService // Inietta il JwtHelperService
+    private jwtHelper: JwtHelperService,
+    private snackBar: MatSnackBar,
   ) {}
 
   getUserId(){
@@ -25,9 +27,22 @@ export class CookiesService implements OnInit {
     return this.cookieService.get('jwtToken')
   }
 
+  getRefreshToken() {
+    let refreshToken = this.cookieService.get('refreshToken');
+    refreshToken.replace(/"/g, '');
+    this.authService.getRefreshToken(refreshToken).subscribe(
+      response => {
+        this.snackBar.open('Tokent ricevuto con successo con successo!', 'OK');
+        if (response) {
+          this.cookieService.set('jwtToken', response.accessToken!, 1, '/');
+          return true
+        }
+        return false;
+      })
+  }
+
   async checkUserToken(): Promise<boolean> {
     const token = this.cookieService.get('jwtToken');
-
     if (token) {
       try {
         const isTokenExpired = this.jwtHelper.isTokenExpired(token);
@@ -35,45 +50,28 @@ export class CookiesService implements OnInit {
         if (!isTokenExpired) {
           return true; // Token valido
         } else {
-          try {
-            const newToken = await this.authService.getRefreshToken(token).toPromise();
-
-            if (newToken) {
-              const isNewTokenExpired = this.jwtHelper.isTokenExpired(newToken);
-
-              if (!isNewTokenExpired) {
-                // Aggiorna il token esistente
-                this.cookieService.set('jwtToken', newToken);
-                return true;
-              }
-            }
-
-            // Token di aggiornamento non valido o mancante
-            console.error('Token di aggiornamento non valido o mancante');
-          } catch (error) {
-            console.error('Errore durante il recupero del nuovo token:', error);
-          }
-
-          // Token scaduto
-          console.error('Token scaduto');
-          this.deleteCookie();
-          await this.router.navigate(['/login']);
-          return false;
+          await this.getRefreshToken(); // Attendi il completamento del refresh token
+          return true; // Ritorna vero dopo il refresh del token
         }
       } catch (error) {
-        // Token non valido
-        console.error('Token non valido:', error);
+        console.error('Errore durante la verifica del token:', error);
       }
+
+      // Token scaduto o errore durante la verifica
+      console.error('Token scaduto o errore durante la verifica');
+      this.deleteCookie();
+      await this.router.navigate(['/login']);
+      return false;
     } else {
       // Token mancante
       console.log('Token mancante');
       this.deleteCookie();
       this.checkUserCookie();
       await this.router.navigate(['/login']);
+      return false;
     }
-
-    return false; // Restituisce falso se si verificano errori
   }
+
 
 
 

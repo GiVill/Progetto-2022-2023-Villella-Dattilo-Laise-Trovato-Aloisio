@@ -27,7 +27,7 @@ export class HomePageComponent implements OnInit {
       (insertions: PageBasicInsertionDto) => {
         this.mostRequested = {
           ...insertions,
-          content: insertions.content?.slice(0, 4),
+          content: insertions.content?.slice(0, 5),
         };
         // Extract all unique user IDs from the insertions
         const userIds = this.mostRequested.content?.map((insertion) => insertion.userId).filter((id, index, array) => array.indexOf(id) === index);
@@ -46,7 +46,7 @@ export class HomePageComponent implements OnInit {
           (insertions: PageBasicInsertionDto) => {
             this.feed = {
               ...insertions,
-              content: insertions.content?.slice(0, 5),
+              content: insertions.content?.slice(0, 6),
             };
           }
         );

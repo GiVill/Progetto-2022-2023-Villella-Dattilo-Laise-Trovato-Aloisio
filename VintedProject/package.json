@@ -27,6 +27,7 @@
     "jsonwebtoken": "^9.0.1",
     "keycloak-angular": "^14.0.0",
     "keycloak-js": "^21.1.2",
+    "ngx-clipboard": "^16.0.0",
     "ngx-cookie-service": "^16.0.0",
     "rxjs": "~7.5.0",
     "stream-chat": "^8.10.1",

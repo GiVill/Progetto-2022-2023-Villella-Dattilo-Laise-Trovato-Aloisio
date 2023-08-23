@@ -19,6 +19,7 @@ import {ProfileEditComponent} from "./Components/Pages/User/profile-edit/profile
 import {FormsModule} from "@angular/forms";
 import {DashboardComponent} from "./Components/Pages/Admin/dashboard/dashboard.component";
 import {ChatComponent} from "./Components/Pages/chat/chat.component";
+import {PrivateComponent} from "./Components/Pages/Insertion/private/private.component";
 
 
 
@@ -40,6 +41,7 @@ const routes: Routes = [
   {path: 'refused', component: RefusedComponent},
   {path: 'dash', component: DashboardComponent},
   {path: 'chat', component: ChatComponent},
+  {path: 'private/:token', component: PrivateComponent},
 
 
 
