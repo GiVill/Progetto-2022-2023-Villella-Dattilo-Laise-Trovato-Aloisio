@@ -40,7 +40,7 @@ public class KeycloakTokenClient {
                 .resteasyClient(new ResteasyClientBuilder().connectionPoolSize(10).build()).build();
     }
 
-    public String getRefreshToken(String refreshToken){
+    public TokenDto getRefreshToken(String refreshToken){
 
         System.out.println(refreshToken);
         RestTemplate restTemplate = new RestTemplate();
@@ -64,8 +64,8 @@ public class KeycloakTokenClient {
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             TokenResponse tokenResponse = responseEntity.getBody();
-            return tokenResponse.toString();
-
+            TokenDto tokenDto = new TokenDto(tokenResponse.getAccess_token(), tokenResponse.getRefresh_token(), tokenResponse.getToken_type(),tokenResponse.getUserDto());
+            return tokenDto;
         } else {
             System.out.println("error while retrieving the token from keycloak!");
             //TODO:gestire errore
