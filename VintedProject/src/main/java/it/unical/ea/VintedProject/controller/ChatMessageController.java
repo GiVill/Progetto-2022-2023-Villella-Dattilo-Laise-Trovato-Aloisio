@@ -14,22 +14,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1")
 @RequiredArgsConstructor
-@Tag(name = "Chat") //Name displayed on swagger
+@Tag(name = "ChatMessage") //Name displayed on swagger
 public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
 
-    @GetMapping("/chat/user/{id}")
+    @GetMapping("/message/user/{id}")
     public ResponseEntity<List<Chat>> allChatUser(@PathVariable("id")Long id){
         return ResponseEntity.ok(chatMessageService.allChatByUserId(id));
     }
 
-    @GetMapping("/chat/message/{id}/{id2}")
+    @GetMapping("/message/{id}/{id2}")
     public ResponseEntity<List<ChatDto>> allChatMessage(@PathVariable("id") Long id, @PathVariable("id2") Long id2){
         return ResponseEntity.ok(chatMessageService.allMessageByUserId(id,id2));
     }
 
-    @PostMapping("/chat/insert")
+    @PostMapping("/message/insert")
     public ResponseEntity<String> insertMessage(@RequestBody NewMessageDto newMessageDto){
         chatMessageService.insertMessageChat(newMessageDto);
         return ResponseEntity.ok("ok");

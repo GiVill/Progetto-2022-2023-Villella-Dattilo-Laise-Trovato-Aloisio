@@ -18,10 +18,9 @@ public class OrderDto {
     @NotNull
     private Long id;
 
-    private LocalDate date;
+    private String date;
 
-    @NotNull
-    private Long paymentId;
+    private String payment_method;
 
     private List<Long> insertionIdList;
 

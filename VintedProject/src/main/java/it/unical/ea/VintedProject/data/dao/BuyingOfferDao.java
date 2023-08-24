@@ -1,6 +1,8 @@
 package it.unical.ea.VintedProject.data.dao;
 
 import it.unical.ea.VintedProject.data.entities.BuyingOffer;
+import it.unical.ea.VintedProject.dto.BuyingOfferDto;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,5 +25,8 @@ public interface BuyingOfferDao extends JpaRepository<BuyingOffer,Long> {
     //trova le offerte minore ugali a quella passata
     //Return a list of ALL Offers with a price lower than AND equal to an amount
     List<BuyingOffer> findAllByPriceLessThanEqual(float price);
+
+    Page<BuyingOfferDto> findAllByUserId(Long userId);
+
 
 }

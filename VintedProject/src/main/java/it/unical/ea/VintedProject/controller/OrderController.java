@@ -46,7 +46,8 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public ResponseEntity<OrderDto> addOrder(@RequestBody @Valid OrderDto orderDto) {
+    public ResponseEntity<OrderDto> addOrder(@RequestBody OrderDto orderDto) {
+        System.out.println("AFFA");
         return ResponseEntity.ok(orderService.save(orderDto));
     }
 
