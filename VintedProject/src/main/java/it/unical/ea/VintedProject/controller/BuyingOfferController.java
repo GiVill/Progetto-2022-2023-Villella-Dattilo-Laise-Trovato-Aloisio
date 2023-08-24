@@ -32,7 +32,7 @@ public class BuyingOfferController {
 
     @GetMapping("/offers")
     //@PreAuthorize("hasAnyRole('admin')")
-    public ResponseEntity<List<BuyingOfferDto>> all() {
+    public ResponseEntity<List<BuyingOfferDto>> findAllBuyingOffers() {
         return ResponseEntity.ok(buyingOfferService.findAll());
     }
 
