@@ -65,9 +65,8 @@ public class UserController {
     @PostMapping("/users")
     public ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) { return ResponseEntity.ok(userService.saveDto(userDto)); }
 
-    @PutMapping("/password/{idUser}")
-    public ResponseEntity<Boolean> updateUserPassword(@PathVariable("idUser") Long id,@RequestBody @Valid String newPassword) { return ResponseEntity.ok(userService.updateUserPassword(id,newPassword));}
-
+    @PutMapping("/password")
+    public ResponseEntity<Boolean> updateUserPassword(@RequestBody @Valid String newPassword) { return ResponseEntity.ok(userService.updateUserPassword(newPassword));}
     @DeleteMapping("/users/{idUser}")
     //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<Void> deleteUserById(@PathVariable("idUser") Long id) {

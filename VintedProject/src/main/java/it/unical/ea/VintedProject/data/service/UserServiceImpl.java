@@ -34,8 +34,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final KeycloakTokenClient keycloakTokenClient;
     private final UserDao userDao;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
     private final static int SIZE_FOR_PAGE = 10;
     private final MessageLang messageLang;
 
@@ -81,15 +83,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updateUserPassword(Long id, String newPassword) {
+    public Boolean updateUserPassword(String newPassword) {
         Optional<User> u = findByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || id !=u.get().getId()){
+        if(u.get().getEmail() == null){
             throw new EntityNotFoundException(messageLang.getMessage("wrong.user"));
         }
         //TODO L'update andrebbe fatta anche su Keycloak
         try{
+            keycloakTokenClient.updateUserPassword(newPassword);
             User user = userDao.findById(u.get().getId()).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", u.get().getId())));
-            user.setPassword(newPassword);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.save(user);
             return true;
         }catch (Exception e){

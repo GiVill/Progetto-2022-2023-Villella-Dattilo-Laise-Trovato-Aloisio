@@ -17,15 +17,15 @@ public class NewUserDto {
     private String password;
 
     @NotNull(message = "nickname.not.empty")
-    private String nickName;
+    private String nickname;
 
     @NotNull(message = "password.not.empty") //TODO cambiare
-    private String firstName;
+    private String firstname;
 
     @Email(message = "email.not.valid")
     private String email;
 
-    private String lastName;
+    private String lastname;
     private String addressStreet;
     private Integer addressNumber;
     private String addressCity;

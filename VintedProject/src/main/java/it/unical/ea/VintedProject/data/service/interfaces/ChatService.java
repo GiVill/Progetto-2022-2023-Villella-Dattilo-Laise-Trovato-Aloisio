@@ -21,4 +21,5 @@ public interface ChatService {
 
     List<ChatDto> allMessageByUserId(Long id1, Long id2);
 
+
 }

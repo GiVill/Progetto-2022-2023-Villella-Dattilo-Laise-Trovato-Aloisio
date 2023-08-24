@@ -1,7 +1,9 @@
 package it.unical.ea.VintedProject.security.keycloak;
 
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.dto.NewUserDto;
+import it.unical.ea.VintedProject.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.keycloak.admin.client.CreatedResponseUtil;
@@ -81,7 +83,7 @@ public class KeycloakTokenClient {
     public TokenDto userRegister(NewUserDto newUserDto){
         //TODO: registrazione utente su keycloak
         if(addUserOnKeyCloak(newUserDto)){
-            return getToken(newUserDto.getNickName(),newUserDto.getPassword());
+            return getToken(newUserDto.getNickname(),newUserDto.getPassword());
         }
         return null; //throw new RuntimeException(messageLang.getMessage("keycloak.token.error")); ?????
     }
@@ -119,14 +121,31 @@ public class KeycloakTokenClient {
     }
 
     private UserRepresentation newUserDtoConverter(NewUserDto newUserDto){
+
         UserRepresentation userRepresentation = new UserRepresentation();
 
-        userRepresentation.setUsername(newUserDto.getNickName());
+        userRepresentation.setUsername(newUserDto.getNickname());
         userRepresentation.setEmail(newUserDto.getEmail());
         userRepresentation.setEmailVerified(true);
         userRepresentation.setEnabled(true);
 
         return  userRepresentation;
+    }
+
+    public boolean updateUserPassword(String newPassword){
+
+
+        CredentialRepresentation passwordCred = new CredentialRepresentation();
+        passwordCred.setTemporary(false);
+        passwordCred.setType(CredentialRepresentation.PASSWORD);
+        passwordCred.setValue(newPassword);
+
+        RealmResource realmResource = getAdminKeycloakUser().realm("vinted2_0");
+        UserResource userResource = realmResource.users().get(LoggedUserDetail.getInstance().getIdKeycloac());
+
+        userResource.resetPassword(passwordCred);
+
+        return true;
     }
 
     public boolean addUserOnKeyCloak(NewUserDto newUserDto){

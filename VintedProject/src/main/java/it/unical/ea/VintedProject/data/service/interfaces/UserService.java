@@ -30,7 +30,7 @@ public interface UserService {
 
     Optional<User> findByEmail(String email);
 
-    Boolean updateUserPassword(Long id, String newPassword);
+    Boolean updateUserPassword(String newPassword);
 
 
 }
