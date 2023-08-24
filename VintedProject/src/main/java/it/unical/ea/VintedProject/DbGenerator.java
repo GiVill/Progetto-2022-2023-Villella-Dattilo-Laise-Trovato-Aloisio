@@ -22,10 +22,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -60,7 +56,7 @@ public class DbGenerator implements ApplicationRunner {
     protected final BasicInsertionService insertionService;
     protected final OrderService orderService;
     protected final BuyingOfferService buyingOfferService;
-    protected final ChatService chatService;
+    protected final ChatMessageService chatMessageService;
 
 
     public void createDb() {
@@ -182,14 +178,14 @@ public class DbGenerator implements ApplicationRunner {
         userService.save(user);
     }
     private void insertChat(String id1, String id2,String nickname, String message, String date) {
-        Chat chat = new Chat();
-        chat.setSender(Long.valueOf(id1));
-        chat.setReciver(Long.valueOf(id2));
-        chat.setNickname(nickname);
-        chat.setMessage(message);
-        chat.setDate(LocalDateTime.parse(date));
+        ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setSender(Long.valueOf(id1));
+        chatMessage.setReciver(Long.valueOf(id2));
+        chatMessage.setNickname(nickname);
+        chatMessage.setMessage(message);
+        chatMessage.setDate(LocalDateTime.parse(date));
 
-        chatService.save(chat);
+        chatMessageService.save(chatMessage);
     }
 
     @Override

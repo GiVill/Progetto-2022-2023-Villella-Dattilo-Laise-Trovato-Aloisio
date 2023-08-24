@@ -1,13 +1,14 @@
 package it.unical.ea.VintedProject.data.service;
 
-import it.unical.ea.VintedProject.config.compare.ChatDtoComparator;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.dao.ChatDao;
+import it.unical.ea.VintedProject.data.dao.ChatMessageDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.Chat;
+import it.unical.ea.VintedProject.data.entities.ChatMessage;
 import it.unical.ea.VintedProject.data.entities.User;
-import it.unical.ea.VintedProject.data.service.interfaces.ChatService;
+import it.unical.ea.VintedProject.data.service.interfaces.ChatMessageService;
 import it.unical.ea.VintedProject.dto.ChatDto;
 import it.unical.ea.VintedProject.dto.NewMessageDto;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,33 +18,31 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static java.util.Collections.list;
 
 @Service
 @RequiredArgsConstructor
-public class ChatServiceImpl implements ChatService {
+public class ChatMessageServiceImpl implements ChatMessageService {
 
     private final ChatDao chatDao;
+    private final ChatMessageDao chatMessageDao;
     private final UserDao userDao;
     private final MessageLang messageLang;
     private final ModelMapper modelMapper;
 
     @Override
-    public void save(Chat chat) {
-        chatDao.save(chat);
+    public void save(ChatMessage chatMessage) {
+        chatMessageDao.save(chatMessage);
 
     }
 
     @Override
-    public void update(Chat chat) {
+    public void update(ChatMessage chatMessage) {
         //da vedere se serve
     }
 
     @Override
-    public void delete(Chat chat) {
-        chatDao.delete(chat);
+    public void delete(ChatMessage chatMessage) {
+        chatMessageDao.delete(chatMessage);
     }
 
     @Override
@@ -52,43 +51,30 @@ public class ChatServiceImpl implements ChatService {
         if(u.get().getEmail() == null || !u.get().getId().equals(id)){
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
         }
-        List<Chat> list =  chatDao.findAllBySenderOrderByDateAsc(id);
+        List<Chat> list =  chatDao.findByReciverOrSenderOrderByBasicInsertion(id, id);
 
 
         if(list.isEmpty()){
             throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
         }
 
-        Set<Chat> uniqueChats = new HashSet<>(list);
-        List<Chat> uniqueList = new ArrayList<>(uniqueChats);
-        uniqueList.sort(Comparator.comparing(Chat::getDate));
-        for(Chat i : uniqueList){
-            System.out.println(i.getReciver());
-        }
+        Set<Chat> uniqueChatMessages = new HashSet<>(list);
+        List<Chat> uniqueList = new ArrayList<>(uniqueChatMessages);
         return uniqueList;
     }
 
-    //TODO si puo cancellare
     @Override
-    public List<Chat> allChatByUserId2(Long id) {
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getId().equals(id)){
-            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
-        }
-        List<Chat> list =  chatDao.findAllByReciverOrderByDateAsc(id);
-        if(list.isEmpty()){
-            throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
-        }
-
-        Set<Chat> uniqueChats = new HashSet<>(list);
-        List<Chat> uniqueList = new ArrayList<>(uniqueChats);
-        uniqueList.sort(Comparator.comparing(Chat::getDate));
-        for(Chat i : uniqueList){
-            System.out.println(i.getId());
-        }
-        return list;
+    public List<ChatMessage> allChatByUserId2(Long id) {
+        return null;
     }
 
+    @Override
+    public List<ChatDto> allMessageByUserId(Long id1, Long id2) {
+        return null;
+    }
+
+
+/*
     @Override
     public List<ChatDto> allMessageByUserId(Long id1, Long id2) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
@@ -131,6 +117,8 @@ public class ChatServiceImpl implements ChatService {
         }
         return unite;
     }
+    */
+
 
     @Override
     public void insertMessageChat(NewMessageDto newMessageDto) {
@@ -141,12 +129,12 @@ public class ChatServiceImpl implements ChatService {
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present",newMessageDto.getSender()));
         }
 
-        Chat chat = new Chat();
-        chat.setSender(newMessageDto.getSender());
-        chat.setReciver(newMessageDto.getReciver());
-        chat.setNickname(newMessageDto.getNickname());
-        chat.setMessage(newMessageDto.getMessage());
-        chat.setDate(LocalDateTime.now());
-        chatDao.save(chat);
+        ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setSender(newMessageDto.getSender());
+        chatMessage.setReciver(newMessageDto.getReciver());
+        chatMessage.setNickname(newMessageDto.getNickname());
+        chatMessage.setMessage(newMessageDto.getMessage());
+        chatMessage.setDate(LocalDateTime.now());
+        chatMessageDao.save(chatMessage);
     }
 }
