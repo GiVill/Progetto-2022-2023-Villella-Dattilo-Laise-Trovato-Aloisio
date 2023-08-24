@@ -2,9 +2,13 @@ package it.unical.ea.VintedProject.controller;
 
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
+import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.OrderService;
+import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.OrderDto;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +26,7 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
+    private final UserService userService;
 
     @GetMapping("/orders/{orderId}")
     public ResponseEntity<OrderDto> getOrderById(@PathVariable("orderId") Long orderId) {
@@ -64,9 +70,21 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("orders/user/{userId}/{page}")
+    @GetMapping("/orders/user/{page}")
+    public ResponseEntity<Page<OrderDto>> getUserOrders(@PathVariable("page") int page){
+        Optional<User> u = userService.findByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null){
+            throw new EntityNotFoundException("CACCA");
+        }
+        return ResponseEntity.ok(orderService.findByUserId(u.get().getId(), page));
+    }
+
+    /* TODO: ADMIN
+    @GetMapping("/orders/user/{userId}/{page}")
     public ResponseEntity<Page<OrderDto>> getUserOrders(@PathVariable("userId") Long userId,@PathVariable("page") int page){
         return ResponseEntity.ok(orderService.findByUserId(userId,page));
     }
+
+     */
 
 }

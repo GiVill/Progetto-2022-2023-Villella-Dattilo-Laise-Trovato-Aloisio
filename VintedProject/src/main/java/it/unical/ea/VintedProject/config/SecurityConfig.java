@@ -82,7 +82,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/v1/orders").permitAll()                      //.hasRole(ADMIN)
                 .requestMatchers(HttpMethod.DELETE, "/v1/orders/{orderId}").permitAll()         //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.DELETE, "/v1/orders/admin/{orderId}").permitAll()   //.hasRole(ADMIN)
-                .requestMatchers(HttpMethod.GET, "/v1/orders/user/{userId}/{page}").permitAll() //.hasAnyRole(USER,ADMIN)
+                .requestMatchers(HttpMethod.GET, "/v1/orders/user/{page}").permitAll() //.hasAnyRole(USER,ADMIN)
                 //INSERTION
                 .requestMatchers(HttpMethod.GET, "/v1/insertions").permitAll()                              //?
                 .requestMatchers(HttpMethod.POST, "/v1/insertions").permitAll()                             //.hasAnyRole(USER,ADMIN)
