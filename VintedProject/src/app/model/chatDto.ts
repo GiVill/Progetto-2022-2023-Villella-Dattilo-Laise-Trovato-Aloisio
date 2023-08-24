@@ -9,12 +9,13 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { BasicInsertion } from './basicInsertion';
+import { ChatMessageDto } from './chatMessageDto';
 
 export interface ChatDto {
     id?: number;
     reciver?: number;
     nickname?: string;
-    message?: string;
-    date?: Date;
-    seen?: boolean;
+    chatMessage?: ChatMessageDto;
+    basicInsertion?: BasicInsertion;
 }

@@ -33,7 +33,7 @@ export class OfferService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, private cookiesServices: CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, private CookiesService: CookiesService, private cookiesServices: CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -75,14 +75,13 @@ export class OfferService {
         }
 
         let headers = this.defaultHeaders;
-
         // authentication (bearerAuth) required
-      if (this.cookiesServices.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.cookiesServices.getTokent()
-          : this.cookiesServices.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -289,7 +288,7 @@ export class OfferService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse200>('get',`${this.basePath}/v1/offers/user/${encodeURIComponent(String(idUser))}`,
+        return this.httpClient.request<InlineResponse200>('get',`${this.basePath}/v1/offers/user/`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

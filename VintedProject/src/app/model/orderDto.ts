@@ -9,12 +9,15 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import {BasicInsertion} from "./basicInsertion";
+import {Order} from "./order";
+import PaymentMethodEnum = Order.PaymentMethodEnum;
 
 export interface OrderDto {
     id: number;
     date?: string;
-    paymentId: number;
-    insertionIdList: Array<number>;
+    insertionIdList?: Array<BasicInsertion>;
     total?: number;
     userId: number;
+    payment_method: string;
 }

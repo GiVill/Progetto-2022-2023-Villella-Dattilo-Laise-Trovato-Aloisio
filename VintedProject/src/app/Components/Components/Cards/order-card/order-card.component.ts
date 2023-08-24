@@ -14,8 +14,7 @@ export class OrderCardComponent {
 
   isHovered = false;
 
-  constructor(private router: Router,
-              private cart: CartComponent) {
+  constructor(private router: Router,) {
   }
 
   onImageClick(): void {
@@ -23,8 +22,6 @@ export class OrderCardComponent {
   }
 
   remove(insertionId: number | undefined): void {
-    if (insertionId) {
-      this.cart.removeFromCart(insertionId);
-    }
+
   }
 }

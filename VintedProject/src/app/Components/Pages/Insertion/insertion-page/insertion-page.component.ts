@@ -17,6 +17,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {OfferService} from "../../../../api/offer.service";
 import {NewMessageDto} from "../../../../model/newMessageDto";
 import {ChatService} from "../../../../api/chat.service";
+import {ChatMessageService} from "../../../../api/chatMessage.service";
 
 
 @Component({
@@ -50,7 +51,7 @@ export class InsertionPageComponent implements OnInit {
     private userService: UserService,
     private error: ErrorService,
     private router: Router,
-    private chatService: ChatService,
+    private chatMessageService: ChatMessageService,
    private snackBar: MatSnackBar) {
   }
 
@@ -203,13 +204,13 @@ checkProductInCart(): void {
   submitMessage() {
     if (this.message.trim() !== '') {
       const newMessageDto: NewMessageDto = {
-        sender: Number(this.cookiesService.getUserId()),
-        reciver: this.user?.id,
+        reciver: Number(this.cookiesService.getUserId()),
+        sender: this.user?.id,
         nickname: this.user?.nickname,
         message: this.message
       };
       console.log(newMessageDto)
-      this.chatService.insertMessage(newMessageDto).subscribe(
+      this.chatMessageService.insertMessage(newMessageDto).subscribe(
 
         (response: string) => {
           console.log(response)

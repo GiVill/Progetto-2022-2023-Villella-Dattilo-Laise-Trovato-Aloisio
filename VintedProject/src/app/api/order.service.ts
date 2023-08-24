@@ -23,7 +23,6 @@ import { ServiceError } from '../model/serviceError';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-import {CookiesService} from "./cookies.service";
 
 
 @Injectable()
@@ -33,7 +32,7 @@ export class OrderService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient,private CookiesService:CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -77,10 +76,10 @@ export class OrderService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-          if (this.CookiesService.getTokent()) {
+        if (this.configuration.accessToken) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-              ? this.CookiesService.getTokent()
-              : this.CookiesService.getTokent();
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -119,13 +118,13 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public all2(page: number, observe?: 'body', reportProgress?: boolean): Observable<PageOrderDto>;
-    public all2(page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOrderDto>>;
-    public all2(page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOrderDto>>;
-    public all2(page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public all1(page: number, observe?: 'body', reportProgress?: boolean): Observable<PageOrderDto>;
+    public all1(page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOrderDto>>;
+    public all1(page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOrderDto>>;
+    public all1(page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling all2.');
+            throw new Error('Required parameter page was null or undefined when calling all1.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -136,13 +135,12 @@ export class OrderService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-      // authentication (bearerAuth) required
-      if (this.CookiesService.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.CookiesService.getTokent()
-          : this.CookiesService.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -186,13 +184,12 @@ export class OrderService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-      // authentication (bearerAuth) required
-      if (this.CookiesService.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.CookiesService.getTokent()
-          : this.CookiesService.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -235,13 +232,12 @@ export class OrderService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-      // authentication (bearerAuth) required
-      if (this.CookiesService.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.CookiesService.getTokent()
-          : this.CookiesService.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -284,13 +280,12 @@ export class OrderService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-      // authentication (bearerAuth) required
-      if (this.CookiesService.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.CookiesService.getTokent()
-          : this.CookiesService.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -338,13 +333,12 @@ export class OrderService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-      // authentication (bearerAuth) required
-      if (this.CookiesService.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.CookiesService.getTokent()
-          : this.CookiesService.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -392,13 +386,12 @@ export class OrderService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-      // authentication (bearerAuth) required
-      if (this.CookiesService.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.CookiesService.getTokent()
-          : this.CookiesService.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -446,13 +439,12 @@ export class OrderService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-      // authentication (bearerAuth) required
-      if (this.CookiesService.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.CookiesService.getTokent()
-          : this.CookiesService.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -466,7 +458,7 @@ export class OrderService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageOrderDto>('get',`${this.basePath}/v1/orders/user/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(page))}`,
+        return this.httpClient.request<PageOrderDto>('get',`${this.basePath}/v1/orders/user/${encodeURIComponent(String(page))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

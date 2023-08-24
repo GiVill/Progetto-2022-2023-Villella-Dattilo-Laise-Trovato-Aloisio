@@ -29,16 +29,20 @@ export class CookiesService implements OnInit {
 
   getRefreshToken() {
     let refreshToken = this.cookieService.get('refreshToken');
-    refreshToken.replace(/"/g, '');
+    refreshToken = refreshToken.replace(/"/g, ''); // Assegna il risultato di replace a refreshToken
     this.authService.getRefreshToken(refreshToken).subscribe(
-      response => {
-        this.snackBar.open('Tokent ricevuto con successo con successo!', 'OK');
-        if (response) {
-          this.cookieService.set('jwtToken', response.accessToken!, 1, '/');
-          return true
-        }
-        return false;
-      })
+        response => {
+          this.snackBar.open('Token ricevuto con successo!', 'OK');
+          if (response) {
+            this.cookieService.set('jwtToken', response.accessToken!, 1, '/');
+            return true;
+          }
+          console.log(Error)
+          return false;
+        }, error =>
+            console.log(error)
+    );
+    return false;
   }
 
   async checkUserToken(): Promise<boolean> {
@@ -46,18 +50,18 @@ export class CookiesService implements OnInit {
     if (token) {
       try {
         const isTokenExpired = this.jwtHelper.isTokenExpired(token);
-
         if (!isTokenExpired) {
           return true; // Token valido
         } else {
-          await this.getRefreshToken(); // Attendi il completamento del refresh token
-          return true; // Ritorna vero dopo il refresh del token
+          if( this.getRefreshToken()){
+            return true;
+          }
+
         }
       } catch (error) {
         console.error('Errore durante la verifica del token:', error);
       }
 
-      // Token scaduto o errore durante la verifica
       console.error('Token scaduto o errore durante la verifica');
       this.deleteCookie();
       await this.router.navigate(['/login']);
@@ -71,8 +75,6 @@ export class CookiesService implements OnInit {
       return false;
     }
   }
-
-
 
 
   checkUserCookie(): void {
@@ -96,6 +98,7 @@ export class CookiesService implements OnInit {
     this.cookieService.delete('userLastName', '/');
     this.cookieService.delete('userEmail', '/');
     this.cookieService.delete('jwtToken', '/');
+    this.cookieService.delete('refreshToken', '/');
     this.checkUserCookie()
   }
 

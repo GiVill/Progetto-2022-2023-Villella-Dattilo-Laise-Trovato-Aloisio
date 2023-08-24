@@ -19,6 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { Chat } from '../model/chat';
 import { ChatDto } from '../model/chatDto';
+import { NewMessageDto } from '../model/newMessageDto';
 import { ServiceError } from '../model/serviceError';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -26,7 +27,7 @@ import { Configuration }                                     from '../configurat
 
 
 @Injectable()
-export class ChatService {
+export class ChatMessageService {
 
     protected basePath = 'https://localhost:8010/vintedProject-api';
     public defaultHeaders = new HttpHeaders();
@@ -65,17 +66,17 @@ export class ChatService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public allChatMessage1(id: number, id2: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ChatDto>>;
-    public allChatMessage1(id: number, id2: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ChatDto>>>;
-    public allChatMessage1(id: number, id2: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ChatDto>>>;
-    public allChatMessage1(id: number, id2: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public allChatMessage(id: number, id2: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ChatDto>>;
+    public allChatMessage(id: number, id2: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ChatDto>>>;
+    public allChatMessage(id: number, id2: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ChatDto>>>;
+    public allChatMessage(id: number, id2: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling allChatMessage1.');
+            throw new Error('Required parameter id was null or undefined when calling allChatMessage.');
         }
 
         if (id2 === null || id2 === undefined) {
-            throw new Error('Required parameter id2 was null or undefined when calling allChatMessage1.');
+            throw new Error('Required parameter id2 was null or undefined when calling allChatMessage.');
         }
 
         let headers = this.defaultHeaders;
@@ -100,7 +101,7 @@ export class ChatService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<ChatDto>>('get',`${this.basePath}/v1/chat/message/${encodeURIComponent(String(id))}/${encodeURIComponent(String(id2))}`,
+        return this.httpClient.request<Array<ChatDto>>('get',`${this.basePath}/v1/message/${encodeURIComponent(String(id))}/${encodeURIComponent(String(id2))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -117,13 +118,13 @@ export class ChatService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public allChatUser1(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Chat>>;
-    public allChatUser1(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Chat>>>;
-    public allChatUser1(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Chat>>>;
-    public allChatUser1(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public allChatUser(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Chat>>;
+    public allChatUser(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Chat>>>;
+    public allChatUser(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Chat>>>;
+    public allChatUser(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling allChatUser1.');
+            throw new Error('Required parameter id was null or undefined when calling allChatUser.');
         }
 
         let headers = this.defaultHeaders;
@@ -148,8 +149,62 @@ export class ChatService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<Chat>>('get',`${this.basePath}/v1/chat/user/${encodeURIComponent(String(id))}`,
+        return this.httpClient.request<Array<Chat>>('get',`${this.basePath}/v1/message/user/${encodeURIComponent(String(id))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public insertMessage(body: NewMessageDto, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public insertMessage(body: NewMessageDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public insertMessage(body: NewMessageDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public insertMessage(body: NewMessageDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling insertMessage.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<string>('post',`${this.basePath}/v1/message/insert`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

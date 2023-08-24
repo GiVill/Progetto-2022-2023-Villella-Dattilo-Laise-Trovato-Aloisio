@@ -3,6 +3,8 @@ import {ChatDto} from "../../../model/chatDto";
 import {ChatService} from "../../../api/chat.service";
 import {CookiesService} from "../../../api/cookies.service";
 import {NewMessageDto} from "../../../model/newMessageDto";
+import {ChatMessageService} from "../../../api/chatMessage.service";
+import {ChatMessageDto} from "../../../model/chatMessageDto";
 
 
 @Component({
@@ -14,13 +16,13 @@ export class ChatComponent implements OnInit {
   noChat: Boolean = false;
   users?: Array<ChatDto> = [];
   selectedUser!: ChatDto
-  messages: Array<ChatDto> = [];
+  messages: Array<ChatMessageDto> = [];
   newMessage: string = '';
   selectedUserId?: number | null = null;
   myId= Number(this.cookiesService.getUserId())
 
 
-  constructor(private chatService: ChatService,
+  constructor(private chatMessageService: ChatMessageService,
               private cookiesService: CookiesService) {}
 
   ngOnInit(): void {
@@ -36,7 +38,7 @@ export class ChatComponent implements OnInit {
   }
   async loadUsers(): Promise<void> {
     try {
-      const [users] = await Promise.all([this.chatService.allChatUser(this.myId).toPromise()]);
+      const [users] = await Promise.all([this.chatMessageService.allChatUser(this.myId).toPromise()]);
       this.users = users;
       if (users) {
         this.selectedUser = users[0];
@@ -52,7 +54,7 @@ export class ChatComponent implements OnInit {
   }
 
   loadMessages(userId: number): void {
-    this.chatService.allChatMessage(this.myId, userId).subscribe(
+    this.chatMessageService.allChatMessage(this.myId, userId).subscribe(
       (messages: Array<ChatDto>) => {
         this.messages = messages;
         console.log(messages)
@@ -72,7 +74,7 @@ export class ChatComponent implements OnInit {
         message: this.newMessage
       };
       console.log(newMessageDto)
-      this.chatService.insertMessage(newMessageDto).subscribe(
+      this.chatMessageService.insertMessage(newMessageDto).subscribe(
 
         (response: string) => {
           console.log(response)

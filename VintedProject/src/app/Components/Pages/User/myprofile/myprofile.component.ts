@@ -22,13 +22,7 @@ export class MyprofileComponent implements OnInit{
   user: UserDto | undefined;
   myInsertion!: PageBasicInsertionDto;
   myOrder: PageOrderDto | undefined;
-  myOffer?: BuyingOfferDto[] = [{
-    "id": 7,
-    "price": 60,
-    "status": "APPROVED",
-    "insertionId": 2,
-    "userId": 7
-  }];
+  myOffer?: BuyingOfferDto[] = [];
 
   page = 0;
   isAnyInsertion = false;
@@ -83,16 +77,16 @@ export class MyprofileComponent implements OnInit{
         }
       );
 
-    /*this.offerService.allId(this.userId).subscribe(
-      (value: BuyingOfferDto) => {
-        this.myOffer?.push(value);
+    this.offerService.allId(this.userId).subscribe(
+      (value: BuyingOfferDto[]) => {
+          this.myOffer = value;
         console.log(this.myOffer)
       },
       (error) => {
         console.log('Si è verificato un errore durante il recupero delle offerte dell\'utente:', error);
       }
-    );*/
-
+    );
+    this.cookieSevices.getRefreshToken()
   }
 
 

@@ -10,6 +10,7 @@ import {OfferService} from "../../../../api/offer.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {OrderService} from "../../../../api/order.service";
 import {CookiesService} from "../../../../api/cookies.service";
+import {PaymentDto} from "../../../../model/paymentDto";
 
 
 @Component({
@@ -22,6 +23,7 @@ export class OfferCardComponent implements OnInit{
   product?: BasicInsertionDto;
   isHovered = false;
   accepted: boolean = false;
+  paymentMethods: PaymentDto.PaymentMethodEnum[] = Object.values(PaymentDto.PaymentMethodEnum);
 
 
   constructor(private router: Router,
@@ -67,15 +69,14 @@ export class OfferCardComponent implements OnInit{
   }
 
   createOrder() {
-
     if (this.product?.id != undefined) {
       const order: OrderDto = {
         id: 0,
-        paymentId: 0,
-        date: new Date().getDate().toString(),
-        insertionIdList: [this.product?.id],
+        payment_method: "this.paymentMethods",
+        insertionIdList: [this.product],
         userId: Number(this.cookieServices.getUserId())
       };
+      console.log(order)
       this.orderService.addOrder(order).subscribe((response) => {
           this.snackBar.open("Ordine creato ",)
         },

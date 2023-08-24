@@ -9,15 +9,23 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { BasicInsertion } from './basicInsertion';
+import { User } from './user';
 
-export interface BuyingOfferDto {
+export interface Order {
     id?: number;
-    price: number;
-    status?: BuyingOfferDto.StatusEnum;
-    insertionId?: number;
-    userId: number;
+    total?: number;
+    payment_method?: Order.PaymentMethodEnum;
+    user?: number;
+    insertionList?: Array<Number>;
 }
-export namespace BuyingOfferDto {
+export namespace Order {
+    export type PaymentMethodEnum = 'CARD' | 'PAYPAL' | 'MARK';
+    export const PaymentMethodEnum = {
+        CARD: 'CARD' as PaymentMethodEnum,
+        PAYPAL: 'PAYPAL' as PaymentMethodEnum,
+        MARK: 'MARK' as PaymentMethodEnum
+    };
     export type StatusEnum = 'PENDING' | 'APPROVED' | 'REFUSED';
     export const StatusEnum = {
         PENDING: 'PENDING' as StatusEnum,
