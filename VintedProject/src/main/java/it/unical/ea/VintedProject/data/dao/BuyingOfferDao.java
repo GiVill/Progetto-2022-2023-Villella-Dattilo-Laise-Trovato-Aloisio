@@ -18,6 +18,8 @@ public interface BuyingOfferDao extends JpaRepository<BuyingOffer,Long> {
 
     List<BuyingOffer> findByInsertionId(Long aLong);
 
+    List<BuyingOffer> findAllByUserId(Long userId);
+
     //trova le offerte maggiori uguali a quella passata
     //Return a list of ALL Offers with a price greater than AND equal to an amount
     List<BuyingOffer> findAllByPriceGreaterThanEqual(float price);
@@ -25,8 +27,5 @@ public interface BuyingOfferDao extends JpaRepository<BuyingOffer,Long> {
     //trova le offerte minore ugali a quella passata
     //Return a list of ALL Offers with a price lower than AND equal to an amount
     List<BuyingOffer> findAllByPriceLessThanEqual(float price);
-
-    Page<BuyingOfferDto> findAllByUserId(Long userId);
-
 
 }

@@ -14,7 +14,7 @@ public interface BuyingOfferService {
 
     void save(BuyingOffer buyingOffer);
 
-    Stream<BuyingOfferDto> getById(Long userId);
+    List<BuyingOfferDto> findAllByUserId(Long userId);
 
     List<BuyingOfferDto> getByInsertionId(Long insertionId);
 

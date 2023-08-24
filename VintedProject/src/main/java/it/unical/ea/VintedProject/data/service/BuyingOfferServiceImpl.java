@@ -7,6 +7,7 @@ import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BuyingOffer;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
+import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BuyingOfferDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     private final ModelMapper modelMapper;
     private final BuyingOfferDao buyingOfferDao;
     private final UserDao userDao;
+    private final UserService userService;
     private final MessageLang messageLang;
 
     @Override
@@ -40,13 +42,11 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
         buyingOfferDao.save(buyingOffer);
     }
 
+
+    //TODO: FUNZIONE SOLO PER utente
     @Override
-    public Stream<BuyingOfferDto> getById(Long userId) {
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getId().equals(userId)){
-            throw new EntityNotFoundException(messageLang.getMessage("wrong.user"));
-        }
-        return buyingOfferDao.findById(userId).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class));
+    public List<BuyingOfferDto> findAllByUserId(Long userId) {
+        return buyingOfferDao.findAllByUserId(userId).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class)).collect(Collectors.toList());
     }
 
     @Override

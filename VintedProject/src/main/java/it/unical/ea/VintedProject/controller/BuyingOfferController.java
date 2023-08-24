@@ -2,8 +2,12 @@ package it.unical.ea.VintedProject.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
+import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
+import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BuyingOfferDto;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +17,7 @@ import org.springframework.security.oauth2.core.endpoint.DefaultOAuth2AccessToke
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @RestController
@@ -23,6 +28,7 @@ import java.util.stream.Stream;
 public class BuyingOfferController {
 
     private final BuyingOfferService buyingOfferService;
+    private final UserService userService;
 
     @GetMapping("/offers")
     //@PreAuthorize("hasAnyRole('admin')")
@@ -30,9 +36,20 @@ public class BuyingOfferController {
         return ResponseEntity.ok(buyingOfferService.findAll());
     }
 
+    /* TODO: SOLO ADMIN
     @GetMapping("/offers/user/{idUser}")
     public ResponseEntity<Stream<BuyingOfferDto>> allId(@PathVariable("idUser") Long userId) {
         return ResponseEntity.ok(buyingOfferService.getById(userId));
+    }
+     */
+
+    @GetMapping("/offers/user")
+    public ResponseEntity<List<BuyingOfferDto>> getAllByUser() {
+        Optional<User> u = userService.findByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null){
+            throw new EntityNotFoundException("CACCA");
+        }
+        return ResponseEntity.ok(buyingOfferService.findAllByUserId(u.get().getId()));
     }
 
     @GetMapping("/offers/insertion/{insertionId}")

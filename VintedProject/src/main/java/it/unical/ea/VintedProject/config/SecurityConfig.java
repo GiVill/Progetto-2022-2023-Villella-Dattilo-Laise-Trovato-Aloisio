@@ -101,7 +101,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/v1/insertions/private/{token}").permitAll()              //.hasAnyRole(USER,ADMIN)
                 //OFFERS
                 .requestMatchers(HttpMethod.GET, "/v1/offers").permitAll()                  //.hasRole(ADMIN)
-                .requestMatchers(HttpMethod.GET, "/v1/offers/user/{idUser}").permitAll()         //.hasAnyRole(USER,ADMIN)
+                .requestMatchers(HttpMethod.GET, "/v1/offers/user").permitAll()         //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.GET, "/v1/offers/insertion/{insertionId}").permitAll()         //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.GET, "/v1/offers/admin/{userId}").permitAll()   //.hasRole(ADMIN)
                 .requestMatchers(HttpMethod.POST, "/v1/offers").permitAll()                 //.hasAnyRole(USER,ADMIN)
