@@ -53,7 +53,7 @@ public class AuthController {
     }
 
     @PostMapping("/get-refresh-token")
-    public ResponseEntity<TokenDto> getRefreshToken(@RequestBody @Valid String refreshToken){
-        return ResponseEntity.ok(keycloakTokenClient.getRefreshToken(refreshToken));
+    public ResponseEntity<TokenDto> getRefreshToken(@RequestBody String Token){
+        return ResponseEntity.ok(keycloakTokenClient.getRefreshToken(Token));
     }
 }

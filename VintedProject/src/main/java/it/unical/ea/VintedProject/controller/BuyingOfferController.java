@@ -63,6 +63,12 @@ public class BuyingOfferController {
         return ResponseEntity.ok(buyingOfferService.getAllByUserIdForAdmin(userId));
     }
 
+    @GetMapping("/offers/{offerId}")
+    //@PreAuthorize("hasAnyRole('admin')")
+    public ResponseEntity<Stream<BuyingOfferDto>> getById(@PathVariable("offerId") Long OfferId){
+        return ResponseEntity.ok(buyingOfferService.findById(OfferId));
+    }
+
     @PostMapping("/offers")
     public ResponseEntity<BuyingOfferDto> addBuyingOffer (@RequestBody @Valid BuyingOfferDto offer){
         return ResponseEntity.ok(buyingOfferService.save(offer));

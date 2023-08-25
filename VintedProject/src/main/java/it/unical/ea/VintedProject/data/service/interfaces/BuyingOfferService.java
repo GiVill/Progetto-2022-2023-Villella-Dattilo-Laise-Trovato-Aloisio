@@ -12,6 +12,8 @@ public interface BuyingOfferService {
 
     void deleteOfferById(Long id);
 
+    Stream<BuyingOfferDto> findById(Long offerId);
+
     void save(BuyingOffer buyingOffer);
 
     List<BuyingOfferDto> findAllByUserId(Long userId);

@@ -80,4 +80,13 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
         buyingOfferDao.deleteById(offerId);
     }
 
+    @Override
+    public Stream<BuyingOfferDto> findById(Long offerId) {
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if (u.get().getEmail() == null || !u.get().getBuyingOffers().contains(buyingOfferDao.findById(offerId))) {
+            throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present", offerId));
+        }
+        return buyingOfferDao.findById(offerId).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class));
+    }
+
 }
