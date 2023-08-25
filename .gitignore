@@ -2,9 +2,10 @@
 /shelf/
 /workspace.xml
 /.idea
-/dbdata
+#/dbdata
 /VintedProject/.idea
 /VintedProject/pom.xml
 /VintedProject/hsql-db
-/VintedProject/src/main/resources/dbdata
-/VintedProject/src/main/resources/image
+/VintedProject/src/main/resources/dbdata/*
+/VintedProject/src/main/resources/image/*
+/VintedProject/target/*
