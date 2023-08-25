@@ -12,10 +12,7 @@ import java.util.Optional;
 @Repository
 public interface BuyingOfferDao extends JpaRepository<BuyingOffer,Long> {
 
-    //Find a SINGLE offert using his id
-    @Override
-    Optional<BuyingOffer> findById(Long aLong);
-
+    Optional<BuyingOffer> findById(Long id);
     List<BuyingOffer> findByInsertionId(Long aLong);
 
     List<BuyingOffer> findAllByUserId(Long userId);

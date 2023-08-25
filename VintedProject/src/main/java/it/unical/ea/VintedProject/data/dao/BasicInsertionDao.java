@@ -26,6 +26,8 @@ public interface BasicInsertionDao extends JpaRepository<BasicInsertion,Long> {
     //Return a PAGEABLE of Insertion fetched by User id
     Page<BasicInsertion> findAllByUserId(Long uLong, Pageable pageable);
 
+    Optional<BasicInsertion> findByBuyingOffersId(Long offerId);
+
     Page<BasicInsertion> findAllByUserEmail(String email, Pageable pageable);
 
     //Return a PAGEABLE of Insertion fetched by title
