@@ -11,6 +11,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {OrderService} from "../../../../api/order.service";
 import {CookiesService} from "../../../../api/cookies.service";
 import {PaymentDto} from "../../../../model/paymentDto";
+import {MyprofileComponent} from "../../../Pages/User/myprofile/myprofile.component";
 
 
 @Component({
@@ -29,6 +30,7 @@ export class OfferCardComponent implements OnInit{
   constructor(private router: Router,
               private basicInsertion: InsertionService,
               private offerService: OfferService,
+              private myProfile: MyprofileComponent,
               private orderService: OrderService,
               private cookieServices: CookiesService,
               private snackBar: MatSnackBar,
@@ -50,6 +52,7 @@ export class OfferCardComponent implements OnInit{
   deleteOffer() {
     this.offerService._delete(Number(this.offer?.id)).subscribe((response) => {
       this.snackBar.open("Offerta eliminata", )
+      this.myProfile.updateOffer();
       },
       (error) => {
         this.snackBar.open("Errore nell'eliminazione dell offerta")

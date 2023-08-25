@@ -40,8 +40,7 @@ export class MyprofileComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.cookieSevices.getRefreshToken();
-
+    this.cookieSevices.checkUserCookie();
     this.route.paramMap.pipe(
       switchMap((params) => {
         return this.userService.getById(this.userId);
@@ -81,6 +80,32 @@ export class MyprofileComponent implements OnInit{
       }
     );
   }
+
+  updateOffer(){
+    const offerObservable = this.offerService.allId(this.userId);
+    forkJoin([
+      offerObservable,
+    ]).subscribe(
+      ([offerData]) => {
+        this.myOffer = offerData;
+
+        if (this.myInsertion?.empty) {
+          this.isAnyInsertion = true;
+        }
+
+        if (this.myOrder?.empty) {
+          this.isAnyOrder = true;
+        }
+
+        console.log('All data retrieved:', this.myInsertion, this.myOffer, this.myOrder);
+      },
+      (error) => {
+        console.log('An error occurred:', error);
+      }
+    );
+  }
+
+
 
 
   getUserOrders(): void {
