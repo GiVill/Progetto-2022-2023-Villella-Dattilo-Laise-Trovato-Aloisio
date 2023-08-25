@@ -27,6 +27,7 @@ export class MyprofileComponent implements OnInit{
   page = 0;
   isAnyInsertion = false;
   isAnyOrder = false;
+  isAnyOffer = false;
   userId: number = Number(this.cookieSevices.getUserId());
   showUpdateSectionFlag = false;
 
@@ -63,12 +64,14 @@ export class MyprofileComponent implements OnInit{
             this.myOffer = offerData;
             this.myOrder = orderData;
 
-            if (this.myInsertion?.empty) {
+            if (!this.myInsertion?.empty) {
               this.isAnyInsertion = true;
             }
-
-            if (this.myOrder?.empty) {
+            if (!this.myOrder?.empty) {
               this.isAnyOrder = true;
+            }
+            if (this.myOffer?.length != 0) {
+              this.isAnyOffer = true;
             }
 
             console.log('All data retrieved:', this.myInsertion, this.myOffer, this.myOrder);

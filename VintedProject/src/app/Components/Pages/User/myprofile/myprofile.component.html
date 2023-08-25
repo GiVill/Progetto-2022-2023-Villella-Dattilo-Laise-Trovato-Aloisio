@@ -25,7 +25,7 @@
           <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutte</button>
         </div>
 
-          <div class="body-content" style="margin-top: 30px">
+          <div class="body-content" style="margin-top: 30px"  *ngIf="isAnyInsertion">
             <div class="card-container">
               <div class="card-row">
                 <ng-container *ngFor="let item of myInsertion?.content; let i = index;">
@@ -36,27 +36,35 @@
             </div>
           </div>
         </div>
+    </div>
 
-      <div class="body-content" style="margin-top: 30px">
-        <div class="card-container">
-          <div class="card-row">
-            <ng-container *ngFor="let item of myOffer; let i = index;">
-              <app-offer-profile-card [offer]="item"  class="card-item"></app-offer-profile-card>
-              <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
-            </ng-container>
-          </div>
+    <div class="body-content" style="margin-top: 30px" *ngIf="isAnyOffer">
+      <div style="max-height: 700px;">
+        <div class="header">
+          <h2 class="font">Le mie offerte</h2>
+          <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutti</button>
+        </div>
+        <div style="margin: 15%"> </div>
+      <div class="card-container">
+        <div class="card-row">
+          <ng-container *ngFor="let item of myOffer; let i = index;">
+            <app-offer-profile-card [offer]="item"  class="card-item"></app-offer-profile-card>
+            <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
+          </ng-container>
         </div>
       </div>
     </div>
 
 
 
-  <div class="body-content" style="margin-top: 30px">
+
+  <div class="body-content" style="margin-top: 30px" *ngIf="isAnyOrder">
       <div style="max-height: 700px;">
         <div class="header">
           <h2 class="font">I mie ordini</h2>
           <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutti</button>
         </div>
+        <div style="margin: 15%"> </div>
         <div class="card-container">
           <div class="card-row" >
             <ng-container *ngFor="let item of myOrder?.content; let i = index;">
@@ -67,8 +75,6 @@
         </div>
       </div>
     </div>
-
-
-
+</div>
 </div>
 

@@ -99,8 +99,9 @@
 .showAll-button {
   background-color: #0d9263;
   border: none;
+  margin-left: 100%;
   color: white;
-  padding: 10px 20px;
+  padding: 10px 40px;
   font-family: Maison Neue;
   font-size: 14px;
   font-weight: bold;
