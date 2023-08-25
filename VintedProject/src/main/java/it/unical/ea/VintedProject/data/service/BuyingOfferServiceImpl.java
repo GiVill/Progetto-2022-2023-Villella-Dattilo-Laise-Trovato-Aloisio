@@ -73,7 +73,7 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     @Override
     public void deleteOfferById(Long offerId) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getBuyingOffers().contains(buyingOfferDao.findById(offerId))){
+        if(u.get().getEmail() == null || !u.get().getBuyingOffers().contains(buyingOfferDao.findById(offerId).get())){
             throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present",offerId));
         }
         System.out.println(offerId);
@@ -81,12 +81,13 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     }
 
     @Override
-    public Stream<BuyingOfferDto> findById(Long offerId) {
+    public BuyingOfferDto findOfferById(Long offerId) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if (u.get().getEmail() == null || !u.get().getBuyingOffers().contains(buyingOfferDao.findById(offerId))) {
             throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present", offerId));
         }
-        return buyingOfferDao.findById(offerId).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class));
+            Optional<BuyingOffer> Offer = buyingOfferDao.findById(offerId);
+        return modelMapper.map(Offer.get(), BuyingOfferDto.class);
     }
 
 }

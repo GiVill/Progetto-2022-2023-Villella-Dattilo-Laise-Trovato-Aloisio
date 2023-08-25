@@ -4,6 +4,7 @@ import it.unical.ea.VintedProject.data.entities.BuyingOffer;
 import it.unical.ea.VintedProject.dto.BuyingOfferDto;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public interface BuyingOfferService {
@@ -12,7 +13,8 @@ public interface BuyingOfferService {
 
     void deleteOfferById(Long id);
 
-    Stream<BuyingOfferDto> findById(Long offerId);
+    BuyingOfferDto findOfferById(Long offerId);
+
 
     void save(BuyingOffer buyingOffer);
 

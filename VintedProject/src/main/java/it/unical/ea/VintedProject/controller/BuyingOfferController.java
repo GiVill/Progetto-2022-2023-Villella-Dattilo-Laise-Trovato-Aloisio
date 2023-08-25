@@ -65,8 +65,8 @@ public class BuyingOfferController {
 
     @GetMapping("/offers/{offerId}")
     //@PreAuthorize("hasAnyRole('admin')")
-    public ResponseEntity<Stream<BuyingOfferDto>> getById(@PathVariable("offerId") Long OfferId){
-        return ResponseEntity.ok(buyingOfferService.findById(OfferId));
+    public ResponseEntity<BuyingOfferDto> findById(@PathVariable("offerId") Long OfferId){
+        return ResponseEntity.ok(buyingOfferService.findOfferById(OfferId));
     }
 
     @PostMapping("/offers")
