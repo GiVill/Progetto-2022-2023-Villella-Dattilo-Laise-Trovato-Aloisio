@@ -2,7 +2,7 @@ import {Component,OnInit} from '@angular/core';
 import {InsertionService} from "../../../../api/insertion.service";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../../api/user.service";
-import {switchMap} from "rxjs";
+import {forkJoin, switchMap} from "rxjs";
 import {OrderService} from "../../../../api/order.service";
 import {CookiesService} from "../../../../api/cookies.service";
 import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
@@ -10,6 +10,7 @@ import {PageOrderDto} from "../../../../model/pageOrderDto";
 import {UserDto} from "../../../../model/userDto";
 import {BuyingOfferDto} from "../../../../model/buyingOfferDto";
 import {OfferService} from "../../../../api/offer.service";
+import {PageBuyngOfferDto} from "../../../../model/pageBuyngOfferDto";
 
 
 
@@ -22,8 +23,7 @@ export class MyprofileComponent implements OnInit{
   user: UserDto | undefined;
   myInsertion!: PageBasicInsertionDto;
   myOrder: PageOrderDto | undefined;
-  myOffer?: BuyingOfferDto[] = [];
-
+  myOffer?: BuyingOfferDto[];
   page = 0;
   isAnyInsertion = false;
   isAnyOrder = false;
@@ -40,54 +40,46 @@ export class MyprofileComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.cookieSevices.getRefreshToken()
-    this.route.paramMap
-      .pipe(
-        switchMap((params) => {
-          return this.userService.getById(this.userId);
-        })
-      )
-      .subscribe(
-        (user: UserDto) => {
-          this.user = user;
-// TODO: Create the functions getInsertionByUserId and getUserOrders in the respective services
-          this.insertionService.getInsertionByUserId(this.userId, this.page).subscribe(
-            (data: PageBasicInsertionDto) => {
-              this.myInsertion = data;
-              if (this.myInsertion?.empty) {
-                this.isAnyInsertion = true;
-              }
-              console.log(this.myInsertion)
-            },
-            (error) => {
-              console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
-            }
-          );
+    this.cookieSevices.getRefreshToken();
 
-          this.orderService.getUserOrders(this.userId, this.page).subscribe(
-            (data: PageOrderDto) => {
-              this.myOrder = data;
-              if (this.myOrder?.empty) {
-                this.isAnyOrder = true;
-              }
-            },
-            (error) => {
-              console.log('Si è verificato un errore durante il recupero degli ordini dell\'utente:', error);
-            }
-          );
-        }
-      );
+    this.route.paramMap.pipe(
+      switchMap((params) => {
+        return this.userService.getById(this.userId);
+      })
+    ).subscribe(
+      (user: UserDto) => {
+        this.user = user;
+        // Create observables for each API call
+        const insertionObservable = this.insertionService.getInsertionByUserId(this.userId, this.page);
+        const offerObservable = this.offerService.allId(this.userId);
+        const orderObservable = this.orderService.getUserOrders(this.userId, this.page);
+        // Combine observables using forkJoin
+        forkJoin([
+          insertionObservable,
+          offerObservable,
+          orderObservable
+        ]).subscribe(
+          ([insertionData, offerData, orderData]) => {
+            this.myInsertion = insertionData;
+            this.myOffer = offerData;
+            this.myOrder = orderData;
 
-    this.offerService.allId(this.userId).subscribe(
-      (value: BuyingOfferDto[]) => {
-          this.myOffer = value;
-        console.log(this.myOffer)
-      },
-      (error) => {
-        console.log('Si è verificato un errore durante il recupero delle offerte dell\'utente:', error);
+            if (this.myInsertion?.empty) {
+              this.isAnyInsertion = true;
+            }
+
+            if (this.myOrder?.empty) {
+              this.isAnyOrder = true;
+            }
+
+            console.log('All data retrieved:', this.myInsertion, this.myOffer, this.myOrder);
+          },
+          (error) => {
+            console.log('An error occurred:', error);
+          }
+        );
       }
     );
-
   }
 
 

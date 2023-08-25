@@ -24,6 +24,7 @@ import { ServiceError } from '../model/serviceError';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import {CookiesService} from "./cookies.service";
+import {PageBuyngOfferDto} from "../model/pageBuyngOfferDto";
 
 
 @Injectable()
@@ -257,10 +258,7 @@ export class OfferService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public allId(idUser: number, observe?: 'body', reportProgress?: boolean): Observable<BuyingOfferDto[]>;
-    public allId(idUser: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse200>>;
-    public allId(idUser: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse200>>;
-    public allId(idUser: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public allId(idUser: number, observe?: 'body', reportProgress?: boolean): Observable<BuyingOfferDto[]>{
 
         if (idUser === null || idUser === undefined) {
             throw new Error('Required parameter idUser was null or undefined when calling allId.');
@@ -288,7 +286,7 @@ export class OfferService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse200>('get',`${this.basePath}/v1/offers/user`,
+        return this.httpClient.request<BuyingOfferDto[]>('get',`${this.basePath}/v1/offers/user`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

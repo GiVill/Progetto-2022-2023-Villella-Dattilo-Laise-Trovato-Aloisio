@@ -6,13 +6,13 @@
     <div class="">
       <h4 style=""> {{product?.title}}</h4>
       <div style="display: flex; align-content: center">
-      <p>La tua offerta: {{ item?.price}}€ </p>
+      <p>La tua offerta: {{ offer?.price}}€ </p>
       </div>
         <p>Prezzo originale: {{ product?.price}}€ </p>
 
       <div style="display: flex; align-content: center">
     </div>
-      <p>Stato: {{ item?.status}}</p>
+      <p>Stato: {{ offer?.status}}</p>
     </div>
   </div>
   <button *ngIf="!accepted" class="button" (click)="deleteOffer()" > ELIMINA OFFERTA </button>

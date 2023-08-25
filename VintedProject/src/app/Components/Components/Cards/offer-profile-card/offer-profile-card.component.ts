@@ -10,6 +10,7 @@ import {OfferService} from "../../../../api/offer.service";
 import {OrderService} from "../../../../api/order.service";
 import {CookiesService} from "../../../../api/cookies.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {forkJoin} from "rxjs";
 
 
 @Component({
@@ -18,12 +19,9 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrls: ['./offer-profile-card.component.css']
 })
 export class OfferProfileCardComponent implements OnInit{
-  @Input() user: UserDto | undefined;
-  @Input() userId: number | undefined;
+  user: UserDto | undefined;
   @Input() insertion!: BasicInsertionDto; // Receive the BasicInsertionDto input
-  @Input() item?: number;
-  Offer!: BuyingOfferDto;
-  product?: BasicInsertionDto;
+  @Input() offer?: BuyingOfferDto;
   isHovered = false;
   accepted: boolean = false;
   paymentMethods: PaymentDto.PaymentMethodEnum[] = Object.values(PaymentDto.PaymentMethodEnum);
@@ -43,16 +41,27 @@ export class OfferProfileCardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.offerService.getById(this.item!).subscribe()
-    this.userService.getById(this.userId!).subscribe(
-      (user: UserDto) => {
-        this.user = user;
-        console.log(this.user)
-    this.basicInsertion.getInsertionById(this.Offer?.insertionId).subscribe(
-      (data : BasicInsertionDto) => {
-        this.insertion = data
+    this.basicInsertion.getInsertionById(this.offer?.insertionId).subscribe(
+      (data: BasicInsertionDto) => {
+        this.insertion = data;
+
+        // Create observables for each API call
+        const userObservable = this.userService.getById(this.insertion?.userId);
+
+        // Combine observables using forkJoin
+        forkJoin([userObservable]).subscribe(
+          ([user]) => {
+            this.user = user;
+            console.log(this.user);
+          },
+          (error) => {
+            console.error("Error getting user:", error);
+          }
+        );
+      },
+      (error: any) => {
+        console.error("Error getting insertion:", error);
       }
-    )
-      })
+    );
   }
 }

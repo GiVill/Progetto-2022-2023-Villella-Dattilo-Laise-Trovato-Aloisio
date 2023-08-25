@@ -3,5 +3,5 @@
     <img class="rounded-image" [src]="user?.imageName ? 'https://localhost:8010/vintedProject-api/v1/images/' + user?.imageName : 'assets/resources/vestito.jpg'" (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false" alt="Profile">
     <div class="name">{{ user?.firstName }}</div>
   </div>
-  <app-offer-card *ngIf="insertion" [item]="insertion"></app-offer-card>
+  <app-offer-card *ngIf="insertion" [offer]="offer" [product]="insertion"> </app-offer-card>
 </div>

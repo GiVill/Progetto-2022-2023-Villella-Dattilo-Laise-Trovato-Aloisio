@@ -19,7 +19,7 @@ import {PaymentDto} from "../../../../model/paymentDto";
   styleUrls: ['./offer-card.component.css'],
 })
 export class OfferCardComponent implements OnInit{
-  @Input() item?: BuyingOfferDto;
+  @Input() offer?: BuyingOfferDto;
   @Input() product?: BasicInsertionDto;
   isHovered = false;
   accepted: boolean = false;
@@ -36,11 +36,11 @@ export class OfferCardComponent implements OnInit{
   }
 
   onImageClick(): void {
-    this.router.navigate(['/Order', this.item?.id]);
+    this.router.navigate(['/Order', this.offer?.id]);
   }
 
   ngOnInit(): void {
-        if (this.item?.status == "APPROVED")
+        if (this.offer?.status == "APPROVED")
           this.accepted=true;
       }
 
@@ -48,7 +48,7 @@ export class OfferCardComponent implements OnInit{
 
 
   deleteOffer() {
-    this.offerService._delete(Number(this.item?.id)).subscribe((response) => {
+    this.offerService._delete(Number(this.offer?.id)).subscribe((response) => {
       this.snackBar.open("Offerta eliminata", )
       },
       (error) => {
