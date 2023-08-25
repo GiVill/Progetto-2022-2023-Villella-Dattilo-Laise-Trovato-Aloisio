@@ -2,8 +2,10 @@ package it.unical.ea.VintedProject.data.service;
 
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
+import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
 import it.unical.ea.VintedProject.data.dao.BuyingOfferDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
+import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.BuyingOffer;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
@@ -26,6 +28,7 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
 
     private final ModelMapper modelMapper;
     private final BuyingOfferDao buyingOfferDao;
+    private final BasicInsertionDao insertionDao;
     private final UserDao userDao;
     private final UserService userService;
     private final MessageLang messageLang;
@@ -83,11 +86,14 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     @Override
     public BuyingOfferDto findOfferById(Long offerId) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if (u.get().getEmail() == null || !u.get().getBuyingOffers().contains(buyingOfferDao.findById(offerId))) {
-            throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present", offerId));
+        BuyingOffer offer = buyingOfferDao.findById(offerId).get();
+        BasicInsertion insertion = insertionDao.findByBuyingOffersId(offerId).get();
+        if(u.isEmpty()){
+            System.out.println("F");
+        } else if (u.get().getBuyingOffers().contains(offer)) {
+            return modelMapper.map(offer, BuyingOfferDto.class);
         }
-            Optional<BuyingOffer> Offer = buyingOfferDao.findById(offerId);
-        return modelMapper.map(Offer.get(), BuyingOfferDto.class);
+        throw new RuntimeException("jashbdashjd");
     }
 
 }
