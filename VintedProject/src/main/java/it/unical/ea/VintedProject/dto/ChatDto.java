@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @ToString
 public class ChatDto {
     private Long id;
-    private Long reciver;
-    private String nickname;
+    private Long user1;
+    private String user2;
     private ChatMessage chatMessage;
     private BasicInsertion basicInsertion;
 }

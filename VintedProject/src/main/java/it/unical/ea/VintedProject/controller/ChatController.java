@@ -2,6 +2,7 @@ package it.unical.ea.VintedProject.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.data.entities.Chat;
+import it.unical.ea.VintedProject.data.entities.ChatMessage;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatMessageService;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatService;
 import it.unical.ea.VintedProject.dto.ChatDto;
@@ -18,6 +19,7 @@ import java.util.List;
 public class ChatController {
 
         private final ChatService chatService;
+        private final ChatMessageService chatMessageService;
 
         @GetMapping("/chat/user/{id}")
         public ResponseEntity<List<Chat>> allChatUser(@PathVariable("id")Long id){
@@ -25,7 +27,7 @@ public class ChatController {
         }
 
         @GetMapping("/chat/message/{id}/{id2}")
-        public ResponseEntity<List<ChatDto>> allChatMessage(@PathVariable("id") Long id, @PathVariable("id2") Long id2){
-            return ResponseEntity.ok(chatService.allMessageByUserId(id,id2));
+        public ResponseEntity<List<ChatMessage>> allChatMessage(@PathVariable("id") Long id, @PathVariable("id2") Long id2){
+            return ResponseEntity.ok(chatMessageService.allMessageByUserId(id,id2));
         }
 }

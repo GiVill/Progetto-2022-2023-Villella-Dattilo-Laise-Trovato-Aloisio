@@ -46,20 +46,20 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     }
 
     @Override
-    public List<Chat> allChatByUserId(Long id) {
+    public List<ChatMessage> allChatMessageByUserId(Long id) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || !u.get().getId().equals(id)){
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
         }
-        List<Chat> list =  chatDao.findByReciverOrSenderOrderByBasicInsertion(id, id);
+        List<ChatMessage> list =  chatMessageDao.findByReciverOrSenderOrderByDateAsc(id, id);
 
 
         if(list.isEmpty()){
             throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
         }
 
-        Set<Chat> uniqueChatMessages = new HashSet<>(list);
-        List<Chat> uniqueList = new ArrayList<>(uniqueChatMessages);
+        Set<ChatMessage> uniqueChatMessages = new HashSet<>(list);
+        List<ChatMessage> uniqueList = new ArrayList<>(uniqueChatMessages);
         return uniqueList;
     }
 
@@ -69,7 +69,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     }
 
     @Override
-    public List<ChatDto> allMessageByUserId(Long id1, Long id2) {
+    public List<ChatMessage> allMessageByUserId(Long id1, Long id2) {
         return null;
     }
 

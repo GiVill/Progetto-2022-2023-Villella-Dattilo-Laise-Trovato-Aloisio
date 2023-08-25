@@ -15,11 +15,11 @@ public interface ChatMessageService {
 
     void delete(ChatMessage chatMessage);
 
-    List<Chat> allChatByUserId(Long id);
+    List<ChatMessage> allChatMessageByUserId(Long id);
 
     List<ChatMessage> allChatByUserId2(Long id);
 
-    List<ChatDto> allMessageByUserId(Long id1, Long id2);
+    List<ChatMessage> allMessageByUserId(Long id1, Long id2);
 
     void insertMessageChat(NewMessageDto newMessageDto);
 }

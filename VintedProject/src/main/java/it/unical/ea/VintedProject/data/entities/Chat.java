@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.UniqueElements;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "CHAT", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"sender", "reciver","BASICINSERTION_ID"})
+        @UniqueConstraint(columnNames = {"user1", "user2","BASICINSERTION_ID"})
 })
 public class Chat {
     @Id
@@ -22,11 +20,11 @@ public class Chat {
     @Column(name ="ID")
     private Long id;
 
-    @Column(name = "sender")
-    private Long sender;
+    @Column(name = "user1")
+    private Long user1;
 
-    @Column(name = "reciver")
-    private Long reciver;
+    @Column(name = "user2")
+    private Long user2;
 
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatMessage> messages = new ArrayList<>();

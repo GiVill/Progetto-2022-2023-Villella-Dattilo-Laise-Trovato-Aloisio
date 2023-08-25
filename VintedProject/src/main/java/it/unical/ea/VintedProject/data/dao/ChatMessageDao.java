@@ -22,8 +22,8 @@ public interface ChatMessageDao extends JpaRepository<ChatMessage,Long>, JpaSpec
 
 
 
-    List<ChatMessage> findBySenderAndReciverOrderByDateAsc(Long sender, Long reciver);
+    List<ChatMessage> findBySenderOrReciverOrderByDateAsc(Long sender, Long reciver);
 
-    List<ChatMessage> findByReciverAndSenderOrderByDateAsc(Long sender, Long reciver);
+    List<ChatMessage> findByReciverOrSenderOrderByDateAsc(Long sender, Long reciver);
 
 }
