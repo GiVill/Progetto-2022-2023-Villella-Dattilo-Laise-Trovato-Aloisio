@@ -66,16 +66,20 @@ fun ProductScreen(searchedProduct: MutableState<BasicInsertionDto>, application:
                     if (!itemsInCart.contains(searchedProduct.value)) {
                         itemsInCart.add(searchedProduct.value)
                         CoroutineScope(Dispatchers.IO).launch {
-                            AppDatabase.getInstance(context = application.applicationContext).cartDao().insert(converter(searchedProduct.value))
+                            converter(searchedProduct.value)?.let {
+                                AppDatabase.getInstance(context = application.applicationContext).cartDao().insert(
+                                    it
+                                )
+                            }
                         }
-                        Log.i("cart", "Item added!")
+                        Log.i("ProductScreen::class", "Item added!")
                         itemsInCart.forEachIndexed { index, item ->
-                            Log.i("cart", "Item $index: $item") //stampa tutto il carrello
+                            Log.i("ProductScreen::class", "Item $index: $item") //stampa tutto il carrello
                         }
                     } else {
-                        Log.i("cart", "Cannot add the item because is already in the cart!")
+                        Log.i("ProductScreen::class", "Cannot add the item because is already in the cart!")
                         itemsInCart.forEachIndexed { index, item ->
-                            Log.i("cart", "Item $index: $item") //stampa tutto il carrello
+                            Log.i("ProductScreen::class", "Item $index: $item") //stampa tutto il carrello
                         }
                     }
                           },

@@ -51,32 +51,16 @@ import kotlinx.coroutines.withContext
 @Composable
 fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>, application: Context) {
 
-    val scrollState1 = rememberLazyListState()
     val scrollState2 = rememberLazyListState()
 
-    var itemsWomen by remember { mutableStateOf(PageBasicInsertionDto()) }
     var itemsMan by remember { mutableStateOf(PageBasicInsertionDto()) }
     var allItems by remember { mutableStateOf(PageBasicInsertionDto()) }
 
-    var isLoaded by remember { mutableStateOf(false) }
     var isLoaded1 by remember { mutableStateOf(false) }
     var isLoaded2 by remember { mutableStateOf(false) }
 
     var insertionApi = InsertionApi()
 
-    CoroutineScope(Dispatchers.IO).launch {
-        Log.i("home", "Ciao")
-        val women = withContext(Dispatchers.IO) {
-
-            insertionApi.getByCategory("DONNA", 0)
-
-        }
-        Log.i("home", "Ciao")
-        if(women.empty != true) {
-            itemsWomen = women
-        }
-        isLoaded = true
-    }
     CoroutineScope(Dispatchers.IO).launch {
         Log.i("home", "Ciao2")
         val man = withContext(Dispatchers.IO) {
@@ -104,40 +88,14 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
 
         Box(modifier = Modifier.fillMaxSize()) {
 
-            if (isLoaded && isLoaded1 && isLoaded2) {
+            if (isLoaded1 && isLoaded2) {
 
                 //Dentro la LazyColumn non si possono mettere immagini a quanto pare, fuori si
                 ImageConfiguration(imageName = allItems.results[0].imageName, imageScale = ContentScale.Crop)
 
-                //if(itemsWomen.empty != true && itemsMan.empty != true && allItems.empty != true) {
+                //if(itemsMan.empty != true && allItems.empty != true) {
 
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
-                /*
-                item {
-                    // Header item here
-                    // Add any Composable you want to use as the header
-                    Box(modifier = Modifier.fillMaxWidth()){
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                            .clickable(onClick = { /* Open item details activity */ }),
-                        elevation = 4.dp
-                    ) {
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(text = "WOMEN", fontSize = 20.sp, textAlign = TextAlign.Center)
-                        Spacer(modifier = Modifier.height(16.dp))
-                        LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState1) {
-
-                            items(itemsWomen.results) { item ->
-                                ItemCart(item, itemsInCart, navController, searchedProduct, application)
-                            }
-
-                        }
-                    }
-                    }
-                }
-                */
                         /*
                 item {
                     Box(modifier = Modifier.fillMaxWidth()){
@@ -166,6 +124,8 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
                  */
 
                         item {
+                            // Header item here
+                            // Add any Composable you want to use as the header
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -176,7 +136,7 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
                                     text = "Articoli: ",
                                     fontSize = 20.sp,
                                     textAlign = TextAlign.Center
-                                ) //text = "E molto altro!"
+                                )
                                 Spacer(modifier = Modifier.height(16.dp))
                             }
                         }
@@ -190,13 +150,7 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
 
         /*
     Row(modifier = Modifier.fillMaxWidth()) {
-        Text(text = "Woman")
 
-            LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState1) {
-                items(itemsWomen.results) { item ->
-                    ItemCart(item, itemsInCart)
-                }
-            }
             Text(text = "Man")
             LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState2) {
                 items(itemsMan.results) { item ->
@@ -265,7 +219,11 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
                 if (!itemsInCart.contains(item)) {
                     itemsInCart.add(item)
                     CoroutineScope(Dispatchers.IO).launch {
-                        AppDatabase.getInstance(context = application.applicationContext).cartDao().insert(converter(item))
+                        converter(item)?.let {
+                            AppDatabase.getInstance(context = application.applicationContext).cartDao().insert(
+                                it
+                            )
+                        }
                     }
                     Log.i("cart", "Item added!")
                     itemsInCart.forEachIndexed { index, item ->
@@ -315,9 +273,10 @@ fun displayImage(allItems: PageBasicInsertionDto) {
 }
  */
 
-fun converter(item: BasicInsertionDto): CartDto {
+fun converter(item: BasicInsertionDto): CartDto? {
 
-    return CartDto(
+    return item.userId?.let {
+        CartDto(
         title = item.title,
         price = item.price,
         description = item.description,
@@ -330,8 +289,9 @@ fun converter(item: BasicInsertionDto): CartDto {
         imageName = item.imageName,
         brand = item.brand,
         category = item.category,
-        userId = item.userId
+        userId = it
     )
+    }
 
 }
 

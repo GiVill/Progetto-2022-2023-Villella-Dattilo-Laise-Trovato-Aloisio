@@ -184,7 +184,6 @@ fun ProfileScreen(application: Context) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun modifyAccountInfoButton(subject: String){
 
@@ -213,6 +212,7 @@ private fun modifyAccountInfoButton(subject: String){
                 )
                 Button(
                     onClick = {
+                        Log.i("ProfileScreen::class","Typed text: $value")
                         // Perform the action when the send button is clicked
                         performSendAction()
                     },

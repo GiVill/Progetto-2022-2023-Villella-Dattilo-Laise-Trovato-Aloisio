@@ -46,7 +46,6 @@ fun RegistrationScreen(navController: NavHostController, application: Context) {
     val firstnameField = remember { mutableStateOf(TextFieldValue()) }
     val passwordField = remember { mutableStateOf(TextFieldValue()) }
 
-    var loginUnsuccessful by remember {mutableStateOf(false)}
     var buttonEnabled by remember { mutableStateOf(true) }
 
     val auth = AuthApi()
@@ -88,7 +87,6 @@ fun RegistrationScreen(navController: NavHostController, application: Context) {
                                 }
                             }
                             else{
-                                loginUnsuccessful = true
                                 buttonEnabled = true
                             }
                         }

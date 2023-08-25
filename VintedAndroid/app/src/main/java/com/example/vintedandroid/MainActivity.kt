@@ -69,39 +69,6 @@ import com.example.vintedandroid.view.noConnectionScreen
 
 class MainActivity : ComponentActivity() {
 
-    private val OPEN_DOCUMENT_REQUEST_CODE = 1
-    private val READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 1
-
-    fun openDocument() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "image/*"
-        }
-        startActivityForResult(intent, OPEN_DOCUMENT_REQUEST_CODE)
-    }
-
-    // Handle the permission request result
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, proceed with opening the document
-                openDocument()
-            } else {
-                // Permission denied, handle accordingly (e.g., show an error message)
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == OPEN_DOCUMENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            data?.data?.also { uri ->
-                // Perform operations on the document using its URI.
-            }
-        }
-    }
-    @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,27 +77,13 @@ class MainActivity : ComponentActivity() {
                 StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitNetwork().build())
 
                 if (internetChecker(application.applicationContext)) {
-                    //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
-                    //Toast.makeText(this,"a", Toast.LENGTH_SHORT).show()
-
-                    /*
-                    //QUESTE FUNZIONANO SOLO SE IL TUO IP è 192.168.1.90! AGLI ALTRI DARà ERRORE!!
-                    val userApi = UserApi()
-                    val users = userApi.all()
-                    users.forEach { user ->
-                        Log.i("papà",user.toString())
-                    }
-                     */
-
-                    //var c = AppDatabase.getInstance(context = application.applicationContext).userDao().getAll()
-
-
+                    //Toast.makeText(this, "Connected to internet", Toast.LENGTH_SHORT).show()
 
                     val navController = rememberNavController()
 
                     val searchText = remember { mutableStateOf("") }
 
-                    var controlloSuToken = true //questa variabile servirebbe per capire se all'avvio dell'app hai fatto il login oppure no. Per ora non si fa nessun controllo
+                    var controlloSuToken = true //questa variabile servirebbe per capire se all'avvio dell'app hai fatto il login oppure no. Per ora non fa nessun controllo
 
                     if(controlloSuToken) {
 
@@ -139,37 +92,6 @@ class MainActivity : ComponentActivity() {
                             bottomBar = { ApplicationBottomBar(navController) },
                             content = {
                             Box(modifier = Modifier.padding(it)) {
-
-
-                                //val imageView = ImageView(application.applicationContext)  // Replace `context` with your actual context object
-                                val imagePath = "content://com.android.providers.downloads.documents/document/msf%3A1000009051"
-                                //displayImageInImageView(application.applicationContext, imagePath, imageView)
-
-                                CoroutineScope(Dispatchers.IO).launch {
-
-                                    /* Funziona, ma non va aperta qui la galleria
-                                    // Inside your activity or fragment
-                                    if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                        ActivityCompat.requestPermissions(this@MainActivity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE)
-                                    } else {
-                                        // Permission already granted, proceed with opening the document
-                                        openDocument()
-                                    }
-
-                                     */
-
-                                    //openDocument()
-
-                                    //val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-                                    //ActivityCompat.requestPermissions(this, permissions, requestCode)
-/*
-                                    val byteObjects: Array<Byte?> =
-                                        imageToByteArray(application, imagePath)
-                                    Log.i("tag", "OK => ${byteObjects.toString()}")
-
- */
-                                    //pickImage()
-                                }
                                 SetupNavGraph(
                                     navController = navController,
                                     searchText = searchText,
@@ -182,21 +104,12 @@ class MainActivity : ComponentActivity() {
                         navController.navigate(ScreenController.Login.route)
                         LoginScreen(navController = navController, application) //Non funziona bene
                     }
-                } else {
-                    noConnectionScreen(application = application)
-                }
-
+                } else { noConnectionScreen(application = application) }
             }
         }
     }
-
-
-
-
-
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ApplicationTopBar(searchText: MutableState<String>, navController: NavHostController) {
 
@@ -246,30 +159,9 @@ fun ApplicationTopBar(searchText: MutableState<String>, navController: NavHostCo
                 placeholder = { Icon(Icons.Default.Search, contentDescription = "Search")}
             )
 
-        }
-
-            //}
-        }
-    )
-
-    /*
-    TopBar fatta da Umberto
-
-    TopAppBar(
-        title = { Text(text = "VinteDroid") },
-        navigationIcon = {
-            IconButton(onClick = { true }) {
-                Icon(Icons.Default.Menu, contentDescription = "Menu")
-            }
-        },
-        actions = {
-            IconButton(onClick = { /* Open search screen */ }) {
-                Icon(Icons.Default.Search, contentDescription = "Search")
             }
         }
     )
-
-    */
 
     /*
 
@@ -310,8 +202,6 @@ fun ApplicationBottomBar(navController: NavHostController) {//,selectedIndex: Mu
 
     // TUTTI i navController.popBackStack(); ANDREBBERO gestiti diversamente, per ora sono ni
 
-    //TODO IN HOW MANY WAY I CAN HANDLE THE NAVIGATION IN JETPACK COMPOSE?
-
     BottomAppBar {
 
         BottomNavigation {
@@ -346,134 +236,7 @@ fun ApplicationBottomBar(navController: NavHostController) {//,selectedIndex: Mu
                 label = { Text(text = "Cart") }
             )
         }
-        /*
-        NavigationBar {
-            NavigationBarItem(
-                selected = selectedIndex.value == 0,
-                onClick = { selectedIndex.value = 0 },
-                icon = {
-                    Icon(
-                        Icons.Filled.Home,
-                        contentDescription = stringResource(R.string.app_name)
-                    )
-                }
-            )
-            NavigationBarItem(
-                selected = selectedIndex.value == 1,
-                onClick = { selectedIndex.value = 1 },
-                icon = {
-                    Icon(
-                        Icons.Filled.Favorite,
-                        contentDescription = stringResource(R.string.app_name)
-                    )
-                }
-            )
-        }
     }
-
-         */
-    }
-}
-
-
-
-
-/*
-@Composable
-fun pickImage() {
-
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
-    val context = LocalContext.current
-    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
-
-    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()){
-        uri:Uri? -> imageUri = uri
-    }
-
-    Column(modifier = Modifier.fillMaxWidth()) {
-
-        imageUri?.let{
-            if(Build.VERSION.SDK_INT < 28){
-                bitmap.value = MediaStore.Images.Media.getBitmap(context.contentResolver, it)
-            }else{
-                val source = ImageDecoder.createSource(context.contentResolver, it)
-                bitmap.value =ImageDecoder.decodeBitmap(source)
-            }
-
-            bitmap.value?.let { btm ->
-                Image(
-                    bitmap = btm.asImageBitmap(),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(400.dp)
-                        .padding(20.dp)
-                )
-            }
-            Log.i("tag", launcher.toString())
-            Log.i("tag", imageUri.toString())
-        }
-
-        Log.i("tag", imageUri.toString())
-
-        Spacer(modifier = Modifier.height(12.dp))
-        
-        Button(onClick = {launcher.launch("image/*");  Log.i("tag", launcher.toString())}) {
-            Text(text = "Pick Image")
-            
-        }
-        
-    }
-
-}*/*/
-
-/*
-fun displayImageInImageView(context: Context, imagePath: String, imageView: ImageView) {
-    Glide.with(context).load(imagePath).into(imageView)
-    /*
-    val contentResolver = context.contentResolver
-    val imageUri = Uri.parse(imagePath)
-
-    try {
-        val inputStream = contentResolver.openInputStream(imageUri)
-        val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
-
-        // Set the bitmap in the ImageView
-        imageView.setImageBitmap(bitmap)
-
-        inputStream?.close()
-        Log.i("tag", "UOOOU")
-    } catch (e: FileNotFoundException) {
-        Log.i("tag", "NOIN")
-
-        println("Image file not found.")
-    } catch (e: Exception) {
-        Log.i("tag", "NEIN")
-
-        println("Error retrieving the image: ${e.message}")
-    }
-
-     */
-}
-
- */
-
-fun imageToByteArray(context: Context, imagePath: String): Array<Byte?> {
-    val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE)
-    val bitmap: Bitmap = Glide.with(context)
-        .asBitmap()
-        .apply(requestOptions)
-        .load(imagePath)
-        .submit()
-        .get()
-
-    return bitmap.toByteArray()
-}
-
-// Extension function to convert a Bitmap to a byte array
-fun Bitmap.toByteArray(): Array<Byte?> {
-    val byteBuffer = ByteBuffer.allocate(byteCount)
-    copyPixelsToBuffer(byteBuffer)
-    return byteBuffer.array().map { it }.toTypedArray()
 }
 
 @Preview(showBackground = true)

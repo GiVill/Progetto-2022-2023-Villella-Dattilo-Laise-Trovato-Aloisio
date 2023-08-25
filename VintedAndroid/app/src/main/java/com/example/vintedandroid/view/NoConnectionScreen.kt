@@ -43,14 +43,11 @@ fun noConnectionScreen(application :Context){
                  */
                 Button(onClick = {
                     if (internetChecker(application)){
-                        Log.i("tag","Ora sei connesso. Questo è solo un Log")
+                        Log.i("NoConnectionScreen::class","You are now connected")
                         //Forse andrebbe fatto un navigate da qualche parte. (alla home?)
                         //navController.popBackStack(); navController.navigate(ScreenController.Home.route)
                     }
-                    else{
-
-                        Log.i("tag","Sei ancora disconnesso! Questo è solo un Log")
-                    }
+                    else{ Log.i("NoConnectionScreen::class","You are still disconnected!")  }
                 }, modifier = Modifier.padding(8.dp)) {
                     Text(text = "Retry(Per ora non fa nulla)")
                 }

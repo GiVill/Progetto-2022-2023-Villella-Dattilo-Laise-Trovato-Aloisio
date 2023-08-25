@@ -31,7 +31,6 @@ import com.example.vintedandroid.client.models.BasicInsertionDto
 import com.example.vintedandroid.client.models.PageBasicInsertionDto
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(searchText: MutableState<String>, insertionApi: InsertionApi, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>) {
 
@@ -43,9 +42,8 @@ fun SearchScreen(searchText: MutableState<String>, insertionApi: InsertionApi, n
         if (searchText.value != "") {
 
             coroutineScope.launch {
-                //Log.i("tag", "Hai inserito questo testo => ${searchText.value}")
+                Log.i("tag", "You have typed this text: ${searchText.value}")
                 searchResults = insertionApi.getByTitle(searchText.value, 0)
-                //Log.i("tag", searchResults.toString());
             }
         }
     }
@@ -115,7 +113,7 @@ fun SearchScreen(searchText: MutableState<String>, insertionApi: InsertionApi, n
                             contentDescription = "Close Icon")
                     }
                 },
-                colors = SearchBarDefaults.colors(Color.Gray) //TODO Il colore non andrebbe impostato qui
+                colors = SearchBarDefaults.colors(Color.Gray) // Il colore non andrebbe impostato qui
             ) {
                 searchHistory.forEach{
                     Row(modifier = Modifier.padding(all = 14.dp)){

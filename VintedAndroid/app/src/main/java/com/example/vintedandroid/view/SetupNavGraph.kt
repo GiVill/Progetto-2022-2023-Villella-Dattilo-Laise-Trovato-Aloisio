@@ -36,7 +36,6 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
     }
 
     /*
-    //TODO user e user1 vanno cambiati!
     val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh","","ciao@yahoo.it",
         "10-05-2001", UserDto.Gender.MALE,"via napoli",8,"Lamezia",21312,
         "Italy","asdojad")

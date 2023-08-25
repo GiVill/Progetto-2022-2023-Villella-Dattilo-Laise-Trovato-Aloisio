@@ -104,7 +104,7 @@ fun ItemsInCart(item : CartDto, application: Context, itemsFromDB: MutableList<C
                     itemsFromDB.remove(item)
                     AppDatabase.getInstance(context = application.applicationContext).cartDao().delete(item)
                 }
-                Log.i("cart", "Item : $item removed from the cart")
+                Log.i("CartScreen::class", "Item : $item removed from the cart")
             })
             {
             Text(text = "Discard")

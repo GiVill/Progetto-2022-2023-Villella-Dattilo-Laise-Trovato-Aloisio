@@ -111,25 +111,6 @@ fun BottomBarProfile(navController: NavController, application: Context) {
     }
 }
 
-    /*
-    Card(modifier = Modifier
-        .padding(10.dp)
-        .fillMaxWidth()){
-        Column {
-            Row(horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()){
-                Icon(Icons.Filled.AccountCircle, contentDescription = stringResource(R.string.default_account))
-            }
-            Row {
-                Text(text = "${user.lastName}  ${user.firstName}" )
-            }
-            Row {
-                Text(text = user.nickName, textAlign = TextAlign.Center , style = TextStyle(fontSize = Typography.titleLarge.fontSize), modifier = Modifier.fillMaxWidth()  )
-            }
-        }
-
-    }
-     */
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SimilarButton(navController: NavController, text: String, navigateTo: String, icon :ImageVector){

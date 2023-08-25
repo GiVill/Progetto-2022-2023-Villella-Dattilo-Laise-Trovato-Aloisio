@@ -74,8 +74,6 @@ fun LoginScreen(navController: NavHostController, application: Context) {
 
     var loginUnsuccessful = remember {mutableStateOf(false)}
 
-    //var test by remember {mutableStateOf(false)}
-
 
     LaunchedEffect(Unit) {
         if (userFromDB.isEmpty()) {
@@ -100,7 +98,7 @@ fun LoginScreen(navController: NavHostController, application: Context) {
 
         if(isLoaded.value){
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //if(userFromDB.isEmpty() ) { //&& !test
+            //if(userFromDB.isEmpty() ) {
 
                 Column(
                     modifier = Modifier
@@ -114,12 +112,12 @@ fun LoginScreen(navController: NavHostController, application: Context) {
                     Spacer(modifier = Modifier.height(50.dp))
 
                     if (loginUnsuccessful.value) {
+                        Log.i("LoginScreen:class", "Login was unsuccessful!")
                         passwordField = remember { mutableStateOf(TextFieldValue()) }
                         Text(
                             text = "Login failed. Please try again.",
                             modifier = Modifier.padding(16.dp),
                             color = Color.Red,
-
                         )
                     }
 
@@ -132,7 +130,6 @@ fun LoginScreen(navController: NavHostController, application: Context) {
                 }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //}else{
-                //test = true
                 //navController.popBackStack()
                 //navController.navigate(ScreenController.Home.route)
             //}
@@ -173,6 +170,7 @@ private fun loginButton(navController: NavHostController, application: Context, 
 
                 withContext(Dispatchers.Main) {
                     if (t.access_token != null) {
+                        Log.i("LoginScreen::class", "Login successful")
                         val loggedUser = convertUserDTOtoUserDB(t)
                         if (loggedUser != null) {
                             AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().insert(loggedUser)

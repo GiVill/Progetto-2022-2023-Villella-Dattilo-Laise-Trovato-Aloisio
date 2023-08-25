@@ -149,32 +149,6 @@ fun AppContent(application: Context) {
             onValueChange = { if (it.isEmpty() || it.matches(pattern)) { price.value = it } },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
-/*
-        Text(text = "Insert Title")
-        TextField(
-            value = title.value,
-            onValueChange = { title.value = it; },
-            modifier = Modifier
-                .padding(end = 16.dp)
-                .fillMaxWidth(1f),
-            singleLine = true,
-            placeholder = { Icon(Icons.Default.Tab, contentDescription = "Title") }
-        )
-
-        Spacer(modifier = Modifier.padding(10.dp))
-
-        Text(text = "Insert Description")
-        TextField(
-            value = description.value,
-            onValueChange = { description.value = it; },
-            modifier = Modifier
-                .padding(end = 16.dp)
-                .fillMaxWidth(1f),
-            singleLine = true,
-            placeholder = { Icon(Icons.Default.Tab, contentDescription = "Title") }
-        )
-
- */
 
         Button(
             onClick = { galleryLauncher.launch("image/*") },
@@ -357,48 +331,129 @@ private fun convertBasicInsertionDTO(title: String, description: String, price: 
     )
 }
 
-
 /*
-fun <T> Array(): Array<T> {
+QUESTA ERA UNA SEZIONE FATTA PER UN TEST CHE è RIUSCITO SOLO IN PARTE (Ad aprire la galleria del telefono e selezionare una foto, e basta. Potrei aver copiate una sezione di troppo)
 
-}
 
-fun fileToByteArray(file: File): Array<Byte> {
-    val inputStream = FileInputStream(file)
-    val byteArray = inputStream.readBytes()
-    inputStream.close()
+private val OPEN_DOCUMENT_REQUEST_CODE = 1
+    private val READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 1
 
-    return byteArray.toTypedArray()
-}
+    fun openDocument() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/*"
+        }
+        startActivityForResult(intent, OPEN_DOCUMENT_REQUEST_CODE)
+    }
+
+    // Handle the permission request result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, proceed with opening the document
+                openDocument()
+            } else {
+                // Permission denied, handle accordingly (e.g., show an error message)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == OPEN_DOCUMENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            data?.data?.also { uri ->
+                // Perform operations on the document using its URI.
+            }
+        }
+    }
 
  */
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        Box(modifier = Modifier.padding(it)) {
+                                //val imageView = ImageView(application.applicationContext)  // Replace `context` with your actual context object
+                                //val imagePath = "content://com.android.providers.downloads.documents/document/msf%3A1000009051"
+                                //displayImageInImageView(application.applicationContext, imagePath, imageView)
+
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    /*
+                                    //TODO Funziona, ma non va aperta qui la galleria  delle immagini
+                                    // Inside your activity or fragment
+                                    if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                        ActivityCompat.requestPermissions(this@MainActivity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE)
+                                    } else {
+                                        // Permission already granted, proceed with opening the document
+                                        openDocument()
+                                    }
+                                    */
+
+
+
+                                    //val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                    //ActivityCompat.requestPermissions(this, permissions, requestCode)
 /*
-private operator fun <T> State<T>.setValue(t: T?, property: KProperty<T?>, any: Any) {
-
-}
-
-private operator fun <T> MutableState<T>.setValue(t: T?, property: KProperty<T?>, any: Any) {
-
-}
-
-private operator fun Any.getValue(nothing: Nothing?, property: KProperty<*>): Any {
-
-}
+                                    val byteObjects: Array<Byte?> =
+                                        imageToByteArray(application, imagePath)
+                                    Log.i("tag", "OK => ${byteObjects.toString()}")
 
  */
+                                    //pickImage()
+                                }
+                                }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 /*
 @Composable
 fun pickImage() {
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
-    val context: LocalCont
-    
-}
+    val context = LocalContext.current
+    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
 
- */
+    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()){
+        uri:Uri? -> imageUri = uri
+    }
 
+    Column(modifier = Modifier.fillMaxWidth()) {
+
+        imageUri?.let{
+            if(Build.VERSION.SDK_INT < 28){
+                bitmap.value = MediaStore.Images.Media.getBitmap(context.contentResolver, it)
+            }else{
+                val source = ImageDecoder.createSource(context.contentResolver, it)
+                bitmap.value =ImageDecoder.decodeBitmap(source)
+            }
+
+            bitmap.value?.let { btm ->
+                Image(
+                    bitmap = btm.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(400.dp)
+                        .padding(20.dp)
+                )
+            }
+            Log.i("tag", launcher.toString())
+            Log.i("tag", imageUri.toString())
+        }
+
+        Log.i("tag", imageUri.toString())
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(onClick = {launcher.launch("image/*");  Log.i("tag", launcher.toString())}) {
+            Text(text = "Pick Image")
+
+        }
+
+    }
+
+}*/*/
+
+*/
 
 @Preview
 @Composable

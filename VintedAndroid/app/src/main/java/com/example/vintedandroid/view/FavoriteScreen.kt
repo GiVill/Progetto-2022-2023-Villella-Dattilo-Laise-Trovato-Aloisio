@@ -40,7 +40,7 @@ private fun ItemInFavorite(){
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Item a caso nei preferiti")
+            Text(text = "Item a caso (inserito staticamente) nei preferiti")
         }
     }
 }
