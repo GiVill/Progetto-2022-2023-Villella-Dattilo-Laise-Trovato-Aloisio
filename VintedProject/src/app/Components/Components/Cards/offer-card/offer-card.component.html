@@ -1,10 +1,10 @@
 <div  class="content-container product-card" >
   <div>
-    <h1> {{product?.title}}</h1>
-    <img  style=" max-height: 180px;" (click)="onImageClick()" [src]="product?.imageName ? 'https://localhost:8010/vintedProject-api/v1/images/' + product?.imageName : 'assets/resources/vestito.jpg'">
+    <img  style=" max-height: 120px;" (click)="onImageClick()" [src]="product?.imageName ? 'https://localhost:8010/vintedProject-api/v1/images/' + product?.imageName : 'assets/resources/vestito.jpg'">
   </div>
   <div style="padding-left: 2%;">
     <div class="">
+      <h4 style=""> {{product?.title}}</h4>
       <div style="display: flex; align-content: center">
       <p>La tua offerta: {{ item?.price}}€ </p>
       </div>

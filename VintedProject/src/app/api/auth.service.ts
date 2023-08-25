@@ -61,56 +61,65 @@ export class AuthService {
     }
 
 
-    /**
-     *
-     *
-     * @param body
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getRefreshToken(body: string, observe?: 'body', reportProgress?: boolean): Observable<TokenDto>{
+  /**
+   *
+   *
+   * @param body
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
 
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling getRefreshToken.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.request<TokenDto>('post',`${this.basePath}/v1/get-refresh-token`,
-            {
-                body: body,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+  public getRefreshToken(body: any, observe?: 'body', reportProgress?: boolean): Observable<TokenDto>;
+  public getRefreshToken(body: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+  public getRefreshToken(body: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+  public getRefreshToken(body: any, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+    if (body === null || body === undefined) {
+      throw new Error('Required parameter body was null or undefined when calling getRefreshToken.');
     }
+
+    let headers = this.defaultHeaders;
+
+    // authentication (bearerAuth) required
+    if (this.configuration.accessToken) {
+      const accessToken = typeof this.configuration.accessToken === 'function'
+        ? this.configuration.accessToken()
+        : this.configuration.accessToken;
+      headers = headers.set('Authorization', 'Bearer ' + accessToken);
+    }
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected != undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.request<TokenDto>('post',`${this.basePath}/v1/get-refresh-token`,
+      {
+        body: body, // Send the body as is
+        headers: headers,
+        withCredentials: this.configuration.withCredentials
+      }).pipe(
+      tap((response: TokenDto) => {
+        if (response) {
+          // Save the access token in the configuration
+          this.configuration.accessToken = response.accessToken;
+        }
+      })
+    );
+  }
+
 
     /**
      *

@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {AuthService} from "./auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {TokenDto} from "../model/tokenDto";
 
 @Injectable({
   providedIn: 'root'
@@ -28,13 +29,14 @@ export class CookiesService implements OnInit {
   }
 
   getRefreshToken() {
-    let refreshToken = this.cookieService.get('refreshToken');
-    refreshToken = refreshToken.replace(/"/g, ''); // Assegna il risultato di replace a refreshToken
-    this.authService.getRefreshToken(refreshToken).subscribe(
+    const refreshTokenValue = this.cookieService.get('refreshToken');
+    console.log(refreshTokenValue)
+    this.authService.getRefreshToken(refreshTokenValue).subscribe(
         response => {
           this.snackBar.open('Token ricevuto con successo!', 'OK');
           if (response) {
             this.cookieService.set('jwtToken', response.accessToken!, 1, '/');
+            this.cookieService.set('refreshToken', response.refreshToken!, 1, '/');
             return true;
           }
           console.log(Error)

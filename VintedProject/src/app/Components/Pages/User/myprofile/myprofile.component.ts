@@ -40,6 +40,7 @@ export class MyprofileComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.cookieSevices.getRefreshToken()
     this.route.paramMap
       .pipe(
         switchMap((params) => {
@@ -86,7 +87,7 @@ export class MyprofileComponent implements OnInit{
         console.log('Si è verificato un errore durante il recupero delle offerte dell\'utente:', error);
       }
     );
-    this.cookieSevices.getRefreshToken()
+
   }
 
 

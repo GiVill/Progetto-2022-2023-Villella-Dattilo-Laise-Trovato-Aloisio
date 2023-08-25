@@ -53,6 +53,7 @@ import {OfferCardComponent} from "./Components/Components/Cards/offer-card/offer
 import {PrivateComponent} from "./Components/Pages/Insertion/private/private.component";
 import {ClipboardModule} from "ngx-clipboard";
 import {ChatMessageService} from "./api/chatMessage.service";
+import {OfferProfileCardComponent} from "./Components/Components/Cards/offer-profile-card/offer-profile-card.component";
 
 
 
@@ -86,6 +87,7 @@ import {ChatMessageService} from "./api/chatMessage.service";
     OrderCardComponent,
     DashboardComponent,
     CartComponent,
+    OfferProfileCardComponent,
     ProfileCardComponent,
     BottomOfTheBarrelComponent,
     ChatComponent,

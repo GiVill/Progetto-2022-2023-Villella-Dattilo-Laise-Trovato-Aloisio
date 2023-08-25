@@ -20,7 +20,7 @@ import {PaymentDto} from "../../../../model/paymentDto";
 })
 export class OfferCardComponent implements OnInit{
   @Input() item?: BuyingOfferDto;
-  product?: BasicInsertionDto;
+  @Input() product?: BasicInsertionDto;
   isHovered = false;
   accepted: boolean = false;
   paymentMethods: PaymentDto.PaymentMethodEnum[] = Object.values(PaymentDto.PaymentMethodEnum);
@@ -40,18 +40,11 @@ export class OfferCardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.basicInsertion.getInsertionById(this.item?.insertionId).subscribe((data: BasicInsertionDto) => {
-        this.product = data;
         if (this.item?.status == "APPROVED")
           this.accepted=true;
-      },
-      (error) => {
-        console.error('Error fetching product:', error);
       }
-    );{
 
-    }
-  }
+
 
 
   deleteOffer() {

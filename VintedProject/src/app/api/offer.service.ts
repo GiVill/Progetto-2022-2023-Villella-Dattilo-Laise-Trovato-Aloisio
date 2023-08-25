@@ -288,7 +288,7 @@ export class OfferService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<InlineResponse200>('get',`${this.basePath}/v1/offers/user/`,
+        return this.httpClient.request<InlineResponse200>('get',`${this.basePath}/v1/offers/user`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -346,4 +346,44 @@ export class OfferService {
         );
     }
 
+  public getById(offerId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<BuyingOfferDto>>;
+  public getById(offerId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BuyingOfferDto>>>;
+  public getById(offerId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BuyingOfferDto>>>;
+  public getById(offerId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+    if (offerId === null || offerId === undefined) {
+      throw new Error('Required parameter insertionId was null or undefined when calling allInsertionId.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // authentication (bearerAuth) required
+    if (this.cookiesServices.getTokent()) {
+      const accessToken = typeof this.configuration.accessToken === 'function'
+        ? this.cookiesServices.getTokent()
+        : this.cookiesServices.getTokent();
+      headers = headers.set('Authorization', 'Bearer ' + accessToken);
+    }
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+    ];
+
+    return this.httpClient.request<Array<BuyingOfferDto>>('get',`${this.basePath}/v1/offers/${encodeURIComponent(offerId)}`,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
 }

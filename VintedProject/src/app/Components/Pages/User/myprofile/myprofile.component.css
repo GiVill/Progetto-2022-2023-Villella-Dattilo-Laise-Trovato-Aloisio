@@ -82,7 +82,7 @@
 
 .body-content {
   margin: auto;
-  width: 85%;
+  width: 90%;
   padding: 10px;
   position: relative;
   min-height: 450px;
@@ -97,7 +97,7 @@
 }
 
 .showAll-button {
-  background-color: lightblue;
+  background-color: #0d9263;
   border: none;
   color: white;
   padding: 10px 20px;

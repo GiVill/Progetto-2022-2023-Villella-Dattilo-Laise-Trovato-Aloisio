@@ -46,7 +46,7 @@
           <div class="card-container">
             <div class="card-row" >
               <ng-container *ngFor="let item of myOffer; let i = index;">
-                <app-offer-card [item]="item" class="card-item"></app-offer-card>
+                <app-offer-profile-card [item]="item.id"  class="card-item"></app-offer-profile-card>
                 <ng-container *ngIf="(i + 1) % 5 === 0" class="card-item"></ng-container>
               </ng-container>
             </div>
