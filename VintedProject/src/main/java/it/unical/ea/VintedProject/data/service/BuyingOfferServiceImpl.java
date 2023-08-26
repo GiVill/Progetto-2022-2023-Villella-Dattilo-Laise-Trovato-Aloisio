@@ -62,6 +62,7 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
         return buyingOfferDao.findByInsertionId(insertionId).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class)).collect(Collectors.toList());
     }
 
+
     @Override
     @PreAuthorize("has")
     public List<BuyingOfferDto> findAll() {

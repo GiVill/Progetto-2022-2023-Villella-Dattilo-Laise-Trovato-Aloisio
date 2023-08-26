@@ -72,13 +72,6 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<BasicInsertion> insertions;
 
-    @ManyToMany
-    @JoinTable(
-            name = "USER_FAVORITE",
-            joinColumns = @JoinColumn(name = "USER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "BASICINSERTION_ID"))
-    Set<BasicInsertion> favorites;
-
 
 
     /*

@@ -39,6 +39,10 @@ public class ChatMessage {
     @Column(name = "seen")
     private Boolean seen=false;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CHAT_ID")
+    private Chat chat;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,10 +55,6 @@ public class ChatMessage {
     public int hashCode() {
         return Objects.hash(reciver);
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CHAT_ID")
-    private Chat chat;
 }
 
 /*  Per avere gli id invece che gli utenti

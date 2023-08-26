@@ -33,4 +33,7 @@ public class Chat {
     @JoinColumn(name = "BASICINSERTION_ID")
     private BasicInsertion basicInsertion;
 
+    public void pushList(ChatMessage chatMessage){
+        messages.add(chatMessage);
+    }
 }

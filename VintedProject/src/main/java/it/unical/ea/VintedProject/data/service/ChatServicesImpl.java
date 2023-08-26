@@ -4,10 +4,11 @@ import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.dao.ChatDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
+import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.Chat;
 import it.unical.ea.VintedProject.data.entities.User;
+import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatService;
-import it.unical.ea.VintedProject.dto.ChatDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class ChatServicesImpl implements ChatService {
     private final UserDao userDao;
     private final MessageLang messageLang;
     //private final ModelMapper modelMapper;
+    private final BasicInsertionService basicInsertionService;
 
 
     @Override
@@ -62,6 +64,18 @@ public class ChatServicesImpl implements ChatService {
         Set<Chat> uniqueChatMessages = new HashSet<>(list);
         List<Chat> uniqueList = new ArrayList<>(uniqueChatMessages);
         return uniqueList;
+    }
+
+    @Override
+    public Optional<Chat> existChat(Long user1, Long user2, Long insertions) {
+
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null){
+            throw new EntityNotFoundException(messageLang.getMessage("user.not.present"));
+        }
+
+        BasicInsertion insertion = basicInsertionService.findById(insertions);
+        return chatDao.findByUser1AndUser2AndBasicInsertion(user1,user2,insertion);
     }
 
 

@@ -58,9 +58,6 @@ public class BasicInsertion {
     @Column(name = "BRAND")
     private Brand brand;
 
-    @ManyToMany(mappedBy = "favorites")
-    Set<User> usersFavorites;
-
     @OneToMany(mappedBy = "insertion", fetch = FetchType.LAZY)
     private List<BuyingOffer> buyingOffers;
 

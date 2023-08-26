@@ -178,14 +178,14 @@ public class DbGenerator implements ApplicationRunner {
         userService.save(user);
     }
     private void insertChat(String id1, String id2,String nickname, String message, String date) {
-        ChatMessage chatMessage = new ChatMessage();
+       /* ChatMessage chatMessage = new ChatMessage();
         chatMessage.setSender(Long.valueOf(id1));
         chatMessage.setReciver(Long.valueOf(id2));
         chatMessage.setNickname(nickname);
         chatMessage.setMessage(message);
         chatMessage.setDate(LocalDateTime.parse(date));
 
-        chatMessageService.save(chatMessage);
+        chatMessageService.save(chatMessage);*/
     }
 
     @Override

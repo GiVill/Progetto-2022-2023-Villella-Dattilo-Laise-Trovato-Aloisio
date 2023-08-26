@@ -5,9 +5,11 @@ import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.dao.ChatDao;
 import it.unical.ea.VintedProject.data.dao.ChatMessageDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
+import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.Chat;
 import it.unical.ea.VintedProject.data.entities.ChatMessage;
 import it.unical.ea.VintedProject.data.entities.User;
+import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatMessageService;
 import it.unical.ea.VintedProject.dto.ChatDto;
 import it.unical.ea.VintedProject.dto.NewMessageDto;
@@ -28,6 +30,8 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     private final UserDao userDao;
     private final MessageLang messageLang;
     private final ModelMapper modelMapper;
+    private final BasicInsertionService basicInsertionService;
+
 
     @Override
     public void save(ChatMessage chatMessage) {
@@ -48,13 +52,13 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     @Override
     public List<ChatMessage> allChatMessageByUserId(Long id) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getId().equals(id)){
-            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
+        if (u.get().getEmail() == null || !u.get().getId().equals(id)) {
+            throw new EntityNotFoundException(messageLang.getMessage("user.not.present", id));
         }
-        List<ChatMessage> list =  chatMessageDao.findByReciverOrSenderOrderByDateAsc(id, id);
+        List<ChatMessage> list = chatMessageDao.findByReciverOrSenderOrderByDateAsc(id, id);
 
 
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
         }
 
@@ -125,16 +129,54 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         //Chat chat = modelMapper.map(newMessageDto, Chat.class);
 
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getId().equals(newMessageDto.getSender())){
-            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",newMessageDto.getSender()));
+        if (u.get().getEmail() == null || !u.get().getId().equals(newMessageDto.getSender())) {
+            throw new EntityNotFoundException(messageLang.getMessage("user.not.present", newMessageDto.getSender()));
         }
 
-        ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setSender(newMessageDto.getSender());
-        chatMessage.setReciver(newMessageDto.getReciver());
-        chatMessage.setNickname(newMessageDto.getNickname());
-        chatMessage.setMessage(newMessageDto.getMessage());
-        chatMessage.setDate(LocalDateTime.now());
-        chatMessageDao.save(chatMessage);
+        BasicInsertion b = basicInsertionService.findById(Long.valueOf(newMessageDto.getInsertionId()));
+
+        if (chatDao.findByUser1AndUser2AndBasicInsertion(Long.valueOf(newMessageDto.getSender()), Long.valueOf(newMessageDto.getReciver()), (b)).isEmpty()) {
+            Chat chat = new Chat();
+            chat.setUser1(Long.valueOf(newMessageDto.getSender()));
+            chat.setUser2(Long.valueOf(newMessageDto.getReciver()));
+            chat.setBasicInsertion(b);
+
+            ChatMessage chatMessage = new ChatMessage();
+            chatMessage.setSender(Long.valueOf(newMessageDto.getSender()));
+            chatMessage.setReciver(Long.valueOf(newMessageDto.getReciver()));
+            chatMessage.setNickname(newMessageDto.getNickname());
+            chatMessage.setMessage(newMessageDto.getMessage());
+            chatMessage.setDate(LocalDateTime.now());
+
+            chat.pushList(chatMessage);
+            chatDao.save(chat);
+
+
+            chatMessage.setChat(chat);
+            chatMessageDao.save(chatMessage);
+
+
+
+
+        } else {
+
+            Optional<Chat> chat = chatDao.findByUser1AndUser2AndBasicInsertion(Long.valueOf(newMessageDto.getSender()), Long.valueOf(newMessageDto.getReciver()), b);
+            Chat newChat = chat.get();
+
+            ChatMessage chatMessage = new ChatMessage();
+            chatMessage.setSender(Long.valueOf(newMessageDto.getSender()));
+            chatMessage.setReciver(Long.valueOf(newMessageDto.getReciver()));
+            chatMessage.setNickname(newMessageDto.getNickname());
+            chatMessage.setMessage(newMessageDto.getMessage());
+            chatMessage.setDate(LocalDateTime.now());
+
+
+            newChat.pushList(chatMessage);
+            chatDao.save(newChat);
+
+            chatMessage.setChat(chat.get());
+            chatMessageDao.save(chatMessage);
+
+        }
     }
 }

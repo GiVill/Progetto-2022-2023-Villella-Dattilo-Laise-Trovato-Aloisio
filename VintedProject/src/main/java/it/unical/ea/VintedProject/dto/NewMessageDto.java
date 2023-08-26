@@ -14,4 +14,5 @@ public class NewMessageDto {
     private Long reciver;
     private String nickname;
     private String message;
+    private Long insertionId;
 }

@@ -6,6 +6,7 @@ import it.unical.ea.VintedProject.dto.ChatDto;
 import it.unical.ea.VintedProject.dto.NewMessageDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ChatService {
 
@@ -17,6 +18,7 @@ public interface ChatService {
 
     List<Chat> allChatByUserId(Long id);
 
+    Optional<Chat> existChat(Long user1, Long user2, Long insertion);
 
 
 }
