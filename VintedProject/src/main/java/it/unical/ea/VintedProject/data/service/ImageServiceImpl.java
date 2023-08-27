@@ -23,6 +23,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
 
+
+    //TODO: MESSAGGI DI ERRORE
+
     private final UserService userService;
     private final BasicInsertionService insertionService;
     private final MessageLang messageLang;
@@ -126,7 +129,31 @@ public class ImageServiceImpl implements ImageService {
 
     }
     @Override
-    public void deleteImageInsertion(Long id) {
+    public void userDeleteImageInsertion(Long insertionId) {
+        Optional<User> u = userService.findByEmail(LoggedUserDetail.getInstance().getUsername());
+        BasicInsertion basicInsertion = insertionService.findById(insertionId);
+        if(basicInsertion.getUser().getId().equals(u.get().getId())){
+            String newPath = relativePathToUploads + basicInsertion.getImageName();
+
+            File file = new File(newPath);
+            if (file.exists() && file.isFile()) {
+                if (file.delete()) {
+                    System.out.println("File eliminato con successo.");
+                    basicInsertion.setImageName(null);
+                    insertionService.save(basicInsertion);
+                } else {
+                    System.out.println("Impossibile eliminare il file.");
+                }
+            } else {
+                System.out.println("Il file non esiste o non è un file valido.");
+            }
+        } else {
+            throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
+        }
+    }
+
+    @Override
+    public void adminDeleteImageInsertion(Long id) {
 
         BasicInsertion basicInsertion = insertionService.findById(id);
         String newPath = relativePathToUploads + basicInsertion.getImageName();

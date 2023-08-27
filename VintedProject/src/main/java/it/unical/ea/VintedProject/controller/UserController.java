@@ -3,6 +3,7 @@ package it.unical.ea.VintedProject.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
@@ -30,6 +31,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
 
     @Autowired
     private HttpServletRequest request;
@@ -49,7 +51,7 @@ public class UserController {
                     )
             }
     )
-    @GetMapping("/users")
+    @GetMapping("/admin/users")
     //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<List<UserDto>> all() {
         return ResponseEntity.ok(userService.getAllStored());
@@ -57,21 +59,42 @@ public class UserController {
 
 
     @GetMapping("/users/{idUser}")
+    //ADMIN e USER Gli se gli utenti sono pubblici
     public ResponseEntity<UserDto> getById(@PathVariable("idUser") Long id){
         UserDto userDto = userService.getById(id);
         return ResponseEntity.ok(userDto);
     }
 
-    @PostMapping("/users")
+    @PostMapping("/admin/users")
+    // SOLO ADMIN ?
     public ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) { return ResponseEntity.ok(userService.saveDto(userDto)); }
 
-    @PutMapping("/password")
-    public ResponseEntity<Boolean> updateUserPassword(@RequestBody @Valid String newPassword) { return ResponseEntity.ok(userService.updateUserPassword(newPassword));}
-    @DeleteMapping("/users/{idUser}")
+    @PutMapping("/password/{userId}")
+    public ResponseEntity<Boolean> updateUserPassword(@PathVariable Long userId,@RequestBody @Valid String newPassword) {
+        if(loggedUser.getLoggedUserId().equals(userId)){
+            return ResponseEntity.ok(userService.updateUserPassword(newPassword));
+        } else {
+            //TODO: ERRORE PERMESSI
+            throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
+        }
+    }
+    @DeleteMapping("/admin/users/{idUser}")
     //@PreAuthorize("hasRole('admin')")
-    public ResponseEntity<Void> deleteUserById(@PathVariable("idUser") Long id) {
+    public ResponseEntity<Void> adminDeleteUserById(@PathVariable("idUser") Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/admin/users/{idUser}")
+    //@PreAuthorize("hasRole('admin')")
+    public ResponseEntity<Void> userDeleteUserById(@PathVariable("idUser") Long id) {
+        if(loggedUser.getLoggedUserId().equals(id)){
+            userService.deleteUserById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            //TODO: ERRORE PERMESSI
+            throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
+        }
     }
 
     //TODO: Forse questo si può eliminare?

@@ -3,7 +3,9 @@ package it.unical.ea.VintedProject.controller;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
+import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.User;
+import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BuyingOfferDto;
@@ -28,56 +30,88 @@ import java.util.stream.Stream;
 public class BuyingOfferController {
 
     private final BuyingOfferService buyingOfferService;
-    private final UserService userService;
+    private final BasicInsertionService insertionService;
+    private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
 
-    @GetMapping("/offers")
+    @GetMapping("/admin/offers")
     //@PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<List<BuyingOfferDto>> findAllBuyingOffers() {
         return ResponseEntity.ok(buyingOfferService.findAll());
     }
 
-    /* TODO: SOLO ADMIN
-    @GetMapping("/offers/user/{idUser}")
-    public ResponseEntity<Stream<BuyingOfferDto>> allId(@PathVariable("idUser") Long userId) {
-        return ResponseEntity.ok(buyingOfferService.getById(userId));
+    @GetMapping("/admin/offers/user/{idUser}")
+    //@PreAuthorize("hasAnyRole('admin')")
+    //TODO: AGGIUNGERE AL SECURITY CON.
+    public ResponseEntity<List<BuyingOfferDto>> getAllByUserId(@PathVariable("idUser") Long userId) {
+        return ResponseEntity.ok(buyingOfferService.findAllByUserId(userId));
     }
-     */
 
     @GetMapping("/offers/user")
     public ResponseEntity<List<BuyingOfferDto>> getAllByUser() {
-        Optional<User> u = userService.findByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null){
-            throw new EntityNotFoundException("CACCA");
+        if(loggedUser.getLoggedUserId() != null) {
+            return ResponseEntity.ok(buyingOfferService.findAllByUserId(loggedUser.getLoggedUserId()));
+        } else {
+            //TODO: ERRORE PERMESSI
+            throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
         }
-        return ResponseEntity.ok(buyingOfferService.findAllByUserId(u.get().getId()));
+
     }
 
-    @GetMapping("/offers/insertion/{insertionId}")
-    public ResponseEntity<List<BuyingOfferDto>> allInsertionId(@PathVariable("insertionId") Long insertionId) {
+    @GetMapping("/admin/offers/insertion/{insertionId}")
+    public ResponseEntity<List<BuyingOfferDto>> adminGetAllByInsertionId(@PathVariable("insertionId") Long insertionId) {
         return ResponseEntity.ok(buyingOfferService.getByInsertionId(insertionId));
     }
 
-    @GetMapping("/offers/admin/{userId}")
-    //@PreAuthorize("hasAnyRole('admin')")
-    public ResponseEntity<Stream<BuyingOfferDto>> allByUserIdForAdmin(@PathVariable("userId") Long userId){
-        return ResponseEntity.ok(buyingOfferService.getAllByUserIdForAdmin(userId));
+    @GetMapping("/offers/insertion/{insertionId}")
+    public ResponseEntity<List<BuyingOfferDto>> userGetAllByInsertionId(@PathVariable("insertionId") Long insertionId) {
+        BasicInsertion insertion = insertionService.findById(insertionId);
+        if(insertion.getUser().getId().equals(loggedUser.getLoggedUserId())){
+            return ResponseEntity.ok(buyingOfferService.getByInsertionId(insertionId));
+        }else {
+            //TODO: ERRORE PERMESSI
+            throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
+        }
     }
 
-    @GetMapping("/offers/{offerId}")
+    @GetMapping("/admin/offers/{offerId}")
     //@PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<BuyingOfferDto> findById(@PathVariable("offerId") Long OfferId){
         return ResponseEntity.ok(buyingOfferService.findOfferById(OfferId));
     }
 
-    @PostMapping("/offers")
-    public ResponseEntity<BuyingOfferDto> addBuyingOffer (@RequestBody @Valid BuyingOfferDto offer){
+    @PostMapping("/admin/offers")
+    public ResponseEntity<BuyingOfferDto> adminAddBuyingOffer (@RequestBody @Valid BuyingOfferDto offer){
         return ResponseEntity.ok(buyingOfferService.save(offer));
     }
 
-    @DeleteMapping("/offers/{idOffer}")
-    public HttpStatus delete (@PathVariable("idOffer") Long offerId) {
+    @PostMapping("/offers")
+    public ResponseEntity<BuyingOfferDto> userAddBuyingOffer (@RequestBody @Valid BuyingOfferDto offer){
+        if(loggedUser.getLoggedUserId().equals(offer.getUserId())){
+            return ResponseEntity.ok(buyingOfferService.save(offer));
+        } else {
+            //TODO: ERRORE PERMESSI
+            throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
+        }
+    }
+
+    @DeleteMapping("admin/offers/{idOffer}")
+    public HttpStatus adminDeleteOffer (@PathVariable("idOffer") Long offerId) {
         buyingOfferService.deleteOfferById(offerId);
         return HttpStatus.OK;
     }
+
+    @DeleteMapping("/offers")
+    public HttpStatus userDeleteOffer (@RequestBody @Valid BuyingOfferDto buyingOfferDto) {
+        if(loggedUser.getLoggedUserId().equals(buyingOfferDto.getUserId())){
+            buyingOfferService.deleteOfferById(buyingOfferDto.getId());
+            return HttpStatus.OK;
+        } else {
+            //TODO: ERRORE PERMESSI
+            throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
+        }
+    }
+
+
+    //TODO:PUT
 
 }

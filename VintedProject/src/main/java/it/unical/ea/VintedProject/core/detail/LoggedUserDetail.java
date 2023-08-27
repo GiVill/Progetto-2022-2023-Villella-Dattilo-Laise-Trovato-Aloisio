@@ -19,6 +19,7 @@ import java.util.Optional;
 public class LoggedUserDetail implements Serializable {
 
     private static LoggedUserDetail instance;
+    private static UserService userService;
 
     public static LoggedUserDetail getInstance() {
         if(instance == null){
@@ -33,5 +34,11 @@ public class LoggedUserDetail implements Serializable {
     private String email;
     private String username;
     private String sessionId;
+
+
+    public Long getLoggedUserId(){
+        Optional<User> user = userService.findByEmail(email);
+        return user.map(User::getId).orElse(null);
+    }
 
 }

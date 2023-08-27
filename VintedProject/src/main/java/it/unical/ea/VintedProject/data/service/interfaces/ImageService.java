@@ -11,7 +11,8 @@ public interface ImageService {
 
     Boolean insertInsertionImage(Long insertionId, MultipartFile img);
 
-    void deleteImageUser(Long id);
+    void deleteImageUser(Long userId);
 
-    void deleteImageInsertion(Long id);
+    void adminDeleteImageInsertion(Long insertionId);
+    void userDeleteImageInsertion(Long insertionId);
 }
