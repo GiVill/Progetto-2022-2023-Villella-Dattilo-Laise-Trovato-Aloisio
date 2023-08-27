@@ -46,7 +46,6 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     }
 
 
-    //TODO: FUNZIONE SOLO PER utente
     @Override
     public List<BuyingOfferDto> findAllByUserId(Long userId) {
         return buyingOfferDao.findAllByUserId(userId).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class)).collect(Collectors.toList());
@@ -55,13 +54,8 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     @Override
     //@PreAuthorize("has")
     public List<BuyingOfferDto> getByInsertionId(Long insertionId) {
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null){
-            throw new EntityNotFoundException(messageLang.getMessage("wrong.user"));
-        }
         return buyingOfferDao.findByInsertionId(insertionId).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class)).collect(Collectors.toList());
     }
-
 
     @Override
     @PreAuthorize("has")
@@ -70,31 +64,20 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     }
 
     @Override
-    public Stream<BuyingOfferDto> getAllByUserIdForAdmin(Long userId) {
-        return buyingOfferDao.findById(userId).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class));
-    }
-
-    @Override
     public void deleteOfferById(Long offerId) {
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getBuyingOffers().contains(buyingOfferDao.findById(offerId).get())){
+        if(buyingOfferDao.findById(offerId).isEmpty()){
             throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present",offerId));
         }
-        System.out.println(offerId);
         buyingOfferDao.deleteById(offerId);
     }
 
     @Override
     public BuyingOfferDto findOfferById(Long offerId) {
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        BuyingOffer offer = buyingOfferDao.findById(offerId).get();
-        BasicInsertion insertion = insertionDao.findByBuyingOffersId(offerId).get();
-        if(u.isEmpty()){
-            System.out.println("F");
-        } else if (u.get().getBuyingOffers().contains(offer)) {
-            return modelMapper.map(offer, BuyingOfferDto.class);
+        Optional<BuyingOffer> offer = buyingOfferDao.findById(offerId);
+        if(offer.isEmpty()){
+            throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present",offerId));
         }
-        throw new RuntimeException("jashbdashjd");
+        return modelMapper.map(offer.get(), BuyingOfferDto.class);
     }
 
 }

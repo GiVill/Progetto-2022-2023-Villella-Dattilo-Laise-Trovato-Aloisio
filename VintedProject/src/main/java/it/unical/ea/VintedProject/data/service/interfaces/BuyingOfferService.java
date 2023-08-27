@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public interface BuyingOfferService {
-
     BuyingOfferDto save(BuyingOfferDto offer);
 
     void deleteOfferById(Long id);
@@ -22,8 +21,5 @@ public interface BuyingOfferService {
 
     List<BuyingOfferDto> getByInsertionId(Long insertionId);
 
-
     List<BuyingOfferDto> findAll();
-
-    Stream<BuyingOfferDto> getAllByUserIdForAdmin(Long userId);
 }
