@@ -25,7 +25,7 @@ public class Chat {
 
     @Column(name = "user2")
     private Long user2;
-
+    
     @OneToOne
     @JoinColumn(name = "BASICINSERTION_ID")
     private BasicInsertion basicInsertion;

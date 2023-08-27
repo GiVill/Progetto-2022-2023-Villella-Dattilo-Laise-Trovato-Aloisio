@@ -78,6 +78,7 @@ public class UserController {
             throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
         }
     }
+
     @DeleteMapping("/admin/users/{idUser}")
     //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<Void> adminDeleteUserById(@PathVariable("idUser") Long id) {
@@ -85,7 +86,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/admin/users/{idUser}")
+    @DeleteMapping("/users/{idUser}")
     //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<Void> userDeleteUserById(@PathVariable("idUser") Long id) {
         if(loggedUser.getLoggedUserId().equals(id)){

@@ -27,8 +27,5 @@ public class ChatController {
             return ResponseEntity.ok(chatService.allChatByUserId(id));
         }
 
-        @GetMapping("/chat/message/{chatId}")
-        public ResponseEntity<List<ChatMessage>> allChatMessage(@PathVariable("chatId") Long chatId){
-            return ResponseEntity.ok(chatMessageService.allChatMessageByChat_id(chatId));
-        }
+
 }

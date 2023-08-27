@@ -196,8 +196,9 @@ public class DbGenerator implements ApplicationRunner {
             chatMessage.setMessage(message);
             chatMessage.setDate(LocalDateTime.now());
 
-            chatMessage.setChat_id(chat.getId());
             chatDao.save(chat);
+
+            chatMessage.setChat(chat.getId());
             chatMessageService.save(chatMessage);
 
 
@@ -205,21 +206,23 @@ public class DbGenerator implements ApplicationRunner {
 
             Optional<Chat> chat = chatDao.findByUser1AndUser2AndBasicInsertion(Long.valueOf(id1), Long.valueOf(id2), (insertion));
             Chat newChat = chat.get();
+
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setSender(Long.valueOf(Long.valueOf(id1)));
             chatMessage.setReciver(Long.valueOf(Long.valueOf(id2)));
             chatMessage.setNickname(nickname);
             chatMessage.setMessage(message);
             chatMessage.setDate(LocalDateTime.now());
-            chatMessage.setChat_id(newChat.getId());
+            chatMessage.setChat(newChat.getId());
 
             chatMessageService.save(chatMessage);
+            chatDao.save(newChat);
 
         }
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        //createDb();
+       //createDb();
     }
 }

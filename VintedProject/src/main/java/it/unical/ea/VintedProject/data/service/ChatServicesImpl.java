@@ -56,17 +56,17 @@ public class ChatServicesImpl implements ChatService {
         //    throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
         //}
         System.out.println("mlmlml");
-        List<Chat> list =  chatDao.findByUser1OrUser2OrderByBasicInsertion(id, id);
-        System.out.println(list);
+        List<Chat> list =chatDao.findAllByUser1(id);
+        //List<Chat> list = chatDao.findAllByBasicInsertionId(id);
 
-
+        //List<Chat> list =  chatDao.findByUser1OrUser2OrderByBasicInsertion(id, id);
         if(list.isEmpty()){
             throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
         }
 
-        Set<Chat> uniqueChatMessages = new HashSet<>(list);
-        List<Chat> uniqueList = new ArrayList<>(uniqueChatMessages);
-        return uniqueList;
+        //Set<Chat> uniqueChatMessages = new HashSet<>(list);
+        //List<Chat> uniqueList = new ArrayList<>(uniqueChatMessages);
+        return list;
     }
 
     @Override

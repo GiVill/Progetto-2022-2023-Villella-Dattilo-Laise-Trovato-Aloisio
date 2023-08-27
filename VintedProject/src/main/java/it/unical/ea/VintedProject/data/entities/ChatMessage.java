@@ -39,8 +39,8 @@ public class ChatMessage {
     @Column(name = "seen")
     private Boolean seen=false;
 
-    @Column(name = "chat_id")
-    private Long chat_id;
+    @Column(name = "chat")
+    private Long chat;
 
 
     @Override

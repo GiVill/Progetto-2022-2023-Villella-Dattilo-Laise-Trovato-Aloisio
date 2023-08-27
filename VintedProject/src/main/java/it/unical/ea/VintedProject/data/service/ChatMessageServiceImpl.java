@@ -55,16 +55,17 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         if (u.get().getEmail() == null) {
             throw new EntityNotFoundException(messageLang.getMessage("chat.not.present", chatId));
         }
-        List<ChatMessage> list = chatMessageDao.findChatMessageByChat_idOrderByDateAsc(chatId);
+        List<ChatMessage> list = chatMessageDao.findAllByChatOrderByDateAsc(chatId);
+        System.out.println(list);
 
 
         if (list.isEmpty()) {
             throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
         }
 
-        Set<ChatMessage> uniqueChatMessages = new HashSet<>(list);
-        List<ChatMessage> uniqueList = new ArrayList<>(uniqueChatMessages);
-        return uniqueList;
+        //Set<ChatMessage> uniqueChatMessages = new HashSet<>(list);
+        //List<ChatMessage> uniqueList = new ArrayList<>(uniqueChatMessages);
+        return list;
     }
 
 
@@ -137,10 +138,11 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             chatMessage.setNickname(newMessageDto.getNickname());
             chatMessage.setMessage(newMessageDto.getMessage());
             chatMessage.setDate(LocalDateTime.now());
-            chatMessage.setChat_id(chat.getId());
 
-            save(chatMessage);
             chatDao.save(chat);
+
+            chatMessage.setChat(chat.getId());
+            save(chatMessage);
 
 
 
@@ -157,7 +159,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             chatMessage.setNickname(newMessageDto.getNickname());
             chatMessage.setMessage(newMessageDto.getMessage());
             chatMessage.setDate(LocalDateTime.now());
-            chatMessage.setChat_id(newChat.getId());
+            chatMessage.setChat(newChat.getId());
 
             save(chatMessage);
             chatDao.save(newChat);
