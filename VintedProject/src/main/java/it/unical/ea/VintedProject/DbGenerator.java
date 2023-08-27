@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject;
 
+import it.unical.ea.VintedProject.data.dao.ChatDao;
 import it.unical.ea.VintedProject.data.entities.*;
 import it.unical.ea.VintedProject.data.service.interfaces.*;
 import it.unical.ea.VintedProject.dto.NewUserDto;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -57,6 +59,7 @@ public class DbGenerator implements ApplicationRunner {
     protected final OrderService orderService;
     protected final BuyingOfferService buyingOfferService;
     protected final ChatMessageService chatMessageService;
+    private final ChatDao chatDao;
 
 
     public void createDb() {
@@ -99,7 +102,7 @@ public class DbGenerator implements ApplicationRunner {
             for (CSVRecord record : chatCsv) {
                 //System.out.println(record.get(0)+ record.get(1) +record.get(2)+ record.get(3));
                 //insertChat(userService.getUserById(Long.valueOf(record.get(0))), userService.getUserById(Long.valueOf(record.get(1))), record.get(2), record.get(3));
-                insertChat(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4));
+                insertChat(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4), record.get(5));
             }
 
 
@@ -177,19 +180,56 @@ public class DbGenerator implements ApplicationRunner {
 
         userService.save(user);
     }
-    private void insertChat(String id1, String id2,String nickname, String message, String date) {
-       /* ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setSender(Long.valueOf(id1));
-        chatMessage.setReciver(Long.valueOf(id2));
-        chatMessage.setNickname(nickname);
-        chatMessage.setMessage(message);
-        chatMessage.setDate(LocalDateTime.parse(date));
+    private void insertChat(String id1, String id2,String nickname, String message, String date, String insertionId) {
 
-        chatMessageService.save(chatMessage);*/
+        BasicInsertion insertion = insertionService.findById(Long.valueOf(insertionId));
+        if (chatDao.findByUser1AndUser2AndBasicInsertion(Long.valueOf(id1), Long.valueOf(id2), (insertion)).isEmpty()) {
+            Chat chat = new Chat();
+            chat.setUser1(Long.valueOf(id1));
+            chat.setUser2(Long.valueOf(id2));
+            chat.setBasicInsertion(insertion);
+
+            ChatMessage chatMessage = new ChatMessage();
+            chatMessage.setSender(Long.valueOf(Long.valueOf(id1)));
+            chatMessage.setReciver(Long.valueOf(Long.valueOf(id2)));
+            chatMessage.setNickname(nickname);
+            chatMessage.setMessage(message);
+            chatMessage.setDate(LocalDateTime.now());
+
+            chat.pushList(chatMessage);
+            chatDao.save(chat);
+
+
+            chatMessage.setChat(chat);
+            chatMessageService.save(chatMessage);
+
+
+
+
+        } else {
+
+            Optional<Chat> chat = chatDao.findByUser1AndUser2AndBasicInsertion(Long.valueOf(id1), Long.valueOf(id2), (insertion));
+            Chat newChat = chat.get();
+            ChatMessage chatMessage = new ChatMessage();
+            chatMessage.setSender(Long.valueOf(Long.valueOf(id1)));
+            chatMessage.setReciver(Long.valueOf(Long.valueOf(id2)));
+            chatMessage.setNickname(nickname);
+            chatMessage.setMessage(message);
+            chatMessage.setDate(LocalDateTime.now());
+
+
+
+            newChat.pushList(chatMessage);
+            chatDao.save(newChat);
+
+            chatMessage.setChat(chat.get());
+            chatMessageService.save(chatMessage);
+
+        }
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        //createDb();
+        createDb();
     }
 }
