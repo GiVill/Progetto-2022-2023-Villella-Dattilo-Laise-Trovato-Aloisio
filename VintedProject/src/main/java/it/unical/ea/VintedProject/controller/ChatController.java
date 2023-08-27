@@ -23,11 +23,12 @@ public class ChatController {
 
         @GetMapping("/chat/user/{id}")
         public ResponseEntity<List<Chat>> allChatUser(@PathVariable("id")Long id){
+            System.out.println(chatService.allChatByUserId(id));
             return ResponseEntity.ok(chatService.allChatByUserId(id));
         }
 
-        @GetMapping("/chat/message/{id}/{id2}")
-        public ResponseEntity<List<ChatMessage>> allChatMessage(@PathVariable("id") Long id, @PathVariable("id2") Long id2){
-            return ResponseEntity.ok(chatMessageService.allMessageByUserId(id,id2));
+        @GetMapping("/chat/message/{chatId}")
+        public ResponseEntity<List<ChatMessage>> allChatMessage(@PathVariable("chatId") Long chatId){
+            return ResponseEntity.ok(chatMessageService.allChatMessageByChat_id(chatId));
         }
 }

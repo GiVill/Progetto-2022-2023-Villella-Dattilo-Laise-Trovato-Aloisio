@@ -20,15 +20,6 @@ public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
 
-    @GetMapping("/message/user/{id}")
-    public ResponseEntity<List<ChatMessage>> allChatUser(@PathVariable("id")Long id){
-        return ResponseEntity.ok(chatMessageService.allChatMessageByUserId(id));
-    }
-
-    @GetMapping("/message/{id}/{id2}")
-    public ResponseEntity<List<ChatMessage>> allChatMessage(@PathVariable("id") Long id, @PathVariable("id2") Long id2){
-        return ResponseEntity.ok(chatMessageService.allMessageByUserId(id,id2));
-    }
 
     @PostMapping("/message/insert")
     public ResponseEntity<String> insertMessage(@RequestBody NewMessageDto newMessageDto){

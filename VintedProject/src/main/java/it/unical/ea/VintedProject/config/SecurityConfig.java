@@ -119,7 +119,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE,"/v1/images/insertion/{insertionId}").permitAll()    //.hasAnyRole(USER,ADMIN)
                 //CHAT
                 .requestMatchers(HttpMethod.GET,"/v1/chat/user/{id}").permitAll()           //.hasAnyRole(USER,ADMIN)
-                .requestMatchers(HttpMethod.GET,"/v1/chat/message/{id}/{id2}").permitAll()  //.hasAnyRole(USER,ADMIN)
+                .requestMatchers(HttpMethod.GET,"/v1/chat/message/{chatId}").permitAll()  //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.POST,"/v1/chat/insert").permitAll()             //.hasAnyRole(USER,ADMIN)
 
                 .anyRequest()

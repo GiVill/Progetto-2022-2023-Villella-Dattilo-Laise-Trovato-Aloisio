@@ -50,12 +50,12 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     }
 
     @Override
-    public List<ChatMessage> allChatMessageByUserId(Long id) {
+    public List<ChatMessage> allChatMessageByChat_id(Long chatId) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if (u.get().getEmail() == null || !u.get().getId().equals(id)) {
-            throw new EntityNotFoundException(messageLang.getMessage("user.not.present", id));
+        if (u.get().getEmail() == null) {
+            throw new EntityNotFoundException(messageLang.getMessage("chat.not.present", chatId));
         }
-        List<ChatMessage> list = chatMessageDao.findByReciverOrSenderOrderByDateAsc(id, id);
+        List<ChatMessage> list = chatMessageDao.findChatMessageByChat_idOrderByDateAsc(chatId);
 
 
         if (list.isEmpty()) {
@@ -65,16 +65,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         Set<ChatMessage> uniqueChatMessages = new HashSet<>(list);
         List<ChatMessage> uniqueList = new ArrayList<>(uniqueChatMessages);
         return uniqueList;
-    }
-
-    @Override
-    public List<ChatMessage> allChatByUserId2(Long id) {
-        return null;
-    }
-
-    @Override
-    public List<ChatMessage> allMessageByUserId(Long id1, Long id2) {
-        return null;
     }
 
 
@@ -147,13 +137,11 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             chatMessage.setNickname(newMessageDto.getNickname());
             chatMessage.setMessage(newMessageDto.getMessage());
             chatMessage.setDate(LocalDateTime.now());
+            chatMessage.setChat_id(chat.getId());
 
-            chat.pushList(chatMessage);
+            save(chatMessage);
             chatDao.save(chat);
 
-
-            chatMessage.setChat(chat);
-            chatMessageDao.save(chatMessage);
 
 
 
@@ -169,13 +157,11 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             chatMessage.setNickname(newMessageDto.getNickname());
             chatMessage.setMessage(newMessageDto.getMessage());
             chatMessage.setDate(LocalDateTime.now());
+            chatMessage.setChat_id(newChat.getId());
 
-
-            newChat.pushList(chatMessage);
+            save(chatMessage);
             chatDao.save(newChat);
 
-            chatMessage.setChat(chat.get());
-            chatMessageDao.save(chatMessage);
 
         }
     }

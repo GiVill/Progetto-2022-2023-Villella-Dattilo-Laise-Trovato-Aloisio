@@ -196,14 +196,9 @@ public class DbGenerator implements ApplicationRunner {
             chatMessage.setMessage(message);
             chatMessage.setDate(LocalDateTime.now());
 
-            chat.pushList(chatMessage);
+            chatMessage.setChat_id(chat.getId());
             chatDao.save(chat);
-
-
-            chatMessage.setChat(chat);
             chatMessageService.save(chatMessage);
-
-
 
 
         } else {
@@ -216,13 +211,8 @@ public class DbGenerator implements ApplicationRunner {
             chatMessage.setNickname(nickname);
             chatMessage.setMessage(message);
             chatMessage.setDate(LocalDateTime.now());
+            chatMessage.setChat_id(newChat.getId());
 
-
-
-            newChat.pushList(chatMessage);
-            chatDao.save(newChat);
-
-            chatMessage.setChat(chat.get());
             chatMessageService.save(chatMessage);
 
         }
@@ -230,6 +220,6 @@ public class DbGenerator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        createDb();
+        //createDb();
     }
 }

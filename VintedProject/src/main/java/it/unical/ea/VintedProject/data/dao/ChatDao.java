@@ -3,6 +3,7 @@ package it.unical.ea.VintedProject.data.dao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.Chat;
 import it.unical.ea.VintedProject.data.entities.ChatMessage;
+import it.unical.ea.VintedProject.dto.ChatDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

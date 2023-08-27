@@ -9,6 +9,7 @@ import it.unical.ea.VintedProject.data.entities.Chat;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatService;
+import it.unical.ea.VintedProject.dto.ChatDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -51,10 +52,12 @@ public class ChatServicesImpl implements ChatService {
     @Override
     public List<Chat> allChatByUserId(Long id) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getId().equals(id)){
-            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
-        }
+        //if(u.get().getEmail() == null || !u.get().getId().equals(id)){
+        //    throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
+        //}
+        System.out.println("mlmlml");
         List<Chat> list =  chatDao.findByUser1OrUser2OrderByBasicInsertion(id, id);
+        System.out.println(list);
 
 
         if(list.isEmpty()){

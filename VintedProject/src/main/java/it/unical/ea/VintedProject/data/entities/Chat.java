@@ -26,14 +26,9 @@ public class Chat {
     @Column(name = "user2")
     private Long user2;
 
-    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ChatMessage> messages = new ArrayList<>();
-
     @OneToOne
     @JoinColumn(name = "BASICINSERTION_ID")
     private BasicInsertion basicInsertion;
 
-    public void pushList(ChatMessage chatMessage){
-        messages.add(chatMessage);
-    }
+
 }

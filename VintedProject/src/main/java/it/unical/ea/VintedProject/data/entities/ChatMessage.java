@@ -39,9 +39,9 @@ public class ChatMessage {
     @Column(name = "seen")
     private Boolean seen=false;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CHAT_ID")
-    private Chat chat;
+    @Column(name = "chat_id")
+    private Long chat_id;
+
 
     @Override
     public boolean equals(Object o) {
