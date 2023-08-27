@@ -1,8 +1,8 @@
 <div class="chat-container">
   <div class="user-list">
     <ul>
-      <li *ngFor="let user of users" (click)="onSelectUser(user)">
-        <button class="button btn" [ngClass]="{'selected-user': user === selectedUser}" style="margin: 10px">{{ user.nickname}}</button>
+      <li *ngFor="let chats of chat" (click)="onSelectChat(chats)">
+        <button class="button btn" [ngClass]="{'selected-user': chats === selectedChat}" style="margin: 10px">{{ chats.nickname}}</button>
       </li>
     </ul>
   </div>

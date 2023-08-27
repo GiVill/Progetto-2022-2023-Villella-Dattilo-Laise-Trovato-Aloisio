@@ -1,10 +1,10 @@
 import {Component, OnInit} from "@angular/core";
 import {ChatDto} from "../../../model/chatDto";
-import {ChatService} from "../../../api/chat.service";
 import {CookiesService} from "../../../api/cookies.service";
 import {NewMessageDto} from "../../../model/newMessageDto";
 import {ChatMessageService} from "../../../api/chatMessage.service";
 import {ChatMessageDto} from "../../../model/chatMessageDto";
+import {ChatService} from "../../../api/chat.service";
 
 
 @Component({
@@ -14,8 +14,8 @@ import {ChatMessageDto} from "../../../model/chatMessageDto";
 })
 export class ChatComponent implements OnInit {
   noChat: Boolean = false;
-  users?: Array<ChatDto> = [];
-  selectedUser!: ChatDto
+  chat?: Array<ChatDto> = [];
+  selectedChat!: ChatDto
   messages: Array<ChatMessageDto> = [];
   newMessage: string = '';
   selectedUserId?: number | null = null;
@@ -23,28 +23,29 @@ export class ChatComponent implements OnInit {
 
 
   constructor(private chatMessageService: ChatMessageService,
+              private chatService: ChatService,
               private cookiesService: CookiesService) {}
 
   ngOnInit(): void {
     if (!this.cookiesService.checkUserToken()){
         this.cookiesService.getRefreshToken()
     }
-    this.loadUsers().then(() => {
-      if (this.users && this.users.length > 0) {
-        this.selectedUser = this.users[0];
-        this.loadMessages(this.selectedUser.reciver!);
+    this.loadChat().then(() => {
+      if (this.chat && this.chat.length > 0) {
+        this.selectedChat = this.chat[0];
+        this.loadMessages(this.selectedChat.reciver!);
       }
     });
   }
-  async loadUsers(): Promise<void> {
+  async loadChat(): Promise<void> {
     try {
-      const [users] = await Promise.all([this.chatMessageService.allChatUser(this.myId).toPromise()]);
-      this.users = users;
-      if (users) {
-        this.selectedUser = users[0];
+      const [chats] = await Promise.all([this.chatService.allChatUser1(this.myId).toPromise()]);
+      this.chat = chats;
+      if (chats) {
+        this.selectedChat = chats[0];
       }
-      console.log(users);
-      this.loadMessages(this.selectedUser.reciver!);
+      console.log(chats);
+      this.loadMessages(this.selectedChat.reciver!);
 
     } catch (error) {
       this.noChat=true;
@@ -54,7 +55,7 @@ export class ChatComponent implements OnInit {
   }
 
   loadMessages(userId: number): void {
-    this.chatMessageService.allChatMessage(this.myId, userId).subscribe(
+    this.chatMessageService.allChatMessage(this.selectedChat.id!).subscribe(
       (messages: Array<ChatDto>) => {
         this.messages = messages;
         console.log(messages)
@@ -69,8 +70,8 @@ export class ChatComponent implements OnInit {
     if (this.newMessage.trim() !== '') {
       const newMessageDto: NewMessageDto = {
         sender: this.myId,
-        reciver: this.selectedUser.reciver,
-        nickname: this.selectedUser.nickname,
+        reciver: this.selectedChat.reciver,
+        nickname: this.selectedChat.nickname,
         message: this.newMessage
       };
       console.log(newMessageDto)
@@ -79,13 +80,13 @@ export class ChatComponent implements OnInit {
         (response: string) => {
           console.log(response)
           if (response=="ok") {
-            this.loadMessages(this.selectedUser.reciver!);
+            this.loadMessages(this.selectedChat.reciver!);
             this.newMessage = '';
           }
         },
         (error) => {
           if (error.statusText=="OK") {
-            this.loadMessages(this.selectedUser.reciver!);
+            this.loadMessages(this.selectedChat.reciver!);
             this.newMessage = '';
           }else {
             console.error('Error sending message:', error);
@@ -95,10 +96,10 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  onSelectUser(user: ChatDto): void {
+  onSelectChat(user: ChatDto): void {
     console.log("Before selecting user:", user);
-    this.selectedUser = user;
-    console.log("After selecting user:", this.selectedUser);
+    this.selectedChat = user;
+    console.log("After selecting user:", this.selectedChat);
     this.loadMessages(user.reciver!);
     this.selectedUserId = user.id;
   }
