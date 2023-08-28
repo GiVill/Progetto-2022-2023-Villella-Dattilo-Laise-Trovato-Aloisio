@@ -20,14 +20,14 @@ public class LoggedUserMethod {
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
         userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail()).orElseThrow(() -> new EntityNotFoundException("checkLoggedUser"));
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " checkLoggedUser");
-        LoggedUserDetail.resetInstance();
+        //LoggedUserDetail.resetInstance();
     }
     public void checkLoggedUser(Long userId){
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
 
         Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail()).orElseThrow(() -> new EntityNotFoundException("checkLoggedUser ARGS")));
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " checkLoggedUser ARGS");
-        LoggedUserDetail.resetInstance();
+        //LoggedUserDetail.resetInstance();
 
         if(user.get().getId().equals(userDao.findById(userId).get().getId())){ //|| user.get().getId().equals(userService.getUserById(userId).getId())
             throw new RuntimeException("No user logged or user not valid"); //throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
@@ -37,9 +37,9 @@ public class LoggedUserMethod {
     public Long getLoggedUserId(){
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
 
-        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail()).orElseThrow(() -> new EntityNotFoundException("getLoggedUserId")));
+        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() -> new EntityNotFoundException("getLoggedUserId")));
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " getLoggedUserId");
-        LoggedUserDetail.resetInstance();
+        //LoggedUserDetail.resetInstance();
 
         //return user.map(User::getId).orElse(null);
         return user.get().getId();
@@ -48,9 +48,9 @@ public class LoggedUserMethod {
     public Long getLoggedUserId(Long userId){
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
 
-        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail()).orElseThrow(() -> new EntityNotFoundException("getLoggedUserId ARGS")));
+        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() -> new EntityNotFoundException("getLoggedUserId ARGS")));
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " getLoggedUserId ARGS");
-        LoggedUserDetail.resetInstance();
+        //LoggedUserDetail.resetInstance();
         if(user.get().getId().equals(userDao.findById(userId).get().getId())){ // || user.get().getId().equals(userService.getUserById(userId).getId())
             throw new RuntimeException("No user logged or user not valid"); //throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
         }
@@ -61,9 +61,9 @@ public class LoggedUserMethod {
     public User getEntireLoggedUser(){
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
 
-        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail()).orElseThrow(() -> new EntityNotFoundException("getEntireLoggedUser")));
+        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() -> new EntityNotFoundException("getEntireLoggedUser")));
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " getEntireLoggedUser");
-        LoggedUserDetail.resetInstance();
+        //LoggedUserDetail.resetInstance();
 
         return user.get();
     }
