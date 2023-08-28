@@ -12,10 +12,10 @@
 
 export interface NewUserDto { 
     password: string;
-    nickName: string;
-    firstName: string;
+    nickname: string;
+    firstname: string;
     email?: string;
-    lastName?: string;
+    lastname?: string;
     addressStreet?: string;
     addressNumber?: number;
     addressCity?: string;

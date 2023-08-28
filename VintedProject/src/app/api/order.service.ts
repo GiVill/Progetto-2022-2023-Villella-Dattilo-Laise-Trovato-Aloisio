@@ -33,7 +33,7 @@ export class OrderService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, private CookiesService : CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, private CookiesService: CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -76,13 +76,14 @@ export class OrderService {
 
         let headers = this.defaultHeaders;
 
-      // authentication (bearerAuth) required
-      if (this.CookiesService.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.CookiesService.getTokent()
-          : this.CookiesService.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -115,60 +116,6 @@ export class OrderService {
     /**
      *
      *
-     * @param page
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public all1(page: number, observe?: 'body', reportProgress?: boolean): Observable<PageOrderDto>;
-    public all1(page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOrderDto>>;
-    public all1(page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOrderDto>>;
-    public all1(page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling all1.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (page !== undefined && page !== null) {
-            queryParameters = queryParameters.set('page', <any>page);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<PageOrderDto>('get',`${this.basePath}/v1/orders`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     *
-     *
      * @param orderId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -184,11 +131,12 @@ export class OrderService {
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -232,11 +180,12 @@ export class OrderService {
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -265,26 +214,82 @@ export class OrderService {
     /**
      *
      *
-     * @param orderId
+     * @param page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getOrderById(orderId: number, observe?: 'body', reportProgress?: boolean): Observable<OrderDto>;
-    public getOrderById(orderId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<OrderDto>>;
-    public getOrderById(orderId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<OrderDto>>;
-    public getOrderById(orderId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAll(page: number, observe?: 'body', reportProgress?: boolean): Observable<PageOrderDto>;
+    public getAll(page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOrderDto>>;
+    public getAll(page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOrderDto>>;
+    public getAll(page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (orderId === null || orderId === undefined) {
-            throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
+        if (page === null || page === undefined) {
+            throw new Error('Required parameter page was null or undefined when calling getAll.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
         }
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<PageOrderDto>('get',`${this.basePath}/v1/orders`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param orderId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getOrderDtoById1(orderId: number, observe?: 'body', reportProgress?: boolean): Observable<OrderDto>;
+    public getOrderDtoById1(orderId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<OrderDto>>;
+    public getOrderDtoById1(orderId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<OrderDto>>;
+    public getOrderDtoById1(orderId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (orderId === null || orderId === undefined) {
+            throw new Error('Required parameter orderId was null or undefined when calling getOrderDtoById1.');
+        }
+
+        let headers = this.defaultHeaders;
+
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -313,84 +318,32 @@ export class OrderService {
     /**
      *
      *
-     * @param userId
-     * @param page
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getOrderByIdAdmin(userId: number, page: number, observe?: 'body', reportProgress?: boolean): Observable<PageOrderDto>;
-    public getOrderByIdAdmin(userId: number, page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOrderDto>>;
-    public getOrderByIdAdmin(userId: number, page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOrderDto>>;
-    public getOrderByIdAdmin(userId: number, page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling getOrderByIdAdmin.');
-        }
-
-        if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling getOrderByIdAdmin.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<PageOrderDto>('get',`${this.basePath}/v1/orders/admin/id/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(page))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     *
-     *
      * @param userEmail
      * @param page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getOrderByIdAdminByEmail(userEmail: string, page: number, observe?: 'body', reportProgress?: boolean): Observable<PageOrderDto>;
-    public getOrderByIdAdminByEmail(userEmail: string, page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOrderDto>>;
-    public getOrderByIdAdminByEmail(userEmail: string, page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOrderDto>>;
-    public getOrderByIdAdminByEmail(userEmail: string, page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getOrderDtoByIdByEmailPagedAdmin(userEmail: string, page: number, observe?: 'body', reportProgress?: boolean): Observable<PageOrderDto>;
+    public getOrderDtoByIdByEmailPagedAdmin(userEmail: string, page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOrderDto>>;
+    public getOrderDtoByIdByEmailPagedAdmin(userEmail: string, page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOrderDto>>;
+    public getOrderDtoByIdByEmailPagedAdmin(userEmail: string, page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (userEmail === null || userEmail === undefined) {
-            throw new Error('Required parameter userEmail was null or undefined when calling getOrderByIdAdminByEmail.');
+            throw new Error('Required parameter userEmail was null or undefined when calling getOrderDtoByIdByEmailPagedAdmin.');
         }
 
         if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling getOrderByIdAdminByEmail.');
+            throw new Error('Required parameter page was null or undefined when calling getOrderDtoByIdByEmailPagedAdmin.');
         }
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -424,14 +377,63 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUserOrders(userId: number, page: number, observe?: 'body', reportProgress?: boolean): Observable<PageOrderDto>;
-    public getUserOrders(userId: number, page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOrderDto>>;
-    public getUserOrders(userId: number, page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOrderDto>>;
-    public getUserOrders(userId: number, page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getOrderDtoByIdPagedAdmin(userId: number, page: number, observe?: 'body', reportProgress?: boolean): Observable<PageOrderDto>;
+    public getOrderDtoByIdPagedAdmin(userId: number, page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOrderDto>>;
+    public getOrderDtoByIdPagedAdmin(userId: number, page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOrderDto>>;
+    public getOrderDtoByIdPagedAdmin(userId: number, page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling getUserOrders.');
+            throw new Error('Required parameter userId was null or undefined when calling getOrderDtoByIdPagedAdmin.');
         }
+
+        if (page === null || page === undefined) {
+            throw new Error('Required parameter page was null or undefined when calling getOrderDtoByIdPagedAdmin.');
+        }
+
+        let headers = this.defaultHeaders;
+
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<PageOrderDto>('get',`${this.basePath}/v1/orders/admin/id/${encodeURIComponent(String(userId))}/${encodeURIComponent(String(page))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param page
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getUserOrders(page: number, observe?: 'body', reportProgress?: boolean): Observable<PageOrderDto>;
+    public getUserOrders(page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageOrderDto>>;
+    public getUserOrders(page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageOrderDto>>;
+    public getUserOrders(page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (page === null || page === undefined) {
             throw new Error('Required parameter page was null or undefined when calling getUserOrders.');
@@ -439,11 +441,12 @@ export class OrderService {
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header

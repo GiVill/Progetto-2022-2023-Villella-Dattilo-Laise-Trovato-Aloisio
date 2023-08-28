@@ -18,7 +18,6 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Chat } from '../model/chat';
-import { ChatDto } from '../model/chatDto';
 import { ServiceError } from '../model/serviceError';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -61,69 +60,16 @@ export class ChatService {
      * 
      * 
      * @param id 
-     * @param id2 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public allChatMessage1(id: number, id2: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ChatDto>>;
-    public allChatMessage1(id: number, id2: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ChatDto>>>;
-    public allChatMessage1(id: number, id2: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ChatDto>>>;
-    public allChatMessage1(id: number, id2: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public allChatUser(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Chat>>;
+    public allChatUser(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Chat>>>;
+    public allChatUser(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Chat>>>;
+    public allChatUser(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling allChatMessage1.');
-        }
-
-        if (id2 === null || id2 === undefined) {
-            throw new Error('Required parameter id2 was null or undefined when calling allChatMessage1.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<Array<ChatDto>>('get',`${this.basePath}/v1/chat/message/${encodeURIComponent(String(id))}/${encodeURIComponent(String(id2))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 
-     * 
-     * @param id 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public allChatUser1(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Chat>>;
-    public allChatUser1(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Chat>>>;
-    public allChatUser1(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Chat>>>;
-    public allChatUser1(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling allChatUser1.');
+            throw new Error('Required parameter id was null or undefined when calling allChatUser.');
         }
 
         let headers = this.defaultHeaders;

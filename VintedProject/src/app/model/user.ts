@@ -30,7 +30,6 @@ export interface User {
     buyingOffers?: Array<BuyingOffer>;
     orders?: Array<Order>;
     insertions?: Array<BasicInsertion>;
-    favorites?: Array<BasicInsertion>;
 }
 export namespace User {
     export type RoleEnum = 'ADMIN' | 'USER';

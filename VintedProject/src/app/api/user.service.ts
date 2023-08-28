@@ -22,7 +22,6 @@ import { UserDto } from '../model/userDto';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-import {CookiesService} from "./cookies.service";
 
 
 @Injectable()
@@ -32,7 +31,7 @@ export class UserService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, private CookiesService : CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -100,9 +99,57 @@ export class UserService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<UserDto>('post',`${this.basePath}/v1/users`,
+        return this.httpClient.request<UserDto>('post',`${this.basePath}/v1/admin/users`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param userId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public adminDeleteUserById(userId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public adminDeleteUserById(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public adminDeleteUserById(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public adminDeleteUserById(userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling adminDeleteUserById.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('delete',`${this.basePath}/v1/admin/users/${encodeURIComponent(String(userId))}`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -117,19 +164,19 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public all(observe?: 'body', reportProgress?: boolean): Observable<Array<UserDto>>;
-    public all(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserDto>>>;
-    public all(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserDto>>>;
-    public all(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAll2(observe?: 'body', reportProgress?: boolean): Observable<Array<UserDto>>;
+    public getAll2(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserDto>>>;
+    public getAll2(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserDto>>>;
+    public getAll2(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-          const accessToken = typeof this.configuration.accessToken === 'function'
-            ? this.CookiesService.getTokent()
-            : this.CookiesService.getTokent();
-          headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -144,7 +191,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<UserDto>>('get',`${this.basePath}/v1/users`,
+        return this.httpClient.request<Array<UserDto>>('get',`${this.basePath}/v1/admin/users`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -157,27 +204,27 @@ export class UserService {
     /**
      *
      *
-     * @param idUser
+     * @param userId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteUserById(idUser: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteUserById(idUser: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteUserById(idUser: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteUserById(idUser: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getUserDtoById(userId: number, observe?: 'body', reportProgress?: boolean): Observable<UserDto>;
+    public getUserDtoById(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserDto>>;
+    public getUserDtoById(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserDto>>;
+    public getUserDtoById(userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (idUser === null || idUser === undefined) {
-            throw new Error('Required parameter idUser was null or undefined when calling deleteUserById.');
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling getOrderDtoById.');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-          const accessToken = typeof this.configuration.accessToken === 'function'
-            ? this.CookiesService.getTokent()
-            : this.CookiesService.getTokent();
-          headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -192,55 +239,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/v1/users/${encodeURIComponent(String(idUser))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     *
-     *
-     * @param idUser
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getById(idUser: number, observe?: 'body', reportProgress?: boolean): Observable<UserDto>;
-    public getById(idUser: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserDto>>;
-    public getById(idUser: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserDto>>;
-    public getById(idUser: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (idUser === null || idUser === undefined) {
-            throw new Error('Required parameter idUser was null or undefined when calling getById.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-          const accessToken = typeof this.configuration.accessToken === 'function'
-            ? this.CookiesService.getTokent()
-            : this.CookiesService.getTokent();
-          headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<UserDto>('get',`${this.basePath}/v1/users/${encodeURIComponent(String(idUser))}`,
+        return this.httpClient.request<UserDto>('get',`${this.basePath}/v1/users/${encodeURIComponent(String(userId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -254,31 +253,31 @@ export class UserService {
      *
      *
      * @param body
-     * @param idUser
+     * @param userId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateUserPassword(body: string, idUser: number, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public updateUserPassword(body: string, idUser: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public updateUserPassword(body: string, idUser: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public updateUserPassword(body: string, idUser: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateUserPassword(body: string, userId: number, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public updateUserPassword(body: string, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public updateUserPassword(body: string, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public updateUserPassword(body: string, userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateUserPassword.');
         }
 
-        if (idUser === null || idUser === undefined) {
-            throw new Error('Required parameter idUser was null or undefined when calling updateUserPassword.');
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling updateUserPassword.');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-          const accessToken = typeof this.configuration.accessToken === 'function'
-            ? this.CookiesService.getTokent()
-            : this.CookiesService.getTokent();
-          headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -298,9 +297,57 @@ export class UserService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<boolean>('put',`${this.basePath}/v1/password/${encodeURIComponent(String(idUser))}`,
+        return this.httpClient.request<boolean>('put',`${this.basePath}/v1/password/${encodeURIComponent(String(userId))}`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param userId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public userDeleteUserById(userId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public userDeleteUserById(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public userDeleteUserById(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public userDeleteUserById(userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling userDeleteUserById.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('delete',`${this.basePath}/v1/users/${encodeURIComponent(String(userId))}`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

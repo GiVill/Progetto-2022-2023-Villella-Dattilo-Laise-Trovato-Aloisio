@@ -60,7 +60,7 @@ export class ProductCardComponent implements OnInit{
 
 
   offer() {
-    this.offerService.allInsertionId(Number(this.item?.id)).subscribe(
+    this.offerService.userGetAllByInsertionId(Number(this.item?.id)).subscribe(
       (data: BuyingOfferDto[]) => {
         this.offers = data;
         this.sortOffersByPriceDescending();
@@ -89,9 +89,9 @@ export class ProductCardComponent implements OnInit{
 
   }
 
-  deleteOffer(id: number | undefined) {
-    console.log(id)
-    this.offerService._delete(Number(id)).subscribe(response => {
+  deleteOffer(it: number) {
+
+    this.offerService.userDeleteOffer(this.offers![it]).subscribe(response => {
         this.offer()
         this.snackBar.open("Offerta rifiutata" , "OK")
       },

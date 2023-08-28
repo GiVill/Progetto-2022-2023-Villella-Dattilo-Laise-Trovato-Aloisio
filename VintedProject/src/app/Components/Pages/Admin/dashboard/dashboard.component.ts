@@ -127,7 +127,7 @@ export class DashboardComponent {
 
   actionGetOrderUserById() {
     if (this.userId) {
-      this.orderService.getOrderByIdAdmin(this.userId, this.page).subscribe(
+      this.orderService.getOrderDtoByIdPagedAdmin(this.userId, this.page).subscribe(
         (order: PageOrderDto) => {
           this.orderDtoArray = order;
         },
@@ -138,7 +138,7 @@ export class DashboardComponent {
         }
       );
     }else{
-      this.orderService.getOrderByIdAdminByEmail(this.userEmail, this.page).subscribe(
+      this.orderService.getOrderDtoByIdByEmailPagedAdmin(this.userEmail, this.page).subscribe(
         (order: PageOrderDto) => {
           this.orderDtoArray = order;
         },

@@ -18,13 +18,11 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { BuyingOfferDto } from '../model/buyingOfferDto';
-import { InlineResponse200 } from '../model/inlineResponse200';
 import { ServiceError } from '../model/serviceError';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import {CookiesService} from "./cookies.service";
-import {PageBuyngOfferDto} from "../model/pageBuyngOfferDto";
 
 
 @Injectable()
@@ -34,7 +32,7 @@ export class OfferService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, private CookiesService: CookiesService, private cookiesServices: CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, private CookiesService: CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -62,20 +60,77 @@ export class OfferService {
     /**
      *
      *
+     * @param body
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public adminAddBuyingOffer(body: BuyingOfferDto, observe?: 'body', reportProgress?: boolean): Observable<BuyingOfferDto>;
+    public adminAddBuyingOffer(body: BuyingOfferDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BuyingOfferDto>>;
+    public adminAddBuyingOffer(body: BuyingOfferDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BuyingOfferDto>>;
+    public adminAddBuyingOffer(body: BuyingOfferDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling adminAddBuyingOffer.');
+        }
+
+        let headers = this.defaultHeaders;
+
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<BuyingOfferDto>('post',`${this.basePath}/v1/admin/offers`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
      * @param idOffer
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public _delete(idOffer: number, observe?: 'body', reportProgress?: boolean): Observable<string>;
-    public _delete(idOffer: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-    public _delete(idOffer: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
-    public _delete(idOffer: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public adminDeleteOffer(idOffer: number, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public adminDeleteOffer(idOffer: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public adminDeleteOffer(idOffer: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public adminDeleteOffer(idOffer: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (idOffer === null || idOffer === undefined) {
-            throw new Error('Required parameter idOffer was null or undefined when calling _delete.');
+            throw new Error('Required parameter idOffer was null or undefined when calling adminDeleteOffer.');
         }
 
         let headers = this.defaultHeaders;
+
+
         // authentication (bearerAuth) required
         if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
@@ -96,7 +151,242 @@ export class OfferService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<string>('delete',`${this.basePath}/v1/offers/${encodeURIComponent(String(idOffer))}`,
+        return this.httpClient.request<string>('delete',`${this.basePath}/v1/admin/offers/${encodeURIComponent(String(idOffer))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param insertionId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public adminGetAllByInsertionId(insertionId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<BuyingOfferDto>>;
+    public adminGetAllByInsertionId(insertionId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BuyingOfferDto>>>;
+    public adminGetAllByInsertionId(insertionId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BuyingOfferDto>>>;
+    public adminGetAllByInsertionId(insertionId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (insertionId === null || insertionId === undefined) {
+            throw new Error('Required parameter insertionId was null or undefined when calling adminGetAllByInsertionId.');
+        }
+
+        let headers = this.defaultHeaders;
+
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<BuyingOfferDto>>('get',`${this.basePath}/v1/admin/offers/insertion/${encodeURIComponent(String(insertionId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAll3(observe?: 'body', reportProgress?: boolean): Observable<Array<BuyingOfferDto>>;
+    public getAll3(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BuyingOfferDto>>>;
+    public getAll3(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BuyingOfferDto>>>;
+    public getAll3(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<BuyingOfferDto>>('get',`${this.basePath}/v1/admin/offers`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAllByUser(observe?: 'body', reportProgress?: boolean): Observable<Array<BuyingOfferDto>>;
+    public getAllByUser(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BuyingOfferDto>>>;
+    public getAllByUser(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BuyingOfferDto>>>;
+    public getAllByUser(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<BuyingOfferDto>>('get',`${this.basePath}/v1/user/offers`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param idUser
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAllByUserId(idUser: number, observe?: 'body', reportProgress?: boolean): Observable<Array<BuyingOfferDto>>;
+    public getAllByUserId(idUser: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BuyingOfferDto>>>;
+    public getAllByUserId(idUser: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BuyingOfferDto>>>;
+    public getAllByUserId(idUser: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (idUser === null || idUser === undefined) {
+            throw new Error('Required parameter idUser was null or undefined when calling getAllByUserId.');
+        }
+
+        let headers = this.defaultHeaders;
+
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<BuyingOfferDto>>('get',`${this.basePath}/v1/admin/offers/user/${encodeURIComponent(String(idUser))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param offerId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getById(offerId: number, observe?: 'body', reportProgress?: boolean): Observable<BuyingOfferDto>;
+    public getById(offerId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BuyingOfferDto>>;
+    public getById(offerId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BuyingOfferDto>>;
+    public getById(offerId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (offerId === null || offerId === undefined) {
+            throw new Error('Required parameter offerId was null or undefined when calling getById.');
+        }
+
+        let headers = this.defaultHeaders;
+
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<BuyingOfferDto>('get',`${this.basePath}/v1/admin/offers/${encodeURIComponent(String(offerId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -113,24 +403,25 @@ export class OfferService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addBuyingOffer(body: BuyingOfferDto, observe?: 'body', reportProgress?: boolean): Observable<BuyingOfferDto>;
-    public addBuyingOffer(body: BuyingOfferDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BuyingOfferDto>>;
-    public addBuyingOffer(body: BuyingOfferDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BuyingOfferDto>>;
-    public addBuyingOffer(body: BuyingOfferDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public userAddBuyingOffer(body: BuyingOfferDto, observe?: 'body', reportProgress?: boolean): Observable<BuyingOfferDto>;
+    public userAddBuyingOffer(body: BuyingOfferDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BuyingOfferDto>>;
+    public userAddBuyingOffer(body: BuyingOfferDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BuyingOfferDto>>;
+    public userAddBuyingOffer(body: BuyingOfferDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling addBuyingOffer.');
+            throw new Error('Required parameter body was null or undefined when calling userAddBuyingOffer.');
         }
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
-      if (this.cookiesServices.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.cookiesServices.getTokent()
-          : this.cookiesServices.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -163,69 +454,27 @@ export class OfferService {
     /**
      *
      *
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public all3(observe?: 'body', reportProgress?: boolean): Observable<Array<BuyingOfferDto>>;
-    public all3(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BuyingOfferDto>>>;
-    public all3(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BuyingOfferDto>>>;
-    public all3(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public userDeleteOffer(body: BuyingOfferDto, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public userDeleteOffer(body: BuyingOfferDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public userDeleteOffer(body: BuyingOfferDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public userDeleteOffer(body: BuyingOfferDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-      if (this.cookiesServices.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.cookiesServices.getTokent()
-          : this.cookiesServices.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<Array<BuyingOfferDto>>('get',`${this.basePath}/v1/offers`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     *
-     *
-     * @param userId
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public allByUserIdForAdmin(userId: number, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse200>;
-    public allByUserIdForAdmin(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse200>>;
-    public allByUserIdForAdmin(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse200>>;
-    public allByUserIdForAdmin(userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling allByUserIdForAdmin.');
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling userDeleteOffer.');
         }
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -239,55 +488,16 @@ export class OfferService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json'
         ];
-
-        return this.httpClient.request<InlineResponse200>('get',`${this.basePath}/v1/offers/admin/${encodeURIComponent(String(userId))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     *
-     *
-     * @param idUser
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public allId(idUser: number, observe?: 'body', reportProgress?: boolean): Observable<BuyingOfferDto[]>{
-
-        if (idUser === null || idUser === undefined) {
-            throw new Error('Required parameter idUser was null or undefined when calling allId.');
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-      if (this.cookiesServices.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.cookiesServices.getTokent()
-          : this.cookiesServices.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<BuyingOfferDto[]>('get',`${this.basePath}/v1/offers/user`,
+        return this.httpClient.request<string>('delete',`${this.basePath}/v1/offers`,
             {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -303,24 +513,25 @@ export class OfferService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public allInsertionId(insertionId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<BuyingOfferDto>>;
-    public allInsertionId(insertionId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BuyingOfferDto>>>;
-    public allInsertionId(insertionId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BuyingOfferDto>>>;
-    public allInsertionId(insertionId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public userGetAllByInsertionId(insertionId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<BuyingOfferDto>>;
+    public userGetAllByInsertionId(insertionId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BuyingOfferDto>>>;
+    public userGetAllByInsertionId(insertionId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BuyingOfferDto>>>;
+    public userGetAllByInsertionId(insertionId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (insertionId === null || insertionId === undefined) {
-            throw new Error('Required parameter insertionId was null or undefined when calling allInsertionId.');
+            throw new Error('Required parameter insertionId was null or undefined when calling userGetAllByInsertionId.');
         }
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
-      if (this.cookiesServices.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.cookiesServices.getTokent()
-          : this.cookiesServices.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -344,44 +555,4 @@ export class OfferService {
         );
     }
 
-  public getById(offerId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<BuyingOfferDto>>;
-  public getById(offerId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BuyingOfferDto>>>;
-  public getById(offerId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BuyingOfferDto>>>;
-  public getById(offerId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-    if (offerId === null || offerId === undefined) {
-      throw new Error('Required parameter insertionId was null or undefined when calling allInsertionId.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // authentication (bearerAuth) required
-    if (this.cookiesServices.getTokent()) {
-      const accessToken = typeof this.configuration.accessToken === 'function'
-        ? this.cookiesServices.getTokent()
-        : this.cookiesServices.getTokent();
-      headers = headers.set('Authorization', 'Bearer ' + accessToken);
-    }
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      '*/*'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [
-    ];
-
-    return this.httpClient.request<Array<BuyingOfferDto>>('get',`${this.basePath}/v1/offers/${encodeURIComponent(offerId)}`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
 }

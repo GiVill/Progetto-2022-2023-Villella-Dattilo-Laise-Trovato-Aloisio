@@ -125,7 +125,7 @@ export class CartComponent implements OnInit {
     const cartItemsCookie = this.cookieService.get('cartItems');
     const order: OrderDto = {
       id: 0,
-      payment_method: this.selectedPaymentMethod!,
+      paymentMethod: this.selectedPaymentMethod!,
       insertionIdList: this.loadedProducts,
       userId: Number(this.cookieServices.getUserId()),
       total: this.totalCost

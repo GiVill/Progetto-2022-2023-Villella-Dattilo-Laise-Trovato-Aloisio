@@ -16,13 +16,13 @@ import { SortObject } from './sortObject';
 export interface PageBasicInsertionDto { 
     totalPages?: number;
     totalElements?: number;
-    first?: boolean;
-    last?: boolean;
-    numberOfElements?: number;
-    pageable?: PageableObject;
     size?: number;
     content?: Array<BasicInsertionDto>;
     number?: number;
     sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
+    numberOfElements?: number;
+    pageable?: PageableObject;
     empty?: boolean;
 }

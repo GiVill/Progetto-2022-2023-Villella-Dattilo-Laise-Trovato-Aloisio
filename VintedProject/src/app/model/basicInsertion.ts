@@ -24,7 +24,6 @@ export interface BasicInsertion {
     isPrivate?: boolean;
     category?: BasicInsertion.CategoryEnum;
     brand?: BasicInsertion.BrandEnum;
-    usersFavorites?: Array<User>;
     buyingOffers?: Array<BuyingOffer>;
     user?: User;
     order?: Order;

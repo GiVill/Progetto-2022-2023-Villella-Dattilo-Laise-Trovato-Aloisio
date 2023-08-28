@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
         this.id = Number(params.get('userid'));
         if (this.id==Number(this.cookieservice.getUserId()))
           this.router.navigate(['/myprofile'])
-        return this.userService.getById(this.id);
+        return this.userService.getUserDtoById(this.id);
       })
     ).subscribe(
       (user: UserDto) => {
@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit {
             this.userInsertion = data;
             const userIds = this.userInsertion.content!.map((insertion) => insertion.userId).filter((id, index, array) => array.indexOf(id) === index);
             userIds.forEach((userId) => {
-                this.userService.getById(userId).subscribe((user: UserDto) => {
+                this.userService.getUserDtoById(userId).subscribe((user: UserDto) => {
                   this.users.push(user);
                 });
 

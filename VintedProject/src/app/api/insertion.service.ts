@@ -34,7 +34,7 @@ export class InsertionService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, private CookiesService : CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, private CookiesService:CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -57,14 +57,8 @@ export class InsertionService {
         }
         return false;
     }
-  addInsertion(insertion: BasicInsertionDto, image : File){
-    console.log(insertion);
-    const insertionBlob = new Blob([JSON.stringify(insertion)], { type: 'application/json' });
-    const formData = new FormData();
-    formData.append('insertion', insertionBlob);
-    formData.append('img', image);
-    return this.httpClient.post<BasicInsertionDto>(`${this.basePath}/v1/insertions`,formData);
-  }
+
+
     /**
      *
      *
@@ -72,36 +66,26 @@ export class InsertionService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
+    public addInsertion(insertion: BasicInsertionDto, image : File, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        const insertionBlob = new Blob([JSON.stringify(insertion)], { type: 'application/json' });
+        const formData = new FormData();
+        formData.append('insertion', insertionBlob);
+        formData.append('img', image);
 
-    /**
-     *
-     *
-     * @param page
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public all4(page: number, observe?: 'body', reportProgress?: boolean): Observable<PageBasicInsertionDto>;
-    public all4(page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageBasicInsertionDto>>;
-    public all4(page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageBasicInsertionDto>>;
-    public all4(page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling all4.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (page !== undefined && page !== null) {
-            queryParameters = queryParameters.set('page', <any>page);
-        }
 
         let headers = this.defaultHeaders;
 
-        if (this.configuration.accessToken) {
+
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -113,17 +97,15 @@ export class InsertionService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json'
         ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
-        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/insertions`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+        return this.httpClient.post<BasicInsertionDto>(`${this.basePath}/v1/insertions`,formData);
+
     }
 
     /**
@@ -149,6 +131,7 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
         if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
@@ -156,6 +139,8 @@ export class InsertionService {
                 : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -198,6 +183,7 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
         if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
@@ -205,6 +191,8 @@ export class InsertionService {
                 : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -246,6 +234,7 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
         if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
@@ -266,7 +255,7 @@ export class InsertionService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/v1/insertions/admin/${encodeURIComponent(String(insertionId))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/v1/admin/insertions/${encodeURIComponent(String(insertionId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -293,6 +282,7 @@ export class InsertionService {
         }
 
         let headers = this.defaultHeaders;
+
 
         // authentication (bearerAuth) required
         if (this.CookiesService.getTokent()) {
@@ -327,6 +317,61 @@ export class InsertionService {
     /**
      *
      *
+     * @param page
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAll1(page: number, observe?: 'body', reportProgress?: boolean): Observable<PageBasicInsertionDto>;
+    public getAll1(page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageBasicInsertionDto>>;
+    public getAll1(page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageBasicInsertionDto>>;
+    public getAll1(page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (page === null || page === undefined) {
+            throw new Error('Required parameter page was null or undefined when calling getAll1.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+
+        let headers = this.defaultHeaders;
+
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/insertions`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
      * @param brand
      * @param page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -347,11 +392,12 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -400,11 +446,12 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -453,13 +500,15 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -487,10 +536,10 @@ export class InsertionService {
      *
      *
      * @param insertionId
-     * @param observe? set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress?? flag to report request and response progress.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
      */
-    public getInsertionById(insertionId: number | undefined, observe?: "body", reportProgress?: boolean): Observable<BasicInsertionDto>;
+    public getInsertionById(insertionId: number, observe?: 'body', reportProgress?: boolean): Observable<BasicInsertionDto>;
     public getInsertionById(insertionId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BasicInsertionDto>>;
     public getInsertionById(insertionId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BasicInsertionDto>>;
     public getInsertionById(insertionId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
@@ -501,12 +550,16 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
-        if (this.configuration.accessToken) {
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -553,12 +606,15 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
-        if (this.configuration.accessToken) {
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -572,7 +628,7 @@ export class InsertionService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/insertions/user/email/${encodeURIComponent(String(userEmail))}/${encodeURIComponent(String(page))}`,
+        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/user/insertions/email/${encodeURIComponent(String(userEmail))}/${encodeURIComponent(String(page))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -605,12 +661,15 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
-        if (this.configuration.accessToken) {
+
+        // authentication (bearerAuth) required
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -624,7 +683,7 @@ export class InsertionService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/insertions/user/id/${encodeURIComponent(String(idUser))}/${encodeURIComponent(String(page))}`,
+        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/user/insertions/id/${encodeURIComponent(String(idUser))}/${encodeURIComponent(String(page))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -652,6 +711,7 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
         if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
@@ -659,6 +719,7 @@ export class InsertionService {
                 : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -700,6 +761,7 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
         if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
@@ -707,6 +769,7 @@ export class InsertionService {
                 : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -759,6 +822,7 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
+
         // authentication (bearerAuth) required
         if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
@@ -766,6 +830,7 @@ export class InsertionService {
                 : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -784,7 +849,7 @@ export class InsertionService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<boolean>('put',`${this.basePath}/v1/insertions/admin/${encodeURIComponent(String(insertionId))}`,
+        return this.httpClient.request<boolean>('put',`${this.basePath}/v1/admin/insertions/${encodeURIComponent(String(insertionId))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

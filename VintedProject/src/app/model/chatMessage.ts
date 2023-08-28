@@ -9,13 +9,14 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { SortObject } from './sortObject';
 
-export interface PageableObject { 
-    offset?: number;
-    sort?: SortObject;
-    pageNumber?: number;
-    pageSize?: number;
-    paged?: boolean;
-    unpaged?: boolean;
+export interface ChatMessage { 
+    id?: number;
+    sender?: number;
+    reciver?: number;
+    nickname?: string;
+    message?: string;
+    date?: Date;
+    seen?: boolean;
+    chat?: number;
 }

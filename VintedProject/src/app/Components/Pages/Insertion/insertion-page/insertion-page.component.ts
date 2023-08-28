@@ -68,7 +68,7 @@ export class InsertionPageComponent implements OnInit {
           this.insertion = data;
           console.log(this.insertion);
           if (this.insertion?.userId) {
-            this.userService.getById(this.insertion.userId).subscribe(
+            this.userService.getUserDtoById(this.insertion.userId).subscribe(
               (userData: UserDto) => {
                 this.user = userData;
                 if (Number(this.user?.id) == Number(this.cookiesService.getUserId())){
@@ -79,7 +79,7 @@ export class InsertionPageComponent implements OnInit {
                     this.userOtherInsertion = data;
                     const userIds = this.userOtherInsertion.content!.map((insertion) => insertion.userId).filter((id, index, array) => array.indexOf(id) === index);
                     userIds.forEach((userId) => {
-                      this.userService.getById(userId).subscribe((user: UserDto) => {
+                      this.userService.getUserDtoById(userId).subscribe((user: UserDto) => {
                         this.users.push(user);
                       });
                     });
@@ -179,11 +179,11 @@ checkProductInCart(): void {
         id: 0,
         price: this.offerAmount,
         status: "PENDING",
-        insertionId: this.insertion?.id,
+        insertionId: this.insertion?.id!,
         userId: Number(this.cookiesService.getUserId()),
       };
       console.log(buyingOffer)
-      this.buyngOffer.addBuyingOffer(buyingOffer).subscribe(
+      this.buyngOffer.userAddBuyingOffer(buyingOffer).subscribe(
         (response) => {
           this.snackBar.open("Offerta inviata con successo. Puoi verificare lo stato nel tuo profilo")
 

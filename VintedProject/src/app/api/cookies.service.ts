@@ -34,15 +34,13 @@ export class CookiesService implements OnInit {
     this.authService.getRefreshToken(refreshTokenValue).subscribe(
         response => {
           this.snackBar.open('Token ricevuto con successo!', 'OK');
-          if (response) {
             this.cookieService.set('jwtToken', response.accessToken!, 1, '/');
             this.cookieService.set('refreshToken', response.refreshToken!, 1, '/');
             return true;
-          }
-          console.log(Error)
+        }, error =>{
           return false;
-        }, error =>
-            console.log(error)
+          console.log(error)
+        }
     );
     return false;
   }
@@ -58,12 +56,10 @@ export class CookiesService implements OnInit {
           if( this.getRefreshToken()){
             return true;
           }
-
         }
       } catch (error) {
         console.error('Errore durante la verifica del token:', error);
       }
-
       console.error('Token scaduto o errore durante la verifica');
       this.deleteCookie();
       await this.router.navigate(['/login']);

@@ -50,7 +50,7 @@ export class CategoryComponent implements OnInit{
       if (userIds) {
         // Fetch all users by their IDs and store them in the users array
         userIds.forEach((userId) => {
-          this.userService.getById(userId).subscribe((user: UserDto) => {
+          this.userService.getUserDtoById(userId).subscribe((user: UserDto) => {
             this.users.push(user);
           });
         });

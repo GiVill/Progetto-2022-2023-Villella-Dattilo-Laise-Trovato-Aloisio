@@ -22,7 +22,7 @@ export class UserInsertionComponent implements OnInit{
               private userService: UserService) {}
 
   ngOnInit(): void {
-    this.userService.getById(this.user?.id!).subscribe(
+    this.userService.getUserDtoById(this.user?.id!).subscribe(
       (data: UserDto) => {
         this.user = data;
 

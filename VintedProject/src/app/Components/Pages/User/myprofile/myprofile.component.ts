@@ -2,7 +2,7 @@ import {Component,OnInit} from '@angular/core';
 import {InsertionService} from "../../../../api/insertion.service";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../../api/user.service";
-import {forkJoin, switchMap} from "rxjs";
+import {forkJoin, Observable, switchMap} from "rxjs";
 import {OrderService} from "../../../../api/order.service";
 import {CookiesService} from "../../../../api/cookies.service";
 import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
@@ -11,6 +11,7 @@ import {UserDto} from "../../../../model/userDto";
 import {BuyingOfferDto} from "../../../../model/buyingOfferDto";
 import {OfferService} from "../../../../api/offer.service";
 import {PageBuyngOfferDto} from "../../../../model/pageBuyngOfferDto";
+import {OrderDto} from "../../../../model/orderDto";
 
 
 
@@ -22,8 +23,8 @@ import {PageBuyngOfferDto} from "../../../../model/pageBuyngOfferDto";
 export class MyprofileComponent implements OnInit{
   user: UserDto | undefined;
   myInsertion!: PageBasicInsertionDto;
-  myOrder: PageOrderDto | undefined;
-  myOffer?: BuyingOfferDto[];
+  myOrder!: PageOrderDto;
+  myOffer!:Array<BuyingOfferDto>;
   page = 0;
   isAnyInsertion = false;
   isAnyOrder = false;
@@ -44,15 +45,15 @@ export class MyprofileComponent implements OnInit{
     this.cookieSevices.checkUserCookie();
     this.route.paramMap.pipe(
       switchMap((params) => {
-        return this.userService.getById(this.userId);
+        return this.userService.getUserDtoById(this.userId);
       })
     ).subscribe(
       (user: UserDto) => {
         this.user = user;
         // Create observables for each API call
         const insertionObservable = this.insertionService.getInsertionByUserId(this.userId, this.page);
-        const offerObservable = this.offerService.allId(this.userId);
-        const orderObservable = this.orderService.getUserOrders(this.userId, this.page);
+        const offerObservable = this.offerService.getAllByUser();
+        const orderObservable = this.orderService.getUserOrders(this.userId);
         // Combine observables using forkJoin
         forkJoin([
           insertionObservable,
@@ -61,16 +62,17 @@ export class MyprofileComponent implements OnInit{
         ]).subscribe(
           ([insertionData, offerData, orderData]) => {
             this.myInsertion = insertionData;
+            console.log(insertionData)
             this.myOffer = offerData;
-            this.myOrder = orderData;
+            this.myOrder = orderData ;
 
             if (!this.myInsertion?.empty) {
               this.isAnyInsertion = true;
             }
-            if (!this.myOrder?.empty) {
+            if (!this.myOrder) {
               this.isAnyOrder = true;
             }
-            if (this.myOffer?.length != 0) {
+            if (this.myOffer) {
               this.isAnyOffer = true;
             }
 
@@ -85,45 +87,42 @@ export class MyprofileComponent implements OnInit{
   }
 
   updateOffer(){
-    const offerObservable = this.offerService.allId(this.userId);
+      const offerObservable = this.offerService.getAllByUser();
     forkJoin([
       offerObservable,
-    ]).subscribe(
-      ([offerData]) => {
+    ]).subscribe(([offerData]) => {
         this.myOffer = offerData;
 
         if (this.myInsertion?.empty) {
-          this.isAnyInsertion = true;
+            this.isAnyInsertion = true;
         }
 
         if (this.myOrder?.empty) {
-          this.isAnyOrder = true;
+            this.isAnyOrder = true;
         }
 
         console.log('All data retrieved:', this.myInsertion, this.myOffer, this.myOrder);
-      },
-      (error) => {
+    }, (error) => {
         console.log('An error occurred:', error);
-      }
-    );
+    });
   }
 
 
 
 
-  getUserOrders(): void {
-    this.orderService.getUserOrders(this.userId, this.page).subscribe(
-      (data: PageOrderDto) => {
-        this.myOrder = data;
-        if (this.myOrder?.empty) {
-          this.isAnyOrder = true;
-        }
-      },
-      (error) => {
-        console.log('Si è verificato un errore durante il recupero degli ordini dell\'utente:', error);
-      }
-    );
-  }
+    getUserOrders(): void {
+        this.orderService.getUserOrders(this.page).subscribe(
+            (data: PageOrderDto) => {
+                if (data.content && data.content.length > 0) {
+                    this.myOrder = data;
+                    this.isAnyOrder = true;
+                }
+            },
+            (error) => {
+                console.log('Si è verificato un errore durante il recupero degli ordini dell\'utente:', error);
+            }
+        );
+    }
 
   showUpdateSection(): void {
     this.showUpdateSectionFlag = !this.showUpdateSectionFlag;

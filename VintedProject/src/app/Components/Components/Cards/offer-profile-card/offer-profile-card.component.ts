@@ -41,12 +41,12 @@ export class OfferProfileCardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.basicInsertion.getInsertionById(this.offer?.insertionId).subscribe(
+    this.basicInsertion.getInsertionById(this.offer?.insertionId!).subscribe(
       (data: BasicInsertionDto) => {
         this.insertion = data;
 
         // Create observables for each API call
-        const userObservable = this.userService.getById(this.insertion?.userId);
+        const userObservable = this.userService.getUserDtoById(this.insertion?.userId);
 
         // Combine observables using forkJoin
         forkJoin([userObservable]).subscribe(

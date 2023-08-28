@@ -39,7 +39,7 @@ export class ChatComponent implements OnInit {
   }
   async loadChat(): Promise<void> {
     try {
-      const [chats] = await Promise.all([this.chatService.allChatUser1(this.myId).toPromise()]);
+      const [chats] = await Promise.all([this.chatService.allChatUser(this.myId).toPromise()]);
       this.chat = chats;
       if (chats) {
         this.selectedChat = chats[0];
@@ -72,7 +72,9 @@ export class ChatComponent implements OnInit {
         sender: this.myId,
         reciver: this.selectedChat.reciver,
         nickname: this.selectedChat.nickname,
-        message: this.newMessage
+        message: this.newMessage,
+        chatId: this.selectedChat.id
+
       };
       console.log(newMessageDto)
       this.chatMessageService.insertMessage(newMessageDto).subscribe(

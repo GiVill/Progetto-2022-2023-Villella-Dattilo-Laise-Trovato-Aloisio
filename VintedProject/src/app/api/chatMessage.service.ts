@@ -17,8 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { Chat } from '../model/chat';
-import { ChatDto } from '../model/chatDto';
+import { ChatMessage } from '../model/chatMessage';
 import { NewMessageDto } from '../model/newMessageDto';
 import { ServiceError } from '../model/serviceError';
 
@@ -61,67 +60,17 @@ export class ChatMessageService {
     /**
      *
      *
-     * @param id
-     * @param id2
+     * @param chatId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public allChatMessage(chatId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ChatDto>>;
-    public allChatMessage(chatId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ChatDto>>>;
-    public allChatMessage(chatId: number,  observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ChatDto>>>;
-    public allChatMessage(chatId: number,  observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public allChatMessage(chatId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ChatMessage>>;
+    public allChatMessage(chatId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ChatMessage>>>;
+    public allChatMessage(chatId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ChatMessage>>>;
+    public allChatMessage(chatId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (chatId === null || chatId === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling allChatMessage.');
-        }
-
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<Array<ChatDto>>('get',`${this.basePath}/v1/message/${encodeURIComponent(String(chatId))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     *
-     *
-     * @param id
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public allChatUser(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Chat>>;
-    public allChatUser(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Chat>>>;
-    public allChatUser(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Chat>>>;
-    public allChatUser(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling allChatUser.');
+            throw new Error('Required parameter chatId was null or undefined when calling allChatMessage.');
         }
 
         let headers = this.defaultHeaders;
@@ -146,7 +95,7 @@ export class ChatMessageService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<Chat>>('get',`${this.basePath}/v1/message/user/${encodeURIComponent(String(id))}`,
+        return this.httpClient.request<Array<ChatMessage>>('get',`${this.basePath}/v1/chat/message/${encodeURIComponent(String(chatId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

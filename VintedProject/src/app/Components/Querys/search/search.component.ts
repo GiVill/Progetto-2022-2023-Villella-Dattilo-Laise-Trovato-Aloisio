@@ -49,7 +49,7 @@ export class SearchComponent implements OnInit {
 
         const userIds =  this.insertion.content!.map((insertion) => insertion.userId).filter((id, index, array) => array.indexOf(id) === index);
         userIds.forEach((userId) => {
-          this.userService.getById(userId).subscribe((user: UserDto) => {
+          this.userService.getUserDtoById(userId).subscribe((user: UserDto) => {
             this.users.push(user);
           });
         });

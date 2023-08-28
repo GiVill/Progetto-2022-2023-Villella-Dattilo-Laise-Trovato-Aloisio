@@ -23,7 +23,7 @@ ngOnInit(): void {
 }
 
 loadInsertions(): void {
-  this.insertionService.all4(this.page).subscribe((insertions: PageBasicInsertionDto) => {
+  this.insertionService.getAll1(this.page).subscribe((insertions: PageBasicInsertionDto) => {
     this.catalog = insertions;
 
     // Extract all unique user IDs from the insertions
@@ -32,7 +32,7 @@ loadInsertions(): void {
     if (userIds) {
       // Fetch all users by their IDs and store them in the users array
       userIds.forEach((userId) => {
-        this.userService.getById(userId).subscribe((user: UserDto) => {
+        this.userService.getUserDtoById(userId).subscribe((user: UserDto) => {
           this.users.push(user);
         });
       });
@@ -44,7 +44,7 @@ loadInsertions(): void {
 
 loadmore() {
   this.page += 1;
-  this.insertionService.all4(this.page).subscribe((insertions: PageBasicInsertionDto) => {
+  this.insertionService.getAll1(this.page).subscribe((insertions: PageBasicInsertionDto) => {
     // Aggiungi i nuovi prodotti alla lista esistente invece di sostituirla
     if (this.catalog?.content && insertions.content) {
       this.catalog.content.push(...insertions.content);
@@ -52,7 +52,7 @@ loadmore() {
       // Fetch users for the new insertions and add them to the users array
       const userIds = insertions.content.map((insertion) => insertion.userId).filter((id, index, array) => array.indexOf(id) === index);
       userIds.forEach((userId) => {
-        this.userService.getById(userId).subscribe((user: UserDto) => {
+        this.userService.getUserDtoById(userId).subscribe((user: UserDto) => {
           this.users.push(user);
         });
       });

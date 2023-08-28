@@ -67,7 +67,7 @@
           <div style="margin: 15%"> </div>
           <div class="card-container">
             <div class="card-row" >
-              <ng-container *ngFor="let item of myOrder?.content; let i = index;">
+              <ng-container *ngFor="let item of myOrder.content; let i = index;">
                 <app-order-card [item]="item" class="card-item"></app-order-card>
                 <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
               </ng-container>
