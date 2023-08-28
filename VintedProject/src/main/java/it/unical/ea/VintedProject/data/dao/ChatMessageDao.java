@@ -3,11 +3,13 @@ package it.unical.ea.VintedProject.data.dao;
 import it.unical.ea.VintedProject.data.entities.ChatMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
 
-public interface ChatMessageDao extends JpaRepository<ChatMessage,Long>, JpaSpecificationExecutor<ChatMessage> {
+@Repository
+public interface ChatMessageDao extends JpaRepository<ChatMessage,Long> {
 
     List<ChatMessage> findAllBySender(Long id);
 

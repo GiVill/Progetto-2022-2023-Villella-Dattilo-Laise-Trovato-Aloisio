@@ -11,7 +11,6 @@ import it.unical.ea.VintedProject.data.entities.ChatMessage;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatMessageService;
-import it.unical.ea.VintedProject.dto.ChatDto;
 import it.unical.ea.VintedProject.dto.NewMessageDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -126,11 +125,10 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
         BasicInsertion b = basicInsertionService.getById(Long.valueOf(newMessageDto.getInsertionId()));
 
-        if (chatDao.findByUser1AndUser2AndBasicInsertion(Long.valueOf(newMessageDto.getSender()), Long.valueOf(newMessageDto.getReciver()), (b)).isEmpty()) {
+        if (chatDao.findByUser1AndUser2(Long.valueOf(newMessageDto.getSender()), Long.valueOf(newMessageDto.getReciver())).isEmpty()) {
             Chat chat = new Chat();
             chat.setUser1(Long.valueOf(newMessageDto.getSender()));
             chat.setUser2(Long.valueOf(newMessageDto.getReciver()));
-            chat.setBasicInsertion(b);
 
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setSender(Long.valueOf(newMessageDto.getSender()));
@@ -150,7 +148,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
         } else {
 
-            Optional<Chat> chat = chatDao.findByUser1AndUser2AndBasicInsertion(Long.valueOf(newMessageDto.getSender()), Long.valueOf(newMessageDto.getReciver()), b);
+            Optional<Chat> chat = chatDao.findByUser1AndUser2(Long.valueOf(newMessageDto.getSender()), Long.valueOf(newMessageDto.getReciver()));
             Chat newChat = chat.get();
 
             ChatMessage chatMessage = new ChatMessage();

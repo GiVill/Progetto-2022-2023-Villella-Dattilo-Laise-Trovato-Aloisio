@@ -183,11 +183,11 @@ public class DbGenerator implements ApplicationRunner {
     private void insertChat(String id1, String id2,String nickname, String message, String date, String insertionId) {
 
         BasicInsertion insertion = insertionService.getById(Long.valueOf(insertionId));
-        if (chatDao.findByUser1AndUser2AndBasicInsertion(Long.valueOf(id1), Long.valueOf(id2), (insertion)).isEmpty()) {
+        if (chatDao.findByUser1AndUser2(Long.valueOf(id1), Long.valueOf(id2)).isEmpty()) {
             Chat chat = new Chat();
             chat.setUser1(Long.valueOf(id1));
             chat.setUser2(Long.valueOf(id2));
-            chat.setBasicInsertion(insertion);
+
 
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setSender(Long.valueOf(Long.valueOf(id1)));
@@ -204,7 +204,7 @@ public class DbGenerator implements ApplicationRunner {
 
         } else {
 
-            Optional<Chat> chat = chatDao.findByUser1AndUser2AndBasicInsertion(Long.valueOf(id1), Long.valueOf(id2), (insertion));
+            Optional<Chat> chat = chatDao.findByUser1AndUser2(Long.valueOf(id1), Long.valueOf(id2));
             Chat newChat = chat.get();
 
             ChatMessage chatMessage = new ChatMessage();
@@ -223,6 +223,6 @@ public class DbGenerator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-       //createDb();
+       createDb();
     }
 }

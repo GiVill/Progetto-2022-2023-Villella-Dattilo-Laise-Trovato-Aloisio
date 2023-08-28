@@ -27,5 +27,4 @@ public class ChatController {
             return ResponseEntity.ok(chatService.allChatByUserId(id));
         }
 
-
 }

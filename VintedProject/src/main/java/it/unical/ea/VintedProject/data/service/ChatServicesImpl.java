@@ -9,7 +9,6 @@ import it.unical.ea.VintedProject.data.entities.Chat;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatService;
-import it.unical.ea.VintedProject.dto.ChatDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,7 +55,8 @@ public class ChatServicesImpl implements ChatService {
         //    throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
         //}
         System.out.println("mlmlml");
-        List<Chat> list =chatDao.findAllByUser1(id);
+        List<Chat> list =chatDao.findAllChatsForUser(id);
+        System.out.println(list);
         //List<Chat> list = chatDao.findAllByBasicInsertionId(id);
 
         //List<Chat> list =  chatDao.findByUser1OrUser2OrderByBasicInsertion(id, id);
@@ -78,7 +78,7 @@ public class ChatServicesImpl implements ChatService {
         }
 
         BasicInsertion insertion = basicInsertionService.getById(insertions);
-        return chatDao.findByUser1AndUser2AndBasicInsertion(user1,user2,insertion);
+        return chatDao.findByUser1AndUser2(user1,user2);
     }
 
 
