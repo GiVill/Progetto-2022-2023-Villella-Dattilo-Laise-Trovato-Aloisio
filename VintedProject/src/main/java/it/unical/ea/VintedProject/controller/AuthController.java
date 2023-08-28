@@ -21,13 +21,10 @@ import java.util.Objects;
 @Tag(name = "Auth") //Name displayed on swagger
 public class AuthController {
 
-    //TODO Scrivere meglio sia sign up
+    //TODO Scrivere meglio sign up
 
     private final AuthService authService;
     private final KeycloakTokenClient keycloakTokenClient;
-    private final UserService userService;
-
-
 
     @PostMapping("/sign-up")
     public ResponseEntity<TokenDto> signUp(@RequestBody @Valid NewUserDto newUserDto){
@@ -36,9 +33,7 @@ public class AuthController {
 
             UserDto userDto = authService.signUp(newUserDto);
             if(userDto != null) {
-                System.out.println(token);
                 token.setUserDto(userDto);
-                System.out.println(token);
                 //TODO Probabilmente va aggiustato, andrebbe messo acnhe lo user nel TokenResponse
                 return ResponseEntity.ok(token);
             }

@@ -1,14 +1,13 @@
 package it.unical.ea.VintedProject.data.service.interfaces;
-import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
-import it.unical.ea.VintedProject.dto.BasicInsertionDto;
-import it.unical.ea.VintedProject.dto.OrderDto;
 import it.unical.ea.VintedProject.dto.UserDto;
-import org.springframework.data.domain.Page;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
+
+//Dao Notation:
+//DAO (JPA): find, delete
+//DAO (Service): get, update, delete
 
 public interface UserService {
 
@@ -16,21 +15,19 @@ public interface UserService {
 
     UserDto saveDto(UserDto userDto);
 
-    void deleteUserById(Long id);
-
     User getUserById(Long id);
 
-    UserDto getById(Long id);
+    UserDto getUserDtoById(Long id);
 
     //List<Order> getOrdersByUser(Long userId);
 
-    List<User> findAll();
+    List<User> getAll();
 
-    List<UserDto> getAllStored();
+    List<UserDto> getAllUserDtoSortedByLastnameAscending();
 
-    Optional<User> findByEmail(String email);
+    Optional<User> getOptionalUserByEmail(String email);
 
     Boolean updateUserPassword(String newPassword);
 
-
+    void deleteUserById(Long userId);
 }

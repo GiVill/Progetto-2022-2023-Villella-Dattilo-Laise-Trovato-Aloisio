@@ -20,12 +20,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,16 +30,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BasicInsertionServiceImpl implements BasicInsertionService {
 
-    //private final DressInsertionDao
-
     private final BasicInsertionDao basicInsertionDao;
     private final UserService userService;
     private final UserDao userDao;
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 5;
-
     private final MessageLang messageLang;
-    private final String relativePathToUploads = "src/main/resources/image/";
+    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
 
 
     @Override
@@ -59,28 +52,14 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     }
 
     @Override
-    public void deleteBasicInsertionById(Long insertionId) {
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getInsertions().contains(basicInsertionDao.findById(insertionId))){
-            throw new EntityNotFoundException(messageLang.getMessage("request.not.valid"));
-        }
-        basicInsertionDao.deleteById(insertionId);
-    }
-
-    @Override
-    public void deleteAllBasicInsertionByUserId(Long uId) {
-        basicInsertionDao.deleteAllByUserId(uId);
-    }
-
-    @Override
-    public Page<BasicInsertionDto> findAllByUser(Long uId, int page) {
+    public Page<BasicInsertionDto> getAllByUser(Long uId, int page) {
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE);
         List<BasicInsertionDto> collect = basicInsertionDao.findAllByUserId(uId, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
 
     @Override
-    public Page<BasicInsertionDto> findAllByUserEmail(String email, int page) {
+    public Page<BasicInsertionDto> getAllByUserEmail(String email, int page) {
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE);
         List<BasicInsertionDto> collect = basicInsertionDao.findAllByUserEmail(email, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
@@ -96,7 +75,6 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     @Override
     public Page<BasicInsertionDto> getAllByTitleStartWith(String title, int page) {
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("title").ascending());
-        System.out.println(basicInsertionDao.findAllByTitleContainingIgnoreCase(title, pageRequest));
         List<BasicInsertionDto> collect = basicInsertionDao.findAllByTitleContainingIgnoreCase(title, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
@@ -108,7 +86,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     }
 
     @Override
-    public BasicInsertion findById(Long id) {
+    public BasicInsertion getById(Long id) {
         return basicInsertionDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present",id)));
     }
 
@@ -128,7 +106,8 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     @Override
     public BasicInsertionDto modifyUserInsertion(BasicInsertionDto insertionDto) {
-        Optional<User> user = userService.findByEmail(LoggedUserDetail.getInstance().getEmail());
+        //loggedUser.checkLoggedUser();
+        Optional<User> user = userService.getOptionalUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(user.isEmpty()||!Objects.equals(user.get().getId(), insertionDto.getUserId())){
             throw new EntityNotFoundException(messageLang.getMessage("access.denied"));
         }
@@ -169,6 +148,22 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     public void deleteBasicInsertionForAdmin(Long insertionId) {
         basicInsertionDao.deleteById(insertionId);
     }
+
+    @Override
+    public void deleteBasicInsertionById(Long insertionId) {
+        //loggedUser.checkLoggedUser();
+        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        if(u.get().getEmail() == null || !u.get().getInsertions().contains(basicInsertionDao.findById(insertionId))){
+            throw new EntityNotFoundException(messageLang.getMessage("request.not.valid"));
+        }
+        basicInsertionDao.deleteById(insertionId);
+    }
+
+    @Override
+    public void deleteAllBasicInsertionByUserId(Long uId) {
+        basicInsertionDao.deleteAllByUserId(uId);
+    }
+
 
     @Override
     public Boolean modifyInsertionById(Long insertionId, BasicInsertionDto insertionDto) {

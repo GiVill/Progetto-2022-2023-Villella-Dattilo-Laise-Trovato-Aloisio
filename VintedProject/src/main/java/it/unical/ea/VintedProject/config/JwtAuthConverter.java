@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 
 @Component
 public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationToken> {
-    //Get a JWT and extract some info (like the Role, the user's password, the user's name, ecc)
+    //Get a JWT and extract some info (like Role, user's password, user's name, ecc)
 
     private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter =
             new JwtGrantedAuthoritiesConverter();
@@ -30,6 +30,10 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
     private String principleAttribute;
     @Value("${jwt.auth.converter.resource-id}")
     private String resourceId;
+
+    //private String email;
+
+    private ThreadLocal<String> emailThreadLocal = new ThreadLocal<>();
 
     @Override
     public AbstractAuthenticationToken convert(@NonNull Jwt jwt) {
@@ -47,6 +51,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 
     private String getPrincipleClaimName(Jwt jwt) {
 
+        setEmail(jwt);
         getUserInformation(jwt);
         String claimName = JwtClaimNames.SUB;
         if (principleAttribute != null) {
@@ -79,9 +84,28 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 
 
     private void getUserInformation(Jwt jwt){
-        LoggedUserDetail.getInstance().setIdKeycloac(jwt.getClaim("sub"));
+        LoggedUserDetail.getInstance().setIdKeycloak(jwt.getClaim("sub"));
         LoggedUserDetail.getInstance().setUsername(jwt.getClaim("preferred_username"));
         LoggedUserDetail.getInstance().setEmail(jwt.getClaim("email"));
         LoggedUserDetail.getInstance().setSessionId(jwt.getClaim("sid"));
+    }
+
+    /*
+    private void setEmail(Jwt jwt){
+        System.out.println();
+        email = jwt.getClaim("email");
+    }
+    public String getEmail(){
+        return email;
+    }
+
+     */
+
+    private void setEmail(Jwt jwt){
+        emailThreadLocal.set(jwt.getClaim("email"));
+    }
+
+    public String getEmail(){
+        return emailThreadLocal.get();
     }
 }

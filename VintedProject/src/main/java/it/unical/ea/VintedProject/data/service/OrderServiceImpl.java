@@ -29,6 +29,7 @@ public class OrderServiceImpl implements OrderService {
     private final ModelMapper modelMapper;
     private final MessageLang messageLang;
     private final static int SIZE_FOR_PAGE = 5;
+    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
 
     @Override
     public OrderDto save(OrderDto orderDto) {
@@ -44,9 +45,10 @@ public class OrderServiceImpl implements OrderService {
     public Order save(Order order) { return orderDao.save(order); }
 
     @Override
-    public OrderDto getOrderById(Long orderId) {
+    public OrderDto getOrderDtoById(Long orderId) {
+        //loggedUser.checkLoggedUser(...);
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getOrders().contains(findById(orderId)) ){
+        if(u.get().getEmail() == null || !u.get().getOrders().contains(getById(orderId)) ){
             throw  new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId));
         }
         Order order = orderDao.findById(orderId).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId)));
@@ -55,27 +57,28 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrderById(Long orderId) {
+        //loggedUser.checkLoggedUser(...);
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getOrders().contains(findById(orderId)) ){
+        if(u.get().getEmail() == null || !u.get().getOrders().contains(getById(orderId)) ){
             throw  new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId));
         }
         orderDao.deleteById(orderId);
     }
 
     @Override
-    public Page<OrderDto> getAllPaged(int page) {
+    public Page<OrderDto> getAllOrderDtoPaged(int page) {
         Page<Order> orders = orderDao.findAll(PageRequest.of(page, SIZE_FOR_PAGE));
         List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
 
     @Override
-    public Order findById(Long id) {
+    public Order getById(Long id) {
         return orderDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("order.not.present",id)));
     }
 
     @Override
-    public Page<OrderDto> findByUserId(Long UserId,int page){
+    public Page<OrderDto> getOrderDtoByUserIdPaged(Long UserId, int page){
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null || !u.get().getId().equals(UserId) ){
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present",UserId));
@@ -86,7 +89,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public  Page<OrderDto> getOrderByIdAdmin(Long UserId, int page) {
+    public  Page<OrderDto> getOrderDtoByIdAdminPaged(Long UserId, int page) {
         Optional<User> u = userDao.findById(UserId);
         if(u.get().getEmail() == null ){
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present",UserId));
@@ -110,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Page<OrderDto> getOrderByPaymeth(String method, int page) {
+    public Page<OrderDto> getOrderDtoByPaymentPaged(String method, int page) {
         //TODO AGGIUNGERE I CONTROLLI
         Page<Order> orders = orderDao.findAllByPaymentMethod(method,PageRequest.of(page,SIZE_FOR_PAGE));
         List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());

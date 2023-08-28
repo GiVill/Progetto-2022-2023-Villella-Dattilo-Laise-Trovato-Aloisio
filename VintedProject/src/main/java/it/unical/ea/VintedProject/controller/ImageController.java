@@ -2,6 +2,7 @@ package it.unical.ea.VintedProject.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
+import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.service.interfaces.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -18,7 +19,9 @@ import org.springframework.core.io.Resource;
 public class ImageController {
 
     private final ImageService imageService;
-    private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
+    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
+    private final LoggedUserMethod loggedUserMethod;
+
 
     @GetMapping("/images/{imagePath}")
     public ResponseEntity<Resource> getImageById(@PathVariable("imagePath") String imagePath){
@@ -42,15 +45,18 @@ public class ImageController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/images/user/{userId}")
+    @DeleteMapping("/user/images/{userId}")
     public ResponseEntity<Void> userDeleteImage(@PathVariable("userId") Long userId){
-        if(loggedUser.getLoggedUserId().equals(userId)){
+        //loggedUser.checkLoggedUser(userId);
+        loggedUserMethod.checkLoggedUser(userId);
+
+        //if(loggedUser.getLoggedUserId().equals(userId)){
             imageService.deleteImageUser(userId);
             return ResponseEntity.noContent().build();
-        } else {
+        //} else {
             //TODO: ERRORE PERMESSI
-            throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
-        }
+        //    throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
+        //}
 
     }
 
@@ -60,15 +66,18 @@ public class ImageController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/images/insertion/{insertionId}")
+    @DeleteMapping("/user/images/insertion/{insertionId}")
     public ResponseEntity<Void> userImageInsertion(@PathVariable("insertionId") Long insertionId){
-        if(loggedUser.getLoggedUserId() != null){
+        //loggedUser.checkLoggedUser();
+        loggedUserMethod.checkLoggedUser();
+
+        //if(loggedUser.getLoggedUserId() != null){
             imageService.userDeleteImageInsertion(insertionId);
             return ResponseEntity.noContent().build();
-        } else {
+        //} else {
             //TODO: ERRORE PERMESSI
-            throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
-        }
+        //    throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
+        //}
 
     }
 }

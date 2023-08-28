@@ -11,6 +11,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 @ServletComponentScan
 public class VintedProjectApplication {
 
+	//Dao Notation:
+	//DAO (JPA): find, delete
+	//DAO (Service): get, update, delete
+
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(VintedProjectApplication.class, args);
 

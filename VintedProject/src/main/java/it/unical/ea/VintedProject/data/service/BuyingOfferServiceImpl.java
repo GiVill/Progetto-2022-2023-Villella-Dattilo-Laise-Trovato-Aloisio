@@ -28,9 +28,6 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
 
     private final ModelMapper modelMapper;
     private final BuyingOfferDao buyingOfferDao;
-    private final BasicInsertionDao insertionDao;
-    private final UserDao userDao;
-    private final UserService userService;
     private final MessageLang messageLang;
 
     @Override
@@ -47,7 +44,7 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
 
 
     @Override
-    public List<BuyingOfferDto> findAllByUserId(Long userId) {
+    public List<BuyingOfferDto> getAllByUserId(Long userId) {
         return buyingOfferDao.findAllByUserId(userId).stream().map(s -> modelMapper.map(s, BuyingOfferDto.class)).collect(Collectors.toList());
     }
 
@@ -58,13 +55,13 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     }
 
     @Override
-    @PreAuthorize("has")
-    public List<BuyingOfferDto> findAll() {
+    public List<BuyingOfferDto> getAll() {
         return buyingOfferDao.findAll().stream().map(s -> modelMapper.map(s, BuyingOfferDto.class)).collect(Collectors.toList());
     }
 
     @Override
     public void deleteOfferById(Long offerId) {
+
         if(buyingOfferDao.findById(offerId).isEmpty()){
             throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present",offerId));
         }
@@ -72,7 +69,7 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     }
 
     @Override
-    public BuyingOfferDto findOfferById(Long offerId) {
+    public BuyingOfferDto getOfferById(Long offerId) {
         Optional<BuyingOffer> offer = buyingOfferDao.findById(offerId);
         if(offer.isEmpty()){
             throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present",offerId));

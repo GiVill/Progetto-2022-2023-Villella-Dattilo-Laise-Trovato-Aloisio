@@ -77,7 +77,7 @@ public class ChatServicesImpl implements ChatService {
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present"));
         }
 
-        BasicInsertion insertion = basicInsertionService.findById(insertions);
+        BasicInsertion insertion = basicInsertionService.getById(insertions);
         return chatDao.findByUser1AndUser2AndBasicInsertion(user1,user2,insertion);
     }
 

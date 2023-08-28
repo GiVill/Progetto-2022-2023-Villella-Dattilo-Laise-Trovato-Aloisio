@@ -124,7 +124,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present", newMessageDto.getSender()));
         }
 
-        BasicInsertion b = basicInsertionService.findById(Long.valueOf(newMessageDto.getInsertionId()));
+        BasicInsertion b = basicInsertionService.getById(Long.valueOf(newMessageDto.getInsertionId()));
 
         if (chatDao.findByUser1AndUser2AndBasicInsertion(Long.valueOf(newMessageDto.getSender()), Long.valueOf(newMessageDto.getReciver()), (b)).isEmpty()) {
             Chat chat = new Chat();

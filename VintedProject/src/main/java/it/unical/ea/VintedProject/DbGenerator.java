@@ -119,7 +119,7 @@ public class DbGenerator implements ApplicationRunner {
         BuyingOffer buyingOffer = new BuyingOffer();
         buyingOffer.setStatus(Status.PENDING);
         buyingOffer.setPrice(Float.valueOf(price));
-        buyingOffer.setInsertion(insertionService.findById(Long.valueOf(idInsertion)));
+        buyingOffer.setInsertion(insertionService.getById(Long.valueOf(idInsertion)));
         buyingOffer.setUser(userService.getUserById(Long.valueOf(idUser)));
 
         buyingOfferService.save(buyingOffer);
@@ -135,7 +135,7 @@ public class DbGenerator implements ApplicationRunner {
         basicInsertion.setDescription(description);
         basicInsertion.setUser(userService.getUserById(Long.valueOf(idUser)));
         basicInsertion.setIsPrivate(Boolean.valueOf(isPro));
-        basicInsertion.setOrder(orderService.findById(Long.valueOf(idOrder)));
+        basicInsertion.setOrder(orderService.getById(Long.valueOf(idOrder)));
 
         insertionService.save(basicInsertion);
     }
@@ -182,7 +182,7 @@ public class DbGenerator implements ApplicationRunner {
     }
     private void insertChat(String id1, String id2,String nickname, String message, String date, String insertionId) {
 
-        BasicInsertion insertion = insertionService.findById(Long.valueOf(insertionId));
+        BasicInsertion insertion = insertionService.getById(Long.valueOf(insertionId));
         if (chatDao.findByUser1AndUser2AndBasicInsertion(Long.valueOf(id1), Long.valueOf(id2), (insertion)).isEmpty()) {
             Chat chat = new Chat();
             chat.setUser1(Long.valueOf(id1));

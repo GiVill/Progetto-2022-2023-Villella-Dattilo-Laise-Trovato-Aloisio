@@ -1,15 +1,16 @@
 package it.unical.ea.VintedProject.data.service.interfaces;
 
 
-import com.nimbusds.jose.JOSEException;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.enumeration.Brand;
 import it.unical.ea.VintedProject.dto.enumeration.Category;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.multipart.MultipartFile;
 
+
+//Dao Notation:
+//DAO (JPA): find, delete
+//DAO (Service): get, update, delete
 
 public interface BasicInsertionService {//extends Repository<BasicInsertion,Long> {
 
@@ -21,9 +22,9 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
 
     void deleteAllBasicInsertionByUserId(Long uId);
 
-    Page<BasicInsertionDto> findAllByUser(Long uId, int page);
+    Page<BasicInsertionDto> getAllByUser(Long uId, int page);
 
-    Page<BasicInsertionDto> findAllByUserEmail(String email, int page);
+    Page<BasicInsertionDto> getAllByUserEmail(String email, int page);
 
     Page<BasicInsertionDto> getAllPaged(int page);
 
@@ -31,7 +32,7 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
 
     BasicInsertionDto getInsertionById(Long id);
 
-    BasicInsertion findById(Long id);
+    BasicInsertion getById(Long id);
 
     Page<BasicInsertionDto> getByBrand(Brand brand, int page);
 

@@ -10,9 +10,7 @@ public class UserListener{
     //private UserService userService;
 
     @PostLoad
-    private void afterLoad(User user){
-        log.info("[USER AUDIT] user loaded from database: " + user.getId());
-    }
+    private void afterLoad(User user){ log.info("[USER AUDIT] user loaded from database: " + user.getId()); }
 
     @PostUpdate
     private void postUpdate(User user){

@@ -3,21 +3,13 @@ package it.unical.ea.VintedProject.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
-import it.unical.ea.VintedProject.data.entities.User;
+import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.service.interfaces.OrderService;
-import it.unical.ea.VintedProject.data.service.interfaces.UserService;
-import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.OrderDto;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,39 +18,44 @@ import java.util.Optional;
 public class OrderController {
 
     private final OrderService orderService;
-    private final UserService userService;
+    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
+    private final LoggedUserMethod loggedUserMethod;
 
     @GetMapping("/orders/{orderId}")
-    public ResponseEntity<OrderDto> getOrderById(@PathVariable("orderId") Long orderId) {
-        return ResponseEntity.ok(orderService.getOrderById(orderId));
+    public ResponseEntity<OrderDto> getOrderDtoById(@PathVariable("orderId") Long orderId) {
+        // Check the Token, if not ok: THROW Exception.
+        // find Order using the ID, if not existent: THROW Exception.
+        return ResponseEntity.ok(orderService.getOrderDtoById(orderId));
     }
 
     @GetMapping("/orders/admin/id/{userId}/{page}")
     //@PreAuthorize("hasRole('<admin')")
-    public ResponseEntity<Page<OrderDto>> getOrderByIdAdmin(@PathVariable("userId") Long UserId,@PathVariable("page") int page) {
-        return ResponseEntity.ok(orderService.getOrderByIdAdmin(UserId, page));
+    public ResponseEntity<Page<OrderDto>> getOrderDtoByIdPagedAdmin(@PathVariable("userId") Long UserId, @PathVariable("page") int page) {
+        return ResponseEntity.ok(orderService.getOrderDtoByIdAdminPaged(UserId, page));
     }
 
     @GetMapping("/orders/admin/email/{userEmail}/{page}")
     //@PreAuthorize("hasRole('<admin')")
-    public ResponseEntity<Page<OrderDto>> getOrderByIdAdminByEmail(@PathVariable("userEmail") String email,@PathVariable("page") int page) {
+    public ResponseEntity<Page<OrderDto>> getOrderDtoByIdByEmailPagedAdmin(@PathVariable("userEmail") String email, @PathVariable("page") int page) {
         return ResponseEntity.ok(orderService.getOrderByIdAdminByEmail(email, page));
     }
 
     @GetMapping("/orders")
-    //@PreAuthorize("hasRole('admin')")
-    public ResponseEntity<Page<OrderDto>> all(@RequestParam("page") int page){
-        return ResponseEntity.ok(orderService.getAllPaged(page));
+    public ResponseEntity<Page<OrderDto>> getAll(@RequestParam("page") int page){
+        //Return all the Order (as OrderDto), paged
+        //TODO no Throw handled!
+        return ResponseEntity.ok(orderService.getAllOrderDtoPaged(page));
     }
 
     @PostMapping("/orders")
     public ResponseEntity<OrderDto> addOrder(@RequestBody OrderDto orderDto) {
-        System.out.println("AFFA");
+        //Save an orderDto and return
         return ResponseEntity.ok(orderService.save(orderDto));
     }
 
     @DeleteMapping("/orders/{orderId}")
     public ResponseEntity<Void> deleteOrderById(@PathVariable("orderId") Long orderId) {
+        // Check the Token, if ok: delete an Order using the ID.
         orderService.deleteOrderById(orderId);
         return ResponseEntity.noContent().build();
     }
@@ -66,17 +63,24 @@ public class OrderController {
     @DeleteMapping("/orders/admin/{orderId}")
     //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<Void> deleteOrderForAdmin(@PathVariable("orderId") Long orderId) {
+        // Delete an Order using the ID.
+        // No Throw, No Token
         orderService.deleteOrderForAdmin(orderId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/orders/user/{page}")
     public ResponseEntity<Page<OrderDto>> getUserOrders(@PathVariable("page") int page){
-        Optional<User> u = userService.findByEmail(LoggedUserDetail.getInstance().getEmail());
+        // Check the token, if ok: get OrderDto (as Paged) using the id of the user
+
+        /*Optional<User> u = userService.findByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null){
             throw new EntityNotFoundException("CACCA");
-        }
-        return ResponseEntity.ok(orderService.findByUserId(u.get().getId(), page));
+        }*/
+
+        //Long userId = loggedUser.getLoggedUserId();
+        Long userId = loggedUserMethod.getLoggedUserId();
+        return ResponseEntity.ok(orderService.getOrderDtoByUserIdPaged(userId, page));
     }
 
     /* TODO: ADMIN

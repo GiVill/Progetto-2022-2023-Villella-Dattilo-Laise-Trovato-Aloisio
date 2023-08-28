@@ -3,10 +3,9 @@ import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.dto.OrderDto;
 import org.springframework.data.domain.Page;
 
-import javax.swing.text.html.Option;
-import java.util.List;
-import java.util.Optional;
-
+//Dao Notation:
+//DAO (JPA): find, delete
+//DAO (Service): get, update, delete
 
 public interface OrderService {
 
@@ -16,22 +15,21 @@ public interface OrderService {
 
     Order save(Order order);
 
-    OrderDto getOrderById(Long id);
+    OrderDto getOrderDtoById(Long id);
 
     void deleteOrderById(Long id);
 
-    Page<OrderDto> getAllPaged(int page);
+    Page<OrderDto> getAllOrderDtoPaged(int page);
 
-    Order findById(Long id);
+    Order getById(Long id);
 
-    Page<OrderDto> findByUserId(Long UserId,int page);
+    Page<OrderDto> getOrderDtoByUserIdPaged(Long UserId, int page);
 
-    Page<OrderDto> getOrderByIdAdmin(Long UserId,int page);
+    Page<OrderDto> getOrderDtoByIdAdminPaged(Long UserId, int page);
 
     Page<OrderDto> getOrderByIdAdminByEmail(String userEmail,int page);
 
-    Page<OrderDto> getOrderByPaymeth(String method,int page);
-
+    Page<OrderDto> getOrderDtoByPaymentPaged(String method, int page);
 
     void deleteOrderForAdmin(Long orderId);
 }

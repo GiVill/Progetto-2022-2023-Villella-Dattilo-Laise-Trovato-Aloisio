@@ -3,7 +3,6 @@ package it.unical.ea.VintedProject.security.keycloak;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.dto.NewUserDto;
-import it.unical.ea.VintedProject.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.keycloak.admin.client.CreatedResponseUtil;
@@ -12,7 +11,6 @@ import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
-import org.keycloak.representations.idm.ClientRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.keycloak.representations.idm.CredentialRepresentation;
@@ -141,7 +139,7 @@ public class KeycloakTokenClient {
         passwordCred.setValue(newPassword);
 
         RealmResource realmResource = getAdminKeycloakUser().realm("vinted2_0");
-        UserResource userResource = realmResource.users().get(LoggedUserDetail.getInstance().getIdKeycloac());
+        UserResource userResource = realmResource.users().get(LoggedUserDetail.getInstance().getIdKeycloak());
 
         userResource.resetPassword(passwordCred);
 

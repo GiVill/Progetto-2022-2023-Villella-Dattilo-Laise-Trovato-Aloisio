@@ -1,30 +1,19 @@
 package it.unical.ea.VintedProject.data.service;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
-import it.unical.ea.VintedProject.data.dao.OrderDao;
+import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.dao.UserDao;
-import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
-import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
-import it.unical.ea.VintedProject.data.service.interfaces.OrderService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
-import it.unical.ea.VintedProject.dto.BasicInsertionDto;
-import it.unical.ea.VintedProject.dto.LoginUserDto;
-import it.unical.ea.VintedProject.dto.OrderDto;
 import it.unical.ea.VintedProject.dto.UserDto;
 import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,7 +29,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final static int SIZE_FOR_PAGE = 10;
     private final MessageLang messageLang;
-
+    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
+    private final LoggedUserMethod loggedUserMethod;
 
     @Override
     public void save(User user) { userDao.save(user); }
@@ -58,23 +48,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getById(Long id) {
+    public UserDto getUserDtoById(Long id) {
         User user = userDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present",id)));
         return modelMapper.map(user, UserDto.class);
     }
 
     @Override
-    public List<User> findAll() {
+    public List<User> getAll() {
         return userDao.findAll();
     }
 
     @Override
-    public List<UserDto> getAllStored() {
+    public List<UserDto> getAllUserDtoSortedByLastnameAscending() {
         return userDao.findAll( Sort.by("lastName").ascending()).stream().map(s -> modelMapper.map(s, UserDto.class)).collect(Collectors.toList());
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public Optional<User> getOptionalUserByEmail(String email) {
         Optional<User> user = userDao.findUserByEmail(email);
         if(user.isEmpty()){
             throw new EntityNotFoundException(messageLang.getMessage("user.mail.not.present",email));
@@ -84,14 +74,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean updateUserPassword(String newPassword) {
-        Optional<User> u = findByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null){
-            throw new EntityNotFoundException(messageLang.getMessage("wrong.user"));
-        }
+        //Optional<User> u = getOptionalUserByEmail(LoggedUserDetail.getInstance().getEmail());
+        //if(u.get().getEmail() == null){
+        //    throw new EntityNotFoundException(messageLang.getMessage("wrong.user"));
+        //}
         //TODO L'update andrebbe fatta anche su Keycloak
         try{
+            //User user = loggedUser.getEntireLoggedUser();
+            User user = loggedUserMethod.getEntireLoggedUser();
+
+            //User user = userDao.findById(u.get().getId()).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", u.get().getId())));
             keycloakTokenClient.updateUserPassword(newPassword);
-            User user = userDao.findById(u.get().getId()).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", u.get().getId())));
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.save(user);
             return true;
@@ -101,6 +94,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(Long id) { userDao.deleteById(id); }
+    public void deleteUserById(Long userId) {
+        //loggedUser.checkLoggedUser(userId);
+        loggedUserMethod.checkLoggedUser(userId);
+
+        userDao.deleteById(userId);
+    }
 
 }

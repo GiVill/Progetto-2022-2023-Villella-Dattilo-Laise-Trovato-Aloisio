@@ -3,6 +3,7 @@ package it.unical.ea.VintedProject.data.service;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.config.utility.FileUtil;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
+import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
@@ -16,8 +17,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.net.URL;
 import java.util.Optional;
+
+//Dao Notation:
+//DAO (JPA): find, delete
+//DAO (Service): get, update, delete
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +33,8 @@ public class ImageServiceImpl implements ImageService {
     private final UserService userService;
     private final BasicInsertionService insertionService;
     private final MessageLang messageLang;
+    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
+    private final LoggedUserMethod loggedUserMethod;
 
     private final String relativePathToUploads = "src/main/resources/image/";
 
@@ -49,10 +55,12 @@ public class ImageServiceImpl implements ImageService {
     }
 
     public Boolean insertUserImage(MultipartFile img){
-        Optional<User> u = userService.findByEmail(LoggedUserDetail.getInstance().getUsername());
-        if(u.get().getEmail() == null){
-            throw new EntityNotFoundException(messageLang.getMessage("user.not.found"));
-        }
+        //Optional<User> u = userService.getOptionalUserByEmail(LoggedUserDetail.getInstance().getUsername());
+        //if(u.get().getEmail() == null){
+        //    throw new EntityNotFoundException(messageLang.getMessage("user.not.found"));
+        //}
+        //User u = loggedUser.getEntireLoggedUser();
+        User u = loggedUserMethod.getEntireLoggedUser();
         try {
             String realPathToUploads = System.getProperty("user.dir") + File.separator + relativePathToUploads;
 
@@ -60,8 +68,8 @@ public class ImageServiceImpl implements ImageService {
                 new File(realPathToUploads).mkdir();
             }
 
-            if(u.get().getImageName() != null) {
-                String oldFilePath = realPathToUploads + "\\" + u.get().getImageName();
+            if(u.getImageName() != null) { //u.get().getImageName()
+                String oldFilePath = realPathToUploads + "\\" + u.getImageName(); //u.get().getImageName()
                 File fileToDelete = new File(oldFilePath);
                 if (fileToDelete.exists()) {
                     if (fileToDelete.delete()) {
@@ -76,9 +84,9 @@ public class ImageServiceImpl implements ImageService {
             File dest = new File(filePath);
             img.transferTo(dest);
 
-            u.get().setImageName(orgName);
+            u.setImageName(orgName);//u.get().setImageName(orgName);
 
-            userService.save(u.get());
+            userService.save(u); //userService.save(u.get());
 
             return true;
         }catch (Exception e){ return false; }
@@ -98,7 +106,7 @@ public class ImageServiceImpl implements ImageService {
             File dest = new File(filePath);
             img.transferTo(dest);
 
-            BasicInsertion insertion = insertionService.findById(insertionId);
+            BasicInsertion insertion = insertionService.getById(insertionId);
             insertion.setImageName(orgName);
 
             insertionService.save(insertion);
@@ -130,8 +138,8 @@ public class ImageServiceImpl implements ImageService {
     }
     @Override
     public void userDeleteImageInsertion(Long insertionId) {
-        Optional<User> u = userService.findByEmail(LoggedUserDetail.getInstance().getUsername());
-        BasicInsertion basicInsertion = insertionService.findById(insertionId);
+        Optional<User> u = userService.getOptionalUserByEmail(LoggedUserDetail.getInstance().getUsername());
+        BasicInsertion basicInsertion = insertionService.getById(insertionId);
         if(basicInsertion.getUser().getId().equals(u.get().getId())){
             String newPath = relativePathToUploads + basicInsertion.getImageName();
 
@@ -155,7 +163,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void adminDeleteImageInsertion(Long id) {
 
-        BasicInsertion basicInsertion = insertionService.findById(id);
+        BasicInsertion basicInsertion = insertionService.getById(id);
         String newPath = relativePathToUploads + basicInsertion.getImageName();
 
         File file = new File(newPath);
