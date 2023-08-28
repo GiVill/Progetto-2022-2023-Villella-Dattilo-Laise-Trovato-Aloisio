@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.data.service;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
+import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.Order;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.ws.rs.BadRequestException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,6 +30,7 @@ public class OrderServiceImpl implements OrderService {
     private final UserDao userDao;
     private final ModelMapper modelMapper;
     private final MessageLang messageLang;
+    private final LoggedUserMethod loggedUserMethod;
     private final static int SIZE_FOR_PAGE = 5;
     //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
 
@@ -47,21 +50,17 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto getOrderDtoById(Long orderId) {
         //loggedUser.checkLoggedUser(...);
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getOrders().contains(getById(orderId)) ){
-            throw  new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId));
-        }
+        User u = loggedUserMethod.getEntireLoggedUser();
         Order order = orderDao.findById(orderId).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId)));
-        return modelMapper.map(order, OrderDto.class);
+        if(order.getUser().getId().equals(u.getId())){
+            return modelMapper.map(order, OrderDto.class);
+        }
+        throw new BadRequestException(messageLang.getMessage("access.denied"));
     }
 
     @Override
     public void deleteOrderById(Long orderId) {
         //loggedUser.checkLoggedUser(...);
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getOrders().contains(getById(orderId)) ){
-            throw  new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId));
-        }
         orderDao.deleteById(orderId);
     }
 

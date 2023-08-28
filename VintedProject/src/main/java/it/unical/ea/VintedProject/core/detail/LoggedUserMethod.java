@@ -1,12 +1,14 @@
 package it.unical.ea.VintedProject.core.detail;
 
 import it.unical.ea.VintedProject.config.JwtAuthConverter;
+import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
+import javax.ws.rs.BadRequestException;
 import java.util.Optional;
 
 @Configuration
@@ -16,43 +18,41 @@ public class LoggedUserMethod {
     private final UserDao userDao;
     private final JwtAuthConverter jwtAuthConverter;
 
+    private final MessageLang messageLang;
+
     public void checkLoggedUser(){
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
-        userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail()).orElseThrow(() -> new EntityNotFoundException("checkLoggedUser"));
+        userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() ->  new BadRequestException(messageLang.getMessage("access.denied")));
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " checkLoggedUser");
-        //LoggedUserDetail.resetInstance();
     }
     public void checkLoggedUser(Long userId){
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
 
-        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail()).orElseThrow(() -> new EntityNotFoundException("checkLoggedUser ARGS")));
+        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() ->  new BadRequestException(messageLang.getMessage("access.denied"))));
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " checkLoggedUser ARGS");
-        //LoggedUserDetail.resetInstance();
 
-        if(user.get().getId().equals(userDao.findById(userId).get().getId())){ //|| user.get().getId().equals(userService.getUserById(userId).getId())
-            throw new RuntimeException("No user logged or user not valid"); //throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
+        if(user.get().getId().equals(userId)){ //|| user.get().getId().equals(userService.getUserById(userId).getId())
+            throw new BadRequestException(messageLang.getMessage("access.denied")); //throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
         }
     }
 
     public Long getLoggedUserId(){
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
 
-        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() -> new EntityNotFoundException("getLoggedUserId")));
+        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() -> new BadRequestException(messageLang.getMessage("access.denied"))));
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " getLoggedUserId");
-        //LoggedUserDetail.resetInstance();
 
-        //return user.map(User::getId).orElse(null);
         return user.get().getId();
     }
 
     public Long getLoggedUserId(Long userId){
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
 
-        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() -> new EntityNotFoundException("getLoggedUserId ARGS")));
+        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() ->  new BadRequestException(messageLang.getMessage("access.denied"))));
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " getLoggedUserId ARGS");
-        //LoggedUserDetail.resetInstance();
-        if(user.get().getId().equals(userDao.findById(userId).get().getId())){ // || user.get().getId().equals(userService.getUserById(userId).getId())
-            throw new RuntimeException("No user logged or user not valid"); //throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
+
+        if(!user.get().getId().equals(userId)){ // || user.get().getId().equals(userService.getUserById(userId).getId())
+            throw new BadRequestException(messageLang.getMessage("access.denied"));
         }
 
         return user.get().getId();
@@ -61,9 +61,8 @@ public class LoggedUserMethod {
     public User getEntireLoggedUser(){
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
 
-        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() -> new EntityNotFoundException("getEntireLoggedUser")));
+        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() ->  new BadRequestException(messageLang.getMessage("access.denied"))));
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " getEntireLoggedUser");
-        //LoggedUserDetail.resetInstance();
 
         return user.get();
     }

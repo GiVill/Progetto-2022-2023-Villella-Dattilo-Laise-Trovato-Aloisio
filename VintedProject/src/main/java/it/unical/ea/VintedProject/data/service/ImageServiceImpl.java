@@ -16,6 +16,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.ws.rs.BadRequestException;
 import java.io.File;
 import java.util.Optional;
 
@@ -55,11 +56,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     public Boolean insertUserImage(MultipartFile img){
-        //Optional<User> u = userService.getOptionalUserByEmail(LoggedUserDetail.getInstance().getUsername());
-        //if(u.get().getEmail() == null){
-        //    throw new EntityNotFoundException(messageLang.getMessage("user.not.found"));
-        //}
-        //User u = loggedUser.getEntireLoggedUser();
+
         User u = loggedUserMethod.getEntireLoggedUser();
         try {
             String realPathToUploads = System.getProperty("user.dir") + File.separator + relativePathToUploads;
@@ -93,6 +90,12 @@ public class ImageServiceImpl implements ImageService {
     }
 
     public Boolean insertInsertionImage(Long insertionId, MultipartFile img){
+        BasicInsertion insertion = insertionService.getById(insertionId);
+        User u = loggedUserMethod.getEntireLoggedUser();
+
+        if(!u.getId().equals(insertion.getUser().getId())){
+            throw new BadRequestException(messageLang.getMessage("access.denied"));
+        }
         try {
             String realPathToUploads = System.getProperty("user.dir") + File.separator + relativePathToUploads;
 
@@ -106,7 +109,6 @@ public class ImageServiceImpl implements ImageService {
             File dest = new File(filePath);
             img.transferTo(dest);
 
-            BasicInsertion insertion = insertionService.getById(insertionId);
             insertion.setImageName(orgName);
 
             insertionService.save(insertion);
@@ -138,9 +140,9 @@ public class ImageServiceImpl implements ImageService {
     }
     @Override
     public void userDeleteImageInsertion(Long insertionId) {
-        Optional<User> u = userService.getOptionalUserByEmail(LoggedUserDetail.getInstance().getUsername());
         BasicInsertion basicInsertion = insertionService.getById(insertionId);
-        if(basicInsertion.getUser().getId().equals(u.get().getId())){
+        User u = loggedUserMethod.getEntireLoggedUser();
+        if(basicInsertion.getUser().getId().equals(u.getId())){
             String newPath = relativePathToUploads + basicInsertion.getImageName();
 
             File file = new File(newPath);
@@ -156,7 +158,7 @@ public class ImageServiceImpl implements ImageService {
                 System.out.println("Il file non esiste o non è un file valido.");
             }
         } else {
-            throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
+            throw new BadRequestException(messageLang.getMessage("access.denied"));
         }
     }
 

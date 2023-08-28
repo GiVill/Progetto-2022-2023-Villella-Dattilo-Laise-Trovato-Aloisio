@@ -16,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 
+import javax.ws.rs.BadRequestException;
 import java.util.Date;
 
 @RestControllerAdvice
@@ -25,6 +26,13 @@ public class GlobalExceptionHandler {
 
     private final MessageLang messageLang;
 
+    //400
+    @ExceptionHandler(BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ServiceError onBadRequest(WebRequest req, BadRequestException ex){
+        return errorResponse(req, ex.getMessage());
+    }
+
     //404
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -32,7 +40,7 @@ public class GlobalExceptionHandler {
         return errorResponse(req, ex.getMessage());
     }
 
-    //401
+    //400
     @ExceptionHandler(UserException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ServiceError onResourceNotFoundException(WebRequest req, UserException ex){

@@ -19,13 +19,11 @@ import org.springframework.core.io.Resource;
 public class ImageController {
 
     private final ImageService imageService;
-    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
     private final LoggedUserMethod loggedUserMethod;
 
 
     @GetMapping("/images/{imagePath}")
     public ResponseEntity<Resource> getImageById(@PathVariable("imagePath") String imagePath){
-        System.out.println(imagePath);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(imageService.getImage(imagePath));
     }
 
@@ -47,17 +45,9 @@ public class ImageController {
 
     @DeleteMapping("/user/images/{userId}")
     public ResponseEntity<Void> userDeleteImage(@PathVariable("userId") Long userId){
-        //loggedUser.checkLoggedUser(userId);
         loggedUserMethod.checkLoggedUser(userId);
-
-        //if(loggedUser.getLoggedUserId().equals(userId)){
-            imageService.deleteImageUser(userId);
-            return ResponseEntity.noContent().build();
-        //} else {
-            //TODO: ERRORE PERMESSI
-        //    throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
-        //}
-
+        imageService.deleteImageUser(userId);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/admin/images/insertion/{insertionId}")
@@ -68,16 +58,8 @@ public class ImageController {
 
     @DeleteMapping("/user/images/insertion/{insertionId}")
     public ResponseEntity<Void> userImageInsertion(@PathVariable("insertionId") Long insertionId){
-        //loggedUser.checkLoggedUser();
-        loggedUserMethod.checkLoggedUser();
-
-        //if(loggedUser.getLoggedUserId() != null){
-            imageService.userDeleteImageInsertion(insertionId);
-            return ResponseEntity.noContent().build();
-        //} else {
-            //TODO: ERRORE PERMESSI
-        //    throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
-        //}
+        imageService.userDeleteImageInsertion(insertionId);
+        return ResponseEntity.noContent().build();
 
     }
 }

@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.BadRequestException;
 import java.util.List;
 
 @RestController
@@ -24,7 +26,7 @@ public class BuyingOfferController {
 
     private final BuyingOfferService buyingOfferService;
     private final BasicInsertionService insertionService;
-    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
+    private final MessageLang messageLang;
     private final LoggedUserMethod loggedUserMethod;
 
 
@@ -46,16 +48,7 @@ public class BuyingOfferController {
 
     @GetMapping("/user/offers")
     public ResponseEntity<List<BuyingOfferDto>> getAllByUser() {
-        //loggedUser.checkLoggedUser();
-        loggedUserMethod.checkLoggedUser();
-
-        //if(loggedUser.getLoggedUserId() != null) {
-            return ResponseEntity.ok(buyingOfferService.getAllByUserId(loggedUserMethod.getLoggedUserId()));//loggedUser.getLoggedUserId()
-        //} else {
-            //TODO: ERRORE PERMESSI
-        //    throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
-        //}
-
+        return ResponseEntity.ok(buyingOfferService.getAllByUserId(loggedUserMethod.getLoggedUserId()));
     }
 
     @GetMapping("/admin/offers/insertion/{insertionId}")
@@ -65,15 +58,9 @@ public class BuyingOfferController {
 
     @GetMapping("/offers/insertion/{insertionId}")
     public ResponseEntity<List<BuyingOfferDto>> userGetAllByInsertionId(@PathVariable("insertionId") Long insertionId) {
-
-
         BasicInsertion insertion = insertionService.getById(insertionId);
-        if(insertion.getUser().getId().equals(loggedUserMethod.getLoggedUserId())){ //loggedUser.getLoggedUserId()
-            return ResponseEntity.ok(buyingOfferService.getByInsertionId(insertionId));
-        }else {
-            //TODO: ERRORE PERMESSI
-            throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
-        }
+        loggedUserMethod.getLoggedUserId(insertion.getUser().getId());
+        return ResponseEntity.ok(buyingOfferService.getByInsertionId(insertionId));
     }
 
     @GetMapping("/admin/offers/{offerId}")
@@ -94,15 +81,8 @@ public class BuyingOfferController {
         // Create a BuyingOffer using the Dto
         // No Throw on Save
 
-        //loggedUser.getLoggedUserId(offer.getUserId());
         loggedUserMethod.getLoggedUserId(offer.getUserId());
-
-        //if(loggedUser.getLoggedUserId().equals(offer.getUserId())){
-            return ResponseEntity.ok(buyingOfferService.save(offer));
-        //} else {
-            //TODO: ERRORE PERMESSI
-        //    throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
-        //}
+        return ResponseEntity.ok(buyingOfferService.save(offer));
     }
 
     @DeleteMapping("admin/offers/{idOffer}")
@@ -119,16 +99,11 @@ public class BuyingOfferController {
         // Check the Token, if not ok: THROW Exception.
         // Delete a BuyingOffer using the ID.
         // No Throw on Deletion
-        //loggedUser.getLoggedUserId(buyingOfferDto.getUserId());
-        loggedUserMethod.getLoggedUserId(buyingOfferDto.getUserId());
 
-        //if(loggedUser.getLoggedUserId().equals(buyingOfferDto.getUserId())){
-            buyingOfferService.deleteOfferById(buyingOfferDto.getId());
-            return HttpStatus.OK;
-        //} else {
-            //TODO: ERRORE PERMESSI
-        //    throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
-        //}
+        loggedUserMethod.getLoggedUserId(buyingOfferDto.getUserId());
+        buyingOfferService.deleteOfferById(buyingOfferDto.getId());
+        return HttpStatus.OK;
+
     }
 
 
