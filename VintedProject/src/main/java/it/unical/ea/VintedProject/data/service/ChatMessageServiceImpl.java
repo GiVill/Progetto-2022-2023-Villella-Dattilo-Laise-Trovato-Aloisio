@@ -141,11 +141,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
             chatMessage.setChat(chat.getId());
             save(chatMessage);
-
-
-
-
-
         } else {
 
             Optional<Chat> chat = chatDao.findByUser1AndUser2(Long.valueOf(newMessageDto.getSender()), Long.valueOf(newMessageDto.getReciver()));

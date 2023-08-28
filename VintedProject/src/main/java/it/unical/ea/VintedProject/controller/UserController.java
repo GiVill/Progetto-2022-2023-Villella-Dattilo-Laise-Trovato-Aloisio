@@ -52,7 +52,7 @@ public class UserController {
 
     @GetMapping("/users/{userId}")
     //ADMIN e USER Gli se gli utenti sono pubblici
-    public ResponseEntity<UserDto> getOrderDtoById(@PathVariable("userId") Long userId){
+    public ResponseEntity<UserDto> getUserDtoById(@PathVariable("userId") Long userId){
         // Return UserDto using the id; else user.not.present Exception
         // No Throw
         return ResponseEntity.ok(userService.getUserDtoById(userId));
