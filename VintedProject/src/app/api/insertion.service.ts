@@ -335,16 +335,15 @@ export class InsertionService {
             queryParameters = queryParameters.set('page', <any>page);
         }
 
-        let headers = this.defaultHeaders;
+      let headers = this.defaultHeaders;
 
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.configuration.accessToken) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.configuration.accessToken()
+          : this.configuration.accessToken;
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -390,16 +389,17 @@ export class InsertionService {
             throw new Error('Required parameter page was null or undefined when calling getByBrand.');
         }
 
-        let headers = this.defaultHeaders;
 
 
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      let headers = this.defaultHeaders;
+
+      // authentication (bearerAuth) required
+      if (this.configuration.accessToken) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.configuration.accessToken()
+          : this.configuration.accessToken;
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -444,16 +444,17 @@ export class InsertionService {
             throw new Error('Required parameter page was null or undefined when calling getByCategory.');
         }
 
-        let headers = this.defaultHeaders;
 
 
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      let headers = this.defaultHeaders;
+
+      // authentication (bearerAuth) required
+      if (this.configuration.accessToken) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.configuration.accessToken()
+          : this.configuration.accessToken;
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -498,16 +499,17 @@ export class InsertionService {
             throw new Error('Required parameter page was null or undefined when calling getByTitle.');
         }
 
-        let headers = this.defaultHeaders;
 
 
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      let headers = this.defaultHeaders;
+
+      // authentication (bearerAuth) required
+      if (this.configuration.accessToken) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.configuration.accessToken()
+          : this.configuration.accessToken;
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -551,13 +553,13 @@ export class InsertionService {
         let headers = this.defaultHeaders;
 
 
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.configuration.accessToken) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.configuration.accessToken()
+          : this.configuration.accessToken;
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
 
 
         // to determine the Accept header
@@ -659,16 +661,15 @@ export class InsertionService {
             throw new Error('Required parameter page was null or undefined when calling getInsertionByUserId.');
         }
 
-        let headers = this.defaultHeaders;
+      let headers = this.defaultHeaders;
 
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -709,16 +710,9 @@ export class InsertionService {
             throw new Error('Required parameter token was null or undefined when calling getPrivateInsertion.');
         }
 
-        let headers = this.defaultHeaders;
+      let headers = this.defaultHeaders;
 
 
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [

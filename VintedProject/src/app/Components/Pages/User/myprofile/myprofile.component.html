@@ -22,7 +22,7 @@
       <div style="max-height: 700px;">
         <div class="header">
           <h2 class="font">Le mie inserzioni</h2>
-          <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutte</button>
+          <button class="showAll-button"  (click)="openInsertionModal()">Vedi tutte</button>
         </div>
 
           <div class="body-content" style="margin-top: 30px"  *ngIf="isAnyInsertion">
@@ -42,7 +42,7 @@
       <div style="max-height: 700px;">
         <div class="header">
           <h2 class="font">Le mie offerte</h2>
-          <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutti</button>
+          <button class="showAll-button" (click)="openOfferModal()">Vedi tutti</button>
         </div>
         <div style="margin: 15%"> </div>
       <div class="card-container">
@@ -62,7 +62,7 @@
         <div style="max-height: 700px;">
           <div class="header">
             <h2 class="font">I mie ordini</h2>
-            <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutti</button>
+            <button class="showAll-button" (click)="openOrderModal()" >Vedi tutti</button>
           </div>
           <div style="margin: 15%"> </div>
           <div class="card-container">
@@ -76,5 +76,38 @@
         </div>
       </div>
   </div>
+</div>
+
+<!-- Finestra modale inserzioni -->
+<div class="insertion-modal" *ngIf="InsertionModal" (click)="closeInsertionModal($event)">
+  <div class="content" style="margin-top: 30px">
+    <div style="max-height: 700px;">
+      <div class="header">
+        <h2 class="font">Le mie inserzioni:</h2>
+      </div>
+      <div class="body-content" style="margin-top: 30px; display: flex"  *ngIf="isAnyInsertion">
+        <div class="card-container">
+          <div class="card-row" >
+            <ng-container *ngFor="let item of myInsertion?.content; let i = index;">
+              <app-profile-card [user]="user" [userId]="item.userId" [insertion]="item" class="card-item"></app-profile-card>
+              <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <button class="button showAll-button" (click)="addPageInsertion()" > Carica altro</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Finestra modale offerte -->
+<div class="offer-modal" *ngIf="OfferModal" (click)="closeOfferModal($event)">
+
+</div>
+
+<!-- Finestra modale ordini -->
+<div class="order-modal" *ngIf="OrderModal" (click)="closeOrderModal($event)">
+
 </div>
 

@@ -12,6 +12,7 @@ import {BuyingOfferDto} from "../../../../model/buyingOfferDto";
 import {OfferService} from "../../../../api/offer.service";
 import {PageBuyngOfferDto} from "../../../../model/pageBuyngOfferDto";
 import {OrderDto} from "../../../../model/orderDto";
+import {MatDialog} from "@angular/material/dialog";
 
 
 
@@ -29,8 +30,12 @@ export class MyprofileComponent implements OnInit{
   isAnyInsertion = false;
   isAnyOrder = false;
   isAnyOffer = false;
-  userId: number = Number(this.cookieSevices.getUserId());
+  userId = Number(this.cookieSevices.getUserId());
   showUpdateSectionFlag = false;
+  InsertionModal=false
+  OfferModal = false
+  OrderModal = false
+
 
   constructor(
     private insertionService: InsertionService,
@@ -38,11 +43,13 @@ export class MyprofileComponent implements OnInit{
     private userService: UserService,
     private orderService: OrderService,
     private offerService: OfferService,
-    private cookieSevices: CookiesService
+    private cookieSevices: CookiesService,
   ) {}
 
   ngOnInit(): void {
-    this.cookieSevices.checkUserCookie();
+    if (!this.cookieSevices.checkUserToken()){
+      this.cookieSevices.getRefreshToken()
+    }
     this.route.paramMap.pipe(
       switchMap((params) => {
         return this.userService.getUserDtoById(this.userId);
@@ -123,6 +130,29 @@ export class MyprofileComponent implements OnInit{
             }
         );
     }
+  getUserInsertion(): void {
+    this.insertionService.getInsertionByUserId(this.userId, this.page).subscribe(
+      (data: PageBasicInsertionDto) => {
+        if (data.content && data.content.length > 0) {
+          this.myInsertion = data;
+        }
+      },
+      (error) => {
+        console.log('Si è verificato un errore durante il recupero delle inserzioni dell\'utente:', error);
+      }
+    );
+  }
+  getUserOffer(): void {
+    this.offerService.getAllByUserId(this.page).subscribe(
+      (data: Array<BuyingOfferDto>) => {
+          this.myOffer = data;
+
+      },
+      (error) => {
+        console.log('Si è verificato un errore durante il recupero delle offerte dell\'utente:', error);
+      }
+    );
+  }
 
   showUpdateSection(): void {
     this.showUpdateSectionFlag = !this.showUpdateSectionFlag;
@@ -145,18 +175,59 @@ export class MyprofileComponent implements OnInit{
 
   updateNickname(newNickname: string): void {
     if (this.userId && newNickname) {
-      /* this.userService.updateUserNickname(newNickname, this.userId, 'body', false).subscribe(
-         (success: boolean) => {
-           // Nickname update successful
-           console.log('Nickname updated successfully.');
-         },
-         (error: any) => {
-           console.log('Failed to update nickname:', error);
-         }
-       );
-     }*/
-    }}
 
+    }
+  }
+
+  openInsertionModal() {
+    this.InsertionModal = !this.InsertionModal;
+  }
+
+  openOfferModal() {
+    this.OfferModal = !this.OfferModal;
+  }
+
+
+  openOrderModal() {
+    this.OrderModal = !this.OrderModal;
+  }
+
+  closeInsertionModal(event: any) {
+    if (event.target.classList.contains('insertion-modal')) {
+      this.openInsertionModal()
+      this.page=0;
+
+    }
+  }
+
+  closeOfferModal(event: any) {
+    if (event.target.classList.contains('offer-modal')) {
+      this.openOfferModal()
+      this.page=0;
+    }
+  }
+
+  closeOrderModal(event: any) {
+    if (event.target.classList.contains('order-modal')) {
+      this.openOrderModal()
+      this.page=0;
+    }
+  }
+
+  addPageInsertion() {
+    this.page+=1;
+    this.getUserInsertion()
+  }
+
+  addPageOffer() {
+    this.page+=1;
+    this.getUserOffer()
+  }
+
+  addPageOrder() {
+    this.page+=1;
+    this.getUserOrders()
+  }
 
 
 }

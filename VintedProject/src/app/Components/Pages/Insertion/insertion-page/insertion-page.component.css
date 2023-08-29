@@ -160,6 +160,7 @@
   background-color: rgba(0, 0, 0,0.9);
   color: white;
 }
+
 .message{
   display: flex;
   flex-direction: column;

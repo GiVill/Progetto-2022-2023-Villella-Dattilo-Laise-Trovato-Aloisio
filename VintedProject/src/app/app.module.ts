@@ -54,6 +54,7 @@ import {PrivateComponent} from "./Components/Pages/Insertion/private/private.com
 import {ClipboardModule} from "ngx-clipboard";
 import {ChatMessageService} from "./api/chatMessage.service";
 import {OfferProfileCardComponent} from "./Components/Components/Cards/offer-profile-card/offer-profile-card.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 
