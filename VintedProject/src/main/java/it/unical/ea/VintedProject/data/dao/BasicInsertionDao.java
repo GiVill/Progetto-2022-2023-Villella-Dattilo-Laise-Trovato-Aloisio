@@ -6,6 +6,7 @@ import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.enumeration.Brand;
 import it.unical.ea.VintedProject.dto.enumeration.Category;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -23,15 +24,21 @@ public interface BasicInsertionDao extends JpaRepository<BasicInsertion,Long> {
     @Override
     Optional<BasicInsertion> findById(Long aLong);
 
+    Page<BasicInsertion> findAllByIsPrivateIsFalse(PageRequest aLong);
+
+    Optional<BasicInsertion> findByIdAndIsPrivateIsFalse(Long aLong);
+
     //Return a PAGEABLE of Insertion fetched by User id
     Page<BasicInsertion> findAllByUserId(Long uLong, Pageable pageable);
+
+    Page<BasicInsertion> findAllByUserIdAndIsPrivateIsFalse(Long uLong, Pageable pageable);
 
     Optional<BasicInsertion> findByBuyingOffersId(Long offerId);
 
     Page<BasicInsertion> findAllByUserEmail(String email, Pageable pageable);
 
     //Return a PAGEABLE of Insertion fetched by title
-    Page<BasicInsertion> findAllByTitleContainingIgnoreCase(String title,Pageable pageable);
+    Page<BasicInsertion> findAllByTitleContainingIgnoreCaseAndIsPrivateIsFalse(String title, Pageable pageable);
 
     //Return ALL the Insertion with a price lower or equal
     List<BasicInsertion> findByPriceLessThanEqual(int price);
@@ -43,10 +50,10 @@ public interface BasicInsertionDao extends JpaRepository<BasicInsertion,Long> {
     List<BasicInsertion> findByPriceBetween(int from, int to);
 
     //Return a PAGEABLE of Insertion with a determinate Brand
-    Page<BasicInsertion> findByBrand(Brand brand, Pageable pageable);
+    Page<BasicInsertion> findByBrandAndIsPrivateIsFalse(Brand brand, Pageable pageable);
 
     //Return a PAGEABLE of Insertion with a determinate Category
-    Page<BasicInsertion> findByCategory(Category category, Pageable pageable);
+    Page<BasicInsertion> findByCategoryAndIsPrivateIsFalse(Category category, Pageable pageable);
 
     Page<BasicInsertion> findAllByIsPrivate(Boolean isPrivate, Pageable pageable);
 

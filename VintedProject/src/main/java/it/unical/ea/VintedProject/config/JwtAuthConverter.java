@@ -35,6 +35,8 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 
     private ThreadLocal<String> emailThreadLocal = new ThreadLocal<>();
 
+    private ThreadLocal<String> idKeycloakThreadLocal = new ThreadLocal<>();
+
     @Override
     public AbstractAuthenticationToken convert(@NonNull Jwt jwt) {
         Collection<GrantedAuthority> authorities = Stream.concat(
@@ -52,6 +54,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
     private String getPrincipleClaimName(Jwt jwt) {
 
         setEmail(jwt);
+        setIdKeycloak(jwt);
         getUserInformation(jwt);
         String claimName = JwtClaimNames.SUB;
         if (principleAttribute != null) {
@@ -107,5 +110,13 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 
     public String getEmail(){
         return emailThreadLocal.get();
+    }
+
+    private void setIdKeycloak(Jwt jwt){
+        idKeycloakThreadLocal.set(jwt.getClaim("sub"));
+    }
+
+    public String getIdKeycloak(){
+        return idKeycloakThreadLocal.get();
     }
 }

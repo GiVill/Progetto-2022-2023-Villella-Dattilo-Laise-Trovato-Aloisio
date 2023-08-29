@@ -2,11 +2,10 @@ package it.unical.ea.VintedProject.data.service;
 
 import com.nimbusds.jose.JOSEException;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
-import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
+import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
-import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
@@ -36,7 +35,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 5;
     private final MessageLang messageLang;
-    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
+    private final LoggedUserMethod loggedUserMethod;
 
 
     @Override
@@ -53,6 +52,13 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     @Override
     public Page<BasicInsertionDto> getAllByUser(Long uId, int page) {
+        PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE);
+        List<BasicInsertionDto> collect = basicInsertionDao.findAllByUserIdAndIsPrivateIsFalse(uId, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        return new PageImpl<>(collect);
+    }
+
+    @Override
+    public Page<BasicInsertionDto> getAllMyInsertions(Long uId, int page) {
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE);
         List<BasicInsertionDto> collect = basicInsertionDao.findAllByUserId(uId, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
@@ -73,10 +79,23 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     }
 
     @Override
+    public Page<BasicInsertionDto> getAllByIsPrivateEqualsFalsePaged(int page) {
+        Page<BasicInsertion> basicInsertions = basicInsertionDao.findAllByIsPrivateIsFalse(PageRequest.of(page, SIZE_FOR_PAGE));
+        List<BasicInsertionDto> collect = basicInsertions.stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        return new PageImpl<>(collect);
+    }
+
+    @Override
     public Page<BasicInsertionDto> getAllByTitleStartWith(String title, int page) {
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("title").ascending());
-        List<BasicInsertionDto> collect = basicInsertionDao.findAllByTitleContainingIgnoreCase(title, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        List<BasicInsertionDto> collect = basicInsertionDao.findAllByTitleContainingIgnoreCaseAndIsPrivateIsFalse(title, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
+    }
+
+    @Override
+    public BasicInsertionDto getInsertionByIdAndIsPrivateEqualsFalse(Long id) {
+        BasicInsertion basicInsertion = basicInsertionDao.findByIdAndIsPrivateIsFalse(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present",id)));
+        return modelMapper.map(basicInsertion, BasicInsertionDto.class);
     }
 
     @Override
@@ -93,36 +112,46 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     @Override
     public Page<BasicInsertionDto> getByBrand(Brand brand, int page){
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("brand").ascending());
-        List<BasicInsertionDto> collect = basicInsertionDao.findByBrand(brand, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        List<BasicInsertionDto> collect = basicInsertionDao.findByBrandAndIsPrivateIsFalse(brand, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
 
     @Override
     public Page<BasicInsertionDto> getByCategory(Category category, int page){
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("category").ascending());
-        List<BasicInsertionDto> collect = basicInsertionDao.findByCategory(category,pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        List<BasicInsertionDto> collect = basicInsertionDao.findByCategoryAndIsPrivateIsFalse(category,pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
 
     @Override
     public BasicInsertionDto modifyUserInsertion(BasicInsertionDto insertionDto) {
-        //loggedUser.checkLoggedUser();
-        Optional<User> user = userService.getOptionalUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(user.isEmpty()||!Objects.equals(user.get().getId(), insertionDto.getUserId())){
-            throw new EntityNotFoundException(messageLang.getMessage("access.denied"));
-        }
+        loggedUserMethod.checkLoggedUser(insertionDto.getUserId());
         basicInsertionDao.save(modelMapper.map(insertionDto,BasicInsertion.class));
         return insertionDto;
     }
 
 
     @Override
-    public String generateToken(Long id) {
+    public String generate24hToken(Long id) {
         BasicInsertion insertion = basicInsertionDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present", id)));
+        loggedUserMethod.checkLoggedUser(insertion.getUser().getId());
         Map<String, Object> claims  = new HashMap<>();
         claims.put("id",insertion.getId());
         try {
-            return TokenStore.getInstance().createToken(claims);
+            return TokenStore.getInstance().create24hToken(claims);
+        } catch (JOSEException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String generateLongTermToken(Long id) {
+        BasicInsertion insertion = basicInsertionDao.findById(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present", id)));
+        loggedUserMethod.checkLoggedUser(insertion.getUser().getId());
+        Map<String, Object> claims  = new HashMap<>();
+        claims.put("id",insertion.getId());
+        try {
+            return TokenStore.getInstance().createLongTermToken(claims);
         } catch (JOSEException e) {
             throw new RuntimeException(e);
         }
@@ -151,11 +180,6 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     @Override
     public void deleteBasicInsertionById(Long insertionId) {
-        //loggedUser.checkLoggedUser();
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getInsertions().contains(basicInsertionDao.findById(insertionId))){
-            throw new EntityNotFoundException(messageLang.getMessage("request.not.valid"));
-        }
         basicInsertionDao.deleteById(insertionId);
     }
 
@@ -166,12 +190,8 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
 
     @Override
-    public Boolean modifyInsertionById(Long insertionId, BasicInsertionDto insertionDto) {
-        if(basicInsertionDao.findById(insertionId).isPresent()){
-            basicInsertionDao.save(modelMapper.map(insertionDto,BasicInsertion.class));
-            return true;
-        }
-        throw new EntityNotFoundException(messageLang.getMessage("insertion.not.present"));
+    public void modifyInsertion(BasicInsertionDto insertionDto) {
+        basicInsertionDao.save(modelMapper.map(insertionDto,BasicInsertion.class));
     }
 
 

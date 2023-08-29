@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final static int SIZE_FOR_PAGE = 10;
     private final MessageLang messageLang;
-    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
     private final LoggedUserMethod loggedUserMethod;
 
     @Override
@@ -74,16 +73,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean updateUserPassword(String newPassword) {
-        //Optional<User> u = getOptionalUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        //if(u.get().getEmail() == null){
-        //    throw new EntityNotFoundException(messageLang.getMessage("wrong.user"));
-        //}
-        //TODO L'update andrebbe fatta anche su Keycloak
         try{
-            //User user = loggedUser.getEntireLoggedUser();
             User user = loggedUserMethod.getEntireLoggedUser();
 
-            //User user = userDao.findById(u.get().getId()).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("user.not.present", u.get().getId())));
             keycloakTokenClient.updateUserPassword(newPassword);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.save(user);
@@ -95,9 +87,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long userId) {
-        //loggedUser.checkLoggedUser(userId);
-        loggedUserMethod.checkLoggedUser(userId);
 
+        loggedUserMethod.checkLoggedUser(userId);
         userDao.deleteById(userId);
     }
 

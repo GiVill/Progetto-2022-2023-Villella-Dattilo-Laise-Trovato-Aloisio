@@ -31,7 +31,7 @@ public class LoggedUserMethod {
         Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() ->  new BadRequestException(messageLang.getMessage("access.denied"))));
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " checkLoggedUser ARGS");
 
-        if(user.get().getId().equals(userId)){ //|| user.get().getId().equals(userService.getUserById(userId).getId())
+        if(!user.get().getId().equals(userId)){ //|| user.get().getId().equals(userService.getUserById(userId).getId())
             throw new BadRequestException(messageLang.getMessage("access.denied")); //throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
         }
     }
@@ -43,6 +43,15 @@ public class LoggedUserMethod {
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " getLoggedUserId");
 
         return user.get().getId();
+    }
+
+    public String getLoggedUserIdKeycloak(){
+        System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
+
+        Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() -> new BadRequestException(messageLang.getMessage("access.denied"))));
+        System.out.println(LoggedUserDetail.getInstance().getEmail() + " getLoggedUserId");
+
+        return jwtAuthConverter.getIdKeycloak();
     }
 
     public Long getLoggedUserId(Long userId){

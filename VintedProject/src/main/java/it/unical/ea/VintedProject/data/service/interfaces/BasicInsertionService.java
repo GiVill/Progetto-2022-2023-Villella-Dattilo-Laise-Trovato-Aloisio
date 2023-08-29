@@ -23,13 +23,18 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
     void deleteAllBasicInsertionByUserId(Long uId);
 
     Page<BasicInsertionDto> getAllByUser(Long uId, int page);
+    Page<BasicInsertionDto> getAllMyInsertions(Long uId, int page);
 
     Page<BasicInsertionDto> getAllByUserEmail(String email, int page);
 
     Page<BasicInsertionDto> getAllPaged(int page);
 
+
+    Page<BasicInsertionDto> getAllByIsPrivateEqualsFalsePaged(int page);
+
     Page<BasicInsertionDto> getAllByTitleStartWith(String title, int page);
 
+    BasicInsertionDto getInsertionByIdAndIsPrivateEqualsFalse(Long id);
     BasicInsertionDto getInsertionById(Long id);
 
     BasicInsertion getById(Long id);
@@ -44,13 +49,14 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
     Page<BasicInsertion> @Param("a") User;
 
  */
+    String generate24hToken(Long id) ;
 
-    String generateToken(Long id) ;
+    String generateLongTermToken(Long id);
 
     BasicInsertionDto getPrivateInsertion(String token);
 
 
     void deleteBasicInsertionForAdmin(Long insertionId);
 
-    Boolean modifyInsertionById(Long insertionId, BasicInsertionDto insertionDto);
+    void modifyInsertion(BasicInsertionDto insertionDto);
 }

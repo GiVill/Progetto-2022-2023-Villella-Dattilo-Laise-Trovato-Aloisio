@@ -38,12 +38,12 @@ public class ImageController {
     }
 
     @DeleteMapping("/admin/images/user/{userId}")
-    public ResponseEntity<Void> adminDeleteImage(@PathVariable("userId") Long insertionId){
-        imageService.deleteImageUser(insertionId);
+    public ResponseEntity<Void> adminDeleteImage(@PathVariable("userId") Long userId){
+        imageService.deleteImageUser(userId);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/user/images/{userId}")
+    @DeleteMapping("/images/user/{userId}")
     public ResponseEntity<Void> userDeleteImage(@PathVariable("userId") Long userId){
         loggedUserMethod.checkLoggedUser(userId);
         imageService.deleteImageUser(userId);
@@ -56,7 +56,7 @@ public class ImageController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/user/images/insertion/{insertionId}")
+    @DeleteMapping("/images/insertion/{insertionId}")
     public ResponseEntity<Void> userImageInsertion(@PathVariable("insertionId") Long insertionId){
         imageService.userDeleteImageInsertion(insertionId);
         return ResponseEntity.noContent().build();

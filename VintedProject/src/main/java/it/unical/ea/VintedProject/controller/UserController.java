@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
+import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.UserDto;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
+    private final LoggedUserMethod loggedUserMethod;
 
     @Autowired
     private HttpServletRequest request;
@@ -59,20 +60,13 @@ public class UserController {
     }
 
     @PostMapping("/admin/users")
-    // SOLO ADMIN ?
     public ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) {
         return ResponseEntity.ok(userService.saveDto(userDto));
     }
 
-    @PutMapping("/password/{userId}")
-    public ResponseEntity<Boolean> updateUserPassword(@PathVariable Long userId,@RequestBody @Valid String newPassword) {
-        //TODO loggedUser.getLoggedUserId(userId);
-        //if(loggedUser.getLoggedUserId().equals(userId)){
+    @PutMapping("/password")
+    public ResponseEntity<Boolean> updateUserPassword(@RequestBody @Valid String newPassword) {
         return ResponseEntity.ok(userService.updateUserPassword(newPassword));
-        //} else {
-        //TODO: ERRORE PERMESSI
-        //    throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
-        //}
     }
     @DeleteMapping("/admin/users/{userId}")
     //@PreAuthorize("hasRole('admin')")
@@ -84,15 +78,10 @@ public class UserController {
     @DeleteMapping("/users/{userId}")
     //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<Void> userDeleteUserById(@PathVariable("userId") Long userId) {
-        //loggedUser.checkLoggedUser(userId);
-        //if(loggedUser.getLoggedUserId().equals(id)){
         userService.deleteUserById(userId);
         return ResponseEntity.noContent().build();
-        //} else {
-        //TODO: ERRORE PERMESSI
-        //    throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
-        //}
     }
+
 
     //TODO: Forse questo si può eliminare?
     public String serviceAFallback(Exception e) {

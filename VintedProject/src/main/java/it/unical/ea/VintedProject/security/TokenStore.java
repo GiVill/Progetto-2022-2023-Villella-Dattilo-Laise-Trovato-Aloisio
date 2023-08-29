@@ -26,10 +26,27 @@ public class TokenStore {
         return instance;
     }
 
-    public String createToken(Map<String, Object> claims) throws JOSEException {
+    public String create24hToken(Map<String, Object> claims) throws JOSEException {
         Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS); // Issued now
         Instant notBefore = issuedAt.plus(5, ChronoUnit.SECONDS); // Valid in 5 seconds (useless to us, here just to show how to set it)
         Instant expiration = issuedAt.plus(24, ChronoUnit.HOURS); // Invalid after 24 hours
+        JWTClaimsSet.Builder builder = new JWTClaimsSet.Builder();
+        for (String entry : claims.keySet())
+            builder.claim(entry, claims.get(entry));
+        JWTClaimsSet claimsSet = builder.issueTime(Date.from(issuedAt))
+                .notBeforeTime(Date.from(notBefore))
+                .expirationTime(Date.from(expiration)).build();
+        Payload payload = new Payload(claimsSet.toJSONObject());
+        JWSObject jwsObject = new JWSObject(new JWSHeader(JWSAlgorithm.HS256), payload);
+        jwsObject.sign(new MACSigner(secretKey.getBytes()));
+        return jwsObject.serialize();
+    }
+
+
+    public String createLongTermToken(Map<String, Object> claims) throws JOSEException {
+        Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS); // Issued now
+        Instant notBefore = issuedAt.plus(5, ChronoUnit.SECONDS); // Valid in 5 seconds (useless to us, here just to show how to set it)
+        Instant expiration = issuedAt.plus(8760,ChronoUnit.HOURS);
         JWTClaimsSet.Builder builder = new JWTClaimsSet.Builder();
         for (String entry : claims.keySet())
             builder.claim(entry, claims.get(entry));

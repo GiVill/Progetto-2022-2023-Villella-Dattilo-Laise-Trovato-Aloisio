@@ -40,13 +40,13 @@ public class BuyingOfferController {
 
     @GetMapping("/admin/offers/user/{idUser}")
     //TODO: AGGIUNGERE AL SECURITY CON.
-    public ResponseEntity<List<BuyingOfferDto>> getAllByUserId(@PathVariable("idUser") Long userId) {
+    public ResponseEntity<List<BuyingOfferDto>> getAllByUserId(@PathVariable("idUser") Long idUser) {
         // find an Insertion using the ID.
         // No Throw on the find!
-        return ResponseEntity.ok(buyingOfferService.getAllByUserId(userId));
+        return ResponseEntity.ok(buyingOfferService.getAllByUserId(idUser));
     }
 
-    @GetMapping("/user/offers")
+    @GetMapping("/offers/user")
     public ResponseEntity<List<BuyingOfferDto>> getAllByUser() {
         return ResponseEntity.ok(buyingOfferService.getAllByUserId(loggedUserMethod.getLoggedUserId()));
     }

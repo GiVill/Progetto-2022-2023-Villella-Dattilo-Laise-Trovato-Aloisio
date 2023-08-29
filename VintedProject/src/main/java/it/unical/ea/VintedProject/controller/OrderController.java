@@ -33,14 +33,11 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrderDtoByIdAdminPaged(UserId, page));
     }
 
-    /*
-    @GetMapping("/orders/admin/email/{userEmail}/{page}")
+    @GetMapping("/admin/orders/email/{userEmail}/{page}")
     //@PreAuthorize("hasRole('<admin')")
     public ResponseEntity<Page<OrderDto>> getOrderDtoByIdByEmailPagedAdmin(@PathVariable("userEmail") String email, @PathVariable("page") int page) {
         return ResponseEntity.ok(orderService.getOrderByIdAdminByEmail(email, page));
     }
-
-     */
 
     @GetMapping("/admin/orders")
     public ResponseEntity<Page<OrderDto>> getAll(@RequestParam("page") int page){
@@ -86,12 +83,11 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrderDtoByUserIdPaged(userId, page));
     }
 
-    /* TODO: ADMIN
-    @GetMapping("/orders/user/{userId}/{page}")
+    @GetMapping("admin/orders/user/{userId}/{page}")
     public ResponseEntity<Page<OrderDto>> getUserOrders(@PathVariable("userId") Long userId,@PathVariable("page") int page){
-        return ResponseEntity.ok(orderService.findByUserId(userId,page));
+        return ResponseEntity.ok(orderService.getOrderDtoByIdAdminPaged(userId,page));
     }
 
-     */
+
 
 }

@@ -2,6 +2,7 @@ package it.unical.ea.VintedProject.security.keycloak;
 
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
+import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.dto.NewUserDto;
 import lombok.RequiredArgsConstructor;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
@@ -29,6 +30,7 @@ public class KeycloakTokenClient {
 
 
     private final MessageLang messageLang;
+    private final LoggedUserMethod loggedUserMethod;
     private static final String TOKEN_ENDPOINT = "http://localhost:8090/realms/vinted2_0/protocol/openid-connect/token";
 
     public Keycloak getAdminKeycloakUser() {
@@ -132,6 +134,10 @@ public class KeycloakTokenClient {
 
     public boolean updateUserPassword(String newPassword){
 
+        String keycloakId = loggedUserMethod.getLoggedUserIdKeycloak();
+
+        System.out.println(keycloakId);
+
 
         CredentialRepresentation passwordCred = new CredentialRepresentation();
         passwordCred.setTemporary(false);
@@ -139,7 +145,7 @@ public class KeycloakTokenClient {
         passwordCred.setValue(newPassword);
 
         RealmResource realmResource = getAdminKeycloakUser().realm("vinted2_0");
-        UserResource userResource = realmResource.users().get(LoggedUserDetail.getInstance().getIdKeycloak());
+        UserResource userResource = realmResource.users().get(keycloakId);
 
         userResource.resetPassword(passwordCred);
 
