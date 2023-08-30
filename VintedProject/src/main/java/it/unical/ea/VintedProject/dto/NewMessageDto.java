@@ -15,4 +15,5 @@ public class NewMessageDto {
     private String nickname;
     private String message;
     private Long insertionId;
+    private Long chatId;
 }

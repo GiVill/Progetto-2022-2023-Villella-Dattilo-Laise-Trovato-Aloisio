@@ -2,6 +2,7 @@ package it.unical.ea.VintedProject.data.service;
 
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
+import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
 import it.unical.ea.VintedProject.data.dao.BuyingOfferDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
@@ -17,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import javax.ws.rs.BadRequestException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,7 +30,9 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
 
     private final ModelMapper modelMapper;
     private final BuyingOfferDao buyingOfferDao;
+    private final BasicInsertionDao insertionDao;
     private final MessageLang messageLang;
+    private final LoggedUserMethod loggedUserMethod;
 
     @Override
     public BuyingOfferDto save(BuyingOfferDto offer) {
@@ -60,12 +64,21 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     }
 
     @Override
-    public void deleteOfferById(Long offerId) {
+    public void deleteOfferById(Long buyingOfferId) {
 
-        if(buyingOfferDao.findById(offerId).isEmpty()){
-            throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present",offerId));
+        Optional<BasicInsertion> insertion = insertionDao.findById(buyingOfferId);
+        Optional<BuyingOffer> buyingOffer = buyingOfferDao.findById(buyingOfferId);
+
+        if(loggedUserMethod.getLoggedUserId().equals(buyingOffer.get().getUser().getId()) ||
+                loggedUserMethod.getLoggedUserId().equals(insertion.get().getUser().getId())){
+            if(buyingOffer.isEmpty()){
+                throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present",buyingOfferId));
+            }
+            buyingOfferDao.deleteById(buyingOfferId);
+        } else {
+            throw new BadRequestException(messageLang.getMessage("access.denied"));
         }
-        buyingOfferDao.deleteById(offerId);
+
     }
 
     @Override
@@ -75,6 +88,18 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
             throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present",offerId));
         }
         return modelMapper.map(offer.get(), BuyingOfferDto.class);
+    }
+
+    @Override
+    public void acceptOffer(BuyingOfferDto buyingOfferDto) {
+        Optional<BasicInsertion> insertion = insertionDao.findById(buyingOfferDto.getInsertionId());
+        if(loggedUserMethod.getLoggedUserId().equals(insertion.get().getUser().getId())){
+            BuyingOffer buyingOffer = modelMapper.map(buyingOfferDto,BuyingOffer.class);
+            buyingOfferDao.save(buyingOffer);
+        }
+        else {
+            throw new BadRequestException(messageLang.getMessage("access.denied"));
+        }
     }
 
 }

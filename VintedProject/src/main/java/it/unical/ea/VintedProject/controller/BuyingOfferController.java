@@ -99,8 +99,16 @@ public class BuyingOfferController {
         // Check the Token, if not ok: THROW Exception.
         // Delete a BuyingOffer using the ID.
         // No Throw on Deletion
+        buyingOfferService.deleteOfferById(buyingOfferDto.getId());
+        return HttpStatus.OK;
 
-        loggedUserMethod.getLoggedUserId(buyingOfferDto.getUserId());
+    }
+
+    @PutMapping("/offers/accept")
+    public HttpStatus acceptOffers (@RequestBody @Valid BuyingOfferDto buyingOfferDto) {
+        // Check the Token, if not ok: THROW Exception.
+        // Delete a BuyingOffer using the ID.
+        // No Throw on Deletion
         buyingOfferService.deleteOfferById(buyingOfferDto.getId());
         return HttpStatus.OK;
 

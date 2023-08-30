@@ -146,7 +146,7 @@ public class InsertionController {
 
     @DeleteMapping("/admin/insertions/{insertionId}")
     //@PreAuthorize("hasAnyRole('admin')")
-    public ResponseEntity<Void> adminDeleteInsertionByUserId(@RequestParam("insertionId") Long insertionId) {
+    public ResponseEntity<Void> adminDeleteInsertionByInsertionId(@RequestParam("insertionId") Long insertionId) {
         // Check the Token, if not ok: THROW Exception.
         // Delete an Insertion using the ID.
         // No Throw on Deletion

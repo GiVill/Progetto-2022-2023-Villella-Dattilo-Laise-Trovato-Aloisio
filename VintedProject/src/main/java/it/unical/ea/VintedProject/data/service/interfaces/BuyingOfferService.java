@@ -12,9 +12,11 @@ import java.util.List;
 public interface BuyingOfferService {
     BuyingOfferDto save(BuyingOfferDto offer);
 
-    void deleteOfferById(Long id);
+    void deleteOfferById(Long buyingOfferId);
 
     BuyingOfferDto getOfferById(Long offerId);
+
+    void acceptOffer(BuyingOfferDto buyingOfferDto);
 
 
     void save(BuyingOffer buyingOffer);
