@@ -2,8 +2,10 @@ package it.unical.ea.VintedProject.data.service;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
+import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
+import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.OrderService;
@@ -28,6 +30,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderDao orderDao;
     private final UserDao userDao;
+    private final BasicInsertionDao insertionDao;
     private final ModelMapper modelMapper;
     private final MessageLang messageLang;
     private final LoggedUserMethod loggedUserMethod;
@@ -36,7 +39,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto save(OrderDto orderDto) {
+
+        for (Long id:orderDto.getInsertionIdList()) {
+            Optional<BasicInsertion> insertion = insertionDao.findById(id);
+            if(insertion.isPresent()){
+                insertion.get().setAvailable(false);
+                insertionDao.save(insertion.get());
+            }
+        }
         Order order = modelMapper.map(orderDto, Order.class);
+
         Order o = orderDao.save(order);
         return modelMapper.map(o, OrderDto.class);
     }
