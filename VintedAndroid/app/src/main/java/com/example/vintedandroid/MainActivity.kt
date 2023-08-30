@@ -68,6 +68,7 @@ import com.example.vintedandroid.model.application_status.internetChecker
 import com.example.vintedandroid.view.noConnectionScreen
 import com.example.vintedandroid.viewmodel.CartViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
+import com.example.vintedandroid.viewmodel.LoginViewModel
 import com.example.vintedandroid.viewmodel.UserViewModel
 
 class MainActivity : ComponentActivity() {
@@ -101,7 +102,8 @@ class MainActivity : ComponentActivity() {
                                     application = application.applicationContext,
                                     homeViewModel =  HomeViewModel(application),
                                     userViewModel = UserViewModel(application),
-                                    cartViewModel = CartViewModel(application)
+                                    cartViewModel = CartViewModel(application),
+                                    loginViewModel = LoginViewModel(application)
                                 )
                             }
                         } )
