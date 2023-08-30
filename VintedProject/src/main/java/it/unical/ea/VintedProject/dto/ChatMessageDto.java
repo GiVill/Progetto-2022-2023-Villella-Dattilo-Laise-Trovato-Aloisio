@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 public class ChatMessageDto {
     private Long id;
     private Long reciver;
-    private String nickname;
     private String message;
     private LocalDateTime date;
     private Boolean seen;
