@@ -9,11 +9,15 @@ import it.unical.ea.VintedProject.data.entities.Chat;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatService;
+import it.unical.ea.VintedProject.dto.ChatDto;
+import it.unical.ea.VintedProject.dto.OrderDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -24,7 +28,7 @@ public class ChatServicesImpl implements ChatService {
     private final ChatDao chatDao;
     private final UserDao userDao;
     private final MessageLang messageLang;
-    //private final ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
     private final BasicInsertionService basicInsertionService;
 
 
@@ -49,13 +53,13 @@ public class ChatServicesImpl implements ChatService {
     }
 
     @Override
-    public List<Chat> allChatByUserId(Long id) {
+    public List<ChatDto> allChatByUserId(Long id) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         //if(u.get().getEmail() == null || !u.get().getId().equals(id)){
         //    throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id));
         //}
         System.out.println("mlmlml");
-        List<Chat> list =chatDao.findAllChatsForUser(id);
+        List<Chat> list = chatDao.findAllChatsForUser(id);
         System.out.println(list);
         //List<Chat> list = chatDao.findAllByBasicInsertionId(id);
 
@@ -66,7 +70,7 @@ public class ChatServicesImpl implements ChatService {
 
         //Set<Chat> uniqueChatMessages = new HashSet<>(list);
         //List<Chat> uniqueList = new ArrayList<>(uniqueChatMessages);
-        return list;
+        return list.stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
     }
 
     @Override

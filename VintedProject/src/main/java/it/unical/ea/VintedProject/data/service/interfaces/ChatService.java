@@ -16,7 +16,7 @@ public interface ChatService {
 
     void delete(Chat chat);
 
-    List<Chat> allChatByUserId(Long id);
+    List<ChatDto> allChatByUserId(Long id);
 
     Optional<Chat> existChat(Long user1, Long user2, Long insertion);
 
