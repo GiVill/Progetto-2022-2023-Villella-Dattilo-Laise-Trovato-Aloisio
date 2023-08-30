@@ -123,8 +123,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present", newMessageDto.getSender()));
         }
 
-        BasicInsertion b = basicInsertionService.getById(Long.valueOf(newMessageDto.getInsertionId()));
-
         if (chatDao.findByUser1AndUser2(Long.valueOf(newMessageDto.getSender()), Long.valueOf(newMessageDto.getReciver())).isEmpty()) {
             Chat chat = new Chat();
             chat.setUser1(Long.valueOf(newMessageDto.getSender()));
@@ -133,7 +131,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setSender(Long.valueOf(newMessageDto.getSender()));
             chatMessage.setReciver(Long.valueOf(newMessageDto.getReciver()));
-            chatMessage.setNickname(newMessageDto.getNickname());
             chatMessage.setMessage(newMessageDto.getMessage());
             chatMessage.setDate(LocalDateTime.now());
 
@@ -149,7 +146,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setSender(Long.valueOf(newMessageDto.getSender()));
             chatMessage.setReciver(Long.valueOf(newMessageDto.getReciver()));
-            chatMessage.setNickname(newMessageDto.getNickname());
             chatMessage.setMessage(newMessageDto.getMessage());
             chatMessage.setDate(LocalDateTime.now());
             chatMessage.setChat(newChat.getId());

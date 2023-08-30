@@ -12,8 +12,6 @@ public class NewMessageDto {
 
     private Long sender;
     private Long reciver;
-    private String nickname;
     private String message;
-    private Long insertionId;
     private Long chatId;
 }

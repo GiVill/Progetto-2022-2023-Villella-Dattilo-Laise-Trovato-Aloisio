@@ -26,4 +26,5 @@ public class Chat {
     @Column(name = "user2")
     private Long user2;
 
+
 }
