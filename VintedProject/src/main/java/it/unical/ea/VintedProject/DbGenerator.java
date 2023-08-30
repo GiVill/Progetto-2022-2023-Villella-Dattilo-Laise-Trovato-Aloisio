@@ -81,7 +81,7 @@ public class DbGenerator implements ApplicationRunner {
             CSVParser insertionsCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(insertionsRes.getInputStream()));
             for (CSVRecord record : insertionsCsv) {
-                insertInsertion(record.get(0), record.get(1), record.get(2), record.get(3),record.get(4), record.get(5),record.get(6));
+                insertInsertion(record.get(0), record.get(1), record.get(2), record.get(3),record.get(4), record.get(5),record.get(6),record.get(7));
             }
 
 
@@ -126,7 +126,7 @@ public class DbGenerator implements ApplicationRunner {
     }
 
     private void insertInsertion(String title, String price, String creationDate, String description,
-                                 String isPro, String idUser, String idOrder) {
+                                 String isPro, String idUser, String idOrder, String available) {
 
         BasicInsertion basicInsertion = new BasicInsertion();
         basicInsertion.setTitle(title);
@@ -136,6 +136,7 @@ public class DbGenerator implements ApplicationRunner {
         basicInsertion.setUser(userService.getUserById(Long.valueOf(idUser)));
         basicInsertion.setIsPrivate(Boolean.valueOf(isPro));
         basicInsertion.setOrder(orderService.getById(Long.valueOf(idOrder)));
+        basicInsertion.setAvailable(Boolean.valueOf(available));
 
         insertionService.save(basicInsertion);
     }
@@ -223,6 +224,6 @@ public class DbGenerator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-       //createDb();
+       createDb();
     }
 }

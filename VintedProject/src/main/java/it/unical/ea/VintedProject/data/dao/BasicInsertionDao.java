@@ -24,21 +24,21 @@ public interface BasicInsertionDao extends JpaRepository<BasicInsertion,Long> {
     @Override
     Optional<BasicInsertion> findById(Long aLong);
 
-    Page<BasicInsertion> findAllByIsPrivateIsFalse(PageRequest aLong);
+    Page<BasicInsertion> findAllByIsPrivateIsFalseAndAvailableIsTrue(PageRequest aLong);
 
-    Optional<BasicInsertion> findByIdAndIsPrivateIsFalse(Long aLong);
+    Optional<BasicInsertion> findByIdAndIsPrivateIsFalseAndAvailableIsTrue(Long aLong);
 
     //Return a PAGEABLE of Insertion fetched by User id
     Page<BasicInsertion> findAllByUserId(Long uLong, Pageable pageable);
 
-    Page<BasicInsertion> findAllByUserIdAndIsPrivateIsFalse(Long uLong, Pageable pageable);
+    Page<BasicInsertion> findAllByUserIdAndIsPrivateIsFalseAndAvailableIsTrue(Long uLong, Pageable pageable);
 
     Optional<BasicInsertion> findByBuyingOffersId(Long offerId);
 
     Page<BasicInsertion> findAllByUserEmail(String email, Pageable pageable);
 
     //Return a PAGEABLE of Insertion fetched by title
-    Page<BasicInsertion> findAllByTitleContainingIgnoreCaseAndIsPrivateIsFalse(String title, Pageable pageable);
+    Page<BasicInsertion> findAllByTitleContainingIgnoreCaseAndIsPrivateIsFalseAndAvailableIsTrue(String title, Pageable pageable);
 
     //Return ALL the Insertion with a price lower or equal
     List<BasicInsertion> findByPriceLessThanEqual(int price);
@@ -50,10 +50,10 @@ public interface BasicInsertionDao extends JpaRepository<BasicInsertion,Long> {
     List<BasicInsertion> findByPriceBetween(int from, int to);
 
     //Return a PAGEABLE of Insertion with a determinate Brand
-    Page<BasicInsertion> findByBrandAndIsPrivateIsFalse(Brand brand, Pageable pageable);
+    Page<BasicInsertion> findByBrandAndIsPrivateIsFalseAndAvailableIsTrue(Brand brand, Pageable pageable);
 
     //Return a PAGEABLE of Insertion with a determinate Category
-    Page<BasicInsertion> findByCategoryAndIsPrivateIsFalse(Category category, Pageable pageable);
+    Page<BasicInsertion> findByCategoryAndIsPrivateIsFalseAndAvailableIsTrue(Category category, Pageable pageable);
 
     Page<BasicInsertion> findAllByIsPrivate(Boolean isPrivate, Pageable pageable);
 

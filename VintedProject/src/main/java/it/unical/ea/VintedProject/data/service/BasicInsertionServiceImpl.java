@@ -53,7 +53,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     @Override
     public Page<BasicInsertionDto> getAllByUser(Long uId, int page) {
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE);
-        List<BasicInsertionDto> collect = basicInsertionDao.findAllByUserIdAndIsPrivateIsFalse(uId, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        List<BasicInsertionDto> collect = basicInsertionDao.findAllByUserIdAndIsPrivateIsFalseAndAvailableIsTrue(uId, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
 
@@ -80,7 +80,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     @Override
     public Page<BasicInsertionDto> getAllByIsPrivateEqualsFalsePaged(int page) {
-        Page<BasicInsertion> basicInsertions = basicInsertionDao.findAllByIsPrivateIsFalse(PageRequest.of(page, SIZE_FOR_PAGE));
+        Page<BasicInsertion> basicInsertions = basicInsertionDao.findAllByIsPrivateIsFalseAndAvailableIsTrue(PageRequest.of(page, SIZE_FOR_PAGE));
         List<BasicInsertionDto> collect = basicInsertions.stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
@@ -88,13 +88,13 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     @Override
     public Page<BasicInsertionDto> getAllByTitleStartWith(String title, int page) {
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("title").ascending());
-        List<BasicInsertionDto> collect = basicInsertionDao.findAllByTitleContainingIgnoreCaseAndIsPrivateIsFalse(title, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        List<BasicInsertionDto> collect = basicInsertionDao.findAllByTitleContainingIgnoreCaseAndIsPrivateIsFalseAndAvailableIsTrue(title, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
 
     @Override
     public BasicInsertionDto getInsertionByIdAndIsPrivateEqualsFalse(Long id) {
-        BasicInsertion basicInsertion = basicInsertionDao.findByIdAndIsPrivateIsFalse(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present",id)));
+        BasicInsertion basicInsertion = basicInsertionDao.findByIdAndIsPrivateIsFalseAndAvailableIsTrue(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present",id)));
         return modelMapper.map(basicInsertion, BasicInsertionDto.class);
     }
 
@@ -112,14 +112,14 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     @Override
     public Page<BasicInsertionDto> getByBrand(Brand brand, int page){
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("brand").ascending());
-        List<BasicInsertionDto> collect = basicInsertionDao.findByBrandAndIsPrivateIsFalse(brand, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        List<BasicInsertionDto> collect = basicInsertionDao.findByBrandAndIsPrivateIsFalseAndAvailableIsTrue(brand, pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
 
     @Override
     public Page<BasicInsertionDto> getByCategory(Category category, int page){
         PageRequest pageRequest = PageRequest.of(page, SIZE_FOR_PAGE, Sort.by("category").ascending());
-        List<BasicInsertionDto> collect = basicInsertionDao.findByCategoryAndIsPrivateIsFalse(category,pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+        List<BasicInsertionDto> collect = basicInsertionDao.findByCategoryAndIsPrivateIsFalseAndAvailableIsTrue(category,pageRequest).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
 
