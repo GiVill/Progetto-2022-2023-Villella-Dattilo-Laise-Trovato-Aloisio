@@ -115,9 +115,12 @@ fun AppContent(application: Context) {
                 AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll()
             }
             userFromDB.clear()
+            /*
             if(databaseItems.isNotEmpty()){
                 userFromDB.addAll(databaseItems)
             }
+
+             */
             isLoaded.value = true
         }
     }

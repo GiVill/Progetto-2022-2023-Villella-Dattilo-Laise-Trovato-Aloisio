@@ -66,6 +66,9 @@ import java.nio.ByteBuffer
 import android.Manifest
 import com.example.vintedandroid.model.application_status.internetChecker
 import com.example.vintedandroid.view.noConnectionScreen
+import com.example.vintedandroid.viewmodel.CartViewModel
+import com.example.vintedandroid.viewmodel.HomeViewModel
+import com.example.vintedandroid.viewmodel.UserViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -95,14 +98,17 @@ class MainActivity : ComponentActivity() {
                                 SetupNavGraph(
                                     navController = navController,
                                     searchText = searchText,
-                                    application = application.applicationContext
+                                    application = application.applicationContext,
+                                    homeViewModel =  HomeViewModel(application),
+                                    userViewModel = UserViewModel(application),
+                                    cartViewModel = CartViewModel(application)
                                 )
                             }
                         } )
                     }
                     else{
                         navController.navigate(ScreenController.Login.route)
-                        LoginScreen(navController = navController, application) //Non funziona bene
+                        //LoginScreen(navController = navController, application) //Non funziona bene
                     }
                 } else { noConnectionScreen(application = application) }
             }

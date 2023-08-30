@@ -3,6 +3,7 @@ package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,9 +27,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,11 +35,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.vintedandroid.R
 import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.theme.Typography
+import com.example.vintedandroid.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,10 +52,13 @@ import kotlinx.coroutines.withContext
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomBarProfile(navController: NavController, application: Context) {
+fun BottomBarProfile(navController: NavController, application: Context, userViewModel: UserViewModel) {
 
-    var userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
+//    var userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
+    val userFromDB1 = userViewModel.getAllUserFromRoomDatabase()
+/*
     LaunchedEffect(Unit) {
         if (userFromDB.isEmpty()) {
             val databaseItems = withContext(Dispatchers.IO) {
@@ -66,6 +71,8 @@ fun BottomBarProfile(navController: NavController, application: Context) {
         }
     }
 
+ */
+
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
             text = stringResource(R.string.account_settings),
@@ -73,8 +80,9 @@ fun BottomBarProfile(navController: NavController, application: Context) {
             style = TextStyle(fontSize = Typography.titleLarge.fontSize)
         )
         Column {
-            if(userFromDB.isNotEmpty()) {
-                Card(onClick = { navController.popBackStack(); navController.navigate("profile") }) {
+            //if(userFromDB1.isNotEmpty()) {
+                Card(onClick = { //navController.popBackStack();
+                    navController.navigate("profile") }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             Icons.Filled.AccountCircle,
@@ -84,7 +92,7 @@ fun BottomBarProfile(navController: NavController, application: Context) {
                                 .size(size = 48.dp)
                         )
                         Column(modifier = Modifier.weight(1f)) {
-                            Text(text = userFromDB[0].nickName)
+                           // Text(text = userFromDB1[0].nickName)
                             Text(text = "See your profile")
                         }
                         Spacer(modifier = Modifier.weight(1f))
@@ -103,9 +111,9 @@ fun BottomBarProfile(navController: NavController, application: Context) {
                 SimilarButton(navController = navController, text = "Settings", navigateTo = ScreenController.Setting.route, icon = Icons.Filled.Settings)
                 SimilarButton(navController = navController, text = "INVIA FEEDBACK (PER IL MEME)", navigateTo = ScreenController.Feedback.route, icon = Icons.Filled.Info)
 
-                logoutButton(userFromDB = userFromDB, application = application, navController = navController)
+                //logoutButton(userFromDB = userFromDB1, application = application, navController = navController)
 
-            }else{ noUserLoggedIn(navController = navController) }
+            //}else{ noUserLoggedIn(navController = navController, currentBackStackEntry) }
 
         }
     }
@@ -115,7 +123,8 @@ fun BottomBarProfile(navController: NavController, application: Context) {
 @Composable
 private fun SimilarButton(navController: NavController, text: String, navigateTo: String, icon :ImageVector){
 
-    Card(onClick = { navController.popBackStack(); navController.navigate(navigateTo) }) {
+    Card(onClick = { //navController.popBackStack();
+        navController.navigate(navigateTo) }) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 imageVector = icon,
@@ -145,7 +154,8 @@ private fun logoutButton(userFromDB : SnapshotStateList<UserDatabaseDto>, applic
                 AppDatabase.getInstance(context = application.applicationContext).cartDao().deleteAll()
             }
             withContext(Dispatchers.Main) {
-                navController.popBackStack(); navController.navigate("login")
+                //navController.popBackStack();
+                navController.navigate("login")
             }
         }
 
@@ -168,10 +178,15 @@ private fun logoutButton(userFromDB : SnapshotStateList<UserDatabaseDto>, applic
 }
 
 @Composable
-private fun noUserLoggedIn(navController: NavController){
+private fun noUserLoggedIn(navController: NavController, currentBackStackEntry: NavBackStackEntry?){
     Card(modifier = Modifier.fillMaxWidth()) {
         Text(text = "NO USER LOGGED")
-        Button(onClick = { navController.popBackStack(); navController.navigate(ScreenController.Login.route) }){
+        Button(onClick = { //navController.popBackStack();
+            Log.i("BottomBarProfile::class", "currentBackStackEntry: $currentBackStackEntry")
+            Log.i("BottomBarProfile::class", "navController.currentBackStackEntry?.destination?.route: ${navController.currentBackStackEntry?.destination?.route}")
+            Log.i("BottomBarProfile::class", "navController.currentBackStackEntry?.destination?.route: ${navController.currentBackStackEntry?.arguments}")
+
+            navController.navigate(ScreenController.Login.route) }){
             Text(text = "Go to Login page")
         }
     }

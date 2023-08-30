@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.vintedandroid.client.models.BasicInsertionDto
 import com.example.vintedandroid.model.dto.CartDto
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CartDao {
@@ -26,5 +27,5 @@ interface CartDao {
     suspend fun deleteAll();
 
     @Query("select * from cartDto")
-    fun getAll(): List<CartDto>
+    fun getAll(): Flow<MutableList<CartDto>>
 }

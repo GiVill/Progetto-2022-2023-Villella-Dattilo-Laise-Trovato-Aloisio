@@ -2,126 +2,54 @@ package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.StrictMode
 import android.util.Log
-import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
-import com.example.vintedandroid.client.apis.InsertionApi
 import com.example.vintedandroid.client.models.BasicInsertionDto
-import com.example.vintedandroid.client.models.PageBasicInsertionDto
 import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.application_status.internetChecker
 import com.example.vintedandroid.model.dto.CartDto
-import com.example.vintedandroid.view.config.ImageConfiguration
+import com.example.vintedandroid.viewmodel.HomeViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @Composable
-fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>, application: Context) {
+fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>, application: Context, viewModel: HomeViewModel) {
 
-    val scrollState2 = rememberLazyListState()
-
-    var itemsMan by remember { mutableStateOf(PageBasicInsertionDto()) }
-    var allItems by remember { mutableStateOf(PageBasicInsertionDto()) }
-
-    var isLoaded1 by remember { mutableStateOf(false) }
-    var isLoaded2 by remember { mutableStateOf(false) }
-
-    var insertionApi = InsertionApi()
-
-    CoroutineScope(Dispatchers.IO).launch {
-        Log.i("home", "Ciao2")
-        val man = withContext(Dispatchers.IO) {
-            insertionApi.getByCategory("UOMO", 0)
-        }
-        Log.i("home", "Ciao2")
-        if(man.empty != true) {
-            itemsMan = man
-        }
-        isLoaded1 = true
-    }
-    CoroutineScope(Dispatchers.IO).launch {
-        Log.i("home", "Ciao3")
-        val items = withContext(Dispatchers.IO) {
-            insertionApi.all4(2)
-        }
-        Log.i("home", "Ciao3")
-        if(items.empty != true) {
-            allItems = items
-        }
-            isLoaded2 = true
-    }
+    var allInsertion = viewModel.getAllInsertion()
 
     if (internetChecker(application)) {
 
         Box(modifier = Modifier.fillMaxSize()) {
 
-            if (isLoaded1 && isLoaded2) {
+            //if (isLoaded1 && isLoaded2) {
 
                 //Dentro la LazyColumn non si possono mettere immagini a quanto pare, fuori si
-                ImageConfiguration(imageName = allItems.results[0].imageName, imageScale = ContentScale.Crop)
+                //ImageConfiguration(imageName = manViewModel.results[0].imageName, imageScale = ContentScale.Crop)
 
                 //if(itemsMan.empty != true && allItems.empty != true) {
 
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        /*
-                item {
-                    Box(modifier = Modifier.fillMaxWidth()){
-
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                            .clickable(onClick = { /* Open item details activity */ }),
-                        elevation = 4.dp
-                    ) {
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(text = "MAN", fontSize = 20.sp, textAlign = TextAlign.Center)
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        LazyRow(modifier = Modifier.fillMaxWidth(), state = scrollState2) {
-
-                        items(itemsMan.results) { item ->
-                            ItemCart(item, itemsInCart, navController, searchedProduct, application)
-                        }
-
-                        }
-                    }
-                    }
-                }
-                 */
 
                         item {
                             // Header item here
@@ -140,13 +68,13 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
                                 Spacer(modifier = Modifier.height(16.dp))
                             }
                         }
-                        items(allItems.results) { item ->
-                            ItemCart(item, itemsInCart, navController, searchedProduct, application)
+                        items(allInsertion.results) { item ->
+                            ItemCart(item, itemsInCart, navController, searchedProduct, viewModel)
                         }
 
                     }
                 //} else{ Text(text="Error while connecting to the server") }
-        } else{ CircularProgressIndicator(modifier = Modifier.align(Alignment.Center)) }
+        //} else{ CircularProgressIndicator(modifier = Modifier.align(Alignment.Center)) }
 
         /*
     Row(modifier = Modifier.fillMaxWidth()) {
@@ -168,26 +96,17 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
     }
 
      */
-
-        /*
-    LazyRow(modifier = Modifier.horizontalScroll(rememberScrollState())) {
-        items(itemsInCart.filterNotNull()) { item ->
-            ItemCart(item, itemsInCart)
-
-        }
-    }
-     */
         }
     } else { noConnectionScreen(application = application)  }
 }
 
 @Composable
-fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>, application: Context ) {
+fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>, viewModel: HomeViewModel ) {
 
     var showDialog by remember { mutableStateOf(false) }
 
     //Box(modifier = Modifier.fillMaxWidth()){
-        ImageConfiguration(imageName = item.imageName, imageScale = ContentScale.Crop)
+        //ImageConfiguration(imageName = item.imageName, imageScale = ContentScale.Crop)
     //}
 
     Card(
@@ -214,27 +133,8 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
             Text(text = "$${item.price}")
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = {
-                showDialog = true;
-
-                if (!itemsInCart.contains(item)) {
-                    itemsInCart.add(item)
-                    CoroutineScope(Dispatchers.IO).launch {
-                        converter(item)?.let {
-                            AppDatabase.getInstance(context = application.applicationContext).cartDao().insert(
-                                it
-                            )
-                        }
-                    }
-                    Log.i("cart", "Item added!")
-                    itemsInCart.forEachIndexed { index, item ->
-                        Log.i("cart", "Item $index: $item") //stampa tutto il carrello
-                    }
-                } else {
-                    Log.i("cart", "Cannot add the item because is already in the cart!")
-                    itemsInCart.forEachIndexed { index, item ->
-                        Log.i("cart", "Item $index: $item") //stampa tutto il carrello
-                    }
-                }
+                showDialog = true
+                viewModel.insertBasicInsertionDtoOnCartDto(item = item, itemsInCart = itemsInCart)
             }) {
                 Text(text = "Add to Cart")
             }
@@ -272,28 +172,6 @@ fun displayImage(allItems: PageBasicInsertionDto) {
             )}}
 }
  */
-
-fun converter(item: BasicInsertionDto): CartDto? {
-
-    return item.userId?.let {
-        CartDto(
-        title = item.title,
-        price = item.price,
-        description = item.description,
-        condition = item.condition,
-        //creationDate = null,
-        //creationDate = item.creationDate as LocalDate?,
-        isPrivate = item.isPrivate,
-        //endDate = null,
-        //endDate = item.endDate as LocalDate?,
-        imageName = item.imageName,
-        brand = item.brand,
-        category = item.category,
-        userId = it
-    )
-    }
-
-}
 
 @Composable
 fun PopupDialog(onDismiss: () -> Unit, content: @Composable () -> Unit) {

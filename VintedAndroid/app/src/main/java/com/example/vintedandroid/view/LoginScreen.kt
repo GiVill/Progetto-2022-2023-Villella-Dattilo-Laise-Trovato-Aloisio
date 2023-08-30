@@ -12,9 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,11 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.vintedandroid.client.apis.AuthApi
 import com.example.vintedandroid.client.models.LoginUserDto
 import com.example.vintedandroid.client.models.TokenResponse
@@ -38,43 +34,32 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import android.content.Context
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material.icons.outlined.Visibility
-import androidx.compose.material.icons.outlined.VisibilityOff
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.ui.focus.FocusState
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.navigation.NavController
 import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.view.config.createPersonalizedTextfield
 import com.example.vintedandroid.view.config.createPersonalizedTextfieldPassword
+import com.example.vintedandroid.viewmodel.LoginViewModel
+import com.example.vintedandroid.viewmodel.UserViewModel
 
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun LoginScreen(navController: NavHostController, application: Context) {
+fun LoginScreen(navController: NavHostController, application: Context, userViewModel: UserViewModel, loginViewModel: LoginViewModel) {
 
     val emailField = remember { mutableStateOf(TextFieldValue()) }
     var passwordField = remember { mutableStateOf(TextFieldValue()) }
 
-    val userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
-    var isLoaded = remember { mutableStateOf(false) }
+    //val userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
+    //var isLoaded = remember { mutableStateOf(false) }
+
+    var userFromDB1 = userViewModel.getAllUserFromRoomDatabase()
 
     var loginUnsuccessful = remember {mutableStateOf(false)}
 
-
+/*
     LaunchedEffect(Unit) {
         if (userFromDB.isEmpty()) {
             val databaseItems = withContext(Dispatchers.IO) {
@@ -88,15 +73,14 @@ fun LoginScreen(navController: NavHostController, application: Context) {
         }
     }
 
-
-    //checkIfUserInDB(userFromDB = userFromDB, application = application, isLoaded = isLoaded)
+ */
 
     Box(modifier = Modifier
         .fillMaxSize()
         .padding(16.dp),
         contentAlignment = Alignment.Center) {
 
-        if(isLoaded.value){
+        //if(isLoaded.value){
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //if(userFromDB.isEmpty() ) {
 
@@ -124,7 +108,7 @@ fun LoginScreen(navController: NavHostController, application: Context) {
                     createPersonalizedTextfield(textField = emailField, name = "Email", icon = Icons.Default.Email)
                     createPersonalizedTextfieldPassword(textField = passwordField)
 
-                    loginButton(navController = navController, application = application, email = emailField.value.text, password = passwordField.value.text, loginUnsuccessful = loginUnsuccessful)
+                    loginButton(navController = navController, application = application, email = emailField.value.text, password = passwordField.value.text, loginUnsuccessful = loginUnsuccessful, loginViewModel = loginViewModel)
                     goToRegistrationButton(navController = navController)
 
                 }
@@ -133,58 +117,50 @@ fun LoginScreen(navController: NavHostController, application: Context) {
                 //navController.popBackStack()
                 //navController.navigate(ScreenController.Home.route)
             //}
-        }
-    }
-}
-
-private fun checkIfUserInDB(userFromDB: SnapshotStateList<UserDatabaseDto>, application: Context, isLoaded: MutableState<Boolean>) {
-    CoroutineScope(Dispatchers.IO).launch {
-        if (userFromDB.isEmpty()) {
-            val databaseItems = withContext(Dispatchers.IO) {
-                AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll()
-            }
-            userFromDB.clear()
-            if(databaseItems.isNotEmpty()){
-                userFromDB.addAll(databaseItems)
-            }
-            isLoaded.value = true
-        }
+        //}
     }
 }
 
 //TODO Controllare che funzioni tutto correttamente
 @Composable
-private fun loginButton(navController: NavHostController, application: Context, email: String, password: String, loginUnsuccessful: MutableState<Boolean>){
+private fun loginButton(navController: NavHostController, application: Context, email: String, password: String, loginUnsuccessful: MutableState<Boolean>, loginViewModel: LoginViewModel){
 
     var buttonEnabled by remember { mutableStateOf(true) }
-    val auth = AuthApi()
+    //val auth = AuthApi()
 
     Button(
         onClick = {
             buttonEnabled = false
-            val loginUserDto = convertLoginUserDTO(email, password)
+            //val loginUserDto = convertLoginUserDTO(email, password)
             loginUnsuccessful.value = false
             CoroutineScope(Dispatchers.IO).launch {
-
-                val t = auth.login(loginUserDto)
-
-                withContext(Dispatchers.Main) {
-                    if (t.access_token != null) {
-                        Log.i("LoginScreen::class", "Login successful")
-                        val loggedUser = convertUserDTOtoUserDB(t)
-                        if (loggedUser != null) {
-                            AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().insert(loggedUser)
-
-                            navController.popBackStack()
-                            navController.navigate(ScreenController.Home.route)
-                        }
-
-                    } else {
-                        loginUnsuccessful.value = true
-                        buttonEnabled = true
-                    }
+                if(loginViewModel.login(email, password)){
+                    navController.popBackStack()
+                    navController.navigate(ScreenController.Home.route)
+                } else {
+                    loginUnsuccessful.value = true
+                    buttonEnabled = true
                 }
-            }
+
+                //val t = loginViewModel.getToken(email, password)
+
+                //withContext(Dispatchers.Main) {
+                //    if (t.access_token != null) {
+                //       Log.i("LoginScreen::class", "Login successful")
+                //        val loggedUser = convertUserDTOtoUserDB(t)
+                //        if (loggedUser != null) {
+                //            loginViewModel.insertLoggedUserInDatabase(loggedUser)
+                            //AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().insert(loggedUser)
+
+                 //           navController.popBackStack()
+                 //           navController.navigate(ScreenController.Home.route)
+                 //       }
+
+                 //   } else {
+                 //       loginUnsuccessful.value = true
+                 //       buttonEnabled = true
+                 //   }
+                }
 
             //Log.i("tag", response.toString()) //response.contains("").toString()
         },
@@ -196,40 +172,12 @@ private fun loginButton(navController: NavHostController, application: Context, 
 @Composable
 private fun goToRegistrationButton(navController: NavHostController){
     Button(
-        onClick = { navController.popBackStack(); navController.navigate("register") },
+        onClick = { //navController.popBackStack();
+            navController.navigate("register") },
         modifier = Modifier.padding(8.dp)
     ) {
         Text("Need new account? Register!")
     }
 }
 
-private fun convertLoginUserDTO(email: String, password: String): LoginUserDto{
-    return LoginUserDto(
-        email = email,
-        password = password
-    )
-}
 
-private fun convertUserDTOtoUserDB(t: TokenResponse) :UserDatabaseDto?{
-
-    return t.userDto?.let {
-        UserDatabaseDto(
-            id = it.id,
-            nickName = it.nickName,
-            firstName = t.userDto.firstName,
-            lastName = t.userDto.lastName,
-            password = null,
-            imageName = t.userDto.imageName,
-            birthDate = t.userDto.birthDate,
-            gender = t.userDto.gender,
-            addressStreet = t.userDto.addressStreet,
-            addressNumber = t.userDto.addressNumber,
-            addressCity = t.userDto.addressCity,
-            addressCap = t.userDto.addressCap,
-            addressState = t.userDto.addressState,
-            addressRegion = t.userDto.addressRegion,
-            accessToken = t.access_token
-        )
-    }
-
-}

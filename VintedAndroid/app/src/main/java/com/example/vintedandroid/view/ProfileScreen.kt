@@ -41,6 +41,7 @@ import kotlinx.coroutines.withContext
 import android.content.Context
 import android.util.Log
 import androidx.compose.material3.Button
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.layout.ContentScale
 import coil.annotation.ExperimentalCoilApi
@@ -62,9 +63,11 @@ fun ProfileScreen(application: Context) {
                 AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll()
             }
             userFromDB.clear()
+            /*
             if(databaseItems.isNotEmpty()) {
                 userFromDB.addAll(databaseItems)
             }
+            */
             isLoaded = true
         }
     }
@@ -99,68 +102,16 @@ fun ProfileScreen(application: Context) {
                 style = TextStyle(fontSize = Typography.titleLarge.fontSize)
             )
             Column {
-                Card {
-                    if (userFromDB[0].imageName != null) {
-                        //ImageConfiguration(painter = painter, imageScale = ContentScale.Crop)
-                        ImageConfiguration(imageName = userFromDB[0].imageName.toString(), imageScale = ContentScale.Fit)
-                    } else {
-                        Icon(
-                            Icons.Filled.AccountCircle,
-                            contentDescription = stringResource(R.string.default_account),
-                            modifier = Modifier
-                                .padding(10.dp)
-                                .size(size = 48.dp)
-                                .align(Alignment.CenterHorizontally)
-                        )
-                    }
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Row(modifier = Modifier.align(CenterHorizontally)) {
-                            Column(
-                                modifier = Modifier
-                                    .padding(10.dp)
-                                    .weight(1f)
-                            ) {
-                                Text(text = "Nickname:")
-                                Divider()
-                                Text(text = "Firstname:")
-                                Divider()
-                                Text(text = "Lastname:")
-                                Divider()
-                                Text(text = "Email:")
-                                Divider()
-                                Text(text = "BirthDate:")
-                                Divider()
-                                Text(text = "Address:")
-                            }
-                            Column(
-                                Modifier
-                                    .padding(10.dp)
-                                    .weight(1f)
-                            ) {
-                                Text(text = userFromDB[0].nickName)
-                                Divider()
-                                Text(text = userFromDB[0].firstName)
-                                Divider()
-                                userFromDB[0].lastName?.let { Text(text = it) }
-                                Divider()
-                                userFromDB[0].email?.let { Text(text = it) }
-                                Divider()
-                                userFromDB[0].birthDate?.let { Text(text = it) }
-                                Divider()
-                                Text(text = "${userFromDB[0].addressState} ${userFromDB[0].addressRegion} ${userFromDB[0].addressCity} ${userFromDB[0].addressCap} ${userFromDB[0].addressStreet} ${userFromDB[0].addressNumber}")
-                            }
-                        }
-                    }
 
-                }
+                userDetail(userFromDB)
                 Divider()
-
                 Spacer(modifier = Modifier.height(15.dp))
 
                 Column(
                     Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)) {
+                        .padding(8.dp))
+                {
                     modifyAccountInfoButton("Nickname")
                     modifyAccountInfoButton("Email")
                     modifyAccountInfoButton("Password")
@@ -226,6 +177,67 @@ private fun modifyAccountInfoButton(subject: String){
     }
 }
 
+@Composable
+private fun userDetail(userFromDB: SnapshotStateList<UserDatabaseDto>){
+
+    Card {
+        if (userFromDB[0].imageName != null) {
+            //ImageConfiguration(painter = painter, imageScale = ContentScale.Crop)
+            ImageConfiguration(
+                imageName = userFromDB[0].imageName.toString(),
+                imageScale = ContentScale.Fit
+            )
+        } else {
+            Icon(
+                Icons.Filled.AccountCircle,
+                contentDescription = stringResource(R.string.default_account),
+                modifier = Modifier
+                    .padding(10.dp)
+                    .size(size = 48.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+        }
+
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier.align(CenterHorizontally)) {
+                Column(
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .weight(1f)
+                ) {
+                    Text(text = "Nickname:")
+                    Divider()
+                    Text(text = "Firstname:")
+                    Divider()
+                    Text(text = "Lastname:")
+                    Divider()
+                    Text(text = "Email:")
+                    Divider()
+                    Text(text = "BirthDate:")
+                    Divider()
+                    Text(text = "Address:")
+                }
+                Column(
+                    Modifier
+                        .padding(10.dp)
+                        .weight(1f)
+                ) {
+                    Text(text = userFromDB[0].nickName)
+                    Divider()
+                    Text(text = userFromDB[0].firstName)
+                    Divider()
+                    userFromDB[0].lastName?.let { Text(text = it) }
+                    Divider()
+                    userFromDB[0].email?.let { Text(text = it) }
+                    Divider()
+                    userFromDB[0].birthDate?.let { Text(text = it) }
+                    Divider()
+                    Text(text = "${userFromDB[0].addressState} ${userFromDB[0].addressRegion} ${userFromDB[0].addressCity} ${userFromDB[0].addressCap} ${userFromDB[0].addressStreet} ${userFromDB[0].addressNumber}")
+                }
+            }
+        }
+    }
+}
 
 private fun performSendAction() {
     // Add your logic here to handle the send action

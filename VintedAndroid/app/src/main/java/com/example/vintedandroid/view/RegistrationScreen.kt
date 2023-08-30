@@ -32,6 +32,7 @@ import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.view.config.createPersonalizedTextfield
 import com.example.vintedandroid.view.config.createPersonalizedTextfieldPassword
+import com.example.vintedandroid.viewmodel.LoginViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,7 +40,7 @@ import kotlinx.coroutines.withContext
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun RegistrationScreen(navController: NavHostController, application: Context) {
+fun RegistrationScreen(navController: NavHostController, application: Context, loginViewModel: LoginViewModel) {
 
     val emailField = remember { mutableStateOf(TextFieldValue()) }
     val nicknameField = remember { mutableStateOf(TextFieldValue()) }
@@ -48,7 +49,7 @@ fun RegistrationScreen(navController: NavHostController, application: Context) {
 
     var buttonEnabled by remember { mutableStateOf(true) }
 
-    val auth = AuthApi()
+    //val auth = AuthApi()
 
     Column(
         modifier = Modifier
@@ -70,6 +71,15 @@ fun RegistrationScreen(navController: NavHostController, application: Context) {
         Button(
             onClick = {
                 buttonEnabled = false
+
+                if(loginViewModel.registration(emailField.value.text, passwordField.value.text, firstnameField.value.text, nicknameField.value.text)){
+                    navController.popBackStack()
+                    navController.navigate(ScreenController.Home.route)
+                }
+                else{
+                    buttonEnabled = true
+                }
+                /*
                 val registrationUserDto = createNewUserDto(passwordField.value.text, firstnameField.value.text, nicknameField.value.text, emailField.value.text)
                     CoroutineScope(Dispatchers.IO).launch {
 
@@ -91,51 +101,21 @@ fun RegistrationScreen(navController: NavHostController, application: Context) {
                             }
                         }
                     }
+                */
 
-                navController.popBackStack(); navController.navigate(ScreenController.Home.route)
-                      },
+                //navController.popBackStack();
+                //navController.navigate(ScreenController.Home.route)
+                },
             modifier = Modifier.padding(8.dp),
             enabled = buttonEnabled
         ) { Text("Register") }
 
         Button(
-            onClick = { navController.popBackStack(); navController.navigate(ScreenController.Login.route) },
+            onClick = { //navController.popBackStack();
+                navController.navigate(ScreenController.Login.route) },
             modifier = Modifier.padding(8.dp)
         ) {
             Text("Already have an account? Go to Login page")
         }
     }
-}
-
-private fun convertUserDTOtoUserDB(t: TokenResponse) :UserDatabaseDto?{
-
-    return t.userDto?.let {
-        UserDatabaseDto(
-            id = it.id,
-            nickName = it.nickName,
-            firstName = t.userDto.firstName,
-            lastName = t.userDto.lastName,
-            password = null,
-            imageName= t.userDto.imageName,
-            birthDate = t.userDto.birthDate,
-            gender = t.userDto.gender,
-            addressStreet = t.userDto.addressStreet,
-            addressNumber = t.userDto.addressNumber,
-            addressCity = t.userDto.addressCity,
-            addressCap = t.userDto.addressCap,
-            addressState = t.userDto.addressState,
-            addressRegion = t.userDto.addressRegion,
-            accessToken = t.access_token
-        )
-    }
-
-}
-
-private fun createNewUserDto(password: String, firstName: String, nickName: String, email: String): NewUserDto{
-    return NewUserDto(
-        password = password,
-        firstName = firstName,
-        nickName = nickName,
-        email = email
-    )
 }

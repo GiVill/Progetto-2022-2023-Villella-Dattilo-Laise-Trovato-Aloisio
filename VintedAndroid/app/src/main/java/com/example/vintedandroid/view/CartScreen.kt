@@ -18,70 +18,50 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.vintedandroid.model.AppDatabase
 import android.content.Context
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import com.example.vintedandroid.model.dto.CartDto
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope.Empty
+import com.example.vintedandroid.viewmodel.CartViewModel
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun CartScreen(application: Context) {
+fun CartScreen(cartViewModel: CartViewModel) {
 
-    var itemsFromDB = remember { mutableStateListOf<CartDto>() }
-    var isLoaded by remember { mutableStateOf(false) }
+    //var isLoaded by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
-        if (itemsFromDB.isEmpty()) {
-            val databaseItems = withContext(Dispatchers.IO) {
-                AppDatabase.getInstance(context = application.applicationContext).cartDao().getAll()
-            }
-            //itemsFromDB.clear()
-            itemsFromDB.addAll(databaseItems)
-            isLoaded = true
-        }
-    }
+    val cartItemsState: MutableList<CartDto> by cartViewModel.getAll().collectAsState(initial = mutableListOf())
 
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        if (isLoaded){
-        if(itemsFromDB.isNotEmpty() == true){
-            itemsFromDB!!.forEach { item ->
-                ItemsInCart(item, application, itemsFromDB)
-            }
-        }
-        else {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .clickable(onClick = { /* Open item details activity */ }),
-                elevation = 4.dp
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = "No items in cart!")
-                }
-            }
-        }
-        }else{
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-        }
-    }
+    ListOfItem(cartItemsState = cartItemsState, cartViewModel = cartViewModel)
 }
 
 @Composable
-fun ItemsInCart(item : CartDto, application: Context, itemsFromDB: MutableList<CartDto>) {
+fun ListOfItem(cartItemsState: MutableList<CartDto>, cartViewModel: CartViewModel) {
+    //if(isLoaded){
+    if (cartItemsState.isNotEmpty()) {
+        LazyColumn {
+            items(cartItemsState) { cartItem ->
+                    Log.i("Cart", "item in cart is: $cartItem")
+                    ItemsInCart(
+                        item = cartItem,
+                        cartViewModel = cartViewModel
+                    )
+                }
+            }
+        } else {
+            NoItemsInCart()
+        }
+    //}else{
+    //    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+    //}
+
+}
+
+@Composable
+fun ItemsInCart(item : CartDto, cartViewModel: CartViewModel) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -99,16 +79,27 @@ fun ItemsInCart(item : CartDto, application: Context, itemsFromDB: MutableList<C
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = "$${item.price}")
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = {
-                CoroutineScope(Dispatchers.IO).launch {
-                    itemsFromDB.remove(item)
-                    AppDatabase.getInstance(context = application.applicationContext).cartDao().delete(item)
-                }
-                Log.i("CartScreen::class", "Item : $item removed from the cart")
-            })
-            {
-            Text(text = "Discard")
-            }
+            Button(onClick = { cartViewModel.removeItemsInCartFromDatabase(item) })
+
+            { Text(text = "Discard") }
         }
     }
+}
+
+@Composable
+fun NoItemsInCart() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .clickable(onClick = { /* Open item details activity */ }),
+        elevation = 4.dp
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+        { Text(text = "No items in cart!") }
+    }
+
 }

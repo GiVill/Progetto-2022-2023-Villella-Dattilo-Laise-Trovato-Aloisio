@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.vintedandroid.model.dto.CartDto
 import com.example.vintedandroid.model.dto.UserDatabaseDto
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDatabaseDao {
@@ -21,7 +22,7 @@ interface UserDatabaseDao {
     suspend fun delete(userDatabaseDto: UserDatabaseDto)
 
     @Query("select * from userDatabaseDto")
-    fun getAll(): List<UserDatabaseDto>
+    fun getAll(): Flow<UserDatabaseDto>
 
     @Query("SELECT * FROM userDatabaseDto LIMIT 1")
     suspend fun getSingleUser(): UserDatabaseDto?

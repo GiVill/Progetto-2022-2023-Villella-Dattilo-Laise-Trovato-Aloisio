@@ -12,16 +12,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.vintedandroid.client.apis.InsertionApi
 import com.example.vintedandroid.client.models.BasicInsertionDto
-import com.example.vintedandroid.client.models.UserDto
-import com.example.vintedandroid.model.AppDatabase
-import org.springframework.context.ApplicationContext
-import java.util.UUID
+import com.example.vintedandroid.viewmodel.CartViewModel
+import com.example.vintedandroid.viewmodel.HomeViewModel
+import com.example.vintedandroid.viewmodel.LoginViewModel
+import com.example.vintedandroid.viewmodel.UserViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState",
     "RememberReturnType"
 )
 @Composable
-fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context) {
+fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context, homeViewModel: HomeViewModel, userViewModel: UserViewModel, cartViewModel: CartViewModel, loginViewModel: LoginViewModel) {
 
     //var user = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll() //Get di un utente
 
@@ -46,7 +46,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
     NavHost(navController = navController, startDestination = ScreenController.Login.route) {
 
         composable(route = ScreenController.Home.route){
-            HomeScreen(itemsInCart, navController, searchedProduct, application)
+            HomeScreen(itemsInCart, navController, searchedProduct, application, homeViewModel)
         }
         composable(route = ScreenController.Search.route) {
             SearchScreen(searchText, insertionApi, navController, searchedProduct)
@@ -55,13 +55,13 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             AddScreen(application)
         }
         composable(route = ScreenController.Cart.route){
-            CartScreen(application)
+            CartScreen(cartViewModel)
         }
         composable(route = ScreenController.Profile.route){
             ProfileScreen(application)
         }
         composable(route = ScreenController.BottomBarProfile.route){
-            BottomBarProfile(navController, application)
+            BottomBarProfile(navController, application, userViewModel)
         }
         composable(route = ScreenController.Favorite.route){
             FavoriteScreen()
@@ -76,13 +76,13 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             FeedbackScreen()
         }
         composable(route = ScreenController.Login.route){
-            LoginScreen(navController, application)
+            LoginScreen(navController, application, userViewModel, loginViewModel)
         }
         composable(route = ScreenController.Register.route){
-            RegistrationScreen(navController, application)
+            RegistrationScreen(navController, application, loginViewModel)
         }
         composable(route = ScreenController.Product.route){
-            ProductScreen(searchedProduct,application,itemsInCart)
+            ProductScreen(searchedProduct,itemsInCart, homeViewModel)
         }
 
     }
