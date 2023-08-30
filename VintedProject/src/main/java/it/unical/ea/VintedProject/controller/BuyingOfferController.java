@@ -8,6 +8,7 @@ import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
 import it.unical.ea.VintedProject.dto.BuyingOfferDto;
+import it.unical.ea.VintedProject.dto.enumeration.Status;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -109,7 +110,8 @@ public class BuyingOfferController {
         // Check the Token, if not ok: THROW Exception.
         // Delete a BuyingOffer using the ID.
         // No Throw on Deletion
-        buyingOfferService.deleteOfferById(buyingOfferDto.getId());
+        buyingOfferDto.setStatus(Status.APPROVED);
+        buyingOfferService.acceptOffer(buyingOfferDto);
         return HttpStatus.OK;
 
     }
