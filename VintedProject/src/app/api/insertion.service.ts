@@ -34,7 +34,7 @@ export class InsertionService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, private CookiesService:CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, private CookiesService: CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -59,7 +59,7 @@ export class InsertionService {
     }
 
 
-    /**
+       /**
      *
      *
      * @param body
@@ -108,138 +108,35 @@ export class InsertionService {
 
     }
 
+
     /**
      *
      *
-     * @param userId
+     * @param insertionId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteAllInsertionByUserId(userId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteAllInsertionByUserId(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteAllInsertionByUserId(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteAllInsertionByUserId(userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public adminDeleteInsertionByInsertionId(insertionId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public adminDeleteInsertionByInsertionId(insertionId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public adminDeleteInsertionByInsertionId(insertionId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public adminDeleteInsertionByInsertionId(insertionId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling deleteAllInsertionByUserId.');
+        if (insertionId === null || insertionId === undefined) {
+            throw new Error('Required parameter insertionId was null or undefined when calling adminDeleteInsertionByUserId.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (userId !== undefined && userId !== null) {
-            queryParameters = queryParameters.set('userId', <any>userId);
+        if (insertionId !== undefined && insertionId !== null) {
+            queryParameters = queryParameters.set('insertionId', <any>insertionId);
         }
 
         let headers = this.defaultHeaders;
 
-
         // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
+        if (this.configuration.accessToken) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<any>('delete',`${this.basePath}/v1/insertions/${encodeURIComponent(String(userId))}`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     *
-     *
-     * @param insertionId
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public deleteInsertionById(insertionId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteInsertionById(insertionId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteInsertionById(insertionId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteInsertionById(insertionId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (insertionId === null || insertionId === undefined) {
-            throw new Error('Required parameter insertionId was null or undefined when calling deleteInsertionById.');
-        }
-
-        let headers = this.defaultHeaders;
-
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<any>('delete',`${this.basePath}/v1/insertions/${encodeURIComponent(String(insertionId))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     *
-     *
-     * @param insertionId
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public deleteInsertionForAdmin(insertionId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteInsertionForAdmin(insertionId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteInsertionForAdmin(insertionId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteInsertionForAdmin(insertionId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (insertionId === null || insertionId === undefined) {
-            throw new Error('Required parameter insertionId was null or undefined when calling deleteInsertionForAdmin.');
-        }
-
-        let headers = this.defaultHeaders;
-
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header
@@ -257,55 +154,7 @@ export class InsertionService {
 
         return this.httpClient.request<any>('delete',`${this.basePath}/v1/admin/insertions/${encodeURIComponent(String(insertionId))}`,
             {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     *
-     *
-     * @param idInsertion
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public generateCapabilities(idInsertion: number, observe?: 'body', reportProgress?: boolean): Observable<string>;
-    public generateCapabilities(idInsertion: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-    public generateCapabilities(idInsertion: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
-    public generateCapabilities(idInsertion: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (idInsertion === null || idInsertion === undefined) {
-            throw new Error('Required parameter idInsertion was null or undefined when calling generateCapabilities.');
-        }
-
-        let headers = this.defaultHeaders;
-
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<string>('get',`${this.basePath}/v1/insertions/token/${encodeURIComponent(String(idInsertion))}`,
-            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -321,13 +170,13 @@ export class InsertionService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAll1(page: number, observe?: 'body', reportProgress?: boolean): Observable<PageBasicInsertionDto>;
-    public getAll1(page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageBasicInsertionDto>>;
-    public getAll1(page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageBasicInsertionDto>>;
-    public getAll1(page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public adminGetAll(page: number, observe?: 'body', reportProgress?: boolean): Observable<PageBasicInsertionDto>;
+    public adminGetAll(page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageBasicInsertionDto>>;
+    public adminGetAll(page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageBasicInsertionDto>>;
+    public adminGetAll(page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling getAll1.');
+            throw new Error('Required parameter page was null or undefined when calling adminGetAll.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -335,15 +184,15 @@ export class InsertionService {
             queryParameters = queryParameters.set('page', <any>page);
         }
 
-      let headers = this.defaultHeaders;
+        let headers = this.defaultHeaders;
 
-      // authentication (bearerAuth) required
-      if (this.configuration.accessToken) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.configuration.accessToken()
-          : this.configuration.accessToken;
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -357,9 +206,207 @@ export class InsertionService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/insertions`,
+        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/admin/insertions`,
             {
                 params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param insertionId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public adminGetInsertionById(insertionId: number, observe?: 'body', reportProgress?: boolean): Observable<BasicInsertionDto>;
+    public adminGetInsertionById(insertionId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BasicInsertionDto>>;
+    public adminGetInsertionById(insertionId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BasicInsertionDto>>;
+    public adminGetInsertionById(insertionId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (insertionId === null || insertionId === undefined) {
+            throw new Error('Required parameter insertionId was null or undefined when calling adminGetInsertionById.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<BasicInsertionDto>('get',`${this.basePath}/v1/admin/insertions/${encodeURIComponent(String(insertionId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param body
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public adminModifyInsertion(body: BasicInsertionDto, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public adminModifyInsertion(body: BasicInsertionDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public adminModifyInsertion(body: BasicInsertionDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public adminModifyInsertion(body: BasicInsertionDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling adminModifyInsertion.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<boolean>('put',`${this.basePath}/v1/admin/insertions`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param idInsertion
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public generate24hToken(idInsertion: number, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public generate24hToken(idInsertion: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public generate24hToken(idInsertion: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public generate24hToken(idInsertion: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (idInsertion === null || idInsertion === undefined) {
+            throw new Error('Required parameter idInsertion was null or undefined when calling generate24hToken.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<string>('get',`${this.basePath}/v1/insertions/24h/token/${encodeURIComponent(String(idInsertion))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param idInsertion
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public generateYearToken(idInsertion: number, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public generateYearToken(idInsertion: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public generateYearToken(idInsertion: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public generateYearToken(idInsertion: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (idInsertion === null || idInsertion === undefined) {
+            throw new Error('Required parameter idInsertion was null or undefined when calling generateYearToken.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<string>('get',`${this.basePath}/v1/insertions/year/token/${encodeURIComponent(String(idInsertion))}`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -389,17 +436,15 @@ export class InsertionService {
             throw new Error('Required parameter page was null or undefined when calling getByBrand.');
         }
 
+        let headers = this.defaultHeaders;
 
-
-      let headers = this.defaultHeaders;
-
-      // authentication (bearerAuth) required
-      if (this.configuration.accessToken) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.configuration.accessToken()
-          : this.configuration.accessToken;
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -444,17 +489,15 @@ export class InsertionService {
             throw new Error('Required parameter page was null or undefined when calling getByCategory.');
         }
 
+        let headers = this.defaultHeaders;
 
-
-      let headers = this.defaultHeaders;
-
-      // authentication (bearerAuth) required
-      if (this.configuration.accessToken) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.configuration.accessToken()
-          : this.configuration.accessToken;
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -499,18 +542,15 @@ export class InsertionService {
             throw new Error('Required parameter page was null or undefined when calling getByTitle.');
         }
 
+        let headers = this.defaultHeaders;
 
-
-      let headers = this.defaultHeaders;
-
-      // authentication (bearerAuth) required
-      if (this.configuration.accessToken) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.configuration.accessToken()
-          : this.configuration.accessToken;
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
-
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -552,16 +592,13 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
-
-      // authentication (bearerAuth) required
-      if (this.configuration.accessToken) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.configuration.accessToken()
-          : this.configuration.accessToken;
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
-
-
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -608,15 +645,13 @@ export class InsertionService {
 
         let headers = this.defaultHeaders;
 
-
         // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
+        if (this.configuration.accessToken) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -630,7 +665,7 @@ export class InsertionService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/user/insertions/email/${encodeURIComponent(String(userEmail))}/${encodeURIComponent(String(page))}`,
+        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/admin/insertions/${encodeURIComponent(String(userEmail))}/${encodeURIComponent(String(page))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -661,16 +696,15 @@ export class InsertionService {
             throw new Error('Required parameter page was null or undefined when calling getInsertionByUserId.');
         }
 
-      let headers = this.defaultHeaders;
+        let headers = this.defaultHeaders;
 
-      // authentication (bearerAuth) required
-      if (this.CookiesService.getTokent()) {
-        const accessToken = typeof this.configuration.accessToken === 'function'
-          ? this.CookiesService.getTokent()
-          : this.CookiesService.getTokent();
-        headers = headers.set('Authorization', 'Bearer ' + accessToken);
-      }
-
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -684,7 +718,55 @@ export class InsertionService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/user/insertions/id/${encodeURIComponent(String(idUser))}/${encodeURIComponent(String(page))}`,
+        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/insertions/${encodeURIComponent(String(idUser))}/${encodeURIComponent(String(page))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param page
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getMyInsertion(page: number, observe?: 'body', reportProgress?: boolean): Observable<PageBasicInsertionDto>;
+    public getMyInsertion(page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageBasicInsertionDto>>;
+    public getMyInsertion(page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageBasicInsertionDto>>;
+    public getMyInsertion(page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (page === null || page === undefined) {
+            throw new Error('Required parameter page was null or undefined when calling getMyInsertion.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/myInsertions/${encodeURIComponent(String(page))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -710,10 +792,15 @@ export class InsertionService {
             throw new Error('Required parameter token was null or undefined when calling getPrivateInsertion.');
         }
 
-      let headers = this.defaultHeaders;
+        let headers = this.defaultHeaders;
 
-
-
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -744,26 +831,24 @@ export class InsertionService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public modifyInsertion(body: BasicInsertionDto, observe?: 'body', reportProgress?: boolean): Observable<BasicInsertionDto>;
-    public modifyInsertion(body: BasicInsertionDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BasicInsertionDto>>;
-    public modifyInsertion(body: BasicInsertionDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BasicInsertionDto>>;
-    public modifyInsertion(body: BasicInsertionDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public userDeleteInsertion(body: BasicInsertionDto, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public userDeleteInsertion(body: BasicInsertionDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public userDeleteInsertion(body: BasicInsertionDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public userDeleteInsertion(body: BasicInsertionDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling modifyInsertion.');
+            throw new Error('Required parameter body was null or undefined when calling userDeleteInsertion.');
         }
 
         let headers = this.defaultHeaders;
 
-
         // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
+        if (this.configuration.accessToken) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -782,7 +867,7 @@ export class InsertionService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<BasicInsertionDto>('put',`${this.basePath}/v1/insertions/`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/v1/insertions`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -796,35 +881,82 @@ export class InsertionService {
     /**
      *
      *
-     * @param body
-     * @param insertionId
+     * @param page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public modifyInsertionById(body: BasicInsertionDto, insertionId: number, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public modifyInsertionById(body: BasicInsertionDto, insertionId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public modifyInsertionById(body: BasicInsertionDto, insertionId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public modifyInsertionById(body: BasicInsertionDto, insertionId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public userGetAll(page: number, observe?: 'body', reportProgress?: boolean): Observable<PageBasicInsertionDto>;
+    public userGetAll(page: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageBasicInsertionDto>>;
+    public userGetAll(page: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageBasicInsertionDto>>;
+    public userGetAll(page: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling modifyInsertionById.');
+        if (page === null || page === undefined) {
+            throw new Error('Required parameter page was null or undefined when calling userGetAll.');
         }
 
-        if (insertionId === null || insertionId === undefined) {
-            throw new Error('Required parameter insertionId was null or undefined when calling modifyInsertionById.');
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
         }
 
         let headers = this.defaultHeaders;
 
-
         // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
+        if (this.configuration.accessToken) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/insertions`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param body
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public userModifyInsertion(body: BasicInsertionDto, observe?: 'body', reportProgress?: boolean): Observable<BasicInsertionDto>;
+    public userModifyInsertion(body: BasicInsertionDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BasicInsertionDto>>;
+    public userModifyInsertion(body: BasicInsertionDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BasicInsertionDto>>;
+    public userModifyInsertion(body: BasicInsertionDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling userModifyInsertion.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -843,7 +975,7 @@ export class InsertionService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<boolean>('put',`${this.basePath}/v1/admin/insertions/${encodeURIComponent(String(insertionId))}`,
+        return this.httpClient.request<BasicInsertionDto>('put',`${this.basePath}/v1/insertions`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

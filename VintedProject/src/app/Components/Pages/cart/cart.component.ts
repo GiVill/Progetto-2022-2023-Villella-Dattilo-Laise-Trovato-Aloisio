@@ -8,10 +8,10 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {OrderService} from "../../../api/order.service";
 import {TokenService} from "../../../api/token.service";
-import {PaymentService} from "../../../api/payment.service";
 import {Observable} from "rxjs";
 import {OrderDto} from "../../../model/orderDto";
 import {CookiesService} from "../../../api/cookies.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -45,6 +45,7 @@ export class CartComponent implements OnInit {
     private orderService: OrderService,
     private tokenService: TokenService,
     private cookieServices: CookiesService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -123,32 +124,29 @@ export class CartComponent implements OnInit {
       return;
     }
     const cartItemsCookie = this.cookieService.get('cartItems');
-    const order: OrderDto = {
-      id: 0,
-      paymentMethod: this.selectedPaymentMethod!,
-      insertionIdList: this.loadedProducts,
-      userId: Number(this.cookieServices.getUserId()),
-      total: this.totalCost
-    };
-    console.log("prodotti" , this.loadedProducts)
-    const token = this.cookieService.get('jwtToken');
-    this.orderService.addOrder(order).subscribe(
-        response => {
-          console.log("Ordine creato con successo:", response);
-          this.ordineCreato = true;
-          this.orderSuccess = true;
-          this.orderError = false;
-          // TODO: Assegnare a questo pagamento l'id dell'ordine
-          this.clearCart();
-        },
-        error => {
-          console.log("Errore durante la creazione dell'ordine:", error);
-          this.ordineCreato = false;
-          this.orderSuccess = false;
-          this.orderError = true;
-        }
 
-    );
+      const order: OrderDto = {
+        id: 0,
+        total: this.totalCost,
+        paymentMethod: "this.paymentMethods",
+        insertionIdList: this.product,
+        userId: Number(this.cookieServices.getUserId())
+      };
+      console.log(order)
+      this.orderService.userAddOrder(order).subscribe((response) => {
+          this.snackBar.open("Ordine creato ",)
+        },
+        (error) => {
+          this.snackBar.open("Errore durante la creazione dell ordine")
+        }
+      );
+      {
+    this.snackBar.open("Errore durante la creazione dell ordine")
+        this.ordineCreato = false;
+        this.orderSuccess = false;
+        this.orderError = true;
+      }
+
     console.log(order)
   }
 

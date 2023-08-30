@@ -23,7 +23,7 @@ ngOnInit(): void {
 }
 
 loadInsertions(): void {
-  this.insertionService.getAll1(this.page).subscribe((insertions: PageBasicInsertionDto) => {
+  this.insertionService.userGetAll(this.page).subscribe((insertions: PageBasicInsertionDto) => {
     this.catalog = insertions;
 
     // Extract all unique user IDs from the insertions
@@ -44,7 +44,7 @@ loadInsertions(): void {
 
 loadmore() {
   this.page += 1;
-  this.insertionService.getAll1(this.page).subscribe((insertions: PageBasicInsertionDto) => {
+  this.insertionService.userGetAll(this.page).subscribe((insertions: PageBasicInsertionDto) => {
     // Aggiungi i nuovi prodotti alla lista esistente invece di sostituirla
     if (this.catalog?.content && insertions.content) {
       this.catalog.content.push(...insertions.content);

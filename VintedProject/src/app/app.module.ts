@@ -41,7 +41,6 @@ import {InsertionService} from "./api/insertion.service";
 import {AuthService} from "./api/auth.service";
 import {UserService} from "./api/user.service";
 import {CartService} from "./api/cart.service";
-import {PaymentService} from "./api/payment.service";
 import {OrderService} from "./api/order.service";
 import {OfferService} from "./api/offer.service";
 import {DashboardComponent} from "./Components/Pages/Admin/dashboard/dashboard.component";
@@ -122,7 +121,7 @@ import {MatDialogModule} from "@angular/material/dialog";
       }
     })
   ],
-  providers: [CookieService,ChatService,ClipboardModule,JwtHelperService,InsertionService,ChatMessageService,AuthService,UserService,CartService,PaymentService,OrderService,OfferService],
+  providers: [CookieService,ChatService,ClipboardModule,JwtHelperService,InsertionService,ChatMessageService,AuthService,UserService,CartService,OrderService,OfferService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

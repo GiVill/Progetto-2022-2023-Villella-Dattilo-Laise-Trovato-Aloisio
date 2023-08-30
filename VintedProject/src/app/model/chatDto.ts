@@ -14,8 +14,8 @@ import { ChatMessageDto } from './chatMessageDto';
 
 export interface ChatDto {
     id?: number;
-    reciver?: number;
-    nickname?: string;
+    user1?: number;
+    user2?: number;
     chatMessage?: ChatMessageDto;
-    basicInsertion?: BasicInsertion;
+
 }

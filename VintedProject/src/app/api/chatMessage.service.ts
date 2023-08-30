@@ -23,6 +23,7 @@ import { ServiceError } from '../model/serviceError';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
+import {CookiesService} from "./cookies.service";
 
 
 @Injectable()
@@ -32,7 +33,7 @@ export class ChatMessageService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, private CookiesService: CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -75,13 +76,13 @@ export class ChatMessageService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -123,13 +124,13 @@ export class ChatMessageService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'

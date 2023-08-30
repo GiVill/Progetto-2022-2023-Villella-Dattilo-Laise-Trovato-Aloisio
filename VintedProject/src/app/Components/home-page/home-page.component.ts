@@ -23,7 +23,7 @@ export class HomePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.insertionService.getAll1(this.page).subscribe(
+    this.insertionService.userGetAll(this.page).subscribe(
       (insertions: PageBasicInsertionDto) => {
         this.mostRequested = {
           ...insertions,
@@ -42,11 +42,11 @@ export class HomePageComponent implements OnInit {
         }
 
 
-        this.insertionService.getAll1(this.page).subscribe(
+        this.insertionService.userGetAll(this.page).subscribe(
           (insertions: PageBasicInsertionDto) => {
             this.feed = {
               ...insertions,
-              content: insertions.content?.slice(0, 6),
+              content: insertions.content?.slice(0, 6).sort(),
             };
           }
         );

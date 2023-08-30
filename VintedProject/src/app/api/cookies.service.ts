@@ -5,6 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import {AuthService} from "./auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {TokenDto} from "../model/tokenDto";
+import {async} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,7 @@ export class CookiesService implements OnInit {
   }
 
   getTokent(){
+    this.checkUserToken()
     return this.cookieService.get('jwtToken')
   }
 

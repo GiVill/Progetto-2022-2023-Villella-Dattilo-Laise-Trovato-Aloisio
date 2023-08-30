@@ -208,7 +208,6 @@ export class PrivateComponent implements OnInit{
       const newMessageDto: NewMessageDto = {
         sender: Number(this.cookiesService.getUserId()),
         reciver: this.user?.id,
-        nickname: this.user?.nickname,
         message: this.message
       };
       console.log(newMessageDto)

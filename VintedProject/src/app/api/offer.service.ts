@@ -32,7 +32,7 @@ export class OfferService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, private CookiesService: CookiesService, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient , private CookiesService: CookiesService , @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -75,14 +75,14 @@ export class OfferService {
 
         let headers = this.defaultHeaders;
 
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
 
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -130,14 +130,13 @@ export class OfferService {
 
         let headers = this.defaultHeaders;
 
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -179,14 +178,13 @@ export class OfferService {
 
         let headers = this.defaultHeaders;
 
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -216,21 +214,20 @@ export class OfferService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAll3(observe?: 'body', reportProgress?: boolean): Observable<Array<BuyingOfferDto>>;
-    public getAll3(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BuyingOfferDto>>>;
-    public getAll3(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BuyingOfferDto>>>;
-    public getAll3(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAll2(observe?: 'body', reportProgress?: boolean): Observable<Array<BuyingOfferDto>>;
+    public getAll2(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BuyingOfferDto>>>;
+    public getAll2(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BuyingOfferDto>>>;
+    public getAll2(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -267,14 +264,13 @@ export class OfferService {
 
         let headers = this.defaultHeaders;
 
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -288,7 +284,7 @@ export class OfferService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<BuyingOfferDto>>('get',`${this.basePath}/v1/user/offers`,
+        return this.httpClient.request<Array<BuyingOfferDto>>('get',`${this.basePath}/v1/offers/user`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -316,14 +312,13 @@ export class OfferService {
 
         let headers = this.defaultHeaders;
 
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -365,14 +360,13 @@ export class OfferService {
 
         let headers = this.defaultHeaders;
 
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -414,14 +408,13 @@ export class OfferService {
 
         let headers = this.defaultHeaders;
 
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -469,14 +462,13 @@ export class OfferService {
 
         let headers = this.defaultHeaders;
 
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -524,14 +516,13 @@ export class OfferService {
 
         let headers = this.defaultHeaders;
 
-
-        // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -554,5 +545,61 @@ export class OfferService {
             }
         );
     }
+
+
+  /**
+   *
+   *
+   * @param body
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public acceptOffers(body: BuyingOfferDto, observe?: 'body', reportProgress?: boolean): Observable<string>;
+  public acceptOffers(body: BuyingOfferDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+  public acceptOffers(body: BuyingOfferDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+  public acceptOffers(body: BuyingOfferDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+    if (body === null || body === undefined) {
+      throw new Error('Required parameter body was null or undefined when calling acceptOffers.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // authentication (bearerAuth) required
+    if (this.CookiesService.getTokent()) {
+      const accessToken = typeof this.configuration.accessToken === 'function'
+        ? this.CookiesService.getTokent()
+        : this.CookiesService.getTokent();
+      headers = headers.set('Authorization', 'Bearer ' + accessToken);
+    }
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected != undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.request<string>('put',`${this.basePath}/v1/offers/accept`,
+      {
+        body: body,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
 
 }

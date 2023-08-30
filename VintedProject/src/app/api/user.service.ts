@@ -22,6 +22,7 @@ import { UserDto } from '../model/userDto';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
+import {CookiesService} from "./cookies.service";
 
 
 @Injectable()
@@ -31,7 +32,7 @@ export class UserService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, private CookiesService: CookiesService , @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -74,13 +75,13 @@ export class UserService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -128,13 +129,13 @@ export class UserService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -164,20 +165,20 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAll2(observe?: 'body', reportProgress?: boolean): Observable<Array<UserDto>>;
-    public getAll2(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserDto>>>;
-    public getAll2(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserDto>>>;
-    public getAll2(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAll(observe?: 'body', reportProgress?: boolean): Observable<Array<UserDto>>;
+    public getAll(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserDto>>>;
+    public getAll(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserDto>>>;
+    public getAll(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -214,18 +215,18 @@ export class UserService {
     public getUserDtoById(userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling getOrderDtoById.');
+            throw new Error('Required parameter userId was null or undefined when calling getUserDtoById.');
         }
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -253,32 +254,27 @@ export class UserService {
      *
      *
      * @param body
-     * @param userId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateUserPassword(body: string, userId: number, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public updateUserPassword(body: string, userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public updateUserPassword(body: string, userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public updateUserPassword(body: string, userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateUserPassword(body: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public updateUserPassword(body: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public updateUserPassword(body: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public updateUserPassword(body: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateUserPassword.');
         }
 
-        if (userId === null || userId === undefined) {
-            throw new Error('Required parameter userId was null or undefined when calling updateUserPassword.');
-        }
-
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -297,7 +293,7 @@ export class UserService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<boolean>('put',`${this.basePath}/v1/password/${encodeURIComponent(String(userId))}`,
+        return this.httpClient.request<boolean>('put',`${this.basePath}/v1/password`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -326,13 +322,13 @@ export class UserService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
+      // authentication (bearerAuth) required
+      if (this.CookiesService.getTokent()) {
+        const accessToken = typeof this.configuration.accessToken === 'function'
+          ? this.CookiesService.getTokent()
+          : this.CookiesService.getTokent();
+        headers = headers.set('Authorization', 'Bearer ' + accessToken);
+      }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'

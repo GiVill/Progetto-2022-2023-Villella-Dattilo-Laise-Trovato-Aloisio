@@ -204,9 +204,8 @@ checkProductInCart(): void {
   submitMessage() {
     if (this.message.trim() !== '') {
       const newMessageDto: NewMessageDto = {
-        reciver: Number(this.cookiesService.getUserId()),
-        sender: this.user?.id,
-        nickname: this.user?.nickname,
+        sender: Number(this.cookiesService.getUserId()),
+        reciver: this.user?.id,
         message: this.message
       };
       console.log(newMessageDto)

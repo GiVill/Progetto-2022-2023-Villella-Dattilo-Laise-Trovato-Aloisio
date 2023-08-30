@@ -2,7 +2,7 @@ import {Component,OnInit} from '@angular/core';
 import {InsertionService} from "../../../../api/insertion.service";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../../api/user.service";
-import {forkJoin, Observable, switchMap} from "rxjs";
+import {forkJoin, switchMap} from "rxjs";
 import {OrderService} from "../../../../api/order.service";
 import {CookiesService} from "../../../../api/cookies.service";
 import {PageBasicInsertionDto} from "../../../../model/pageBasicInsertionDto";
@@ -10,9 +10,6 @@ import {PageOrderDto} from "../../../../model/pageOrderDto";
 import {UserDto} from "../../../../model/userDto";
 import {BuyingOfferDto} from "../../../../model/buyingOfferDto";
 import {OfferService} from "../../../../api/offer.service";
-import {PageBuyngOfferDto} from "../../../../model/pageBuyngOfferDto";
-import {OrderDto} from "../../../../model/orderDto";
-import {MatDialog} from "@angular/material/dialog";
 
 
 
@@ -37,6 +34,7 @@ export class MyprofileComponent implements OnInit{
   OrderModal = false
 
 
+
   constructor(
     private insertionService: InsertionService,
     private route: ActivatedRoute,
@@ -58,9 +56,9 @@ export class MyprofileComponent implements OnInit{
       (user: UserDto) => {
         this.user = user;
         // Create observables for each API call
-        const insertionObservable = this.insertionService.getInsertionByUserId(this.userId, this.page);
+        const insertionObservable = this.insertionService.getMyInsertion(this.page);
         const offerObservable = this.offerService.getAllByUser();
-        const orderObservable = this.orderService.getUserOrders(this.userId);
+        const orderObservable = this.orderService.getUserOrders(this.page);
         // Combine observables using forkJoin
         forkJoin([
           insertionObservable,
@@ -69,14 +67,13 @@ export class MyprofileComponent implements OnInit{
         ]).subscribe(
           ([insertionData, offerData, orderData]) => {
             this.myInsertion = insertionData;
-            console.log(insertionData)
             this.myOffer = offerData;
             this.myOrder = orderData ;
 
             if (!this.myInsertion?.empty) {
               this.isAnyInsertion = true;
             }
-            if (!this.myOrder) {
+            if (!this.myOrder.empty) {
               this.isAnyOrder = true;
             }
             if (this.myOffer) {
@@ -160,7 +157,7 @@ export class MyprofileComponent implements OnInit{
 
   updatePassword(newPassword: string): void {
     if (this.userId && newPassword) {
-      this.userService.updateUserPassword(newPassword, this.userId).subscribe(
+      this.userService.updateUserPassword(newPassword).subscribe(
         (success: boolean) => {
           // Password update successful
           console.log('Password updated successfully.');

@@ -20,6 +20,7 @@ export class ProductCardComponent implements OnInit{
   isHovered = false;
   myid= Number(this.cookiesService.getUserId());
   offers?: BuyingOfferDto[]
+  ShareOpen= false
   offerModalOpen = false;
 
   constructor(private router: Router,
@@ -35,8 +36,8 @@ export class ProductCardComponent implements OnInit{
       this.imageName = 'assets/resources/vestito.jpg'
     }
 
-    if (this.item?.description && this.item.description.length > 15) {
-      this.item.description = this.item.description.substr(0, 15) + '...';
+    if (this.item?.description && this.item.description.length > 33) {
+      this.item.description = this.item.description.substr(0, 33) + '...';
     }
   }
 
@@ -45,7 +46,12 @@ export class ProductCardComponent implements OnInit{
   }
 
   share(){
-    this.insertionService.generateCapabilities(Number(this.item?.id)).subscribe(response => {
+          this.snackBar.open("Codice copiato nella clipboard.")
+          this.clipboardService.copyFromContent("localhost:4200/insertion/"+this.item?.id);
+  }
+
+  share24(){
+    this.insertionService.generate24hToken(Number(this.item?.id)).subscribe(response => {
         console.log("Capability generata", response);
         this.clipboardService.copyFromContent(String(response))
       },
@@ -57,6 +63,22 @@ export class ProductCardComponent implements OnInit{
         console.log("Errore durante la generazione", error);
       })
   }
+
+  share8766(){
+    this.insertionService.generateYearToken(Number(this.item?.id)).subscribe(response => {
+        console.log("Capability generata", response);
+        this.clipboardService.copyFromContent(String(response))
+      },
+      error => {
+        if (error.status == 200){
+          this.snackBar.open("Codice copiato nella clipboard.")
+          this.clipboardService.copyFromContent("localhost:4200/private/"+String(error.error.text))
+        }
+        console.log("Errore durante la generazione", error);
+      })
+  }
+
+
 
 
   offer() {
@@ -72,6 +94,10 @@ export class ProductCardComponent implements OnInit{
     );
   }
 
+  showShare() {
+    this.ShareOpen = ! this.ShareOpen;
+  }
+
   openOfferModal(): void {
     this.offerModalOpen = true;
     this.offer();
@@ -85,13 +111,21 @@ export class ProductCardComponent implements OnInit{
     this.offers?.sort((a, b) => b.price - a.price); // Ordina le offerte per prezzo decrescente
   }
 
-  acceptOffer() {
-
+  acceptOffer(it: number) {
+    this.offerService.acceptOffers(this.offers![it]).subscribe(response => {
+        this.offer()
+        this.snackBar.open("Offerta Accettata" , "OK")
+      },
+      error => {
+        this.snackBar.open("Errore durante l'accettazione dell'offerta" , "Riprovare")
+      })
   }
 
-  deleteOffer(it: number) {
 
+  deleteOffer(it: number) {
+    console.log(this.offers![it])
     this.offerService.userDeleteOffer(this.offers![it]).subscribe(response => {
+
         this.offer()
         this.snackBar.open("Offerta rifiutata" , "OK")
       },

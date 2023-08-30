@@ -1,14 +1,28 @@
 <div class="product-card">
   <div class="image-container">
     <img class="rounded-image" [src]="imageName" (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
-    <button *ngIf="item?.isPrivate && item?.userId==myid" style="display: flex; bottom: 2px; margin: 5px" (click)="share()" >Condividi con codice privato</button>
-    <button *ngIf="item?.userId==myid" style="display: flex; bottom: 2px; margin: 5px" (click)="openOfferModal()" > Visualizza offerte</button>
+
+    <button *ngIf="item?.userId==myid" style="display: flex; bottom: 2px; margin: 5px; left: 25%;" (click)="openOfferModal()" > Visualizza offerte</button>
 
   </div>
+  <div style="display: flex;">
   <div class="content-container" (click)="onImageClick()">
-    <h2 class="title">{{ item?.title }}</h2>
+    <h3 class="title">{{ item?.title }}</h3>
     <p class="description">{{ item?.description }}</p>
   </div>
+    <button *ngIf="!item?.isPrivate" style="display: flex; left: 60%;" mat-icon-button (click)="share()" >
+      <mat-icon>share</mat-icon>
+    </button>
+    <button *ngIf="item?.isPrivate" style="display: flex; left: 60%;" mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>share</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="share24()" style="font-size: 10px">Condividi per 1 giorno</button>
+      <button mat-menu-item (click)="share8766()" style="font-size: 10px">Condividi per 1 anno</button>
+    </mat-menu>
+  </div>
+
+
   <div class="price-container">
     <p class="price">Prezzo: {{ item?.price }}€</p>
   </div>
@@ -24,7 +38,7 @@
             <p style="color: black">Stato offerta: {{offer.status}}</p>
             <p style="color: black">Prezzo offerto: {{offer.price}}€</p>
             <div class="offer-buttons">
-              <button class="btn" (click)="acceptOffer()" >ACCETTA</button>
+              <button class="btn" (click)="acceptOffer(i)" >ACCETTA</button>
               <button class="btn" (click)="deleteOffer(i)">RIFIUTA</button>
             </div>
           </div>

@@ -12,6 +12,7 @@ import {OrderService} from "../../../../api/order.service";
 import {CookiesService} from "../../../../api/cookies.service";
 import {PaymentDto} from "../../../../model/paymentDto";
 import {MyprofileComponent} from "../../../Pages/User/myprofile/myprofile.component";
+import {getLocaleDateFormat} from "@angular/common";
 
 
 @Component({
@@ -68,12 +69,13 @@ export class OfferCardComponent implements OnInit{
     if (this.product?.id != undefined) {
       const order: OrderDto = {
         id: 0,
+        total: this.offer?.price,
         paymentMethod: "this.paymentMethods",
-        insertionIdList: [this.product],
+        insertionIdList: [this.product.id],
         userId: Number(this.cookieServices.getUserId())
       };
       console.log(order)
-      this.orderService.addOrder(order).subscribe((response) => {
+      this.orderService.userAddOrder(order).subscribe((response) => {
           this.snackBar.open("Ordine creato ",)
         },
         (error) => {

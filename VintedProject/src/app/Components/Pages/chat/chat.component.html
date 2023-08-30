@@ -2,7 +2,7 @@
   <div class="user-list">
     <ul>
       <li *ngFor="let chats of chat" (click)="onSelectChat(chats)">
-        <button class="button btn" [ngClass]="{'selected-user': chats === selectedChat}" style="margin: 10px">{{ chats.basicInsertion?.title}}</button>
+        <button class="button btn" [ngClass]="{'selected-user': chats === selectedChat}" style="margin: 10px">{{ chats.user1}}</button>
       </li>
     </ul>
   </div>

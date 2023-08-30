@@ -7,7 +7,6 @@ import {OrderService} from "../../../../api/order.service";
 import {InsertionService} from "../../../../api/insertion.service";
 import {UserService} from "../../../../api/user.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {PaymentService} from "../../../../api/payment.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -33,7 +32,7 @@ export class DashboardComponent {
               private insertionService :InsertionService,
               private userService :UserService,
               private snackBar: MatSnackBar,
-              private paymentService :PaymentService) {
+              ) {
   }
 
 
@@ -108,7 +107,7 @@ export class DashboardComponent {
   }
 
   actionDeleteBasicInsertion(InsertionId) {
-    this.insertionService.deleteInsertionForAdmin(InsertionId).subscribe(
+    this.insertionService.adminDeleteInsertionByInsertionId(InsertionId).subscribe(
       response => {
         this.actionGetAllByUserId()
         this.snackBar.open('Inserzione Eliminata', 'OK');
@@ -152,7 +151,7 @@ export class DashboardComponent {
   }
 
   actionDeleteOrder(orderId) {
-   this.orderService.deleteOrderForAdmin(orderId).subscribe(
+   this.orderService.deleteOrderById(orderId).subscribe(
      response => {
        this.snackBar.open('Ordine Eliminato', 'OK');
        console.log("Ordine Eliminato", response);
@@ -170,14 +169,7 @@ export class DashboardComponent {
   }
 
   actionDeletePayment() {
-    this.paymentService.deletePaymentAdmin(this.orderId).subscribe(
-      response => {
-        console.log("Pagamento Eliminato", response);
-      },
-      error => {
-        console.log("Errore", error);
-      }
-    );
+
   }
 
   action() {

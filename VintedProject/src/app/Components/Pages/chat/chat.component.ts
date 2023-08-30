@@ -5,6 +5,7 @@ import {NewMessageDto} from "../../../model/newMessageDto";
 import {ChatMessageService} from "../../../api/chatMessage.service";
 import {ChatMessageDto} from "../../../model/chatMessageDto";
 import {ChatService} from "../../../api/chat.service";
+import {BasicInsertion} from "../../../model/basicInsertion";
 
 
 @Component({
@@ -26,14 +27,14 @@ export class ChatComponent implements OnInit {
               private chatService: ChatService,
               private cookiesService: CookiesService) {}
 
-  ngOnInit(): void {
+  async ngOnInit():  Promise<void> {
     if (!this.cookiesService.checkUserToken()){
         this.cookiesService.getRefreshToken()
     }
     this.loadChat().then(() => {
       if (this.chat && this.chat.length > 0) {
         this.selectedChat = this.chat[0];
-        this.loadMessages(this.selectedChat.reciver!);
+        this.loadMessages(this.selectedChat.id!);
       }
     });
   }
@@ -45,8 +46,7 @@ export class ChatComponent implements OnInit {
         this.selectedChat = chats[0];
       }
       console.log(chats);
-      this.loadMessages(this.selectedChat.reciver!);
-
+      this.loadMessages(this.selectedChat.id!);
     } catch (error) {
       this.noChat=true;
       console.error('Error fetching users:', error);
@@ -54,7 +54,7 @@ export class ChatComponent implements OnInit {
 
   }
 
-  loadMessages(userId: number): void {
+  async  loadMessages(userId: number):  Promise<void> {
     this.chatMessageService.allChatMessage(this.selectedChat.id!).subscribe(
       (messages: Array<ChatDto>) => {
         this.messages = messages;
@@ -68,27 +68,28 @@ export class ChatComponent implements OnInit {
 
   sendMessage(): void {
     if (this.newMessage.trim() !== '') {
-      const newMessageDto: NewMessageDto = {
+      let newMessageDto: NewMessageDto = {
+        reciver: this.selectedChat.user1,
         sender: this.myId,
-        reciver: this.selectedChat.reciver,
-        nickname: this.selectedChat.nickname,
         message: this.newMessage,
         chatId: this.selectedChat.id
-
       };
-      console.log(newMessageDto)
+      console.log("sender: " + newMessageDto.sender);
+      console.log("receiver: " + newMessageDto.reciver);
+      console.log("message: " + newMessageDto.message);
+      console.log("chatId: " + newMessageDto.chatId);
       this.chatMessageService.insertMessage(newMessageDto).subscribe(
 
         (response: string) => {
           console.log(response)
           if (response=="ok") {
-            this.loadMessages(this.selectedChat.reciver!);
+            this.loadMessages(this.selectedChat.id!);
             this.newMessage = '';
           }
         },
         (error) => {
           if (error.statusText=="OK") {
-            this.loadMessages(this.selectedChat.reciver!);
+            this.loadMessages(this.selectedChat.id!);
             this.newMessage = '';
           }else {
             console.error('Error sending message:', error);
@@ -98,12 +99,12 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  onSelectChat(user: ChatDto): void {
-    console.log("Before selecting user:", user);
-    this.selectedChat = user;
+  onSelectChat(chat: ChatDto): void {
+    console.log("Before selecting user:", chat);
+    this.selectedChat = chat;
     console.log("After selecting user:", this.selectedChat);
-    this.loadMessages(user.reciver!);
-    this.selectedUserId = user.id;
+    this.loadMessages(chat.id!);
+    this.selectedUserId = chat.id;
   }
 
 }

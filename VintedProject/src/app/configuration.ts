@@ -22,7 +22,7 @@ export class Configuration {
         this.apiKeys = configurationParameters.apiKeys;
         this.username = configurationParameters.username;
         this.password = configurationParameters.password;
-        this.accessToken = this.cookiesService?.getTokent()
+        this.accessToken = configurationParameters.accessToken; // this.cookiesService?.getTokent()
         this.basePath = configurationParameters.basePath;
         this.withCredentials = configurationParameters.withCredentials;
     }
