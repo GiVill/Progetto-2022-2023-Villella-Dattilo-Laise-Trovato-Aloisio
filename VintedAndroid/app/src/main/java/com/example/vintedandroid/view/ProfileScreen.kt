@@ -48,14 +48,17 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.example.vintedandroid.view.config.ImageConfiguration
+import com.example.vintedandroid.viewmodel.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class, ExperimentalCoilApi::class)
 @Composable
-fun ProfileScreen(application: Context) {
+fun ProfileScreen(application: Context, userViewModel: UserViewModel) {
 
     var isLoaded by remember { mutableStateOf(false) }
-    var userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
+    //var userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
 
+    var userFromDB = userViewModel.getAllUserFromRoomDatabase()
+    /*
     //Prende dal db gli/lo user e li salva nella variabile userFromDB.
     LaunchedEffect(Unit) {
         if (userFromDB.isEmpty()) {
@@ -71,6 +74,8 @@ fun ProfileScreen(application: Context) {
             isLoaded = true
         }
     }
+
+     */
 
     /*
     var isDropdownOpen by remember { mutableStateOf(false) }
@@ -103,7 +108,7 @@ fun ProfileScreen(application: Context) {
             )
             Column {
 
-                userDetail(userFromDB)
+                userDetail(userFromDB!!)
                 Divider()
                 Spacer(modifier = Modifier.height(15.dp))
 
@@ -178,13 +183,13 @@ private fun modifyAccountInfoButton(subject: String){
 }
 
 @Composable
-private fun userDetail(userFromDB: SnapshotStateList<UserDatabaseDto>){
+private fun userDetail(userFromDB: UserDatabaseDto){
 
     Card {
-        if (userFromDB[0].imageName != null) {
+        if (userFromDB.imageName != null) {
             //ImageConfiguration(painter = painter, imageScale = ContentScale.Crop)
             ImageConfiguration(
-                imageName = userFromDB[0].imageName.toString(),
+                imageName = userFromDB.imageName.toString(),
                 imageScale = ContentScale.Fit
             )
         } else {
@@ -222,17 +227,17 @@ private fun userDetail(userFromDB: SnapshotStateList<UserDatabaseDto>){
                         .padding(10.dp)
                         .weight(1f)
                 ) {
-                    Text(text = userFromDB[0].nickName)
+                    Text(text = userFromDB.nickName)
                     Divider()
-                    Text(text = userFromDB[0].firstName)
+                    Text(text = userFromDB.firstName)
                     Divider()
-                    userFromDB[0].lastName?.let { Text(text = it) }
+                    userFromDB.lastName?.let { Text(text = it) }
                     Divider()
-                    userFromDB[0].email?.let { Text(text = it) }
+                    userFromDB.email?.let { Text(text = it) }
                     Divider()
-                    userFromDB[0].birthDate?.let { Text(text = it) }
+                    userFromDB.birthDate?.let { Text(text = it) }
                     Divider()
-                    Text(text = "${userFromDB[0].addressState} ${userFromDB[0].addressRegion} ${userFromDB[0].addressCity} ${userFromDB[0].addressCap} ${userFromDB[0].addressStreet} ${userFromDB[0].addressNumber}")
+                    Text(text = "${userFromDB.addressState} ${userFromDB.addressRegion} ${userFromDB.addressCity} ${userFromDB.addressCap} ${userFromDB.addressStreet} ${userFromDB.addressNumber}")
                 }
             }
         }

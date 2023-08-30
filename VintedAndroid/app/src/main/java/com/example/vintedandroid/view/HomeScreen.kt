@@ -17,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +28,7 @@ import com.example.vintedandroid.client.models.BasicInsertionDto
 import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.application_status.internetChecker
 import com.example.vintedandroid.model.dto.CartDto
+import com.example.vintedandroid.view.config.ImageConfiguration
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +47,7 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
             //if (isLoaded1 && isLoaded2) {
 
                 //Dentro la LazyColumn non si possono mettere immagini a quanto pare, fuori si
-                //ImageConfiguration(imageName = manViewModel.results[0].imageName, imageScale = ContentScale.Crop)
+                ImageConfiguration(imageName = "file_840d9ec4-ad3f-47dd-a9bd-ed1b11de153a.jpg", imageScale = ContentScale.Crop) //allInsertion.results[0].imageName
 
                 //if(itemsMan.empty != true && allItems.empty != true) {
 

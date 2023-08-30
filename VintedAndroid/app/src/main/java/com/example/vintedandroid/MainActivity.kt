@@ -1,21 +1,8 @@
 package com.example.vintedandroid
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.net.Uri
 import android.os.Bundle
 import android.os.StrictMode
-import android.provider.MediaStore
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -24,51 +11,29 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarColors
-import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.example.vintedandroid.theme.VintedAndroidTheme
-import com.example.vintedandroid.view.LoginScreen
 import com.example.vintedandroid.view.ScreenController
-import com.example.vintedandroid.view.SearchResultCard
 import com.example.vintedandroid.view.SetupNavGraph
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.FileNotFoundException
-import java.nio.ByteBuffer
-import android.Manifest
 import com.example.vintedandroid.model.application_status.internetChecker
 import com.example.vintedandroid.view.noConnectionScreen
 import com.example.vintedandroid.viewmodel.CartViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
-import com.example.vintedandroid.viewmodel.LoginViewModel
+import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
+import com.example.vintedandroid.viewmodel.OfferViewModel
+import com.example.vintedandroid.viewmodel.UpdatePasswordViewModel
 import com.example.vintedandroid.viewmodel.UserViewModel
 
 class MainActivity : ComponentActivity() {
@@ -103,7 +68,9 @@ class MainActivity : ComponentActivity() {
                                     homeViewModel =  HomeViewModel(application),
                                     userViewModel = UserViewModel(application),
                                     cartViewModel = CartViewModel(application),
-                                    loginViewModel = LoginViewModel(application)
+                                    loginRegistrationViewModel = LoginRegistrationViewModel(application),
+                                    updatePasswordViewModel = UpdatePasswordViewModel(application),
+                                    offerViewModel = OfferViewModel(application)
                                 )
                             }
                         } )

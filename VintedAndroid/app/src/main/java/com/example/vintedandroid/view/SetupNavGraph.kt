@@ -14,14 +14,16 @@ import com.example.vintedandroid.client.apis.InsertionApi
 import com.example.vintedandroid.client.models.BasicInsertionDto
 import com.example.vintedandroid.viewmodel.CartViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
-import com.example.vintedandroid.viewmodel.LoginViewModel
+import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
+import com.example.vintedandroid.viewmodel.OfferViewModel
+import com.example.vintedandroid.viewmodel.UpdatePasswordViewModel
 import com.example.vintedandroid.viewmodel.UserViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState",
     "RememberReturnType"
 )
 @Composable
-fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context, homeViewModel: HomeViewModel, userViewModel: UserViewModel, cartViewModel: CartViewModel, loginViewModel: LoginViewModel) {
+fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context, homeViewModel: HomeViewModel, userViewModel: UserViewModel, cartViewModel: CartViewModel, loginRegistrationViewModel: LoginRegistrationViewModel, updatePasswordViewModel: UpdatePasswordViewModel, offerViewModel: OfferViewModel) {
 
     //var user = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll() //Get di un utente
 
@@ -58,31 +60,31 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             CartScreen(cartViewModel)
         }
         composable(route = ScreenController.Profile.route){
-            ProfileScreen(application)
+            ProfileScreen(application, userViewModel)
         }
         composable(route = ScreenController.BottomBarProfile.route){
-            BottomBarProfile(navController, application, userViewModel)
+            BottomBarProfile(navController, application, userViewModel, cartViewModel)
         }
-        composable(route = ScreenController.Favorite.route){
-            FavoriteScreen()
+        composable(route = ScreenController.Order.route){
+            OrderScreen()
         }
-        composable(route = ScreenController.Balance.route){
-            BalanceScreen()
-        }
-        composable(route = ScreenController.Setting.route){
-            SettingScreen()
+        composable(route = ScreenController.Offer.route){
+            OfferActivity(offerViewModel = offerViewModel)
         }
         composable(route = ScreenController.Feedback.route){
             FeedbackScreen()
         }
         composable(route = ScreenController.Login.route){
-            LoginScreen(navController, application, userViewModel, loginViewModel)
+            LoginScreen(navController, application, userViewModel, loginRegistrationViewModel)
         }
         composable(route = ScreenController.Register.route){
-            RegistrationScreen(navController, application, loginViewModel)
+            RegistrationScreen(navController, application, loginRegistrationViewModel)
         }
         composable(route = ScreenController.Product.route){
             ProductScreen(searchedProduct,itemsInCart, homeViewModel)
+        }
+        composable(route = ScreenController.UpdatePassword.route){
+            UpdatePasswordScreen(updatePasswordViewModel)
         }
 
     }

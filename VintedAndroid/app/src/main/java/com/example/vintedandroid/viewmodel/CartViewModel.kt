@@ -36,4 +36,11 @@ class CartViewModel(application: Application) : ViewModel() {
          */
     }
 
+    //TODO Da testare
+    fun deleteAll(){
+        CoroutineScope(Dispatchers.IO).launch {
+            AppDatabase.getInstance(context = application.applicationContext).cartDao().deleteAll()
+        }
+    }
+
 }

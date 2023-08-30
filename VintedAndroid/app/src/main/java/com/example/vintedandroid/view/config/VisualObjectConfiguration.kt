@@ -77,7 +77,7 @@ fun createPersonalizedTextfieldPassword(textField: MutableState<TextFieldValue>)
         trailingIcon = {
             IconButton(onClick = { showPassword = !showPassword }) {
                 Icon(
-                    imageVector = if (showPassword) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility,
+                    imageVector = if (showPassword) Icons.Outlined.Visibility else Icons.Outlined.VisibilityOff,
                     contentDescription = if (showPassword) "Show Password" else "Hide Password"
                 )
             }

@@ -25,22 +25,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.vintedandroid.client.apis.AuthApi
-import com.example.vintedandroid.client.models.NewUserDto
-import com.example.vintedandroid.client.models.TokenResponse
-import com.example.vintedandroid.model.AppDatabase
-import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.view.config.createPersonalizedTextfield
 import com.example.vintedandroid.view.config.createPersonalizedTextfieldPassword
-import com.example.vintedandroid.viewmodel.LoginViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun RegistrationScreen(navController: NavHostController, application: Context, loginViewModel: LoginViewModel) {
+fun RegistrationScreen(navController: NavHostController, application: Context, loginRegistrationViewModel: LoginRegistrationViewModel) {
 
     val emailField = remember { mutableStateOf(TextFieldValue()) }
     val nicknameField = remember { mutableStateOf(TextFieldValue()) }
@@ -60,7 +51,7 @@ fun RegistrationScreen(navController: NavHostController, application: Context, l
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(text = "REGISTRATION", fontSize = 48.sp)
+        Text(text = "REGISTRATION", fontSize = 36.sp)
         Spacer(modifier = Modifier.height(50.dp))
 
         createPersonalizedTextfield(textField = emailField, name = "Email", Icons.Default.Email)
@@ -72,7 +63,7 @@ fun RegistrationScreen(navController: NavHostController, application: Context, l
             onClick = {
                 buttonEnabled = false
 
-                if(loginViewModel.registration(emailField.value.text, passwordField.value.text, firstnameField.value.text, nicknameField.value.text)){
+                if(loginRegistrationViewModel.registration(emailField.value.text, passwordField.value.text, firstnameField.value.text, nicknameField.value.text)){
                     navController.popBackStack()
                     navController.navigate(ScreenController.Home.route)
                 }

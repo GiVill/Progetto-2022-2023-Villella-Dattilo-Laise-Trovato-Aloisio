@@ -25,29 +25,24 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.vintedandroid.client.apis.AuthApi
-import com.example.vintedandroid.client.models.LoginUserDto
-import com.example.vintedandroid.client.models.TokenResponse
-import com.example.vintedandroid.model.AppDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import android.content.Context
+import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.example.vintedandroid.model.dto.UserDatabaseDto
+import com.example.vintedandroid.client.apis.AuthApi
 import com.example.vintedandroid.view.config.createPersonalizedTextfield
 import com.example.vintedandroid.view.config.createPersonalizedTextfieldPassword
-import com.example.vintedandroid.viewmodel.LoginViewModel
+import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
 import com.example.vintedandroid.viewmodel.UserViewModel
 
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun LoginScreen(navController: NavHostController, application: Context, userViewModel: UserViewModel, loginViewModel: LoginViewModel) {
+fun LoginScreen(navController: NavHostController, application: Context, userViewModel: UserViewModel, loginRegistrationViewModel: LoginRegistrationViewModel) {
 
     val emailField = remember { mutableStateOf(TextFieldValue()) }
     var passwordField = remember { mutableStateOf(TextFieldValue()) }
@@ -108,7 +103,7 @@ fun LoginScreen(navController: NavHostController, application: Context, userView
                     createPersonalizedTextfield(textField = emailField, name = "Email", icon = Icons.Default.Email)
                     createPersonalizedTextfieldPassword(textField = passwordField)
 
-                    loginButton(navController = navController, application = application, email = emailField.value.text, password = passwordField.value.text, loginUnsuccessful = loginUnsuccessful, loginViewModel = loginViewModel)
+                    loginButton(navController = navController, application = application, email = emailField.value.text, password = passwordField.value.text, loginUnsuccessful = loginUnsuccessful, loginRegistrationViewModel = loginRegistrationViewModel)
                     goToRegistrationButton(navController = navController)
 
                 }
@@ -123,7 +118,7 @@ fun LoginScreen(navController: NavHostController, application: Context, userView
 
 //TODO Controllare che funzioni tutto correttamente
 @Composable
-private fun loginButton(navController: NavHostController, application: Context, email: String, password: String, loginUnsuccessful: MutableState<Boolean>, loginViewModel: LoginViewModel){
+private fun loginButton(navController: NavHostController, application: Context, email: String, password: String, loginUnsuccessful: MutableState<Boolean>, loginRegistrationViewModel: LoginRegistrationViewModel){
 
     var buttonEnabled by remember { mutableStateOf(true) }
     //val auth = AuthApi()
@@ -134,7 +129,7 @@ private fun loginButton(navController: NavHostController, application: Context, 
             //val loginUserDto = convertLoginUserDTO(email, password)
             loginUnsuccessful.value = false
             CoroutineScope(Dispatchers.IO).launch {
-                if(loginViewModel.login(email, password)){
+                if(loginRegistrationViewModel.login(email, password)){
                     navController.popBackStack()
                     navController.navigate(ScreenController.Home.route)
                 } else {
@@ -169,6 +164,8 @@ private fun loginButton(navController: NavHostController, application: Context, 
     ) { Text("Login") }
 }
 
+
+
 @Composable
 private fun goToRegistrationButton(navController: NavHostController){
     Button(
@@ -176,7 +173,7 @@ private fun goToRegistrationButton(navController: NavHostController){
             navController.navigate("register") },
         modifier = Modifier.padding(8.dp)
     ) {
-        Text("Need new account? Register!")
+        Text("Need new account? Sign up!")
     }
 }
 
