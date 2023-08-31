@@ -6,8 +6,11 @@ import it.unical.ea.VintedProject.data.entities.ChatMessage;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatMessageService;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatService;
 import it.unical.ea.VintedProject.dto.ChatDto;
+import it.unical.ea.VintedProject.dto.NewChatDto;
 import it.unical.ea.VintedProject.dto.NewMessageDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +28,12 @@ public class ChatController {
         public ResponseEntity<List<ChatDto>> allChatUser(@PathVariable("id")Long id){
             System.out.println(chatService.allChatByUserId(id));
             return ResponseEntity.ok(chatService.allChatByUserId(id));
+        }
+
+        @PostMapping("/chat/newchat")
+        public ResponseEntity<String> newChat(@RequestBody NewChatDto newChatDto){
+            chatService.addChat(newChatDto);
+            return ResponseEntity.ok("ok");
         }
 
 }

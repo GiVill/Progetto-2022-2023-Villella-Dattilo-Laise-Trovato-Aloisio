@@ -102,7 +102,7 @@ public class DbGenerator implements ApplicationRunner {
             for (CSVRecord record : chatCsv) {
                 //System.out.println(record.get(0)+ record.get(1) +record.get(2)+ record.get(3));
                 //insertChat(userService.getUserById(Long.valueOf(record.get(0))), userService.getUserById(Long.valueOf(record.get(1))), record.get(2), record.get(3));
-                insertChat(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4), record.get(5));
+                insertChat(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4));
             }
 
 
@@ -181,19 +181,24 @@ public class DbGenerator implements ApplicationRunner {
 
         userService.save(user);
     }
-    private void insertChat(String id1, String id2,String nickname, String message, String date, String insertionId) {
+    private void insertChat(String id1, String id2, String message, String date, String insertionId) {
 
         BasicInsertion insertion = insertionService.getById(Long.valueOf(insertionId));
-        if (chatDao.findByUser1AndUser2(Long.valueOf(id1), Long.valueOf(id2)).isEmpty()) {
+        if (chatDao.findByUser1AndUser2AndInsertionId(Long.valueOf(id1), Long.valueOf(id2), Long.valueOf(insertionId)).isEmpty()) {
+            User user1 = userService.getUserById(Long.valueOf(id1));
+            User user2 = userService.getUserById(Long.valueOf(id2));
             Chat chat = new Chat();
             chat.setUser1(Long.valueOf(id1));
+            chat.setUser1NameLastname(user1.getFirstName() + " " + user1.getLastName());
             chat.setUser2(Long.valueOf(id2));
+            chat.setUser2NameLastname(user2.getFirstName() + " " + user2.getLastName());
+            chat.setInsertionId(Long.valueOf(insertionId));
+            chat.setInsertionTitle(insertion.getTitle());
 
 
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setSender(Long.valueOf(Long.valueOf(id1)));
             chatMessage.setReciver(Long.valueOf(Long.valueOf(id2)));
-            chatMessage.setNickname(nickname);
             chatMessage.setMessage(message);
             chatMessage.setDate(LocalDateTime.now());
 
@@ -205,13 +210,12 @@ public class DbGenerator implements ApplicationRunner {
 
         } else {
 
-            Optional<Chat> chat = chatDao.findByUser1AndUser2(Long.valueOf(id1), Long.valueOf(id2));
+            Optional<Chat> chat = chatDao.findByUser1AndUser2AndInsertionId(Long.valueOf(id1), Long.valueOf(id2), Long.valueOf(insertionId));
             Chat newChat = chat.get();
 
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setSender(Long.valueOf(Long.valueOf(id1)));
             chatMessage.setReciver(Long.valueOf(Long.valueOf(id2)));
-            chatMessage.setNickname(nickname);
             chatMessage.setMessage(message);
             chatMessage.setDate(LocalDateTime.now());
             chatMessage.setChat(newChat.getId());
@@ -224,6 +228,6 @@ public class DbGenerator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-       //createDb();
+      // createDb();
     }
 }

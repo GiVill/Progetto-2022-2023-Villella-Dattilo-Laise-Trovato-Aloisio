@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "CHAT", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"user1", "user2"})
+        @UniqueConstraint(columnNames = {"user1", "user2","insertionId"})
 })
 public class Chat {
     @Id
@@ -25,6 +25,19 @@ public class Chat {
 
     @Column(name = "user2")
     private Long user2;
+
+    @Column(name = "user1NameSurname")
+    private String user1NameLastname;
+
+    @Column(name = "user2NameSurname")
+    private String user2NameLastname;
+
+    @Column(name = "insertionId")
+    private Long insertionId;
+
+    @Column(name = "InsertionTitle")
+    private String InsertionTitle;
+
 
 
 }

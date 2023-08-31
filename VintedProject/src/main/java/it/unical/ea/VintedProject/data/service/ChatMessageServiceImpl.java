@@ -11,6 +11,8 @@ import it.unical.ea.VintedProject.data.entities.ChatMessage;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatMessageService;
+import it.unical.ea.VintedProject.data.service.interfaces.UserService;
+import it.unical.ea.VintedProject.dto.NewChatDto;
 import it.unical.ea.VintedProject.dto.NewMessageDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     private final UserDao userDao;
     private final MessageLang messageLang;
     private final ModelMapper modelMapper;
+    private final UserService userService;
     private final BasicInsertionService basicInsertionService;
 
 
@@ -116,44 +119,76 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     @Override
     public void insertMessageChat(NewMessageDto newMessageDto) {
-        //Chat chat = modelMapper.map(newMessageDto, Chat.class);
+
 
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if (u.get().getEmail() == null || !u.get().getId().equals(newMessageDto.getSender())) {
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present", newMessageDto.getSender()));
         }
 
-        if (chatDao.findByUser1AndUser2(Long.valueOf(newMessageDto.getSender()), Long.valueOf(newMessageDto.getReciver())).isEmpty()) {
+        Chat chat = chatDao.getById(newMessageDto.getChatId());
+
+        ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setSender(Long.valueOf(newMessageDto.getSender()));
+        chatMessage.setReciver(Long.valueOf(newMessageDto.getReciver()));
+        chatMessage.setMessage(newMessageDto.getMessage());
+        chatMessage.setDate(LocalDateTime.now());
+
+
+
+        chatMessage.setChat(chat.getId());
+        chatMessageDao.save(chatMessage);
+
+
+    }
+
+
+
+    @Override
+    public void insertNewChat(NewChatDto NewChatDto) {
+
+        BasicInsertion insertion = basicInsertionService.getById(Long.valueOf(NewChatDto.getInsertionId()));
+        if (chatDao.findByUser1AndUser2AndInsertionId(Long.valueOf(NewChatDto.getSender()), Long.valueOf(NewChatDto.getReciver()), Long.valueOf(NewChatDto.getInsertionId())).isEmpty()) {
+            User user1 = userService.getUserById(Long.valueOf(NewChatDto.getSender()));
+            User user2 = userService.getUserById(Long.valueOf(NewChatDto.getReciver()));
             Chat chat = new Chat();
-            chat.setUser1(Long.valueOf(newMessageDto.getSender()));
-            chat.setUser2(Long.valueOf(newMessageDto.getReciver()));
+            chat.setUser1(Long.valueOf(NewChatDto.getSender()));
+            chat.setUser1NameLastname(user1.getFirstName() + " " + user1.getLastName());
+            chat.setUser2(Long.valueOf(NewChatDto.getReciver()));
+            chat.setUser2NameLastname(user2.getFirstName() + " " + user2.getLastName());
+            chat.setInsertionId(Long.valueOf(NewChatDto.getInsertionId()));
+            chat.setInsertionTitle(insertion.getTitle());
+
 
             ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setSender(Long.valueOf(newMessageDto.getSender()));
-            chatMessage.setReciver(Long.valueOf(newMessageDto.getReciver()));
-            chatMessage.setMessage(newMessageDto.getMessage());
+            chatMessage.setSender(Long.valueOf(NewChatDto.getSender()));
+            chatMessage.setReciver(Long.valueOf(NewChatDto.getReciver()));
+            chatMessage.setMessage(NewChatDto.getMessage());
             chatMessage.setDate(LocalDateTime.now());
 
             chatDao.save(chat);
 
             chatMessage.setChat(chat.getId());
-            save(chatMessage);
+            chatMessageDao.save(chatMessage);
+            System.out.println(chat);
+            System.out.println(chatMessage);
+
         } else {
 
-            Optional<Chat> chat = chatDao.findByUser1AndUser2(Long.valueOf(newMessageDto.getSender()), Long.valueOf(newMessageDto.getReciver()));
+            Optional<Chat> chat = chatDao.findByUser1AndUser2AndInsertionId(Long.valueOf(NewChatDto.getSender()), Long.valueOf(NewChatDto.getReciver()), Long.valueOf(NewChatDto.getInsertionId()));
             Chat newChat = chat.get();
 
             ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setSender(Long.valueOf(newMessageDto.getSender()));
-            chatMessage.setReciver(Long.valueOf(newMessageDto.getReciver()));
-            chatMessage.setMessage(newMessageDto.getMessage());
+            chatMessage.setSender(Long.valueOf(NewChatDto.getSender()));
+            chatMessage.setReciver(Long.valueOf(NewChatDto.getReciver()));
+            chatMessage.setMessage(NewChatDto.getMessage());
             chatMessage.setDate(LocalDateTime.now());
             chatMessage.setChat(newChat.getId());
 
-            save(chatMessage);
+            chatMessageDao.save(chatMessage);
             chatDao.save(newChat);
-
 
         }
     }
-}
+    }
+

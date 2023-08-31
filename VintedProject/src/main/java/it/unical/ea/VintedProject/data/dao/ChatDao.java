@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface ChatDao  extends JpaRepository<Chat,Long>{
 
-    Optional<Chat> findByUser1AndUser2(Long user1, Long user2);
+    Optional<Chat> findByUser1AndUser2AndInsertionId(Long user1, Long user2, Long insertionId);
 
     @Query("SELECT c FROM Chat c WHERE c.user1 = :userId OR c.user2 = :userId")
     List<Chat> findAllChatsForUser(@Param("userId") Long userId);

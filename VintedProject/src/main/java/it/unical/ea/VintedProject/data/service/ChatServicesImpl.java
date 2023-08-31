@@ -4,13 +4,13 @@ import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.dao.ChatDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
-import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.Chat;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
+import it.unical.ea.VintedProject.data.service.interfaces.ChatMessageService;
 import it.unical.ea.VintedProject.data.service.interfaces.ChatService;
 import it.unical.ea.VintedProject.dto.ChatDto;
-import it.unical.ea.VintedProject.dto.OrderDto;
+import it.unical.ea.VintedProject.dto.NewChatDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -26,6 +26,7 @@ public class ChatServicesImpl implements ChatService {
 
 
     private final ChatDao chatDao;
+    private final ChatMessageService chatMessageService;
     private final UserDao userDao;
     private final MessageLang messageLang;
     private final ModelMapper modelMapper;
@@ -74,16 +75,15 @@ public class ChatServicesImpl implements ChatService {
     }
 
     @Override
-    public Optional<Chat> existChat(Long user1, Long user2, Long insertions) {
-
+    public void addChat(NewChatDto chat) {
         Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
         if(u.get().getEmail() == null){
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present"));
         }
 
-        BasicInsertion insertion = basicInsertionService.getById(insertions);
-        return chatDao.findByUser1AndUser2(user1,user2);
+         chatMessageService.insertNewChat(chat);
     }
+
 
 
 /*

@@ -120,7 +120,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE,"/v1/admin/images/insertion/{insertionId}").permitAll()      //.hasRole(ADMIN)
                 .requestMatchers(HttpMethod.DELETE,"/v1/images/insertion/{insertionId}").permitAll()            //.hasAnyRole(USER,ADMIN)
                 //CHAT
-                .requestMatchers(HttpMethod.GET,"/v1/chat/user/{id}").permitAll()           //.hasAnyRole(USER,ADMIN)
+                .requestMatchers(HttpMethod.GET,"/v1/chat/user/{id}").permitAll()                               //.hasAnyRole(USER,ADMIN)
+                .requestMatchers(HttpMethod.POST,"/v1/chat/newchat").permitAll()                               //.hasAnyRole(USER,ADMIN)
                 //CHATMESSAGE
                 .requestMatchers(HttpMethod.GET,"/v1/chat/message/{chatId}").permitAll()  //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.POST,"/v1/message/insert").permitAll()             //.hasAnyRole(USER,ADMIN)
