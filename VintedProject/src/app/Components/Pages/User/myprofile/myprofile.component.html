@@ -67,8 +67,8 @@
           <div style="margin: 15%"> </div>
           <div class="card-container">
             <div class="card-row" >
-              <ng-container *ngFor="let item of myOrder.content; let i = index;">
-                <app-order-card [item]="item" class="card-item"></app-order-card>
+              <ng-container *ngFor="let item of myOrder.content!; let i = index;">
+                <app-order-card [order]="item" class="card-item"></app-order-card>
                 <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
               </ng-container>
             </div>
@@ -108,6 +108,17 @@
 
 <!-- Finestra modale ordini -->
 <div class="order-modal" *ngIf="OrderModal" (click)="closeOrderModal($event)">
+  <div class="content" style="margin-top: 30px">
+    <div style="max-height: 700px;">
+      <div class="header">
+        <h2 class="font">Le mie inserzioni:</h2>
+      </div>
+      <div class="body-content" style="margin-top: 30px; display: flex"  *ngIf="isAnyOrder">
 
+
+      </div>
+      <button class="button showAll-button" (click)="addPageInsertion()" > Carica altro</button>
+    </div>
+  </div>
 </div>
 

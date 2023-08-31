@@ -18,6 +18,7 @@ import {OfferService} from "../../../../api/offer.service";
 import {NewMessageDto} from "../../../../model/newMessageDto";
 import {ChatService} from "../../../../api/chat.service";
 import {ChatMessageService} from "../../../../api/chatMessage.service";
+import {NewChatDto} from "../../../../model/newChatDto";
 
 @Component({
   selector: 'app-private',
@@ -187,50 +188,46 @@ export class PrivateComponent implements OnInit{
       console.log(buyingOffer)
       this.buyngOffer.userAddBuyingOffer(buyingOffer).subscribe(
         (response) => {
-          this.snackBar.open("Offerta inviata con successo. Puoi verificare lo stato nel tuo profilo")
-
+          this.snackBar.open("Offerta inviata con successo. Puoi verificare lo stato nel tuo profilo",  "OK")
           console.log('Offerta inviata con successo:', response);
           this.closeOfferModal();
         },
         (error) => {
           console.error('Errore durante l\'invio dell\'offerta:', error);
-          this.snackBar.open("Errore nell'invio dell'offerta")
+          this.snackBar.open("Errore nell'invio dell'offerta",  "OK")
         }
       );
     } else {
-      console.error('L\'importo dell\'offerta deve essere maggiore di 0');
-      this.snackBar.open("l'offerta deve essere maggiore di 0")
+      console.error('L\'importo dell\'offerta deve essere maggiore di 0' );
+      this.snackBar.open("l'offerta deve essere maggiore di 0", "OK")
     }
   }
 
   submitMessage() {
     if (this.message.trim() !== '') {
-      const newMessageDto: NewMessageDto = {
+      const newChatDto: NewChatDto = {
         sender: Number(this.cookiesService.getUserId()),
         reciver: this.user?.id,
-        message: this.message
+        message: this.message,
+        insertionId: Number(this.insertion?.id),
+        user1NameLastname: (this.cookiesService.getUserId()),
+        user2NameLastname: (this.user?.firstName + " " + this.user?.lastName),
+        insertionTitle: this.insertion?.title,
       };
-      console.log(newMessageDto)
-      this.chatMessageService.insertMessage(newMessageDto).subscribe(
+      console.log(newChatDto)
+      this.chatMessageService.newChat(newChatDto).subscribe(
 
         (response: string) => {
           console.log(response)
-          this.snackBar.open("Messaggio inviato")
+          this.snackBar.open("Messaggio inviato con successo", "OK")
           this.closeMessageModal()
         },
         (error) => {
-          if (error.statusText=="OK") {
-            this.snackBar.open("Messaggio inviato")
-            this.closeMessageModal()
-          }else {
-            this.snackBar.open("Errore nell'invio del messaggio")
+            this.snackBar.open("Errore durante l'invio del messaggio")
             this.closeModal()
-          }
         }
       );
     }
   }
-
-
 
 }

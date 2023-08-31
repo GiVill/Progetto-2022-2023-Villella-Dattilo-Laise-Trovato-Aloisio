@@ -10,7 +10,7 @@ import {CartComponent} from "../../../Pages/cart/cart.component";
   styleUrls: ['./order-card.component.css']
 })
 export class OrderCardComponent {
-  @Input() item: OrderDto | undefined;
+  @Input() order!: OrderDto;
 
   isHovered = false;
 
@@ -18,7 +18,7 @@ export class OrderCardComponent {
   }
 
   onImageClick(): void {
-    this.router.navigate(['/Order', this.item?.id]);
+    this.router.navigate(['/Order', this.order?.id]);
   }
 
   remove(insertionId: number | undefined): void {

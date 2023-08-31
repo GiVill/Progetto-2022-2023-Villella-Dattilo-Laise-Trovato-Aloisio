@@ -54,6 +54,7 @@ import {ClipboardModule} from "ngx-clipboard";
 import {ChatMessageService} from "./api/chatMessage.service";
 import {OfferProfileCardComponent} from "./Components/Components/Cards/offer-profile-card/offer-profile-card.component";
 import {MatDialogModule} from "@angular/material/dialog";
+import {OrderComponent} from "./Components/Pages/Order/order.component";
 
 
 
@@ -85,6 +86,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     RefusedComponent,
     OfferCardComponent,
     OrderCardComponent,
+    OrderComponent,
     DashboardComponent,
     CartComponent,
     OfferProfileCardComponent,

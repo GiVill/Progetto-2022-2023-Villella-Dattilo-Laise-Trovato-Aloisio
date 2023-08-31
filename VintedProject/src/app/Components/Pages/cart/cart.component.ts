@@ -32,8 +32,7 @@ export class CartComponent implements OnInit {
   orderError = false;
   areProduct: Boolean = false;
   loadedProducts: BasicInsertionDto[] = [];
-
-
+  order?: OrderDto;
 
 
   constructor(
@@ -43,17 +42,17 @@ export class CartComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private orderService: OrderService,
-    private tokenService: TokenService,
     private cookieServices: CookiesService,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     const cartItemsCookie = this.cookieService.get('cartItems');
     if (cartItemsCookie) {
       this.product = JSON.parse(cartItemsCookie);
-      if (this.product.length>0){
-        this.areProduct=true;
+      if (this.product.length > 0) {
+        this.areProduct = true;
       }
     } else {
       this.product = [];
@@ -104,17 +103,17 @@ export class CartComponent implements OnInit {
         this.cartProduct.splice(index, 1);
       }
     }
-   this.insertionService.getInsertionById(Number(insertionId)).subscribe((data: BasicInsertionDto) => {
-     const productPrice = data.price ?? 0;
-     this.totalCost -= productPrice;
-   });
+    this.insertionService.getInsertionById(Number(insertionId)).subscribe((data: BasicInsertionDto) => {
+      const productPrice = data.price ?? 0;
+      this.totalCost -= productPrice;
+    });
 
-   }
+  }
 
 
-  private saveCartItems(cartItems: { insertion_id: number}[]): void {
+  private saveCartItems(cartItems: { insertion_id: number }[]): void {
     this.cookieService.delete('cartItems', '/');
-    const updatedCartItems = cartItems.map(item => ({ insertion_id: item.insertion_id}));
+    const updatedCartItems = cartItems.map(item => ({insertion_id: item.insertion_id}));
     this.cookieService.set('cartItems', JSON.stringify(updatedCartItems), 1, '/');
   }
 
@@ -124,38 +123,42 @@ export class CartComponent implements OnInit {
       return;
     }
 
-    let productRequests = this.product.map((cartItem) => {
-      const order: OrderDto = {
-        id: 0,
-        total: this.totalCost,
-        paymentMethod: this.selectedPaymentMethod,
-        insertionIdList: [cartItem.insertion_id],
-        userId: Number(this.cookieServices.getUserId())
-      };
-      console.log(order)
-      this.orderService.userAddOrder(order).subscribe((response) => {
-          this.snackBar.open("Ordine creato ",)
-        },
-        (error) => {
-          this.snackBar.open("Errore durante la creazione dell ordine")
-        }
-      );
-      {
+    this.order = {
+      id: 0,
+      total: this.totalCost,
+      paymentMethod: this.selectedPaymentMethod,
+      insertionIdList:this.getInsertionId(),
+      userId: Number(this.cookieServices.getUserId())
+    }
+
+
+    this.orderService.userAddOrder(this.order!).subscribe((response) => {
+        this.snackBar.open("Ordine creato ",)
+        this.cookieService.delete('cartItems', '/');
+        this.ngOnInit()
+      },
+      (error) => {
         this.snackBar.open("Errore durante la creazione dell ordine")
-        this.ordineCreato = false;
-        this.orderSuccess = false;
-        this.orderError = true;
       }
+    );
+    {
+      this.snackBar.open("Errore durante la creazione dell ordine")
+      this.ordineCreato = false;
+      this.orderSuccess = false;
+      this.orderError = true;
+    }
 
-      console.log(order)
-
-    })
+    console.log(this.order)
 
   }
 
-
-
-
+ getInsertionId(){
+   let lista: number[] = [];  // Inizializza l'array vuoto qui
+   this.product.forEach((cartItem) => {
+     lista.push(cartItem.insertion_id);
+   });
+   return lista;
+ }
 
 
   clearCart(): void {

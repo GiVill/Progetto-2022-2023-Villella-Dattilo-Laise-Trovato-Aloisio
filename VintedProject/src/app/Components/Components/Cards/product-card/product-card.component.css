@@ -81,6 +81,7 @@ div#hormenu li li a {
   padding: 10px;
   border-radius: 10px;
   position: relative; /* Enable relative positioning */
+  color: black;
 }
 
 
