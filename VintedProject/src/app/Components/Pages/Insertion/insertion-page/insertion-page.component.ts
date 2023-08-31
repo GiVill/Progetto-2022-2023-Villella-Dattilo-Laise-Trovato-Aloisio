@@ -18,6 +18,7 @@ import {OfferService} from "../../../../api/offer.service";
 import {NewMessageDto} from "../../../../model/newMessageDto";
 import {ChatService} from "../../../../api/chat.service";
 import {ChatMessageService} from "../../../../api/chatMessage.service";
+import {NewChatDto} from "../../../../model/newChatDto";
 
 
 @Component({
@@ -203,17 +204,21 @@ checkProductInCart(): void {
 
   submitMessage() {
     if (this.message.trim() !== '') {
-      const newMessageDto: NewMessageDto = {
+      const newChatDto: NewChatDto = {
         sender: Number(this.cookiesService.getUserId()),
         reciver: this.user?.id,
-        message: this.message
+        message: this.message,
+        insertionId: Number(this.insertion?.id),
+        user1NameLastname: (this.cookiesService.getUserId()),
+        user2NameLastname: (this.user?.firstName + " " + this.user?.lastName),
+        insertionTitle: this.insertion?.title,
       };
-      console.log(newMessageDto)
-      this.chatMessageService.insertMessage(newMessageDto).subscribe(
+      console.log(newChatDto)
+      this.chatMessageService.newChat(newChatDto).subscribe(
 
         (response: string) => {
           console.log(response)
-            this.snackBar.open("Messaggio inviato")
+            this.snackBar.open("Messaggio inviato", "OK")
             this.closeMessageModal()
         },
         (error) => {

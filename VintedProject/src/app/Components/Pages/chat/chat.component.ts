@@ -68,11 +68,18 @@ export class ChatComponent implements OnInit {
 
   sendMessage(): void {
     if (this.newMessage.trim() !== '') {
+      let r: number;
+      if (this.selectedChat.user2 == this.myId) {
+         r = this.selectedChat.user1!
+
+      }else{
+         r = this.selectedChat.user2!
+      }
       let newMessageDto: NewMessageDto = {
-        reciver: this.selectedChat.user1,
+        reciver: r,
         sender: this.myId,
         message: this.newMessage,
-        chatId: this.selectedChat.id
+        chatId: this.selectedChat.id,
       };
       console.log("sender: " + newMessageDto.sender);
       console.log("receiver: " + newMessageDto.reciver);
@@ -106,5 +113,7 @@ export class ChatComponent implements OnInit {
     this.loadMessages(chat.id!);
     this.selectedUserId = chat.id;
   }
+
+
 
 }

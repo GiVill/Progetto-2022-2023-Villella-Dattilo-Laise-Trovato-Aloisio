@@ -17,5 +17,9 @@ export interface ChatDto {
     user1?: number;
     user2?: number;
     chatMessage?: ChatMessageDto;
+    user1NameLastname?: string;
+    user2NameLastname?: string;
+    insertionId?: string;
+    insertionTitle?: string;
 
 }

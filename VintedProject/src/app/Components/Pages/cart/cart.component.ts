@@ -123,13 +123,13 @@ export class CartComponent implements OnInit {
       console.log("Nessun prodotto nel carrello. Impossibile creare l'ordine.");
       return;
     }
-    const cartItemsCookie = this.cookieService.get('cartItems');
 
+    let productRequests = this.product.map((cartItem) => {
       const order: OrderDto = {
         id: 0,
         total: this.totalCost,
-        paymentMethod: "this.paymentMethods",
-        insertionIdList: this.product,
+        paymentMethod: this.selectedPaymentMethod,
+        insertionIdList: [cartItem.insertion_id],
         userId: Number(this.cookieServices.getUserId())
       };
       console.log(order)
@@ -141,14 +141,18 @@ export class CartComponent implements OnInit {
         }
       );
       {
-    this.snackBar.open("Errore durante la creazione dell ordine")
+        this.snackBar.open("Errore durante la creazione dell ordine")
         this.ordineCreato = false;
         this.orderSuccess = false;
         this.orderError = true;
       }
 
-    console.log(order)
+      console.log(order)
+
+    })
+
   }
+
 
 
 

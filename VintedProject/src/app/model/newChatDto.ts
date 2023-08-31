@@ -12,9 +12,12 @@
 import {BasicInsertion} from "./basicInsertion";
 import {ChatMessageDto} from "./chatMessageDto";
 
-export interface NewMessageDto {
+export interface NewChatDto {
     sender?: number;
     reciver?: number;
     message?: string;
-    chatId?: number;
+    user1NameLastname?: string;
+    user2NameLastname?: string;
+    insertionId?: number;
+    insertionTitle?: string;
 }

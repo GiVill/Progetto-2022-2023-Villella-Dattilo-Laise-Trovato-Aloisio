@@ -70,7 +70,7 @@ export class OfferCardComponent implements OnInit{
       const order: OrderDto = {
         id: 0,
         total: this.offer?.price,
-        paymentMethod: "this.paymentMethods",
+        paymentMethod: this.paymentMethods.toString(),
         insertionIdList: [this.product.id],
         userId: Number(this.cookieServices.getUserId())
       };

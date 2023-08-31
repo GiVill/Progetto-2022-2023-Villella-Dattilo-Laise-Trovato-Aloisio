@@ -20,4 +20,8 @@ export interface ChatMessageDto {
     date?: Date;
     seen?: boolean;
     chat?: Chat;
+    user1NameLastname?: string;
+    user2NameLastname?: string;
+    insertionId?: string;
+    InsertionTitle?: string;
 }
