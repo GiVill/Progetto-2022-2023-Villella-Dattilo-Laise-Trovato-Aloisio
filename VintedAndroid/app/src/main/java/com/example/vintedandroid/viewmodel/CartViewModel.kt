@@ -24,19 +24,9 @@ class CartViewModel(application: Application) : ViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             AppDatabase.getInstance(context = application.applicationContext).cartDao().delete(item)
             Log.i("CartScreen::class", "Item : $item removed from the cart")
-
         }
-        /*
-        CoroutineScope(Dispatchers.IO).launch {
-                    itemsFromDB.remove(item)
-                    AppDatabase.getInstance(context = application.applicationContext).cartDao().delete(item)
-                }
-                Log.i("CartScreen::class", "Item : $item removed from the cart")
-
-         */
     }
 
-    //TODO Da testare
     fun deleteAll(){
         CoroutineScope(Dispatchers.IO).launch {
             AppDatabase.getInstance(context = application.applicationContext).cartDao().deleteAll()

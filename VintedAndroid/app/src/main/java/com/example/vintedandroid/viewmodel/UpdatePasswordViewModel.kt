@@ -2,7 +2,7 @@ package com.example.vintedandroid.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
-import com.example.vintedandroid.client.apis.UserApi
+import com.example.vintedandroid.swagger.client.apis.UserApi
 
 class UpdatePasswordViewModel(application: Application) : ViewModel() {
 

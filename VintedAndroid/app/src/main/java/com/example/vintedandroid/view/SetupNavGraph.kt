@@ -10,8 +10,8 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.vintedandroid.client.apis.InsertionApi
-import com.example.vintedandroid.client.models.BasicInsertionDto
+import com.example.vintedandroid.swagger.client.apis.InsertionApi
+import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 import com.example.vintedandroid.viewmodel.CartViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
@@ -19,31 +19,17 @@ import com.example.vintedandroid.viewmodel.OfferViewModel
 import com.example.vintedandroid.viewmodel.UpdatePasswordViewModel
 import com.example.vintedandroid.viewmodel.UserViewModel
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState",
-    "RememberReturnType"
-)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState", "RememberReturnType")
 @Composable
 fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context, homeViewModel: HomeViewModel, userViewModel: UserViewModel, cartViewModel: CartViewModel, loginRegistrationViewModel: LoginRegistrationViewModel, updatePasswordViewModel: UpdatePasswordViewModel, offerViewModel: OfferViewModel) {
 
-    //var user = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll() //Get di un utente
-
     val insertionApi = InsertionApi()
 
-    val itemsInCart = remember {
-        mutableStateListOf<BasicInsertionDto?>()
-    }
+    val itemsInCart = remember { mutableStateListOf<BasicInsertionDto?>() }
 
     var searchedProduct = remember {
-        mutableStateOf(BasicInsertionDto(1L,"null", Float.MIN_VALUE,null,null,null,null,null,"",BasicInsertionDto.Brand.ADIDAS,BasicInsertionDto.Category.ABBIGLIAMENTO, 2L))
+        mutableStateOf(BasicInsertionDto(null, "", 1F, "", null, null, null, null, null, null,1L))
     }
-
-    /*
-    val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh","","ciao@yahoo.it",
-        "10-05-2001", UserDto.Gender.MALE,"via napoli",8,"Lamezia",21312,
-        "Italy","asdojad")
-
-    val user1 = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh")
-*/
 
     NavHost(navController = navController, startDestination = ScreenController.Login.route) {
 
@@ -60,10 +46,10 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             CartScreen(cartViewModel)
         }
         composable(route = ScreenController.Profile.route){
-            ProfileScreen(application, userViewModel)
+            ProfileScreen(userViewModel)
         }
         composable(route = ScreenController.BottomBarProfile.route){
-            BottomBarProfile(navController, application, userViewModel, cartViewModel)
+            BottomBarProfile(navController, userViewModel, cartViewModel)
         }
         composable(route = ScreenController.Order.route){
             OrderScreen()
@@ -75,7 +61,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             FeedbackScreen()
         }
         composable(route = ScreenController.Login.route){
-            LoginScreen(navController, application, userViewModel, loginRegistrationViewModel)
+            LoginScreen(navController, userViewModel, loginRegistrationViewModel)
         }
         composable(route = ScreenController.Register.route){
             RegistrationScreen(navController, application, loginRegistrationViewModel)

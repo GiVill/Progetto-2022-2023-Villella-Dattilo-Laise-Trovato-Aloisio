@@ -26,9 +26,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.vintedandroid.client.apis.InsertionApi
-import com.example.vintedandroid.client.models.BasicInsertionDto
-import com.example.vintedandroid.client.models.PageBasicInsertionDto
+import com.example.vintedandroid.swagger.client.apis.InsertionApi
+import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
+import com.example.vintedandroid.swagger.client.models.PageBasicInsertionDto
 import kotlinx.coroutines.launch
 
 @Composable

@@ -1,6 +1,5 @@
 package com.example.vintedandroid.view
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,11 +17,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-//import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -33,74 +29,34 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.example.vintedandroid.R
-import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.theme.Typography
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import android.content.Context
 import android.util.Log
-import androidx.compose.material3.Button
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Percent
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.Button
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.layout.ContentScale
-import coil.annotation.ExperimentalCoilApi
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
+import androidx.compose.ui.text.input.TextFieldValue
 import com.example.vintedandroid.view.config.ImageConfiguration
+import com.example.vintedandroid.view.config.createPersonalizedTextfield
+import com.example.vintedandroid.view.config.createPersonalizedTextfieldPassword
 import com.example.vintedandroid.viewmodel.UserViewModel
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class, ExperimentalCoilApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(application: Context, userViewModel: UserViewModel) {
+fun ProfileScreen(userViewModel: UserViewModel) {
 
-    var isLoaded by remember { mutableStateOf(false) }
-    //var userFromDB = remember { mutableStateListOf<UserDatabaseDto>() }
+    val nicknameField = remember { mutableStateOf(TextFieldValue()) }
+    val emailField = remember { mutableStateOf(TextFieldValue()) }
+    val passwordField = remember { mutableStateOf(TextFieldValue()) }
+    var isTextFieldVisible1 by remember { mutableStateOf(false) }
 
-    var userFromDB = userViewModel.getAllUserFromRoomDatabase()
-    /*
-    //Prende dal db gli/lo user e li salva nella variabile userFromDB.
-    LaunchedEffect(Unit) {
-        if (userFromDB.isEmpty()) {
-            val databaseItems = withContext(Dispatchers.IO) {
-                AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getAll()
-            }
-            userFromDB.clear()
-            /*
-            if(databaseItems.isNotEmpty()) {
-                userFromDB.addAll(databaseItems)
-            }
-            */
-            isLoaded = true
-        }
-    }
-
-     */
-
-    /*
-    var isDropdownOpen by remember { mutableStateOf(false) }
-    var text by remember { mutableStateOf("") }
-
-    Column {
-        Button(
-            onClick = { isDropdownOpen = !isDropdownOpen },
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text("Show Dropdown")
-        }
-
-        if (isDropdownOpen) {
-            TextField(
-                value = text,
-                onValueChange = { text = it },
-                modifier = Modifier.padding(16.dp)
-            )
-        }
-    }
-     */
+    val userFromDB: State<UserDatabaseDto?> = userViewModel.getAllUserFromRoomDatabase().collectAsState(initial = null)
 
     Column(modifier = Modifier.fillMaxSize()) {
-        if(isLoaded) {
             Text(
                 text = stringResource(R.string.account_settings),
                 modifier = Modifier.padding(10.dp),
@@ -108,7 +64,7 @@ fun ProfileScreen(application: Context, userViewModel: UserViewModel) {
             )
             Column {
 
-                userDetail(userFromDB!!)
+                userDetail(userFromDB)
                 Divider()
                 Spacer(modifier = Modifier.height(15.dp))
 
@@ -117,25 +73,36 @@ fun ProfileScreen(application: Context, userViewModel: UserViewModel) {
                         .fillMaxWidth()
                         .padding(8.dp))
                 {
-                    modifyAccountInfoButton("Nickname")
-                    modifyAccountInfoButton("Email")
-                    modifyAccountInfoButton("Password")
-                }
+                    //modifyAccountInfoButton("Nickname")
+                    //modifyAccountInfoButton("Email")
+                    //modifyAccountInfoButton("Password")
 
-                Card(onClick = { /*TODO*/ }) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(10.dp)
+
+                    Button(
+                        onClick = { isTextFieldVisible1 = !isTextFieldVisible1 },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
                     ) {
-                        Text(text = "Modify Email")
-                        Spacer(modifier = Modifier.weight(1f))
-                        Icon(
-                            Icons.Filled.KeyboardArrowRight,
-                            contentDescription = stringResource(R.string.default_account)
-                        )
+                        Text(text = "Security & Password")
+                    }
+
+                    if (isTextFieldVisible1) {
+                        //TODO modifica Immagine
+                        createPersonalizedTextfieldPassword(textField = passwordField)
+
+                        Button(
+                            onClick = {
+                                Log.i("ProfileScreen::class","Typed text: pppppppppppppppppppp")
+                                // Perform the action when the send button is clicked
+                                performSendAction()
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = "Send")
+                        }
                     }
                 }
-            }
         }
     }
 }
@@ -177,22 +144,21 @@ private fun modifyAccountInfoButton(subject: String){
                     Text(text = "Send")
                 }
             }
-
         }
     }
 }
 
 @Composable
-private fun userDetail(userFromDB: UserDatabaseDto){
+private fun userDetail(userFromDB: State<UserDatabaseDto?>){
 
     Card {
-        if (userFromDB.imageName != null) {
-            //ImageConfiguration(painter = painter, imageScale = ContentScale.Crop)
+        if (userFromDB.value?.imageName != null) {
             ImageConfiguration(
-                imageName = userFromDB.imageName.toString(),
+                imageName = userFromDB.value?.imageName.toString(),
                 imageScale = ContentScale.Fit
             )
         } else {
+
             Icon(
                 Icons.Filled.AccountCircle,
                 contentDescription = stringResource(R.string.default_account),
@@ -218,8 +184,6 @@ private fun userDetail(userFromDB: UserDatabaseDto){
                     Divider()
                     Text(text = "Email:")
                     Divider()
-                    Text(text = "BirthDate:")
-                    Divider()
                     Text(text = "Address:")
                 }
                 Column(
@@ -227,17 +191,16 @@ private fun userDetail(userFromDB: UserDatabaseDto){
                         .padding(10.dp)
                         .weight(1f)
                 ) {
-                    Text(text = userFromDB.nickName)
+                    Log.i("ProfileScreen", "email ${userFromDB.value?.email}")
+                    userFromDB.value?.let { Text(text = it.nickName) }
                     Divider()
-                    Text(text = userFromDB.firstName)
+                    userFromDB.value?.let { Text(text = it.firstName) }
                     Divider()
-                    userFromDB.lastName?.let { Text(text = it) }
+                    userFromDB.value?.lastName?.let { Text(text = it) }
                     Divider()
-                    userFromDB.email?.let { Text(text = it) }
+                    userFromDB.value?.email?.let { Text(text = it) }
                     Divider()
-                    userFromDB.birthDate?.let { Text(text = it) }
-                    Divider()
-                    Text(text = "${userFromDB.addressState} ${userFromDB.addressRegion} ${userFromDB.addressCity} ${userFromDB.addressCap} ${userFromDB.addressStreet} ${userFromDB.addressNumber}")
+                    Text(text = "${userFromDB.value?.addressCity} ${userFromDB.value?.addressCap} ${userFromDB.value?.addressStreet} ${userFromDB.value?.addressNumber}")
                 }
             }
         }

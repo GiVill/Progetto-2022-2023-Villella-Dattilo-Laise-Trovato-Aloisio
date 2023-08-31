@@ -15,10 +15,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.vintedandroid.client.models.BasicInsertionDto
+import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 import com.example.vintedandroid.model.AppDatabase
+import com.example.vintedandroid.view.config.ImageConfiguration
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -72,12 +74,6 @@ private fun searchedProductDisplayInfo(searchedProduct: MutableState<BasicInsert
         modifier = Modifier.padding(16.dp), fontSize = 30.sp
     )
     searchedProduct.value.description?.let {
-        Text(
-            text = it,
-            modifier = Modifier.padding(16.dp)
-        )
-    }
-    searchedProduct.value.condition?.let {
         Text(
             text = it,
             modifier = Modifier.padding(16.dp)

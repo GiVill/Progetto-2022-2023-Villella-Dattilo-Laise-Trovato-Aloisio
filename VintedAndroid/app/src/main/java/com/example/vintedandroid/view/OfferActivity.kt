@@ -11,7 +11,6 @@ import com.example.vintedandroid.viewmodel.OfferViewModel
 
 @Composable
 fun OfferActivity(offerViewModel: OfferViewModel) {
-    Text(text = "Cambiami! Mi trovo nel package view e sono in OfferActivity.kt")
 
     var offers = null//offerViewModel.getOffer()
 

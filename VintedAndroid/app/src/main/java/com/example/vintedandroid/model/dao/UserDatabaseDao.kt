@@ -25,7 +25,7 @@ interface UserDatabaseDao {
     fun getAll(): Flow<UserDatabaseDto>
 
     @Query("SELECT * FROM userDatabaseDto LIMIT 1")
-    suspend fun getSingleUser(): UserDatabaseDto
+    fun getSingleUser(): Flow<UserDatabaseDto>
 
     @Query("select * from userDatabaseDto where id = :userId")
     fun getUserById(userId : Long ): UserDatabaseDto

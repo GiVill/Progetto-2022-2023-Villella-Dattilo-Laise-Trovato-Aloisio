@@ -58,13 +58,13 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.checkSelfPermission
 import coil.compose.ImagePainter.State.Empty.painter
 import coil.compose.rememberImagePainter
-import com.example.vintedandroid.client.apis.ImageApi
-import com.example.vintedandroid.client.apis.InsertionApi
-import com.example.vintedandroid.client.models.BasicInsertionDto
-import com.example.vintedandroid.client.models.LoginUserDto
-import com.example.vintedandroid.client.models.UserUserIdBody
+import com.example.vintedandroid.swagger.client.apis.InsertionApi
+import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
+import com.example.vintedandroid.swagger.client.models.LoginUserDto
+//import com.example.vintedandroid.swagger.client.models.UserUserIdBody
 import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.dto.UserDatabaseDto
+import com.example.vintedandroid.swagger.client.apis.ImageApi
 import com.example.vintedandroid.view.config.createPersonalizedTextfield
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -228,16 +228,18 @@ fun AppContent(application: Context) {
 
                             // var requestBody = Files.readAllBytes(file.toPath())
 
-
+                            /* API versione precedente
                             var b = UserUserIdBody(
                                 img = requestBody
                             )
 
+                             */
+
                             var a = ImageApi()
 
-                            var c = a.insertUserImage(b)
+                            //var c = a.insertUserImage(b)
 
-                            Log.i("tag", c.toString())
+                            //Log.i("tag", c.toString())
 
                             //.value = try {
                             // byteArray = fileToByteArray(file)
@@ -307,7 +309,7 @@ fun AppContent(application: Context) {
                     userFromDB[0].id
                 )
 
-                c.addInsertion(body)
+                //c.addInsertion(body)
 
             }
         }) {
@@ -323,14 +325,14 @@ private fun convertBasicInsertionDTO(title: String, description: String, price: 
         title= title,
         description= description,
         price= price,
-        condition = "",
+        //condition = "",
         creationDate= null,
         isPrivate= false,
-        endDate=  null,
+        //endDate=  null,
         imageName = "",
         brand= BasicInsertionDto.Brand.ADIDAS,
         category= BasicInsertionDto.Category.ABBIGLIAMENTO,
-        userId= id
+        userId= 1
     )
 }
 
