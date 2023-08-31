@@ -20,7 +20,7 @@ public class OrderDto {
 
     private String date;
 
-    private String payment_method;
+    private String paymentMethod;
 
     private List<Long> insertionIdList;
 

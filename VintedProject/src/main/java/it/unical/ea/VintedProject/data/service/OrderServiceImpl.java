@@ -96,6 +96,7 @@ public class OrderServiceImpl implements OrderService {
         }
         Page<Order> orders = orderDao.findByUser(u,PageRequest.of(page, SIZE_FOR_PAGE));
         List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());
+        System.out.println("SONO QUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII" + collect);
         return new PageImpl<>(collect);
     }
 

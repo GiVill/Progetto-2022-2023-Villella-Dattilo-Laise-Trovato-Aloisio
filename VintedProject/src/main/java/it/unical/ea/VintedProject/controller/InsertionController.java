@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +27,7 @@ public class InsertionController {
     private final BasicInsertionService basicInsertionService;
     private final ImageService imageService;
     private final LoggedUserMethod loggedUserMethod;
+
 
     /*
     getAll
@@ -67,7 +70,7 @@ public class InsertionController {
 
     @GetMapping("/myInsertions/{page}")
     public ResponseEntity<Page<BasicInsertionDto>> getMyInsertion(@PathVariable("page") int page){
-        // find Insertion using the USER ID, return as Paged.
+
         // No Throw here!
         return ResponseEntity.ok(basicInsertionService.getAllMyInsertions(loggedUserMethod.getLoggedUserId(), page));
     }
