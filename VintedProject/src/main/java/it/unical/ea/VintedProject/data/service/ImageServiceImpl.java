@@ -11,6 +11,7 @@ import it.unical.ea.VintedProject.data.service.interfaces.ImageService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ImageServiceImpl implements ImageService {
 
 
@@ -34,14 +36,12 @@ public class ImageServiceImpl implements ImageService {
     private final UserService userService;
     private final BasicInsertionService insertionService;
     private final MessageLang messageLang;
-    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
     private final LoggedUserMethod loggedUserMethod;
 
     private final String relativePathToUploads = "src/main/resources/image/";
 
     @Override
     public Resource getImage(String imagePath) {
-
 
         // Costruisci il percorso completo del file utilizzando il filepath ricevuto
         String fullPath = relativePathToUploads + imagePath;
@@ -61,29 +61,29 @@ public class ImageServiceImpl implements ImageService {
         try {
             String realPathToUploads = System.getProperty("user.dir") + File.separator + relativePathToUploads;
 
-            if (!new File(realPathToUploads).exists()) {
-                new File(realPathToUploads).mkdir();
+            if (!new File(realPathToUploads).exists()) { //If the directory "image" is not existent
+                new File(realPathToUploads).mkdir();     //Create a directory
             }
 
-            if(u.getImageName() != null) { //u.get().getImageName()
-                String oldFilePath = realPathToUploads + "\\" + u.getImageName(); //u.get().getImageName()
-                File fileToDelete = new File(oldFilePath);
-                if (fileToDelete.exists()) {
-                    if (fileToDelete.delete()) {
-                        System.out.println("Il file è stato eliminato con successo.");
+            if(u.getImageName() != null) {                                  //If the User has already a photo
+                String oldFilePath = realPathToUploads + u.getImageName();  //"\\"+
+                File fileToDelete = new File(oldFilePath);                  //Go to the path the old photo
+                if (fileToDelete.exists()) {                                //Check if the photo exists
+                    if (fileToDelete.delete()) {                            //delete old photo
+                        log.info("The file has been deleted successfully");
                     }
                 }
             }
 
             String orgName = FileUtil.assignProgressiveName(img);
-            String filePath = realPathToUploads +"\\"+ orgName;
+            String filePath = realPathToUploads + orgName; //"\\"+
 
             File dest = new File(filePath);
             img.transferTo(dest);
 
-            u.setImageName(orgName);//u.get().setImageName(orgName);
+            u.setImageName(orgName);
 
-            userService.save(u); //userService.save(u.get());
+            userService.save(u);
 
             return true;
         }catch (Exception e){ return false; }
@@ -99,12 +99,12 @@ public class ImageServiceImpl implements ImageService {
         try {
             String realPathToUploads = System.getProperty("user.dir") + File.separator + relativePathToUploads;
 
-            if (!new File(realPathToUploads).exists()) {
-                new File(realPathToUploads).mkdir();
+            if (!new File(realPathToUploads).exists()) { //If the directory "image" is not existent
+                new File(realPathToUploads).mkdir();     //Create a directory
             }
 
             String orgName = FileUtil.assignProgressiveName(img);
-            String filePath = realPathToUploads +"\\"+ orgName;
+            String filePath = realPathToUploads + orgName; //"\\"+
 
             File dest = new File(filePath);
             img.transferTo(dest);
@@ -126,14 +126,14 @@ public class ImageServiceImpl implements ImageService {
 
         if (file.exists() && file.isFile()) {
             if (file.delete()) {
-                System.out.println("File eliminato con successo.");
+                log.info("File deleted successfully");
                 user.setImageName(null);
                 userService.save(user);
             } else {
-                System.out.println("Impossibile eliminare il file.");
+                log.info("Impossible to eliminate the file");
             }
         } else {
-            System.out.println("Il file non esiste o non è un file valido.");
+            log.info("The file is non existent or isn't in a valid file type");
         }
 
 
@@ -148,14 +148,14 @@ public class ImageServiceImpl implements ImageService {
             File file = new File(newPath);
             if (file.exists() && file.isFile()) {
                 if (file.delete()) {
-                    System.out.println("File eliminato con successo.");
+                    log.info("File deleted successfully");
                     basicInsertion.setImageName(null);
                     insertionService.save(basicInsertion);
                 } else {
-                    System.out.println("Impossibile eliminare il file.");
+                    log.info("Impossible to eliminate the file");
                 }
             } else {
-                System.out.println("Il file non esiste o non è un file valido.");
+                log.info("The file is non existent or isn't in a valid file type");
             }
         } else {
             throw new BadRequestException(messageLang.getMessage("access.denied"));
@@ -171,14 +171,14 @@ public class ImageServiceImpl implements ImageService {
         File file = new File(newPath);
         if (file.exists() && file.isFile()) {
             if (file.delete()) {
-                System.out.println("File eliminato con successo.");
+                log.info("File deleted successfully");
                 basicInsertion.setImageName(null);
                 insertionService.save(basicInsertion);
             } else {
-                System.out.println("Impossibile eliminare il file.");
+                log.info("Impossible to eliminate the file");
             }
         } else {
-            System.out.println("Il file non esiste o non è un file valido.");
+            log.info("The file is non existent or isn't in a valid file type");
         }
     }
 
