@@ -1,8 +1,8 @@
-<div class="product-card isPrivate">
+<div class="product-card isPrivate" [ngStyle]="{'background-color': item?.isPrivate ? '#bababa' : '#f1f1f1'}">
   <div class="image-container">
     <img class="rounded-image" [src]="imageName" (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
 
-    <button *ngIf="item?.userId==myid" style="display: flex; bottom: 2px; margin: 5px; left: 25%;" (click)="openOfferModal()" > Visualizza offerte</button>
+    <button *ngIf="item?.userId==myid"  style="display: flex; bottom: 2px; margin: 5px; left: 25%;" (click)="openOfferModal()" > Visualizza offerte</button>
 
   </div>
   <div style="display: flex;">
