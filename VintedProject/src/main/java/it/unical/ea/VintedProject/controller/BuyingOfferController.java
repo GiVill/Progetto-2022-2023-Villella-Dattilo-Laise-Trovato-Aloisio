@@ -13,6 +13,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.BadRequestException;
@@ -30,10 +32,13 @@ public class BuyingOfferController {
     private final MessageLang messageLang;
     private final LoggedUserMethod loggedUserMethod;
 
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
 
     @GetMapping("/admin/offers")
     //@PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<List<BuyingOfferDto>> getAll() {
+        authentication.getName();
         // find all BuyingOffers, return all as List.
         // No Throw here!
         return ResponseEntity.ok(buyingOfferService.getAll());

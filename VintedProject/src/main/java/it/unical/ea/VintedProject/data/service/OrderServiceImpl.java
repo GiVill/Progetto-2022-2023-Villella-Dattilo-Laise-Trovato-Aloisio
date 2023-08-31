@@ -12,6 +12,7 @@ import it.unical.ea.VintedProject.data.service.interfaces.OrderService;
 import it.unical.ea.VintedProject.dto.OrderDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.sql.Insert;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,6 +20,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.BadRequestException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,14 +43,19 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto save(OrderDto orderDto) {
 
+        //TODO: DEVO FARE UNA SAVE PRIMA PERCHé MI SERVE L'ID DELL'ORDINE PER CREARE LE RELAZIONI CON INSERTION DOPO
+        Order order = orderDao.save(modelMapper.map(orderDto, Order.class));
+
         for (Long id:orderDto.getInsertionIdList()) {
             Optional<BasicInsertion> insertion = insertionDao.findById(id);
             if(insertion.isPresent()){
                 insertion.get().setAvailable(false);
+                insertion.get().setOrder(order);
                 insertionDao.save(insertion.get());
             }
         }
-        Order order = modelMapper.map(orderDto, Order.class);
+
+        order.setDate(LocalDate.now());
 
         Order o = orderDao.save(order);
         return modelMapper.map(o, OrderDto.class);
@@ -65,7 +73,18 @@ public class OrderServiceImpl implements OrderService {
         User u = loggedUserMethod.getEntireLoggedUser();
         Order order = orderDao.findById(orderId).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("order.not.present",orderId)));
         if(order.getUser().getId().equals(u.getId())){
-            return modelMapper.map(order, OrderDto.class);
+
+            OrderDto orderDto = modelMapper.map(order, OrderDto.class);
+            //TODO: LE LISTE DI ID NEI DTO NON FUNZIONANO NEL MODEL MAPPER
+
+            List<Long> insertionIds = new ArrayList<>();
+            for (BasicInsertion insertion : order.getInsertionList()) {
+                insertionIds.add(insertion.getId());
+            }
+            orderDto.setInsertionIdList(insertionIds);
+
+
+            return orderDto;
         }
         throw new BadRequestException(messageLang.getMessage("access.denied"));
     }

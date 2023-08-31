@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.data.dao;
 
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
+import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
 import it.unical.ea.VintedProject.dto.enumeration.Brand;
@@ -39,6 +40,8 @@ public interface BasicInsertionDao extends JpaRepository<BasicInsertion,Long> {
 
     //Return a PAGEABLE of Insertion fetched by title
     Page<BasicInsertion> findAllByTitleContainingIgnoreCaseAndIsPrivateIsFalseAndAvailableIsTrue(String title, Pageable pageable);
+
+    List<BasicInsertion> findAllByOrder(Order order);
 
     //Return ALL the Insertion with a price lower or equal
     List<BasicInsertion> findByPriceLessThanEqual(int price);

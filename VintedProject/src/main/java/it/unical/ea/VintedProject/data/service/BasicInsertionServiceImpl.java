@@ -4,8 +4,10 @@ import com.nimbusds.jose.JOSEException;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
+import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
+import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BasicInsertionDto;
@@ -32,6 +34,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     private final BasicInsertionDao basicInsertionDao;
     private final UserService userService;
     private final UserDao userDao;
+    private final OrderDao orderDao;
     private final ModelMapper modelMapper;
     private final static int SIZE_FOR_PAGE = 5;
     private final MessageLang messageLang;
@@ -96,6 +99,19 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
     public BasicInsertionDto getInsertionByIdAndIsPrivateEqualsFalse(Long id) {
         BasicInsertion basicInsertion = basicInsertionDao.findByIdAndIsPrivateIsFalseAndAvailableIsTrue(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present",id)));
         return modelMapper.map(basicInsertion, BasicInsertionDto.class);
+    }
+
+    @Override
+    public List<BasicInsertionDto> getAllInsertionByOrderId(Long orderId) {
+        Optional<Order> order = orderDao.findById(orderId);
+        if(order.isPresent()){
+            loggedUserMethod.checkLoggedUser(order.get().getUser().getId());
+            List<BasicInsertionDto> collect = basicInsertionDao.findAllByOrder(order.get()).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
+            return collect;
+        } else {
+            //TODO: MESSAGGIO DI ERRORE DA SISTEAMRE
+             throw new EntityNotFoundException(messageLang.getMessage("insertion.not.present",orderId));
+        }
     }
 
     @Override

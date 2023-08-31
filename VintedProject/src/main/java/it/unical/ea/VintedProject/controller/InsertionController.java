@@ -17,6 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/v1")
@@ -59,6 +61,13 @@ public class InsertionController {
         // find Insertion using the ID,
         // if not existent: THROW Exception.
         return ResponseEntity.ok(basicInsertionService.getInsertionByIdAndIsPrivateEqualsFalse(insertionId));
+    }
+
+    @GetMapping("/insertions/order/{orderId}")
+    public ResponseEntity<List<BasicInsertionDto>> getAllInsertionByOrderId(@PathVariable("orderId") Long orderId) {
+        // find Insertion using the ID,
+        // if not existent: THROW Exception.
+        return ResponseEntity.ok(basicInsertionService.getAllInsertionByOrderId(orderId));
     }
 
     @GetMapping("/insertions/{idUser}/{page}")

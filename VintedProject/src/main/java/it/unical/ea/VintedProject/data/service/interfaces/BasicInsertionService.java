@@ -7,6 +7,8 @@ import it.unical.ea.VintedProject.dto.enumeration.Brand;
 import it.unical.ea.VintedProject.dto.enumeration.Category;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 
 //Dao Notation:
 //DAO (JPA): find, delete
@@ -35,6 +37,8 @@ public interface BasicInsertionService {//extends Repository<BasicInsertion,Long
     Page<BasicInsertionDto> getAllByTitleStartWith(String title, int page);
 
     BasicInsertionDto getInsertionByIdAndIsPrivateEqualsFalse(Long id);
+
+    List<BasicInsertionDto> getAllInsertionByOrderId(Long orderId);
     BasicInsertionDto getInsertionById(Long id);
 
     BasicInsertion getById(Long id);

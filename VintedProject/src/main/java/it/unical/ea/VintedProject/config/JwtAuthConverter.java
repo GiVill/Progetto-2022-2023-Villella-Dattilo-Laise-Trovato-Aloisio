@@ -31,6 +31,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
     @Value("${jwt.auth.converter.resource-id}")
     private String resourceId;
 
+
     //private String email;
 
     private ThreadLocal<String> emailThreadLocal = new ThreadLocal<>();

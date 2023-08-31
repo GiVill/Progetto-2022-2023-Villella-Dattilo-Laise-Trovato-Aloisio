@@ -80,6 +80,7 @@ public class SecurityConfig {
                 //INSERTION
                 .requestMatchers(HttpMethod.GET, "/v1/insertions").permitAll()                                  //.hasRole(USER)
                 .requestMatchers(HttpMethod.GET, "/v1/insertions/{insertionId}").permitAll()                    //.hasAnyRole(USER,ADMIN)
+                .requestMatchers(HttpMethod.GET, "/v1//insertions/order/{orderId}").permitAll()                       //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.GET, "/v1/insertions/{idUser}/{page}").permitAll()                  //.hasAnyRole(ADMIN,USER)
                 .requestMatchers(HttpMethod.GET, "/v1/myInsertions/{page}").permitAll()                         //.hasAnyRole(ADMIN,USER)
                 .requestMatchers(HttpMethod.GET, "/v1/insertions/title/{title}/{page}").permitAll()             //.hasAnyRole(ADMIN,USER)
