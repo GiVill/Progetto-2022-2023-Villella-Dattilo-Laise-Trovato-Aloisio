@@ -20,6 +20,7 @@ import {FormsModule} from "@angular/forms";
 import {DashboardComponent} from "./Components/Pages/Admin/dashboard/dashboard.component";
 import {ChatComponent} from "./Components/Pages/chat/chat.component";
 import {PrivateComponent} from "./Components/Pages/Insertion/private/private.component";
+import {OrderComponent} from "./Components/Pages/Order/order.component";
 
 
 
@@ -42,7 +43,7 @@ const routes: Routes = [
   {path: 'dash', component: DashboardComponent},
   {path: 'chat', component: ChatComponent},
   {path: 'private/:token', component: PrivateComponent},
-
+  {path: 'order/:order', component: OrderComponent},
 
 
 ];

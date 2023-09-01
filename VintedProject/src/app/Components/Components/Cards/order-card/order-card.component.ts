@@ -18,7 +18,7 @@ export class OrderCardComponent {
   }
 
   onImageClick(): void {
-    this.router.navigate(['/Order', this.order?.id]);
+    this.router.navigate(['/Order', this.order]);
   }
 
   remove(insertionId: number | undefined): void {
