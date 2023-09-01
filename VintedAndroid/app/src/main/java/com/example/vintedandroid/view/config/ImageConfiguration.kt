@@ -42,3 +42,14 @@ fun ImageConfiguration(imageName: String?, imageScale: ContentScale){ //painter:
 
     }
 }
+
+@Composable
+fun AsyncImage(imageName: String?) {
+
+    Log.i(logTag, "url: $fixedUrlForImage$imageName")
+
+    coil.compose.AsyncImage(
+        model = "$fixedUrlForImage$imageName",
+        contentDescription = "Async Image Of The Product"
+    )
+}

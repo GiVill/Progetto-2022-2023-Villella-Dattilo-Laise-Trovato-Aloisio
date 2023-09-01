@@ -2,6 +2,7 @@ package com.example.vintedandroid.viewmodel
 
 import android.app.Application
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import com.example.vintedandroid.swagger.client.apis.InsertionApi
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
@@ -12,13 +13,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class HomeViewModel(application: Application) : ViewModel() {
 
     private val application = application
 
-    fun getAllInsertion(): PageBasicInsertionDto {
-        var insertion = InsertionApi().userGetAll(0)
+    fun getAllInsertion(page: Int): PageBasicInsertionDto {
+        var insertion = InsertionApi().userGetAll(page)
         Log.i("HomeViewModel::class", "getAllInsertion -> ${insertion.results}")
         return insertion
     }

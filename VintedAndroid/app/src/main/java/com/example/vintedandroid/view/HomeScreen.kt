@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -26,44 +27,50 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.application_status.internetChecker
 import com.example.vintedandroid.model.dto.CartDto
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
+import com.example.vintedandroid.swagger.client.models.PageBasicInsertionDto
 import com.example.vintedandroid.view.config.ImageConfiguration
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
+var page: Int = 0
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "CoroutineCreationDuringComposition",
+    "StateFlowValueCalledInComposition"
+)
 @Composable
 fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>, application: Context, viewModel: HomeViewModel) {
 
-    var allInsertion = viewModel.getAllInsertion()
+
+    var pageInsertion by remember { mutableStateOf(viewModel.getAllInsertion(page)) }
+    var allInsertion = mutableListOf<BasicInsertionDto>()
+
+    /*
+    var allInsertion by remember { mutableStateOf(viewModel.getAllInsertion(page)) }
+    var pageInsertion by remember(allInsertion) {
+    derivedStateOf {
+        // Calculate pageInsertion based on allInsertion whenever allInsertion changes
+        // You can put your logic here to calculate pageInsertion
+        // For example, if you want pageInsertion to be a sublist of allInsertion:
+        allInsertion.subList(0, minOf(page, allInsertion.size))
+    }
+}
+     */
+
+    //    val itemsInCart = remember { mutableStateListOf<BasicInsertionDto?>() }
 
     if (internetChecker(application)) {
-
         Box(modifier = Modifier.fillMaxSize()) {
 
             //if (isLoaded1 && isLoaded2) {
-
-            //Dentro la LazyColumn non si possono mettere immagini a quanto pare, fuori si
-            //ImageConfiguration(imageName = "file_bf52168a-261d-469e-a1a4-55ba0da6fdac.jpg", imageScale = ContentScale.Crop) //allInsertion.results[0].imageName
-
-            //if(itemsMan.empty != true && allItems.empty != true) {
-/*
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-
-
                 item {
-                    // Header item here
-                    // Add any Composable you want to use as the header
-                    ImageConfiguration(
-                        imageName = "file_bf52168a-261d-469e-a1a4-55ba0da6fdac.jpg",
-                        imageScale = ContentScale.Crop
-                    ) //allInsertion.results[0].imageName
-
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -78,45 +85,30 @@ fun HomeScreen(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavH
                         Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
-                items(allInsertion.results) { item ->
+                items(allInsertion) { item ->
                     ItemCart(item, itemsInCart, navController, searchedProduct, viewModel)
                 }
-
-            }
-            */
-
-
-            ImageConfiguration(imageName = "file_bf52168a-261d-469e-a1a4-55ba0da6fdac.jpg", imageScale = ContentScale.Fit) //allInsertion.results[0].imageName
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(6.dp)
-                    .verticalScroll(state = rememberScrollState())
-            ) {
-
-                Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = "Articoli: ",
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    allInsertion.results.forEach { item ->
-                        ItemCart(item, itemsInCart, navController, searchedProduct, viewModel)
-
-                        /*
-                        items(allInsertion.results) { item ->
-                            ItemCart(item, itemsInCart, navController, searchedProduct, viewModel)
+                item {
+                    Row (modifier = Modifier.fillMaxSize()){
+                        Button(
+                            onClick = {
+                                page -= 1
+                                pageInsertion = viewModel.getAllInsertion(page)
+                            },
+                            enabled = page > 0
+                        ) {
+                            Text(text = "Previous Page")
                         }
-
-                         */
+                        Button(
+                            onClick = {
+                                page += 1
+                                pageInsertion = viewModel.getAllInsertion(page)
+                            },
+                            enabled = pageInsertion.totalPages != page
+                        ) { Text(text = "Next Page") }
                     }
-
+                }
             }
-
-
-
 
                 //} else{ Text(text="Error while connecting to the server") }
         //} else{ CircularProgressIndicator(modifier = Modifier.align(Alignment.Center)) }
@@ -129,10 +121,6 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
 
     var showDialog by remember { mutableStateOf(false) }
 
-    //Box(modifier = Modifier.fillMaxWidth()){
-        //ImageConfiguration(imageName = item.imageName, imageScale = ContentScale.Crop)
-    //}
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -144,63 +132,37 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
             }),
         elevation = 4.dp
     ) {
-        ImageConfiguration(imageName = "file_bf52168a-261d-469e-a1a4-55ba0da6fdac.jpg", imageScale = ContentScale.Fit) //allInsertion.results[0].imageName
-
-        Column(
-            modifier = Modifier
+            Column(modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+                //horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                AsyncImage(
+                    model = "https://192.168.1.90:8010/vintedProject-api/v1/images/file_bf52168a-261d-469e-a1a4-55ba0da6fdac.jpg",
+                    contentDescription = "Async Image Of The Product"
+                )
+                Divider()
 
-            ImageConfiguration(imageName = "file_bf52168a-261d-469e-a1a4-55ba0da6fdac.jpg", imageScale = ContentScale.Fit) //allInsertion.results[0].imageName
-
-            Text(text = item.title)
-            Spacer(modifier = Modifier.height(8.dp))
-            item.description?.let { Text(text = it) }
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "$${item.price}")
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = {
-                showDialog = true
-                viewModel.insertBasicInsertionDtoOnCartDto(item = item, itemsInCart = itemsInCart)
-            }) {
-                Text(text = "Add to Cart")
-            }
-            if (showDialog) {
-                PopupDialog(onDismiss = { showDialog = false }) {
-                    Text("${item.title} added in cart!")
+                Text(text = item.title)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = item.description)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "$${item.price}")
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(onClick = {
+                    showDialog = true
+                    viewModel.insertBasicInsertionDtoOnCartDto(item = item, itemsInCart = itemsInCart)
+                }) {
+                    Text(text = "Add to Cart")
+                }
+                if (showDialog) {
+                    PopupDialog(onDismiss = { showDialog = false }) {
+                        Text("${item.title} added in cart!")
+                    }
                 }
             }
-        }
     }
 }
-
-//TODO Andrebbe sostituita con la classe apposita!
-/*
-@SuppressLint("SuspiciousIndentation")
-@Composable
-fun displayImage(allItems: PageBasicInsertionDto) {
-
-    Box(modifier = Modifier.fillMaxWidth()) {
-
-
-    val url = "https://192.168.1.90:8010/vintedProject-api/v1/images/file_472864ab-51c9-4ff6-bab2-85a8871eb446.jpg"//${allItems.results[2].imageName}"
-        Log.i("tag", "ok, no? => $url")
-        val painter: ImagePainter = rememberImagePainter(url)//: String? = null
-
-
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Image(
-                painter = painter,
-                contentDescription = null, // Provide a proper content description
-                modifier = Modifier.fillMaxWidth(),
-                contentScale = ContentScale.Fit
-            )}}
-}
- */
 
 @Composable
 fun PopupDialog(onDismiss: () -> Unit, content: @Composable () -> Unit) {

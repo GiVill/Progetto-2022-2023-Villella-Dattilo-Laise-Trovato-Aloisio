@@ -27,6 +27,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
 
     val itemsInCart = remember { mutableStateListOf<BasicInsertionDto?>() }
 
+
     var searchedProduct = remember {
         mutableStateOf(BasicInsertionDto(null, "", 1F, "", null, null, null, null, null, null,1L))
     }

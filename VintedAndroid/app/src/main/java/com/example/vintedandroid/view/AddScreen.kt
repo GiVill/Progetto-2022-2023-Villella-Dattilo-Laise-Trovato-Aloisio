@@ -56,7 +56,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.checkSelfPermission
-import coil.compose.ImagePainter.State.Empty.painter
+
 import coil.compose.rememberImagePainter
 import com.example.vintedandroid.swagger.client.apis.InsertionApi
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
@@ -90,6 +90,9 @@ fun AddScreen(application: Context) {
 @Composable
 fun AppContent(application: Context) {
 
+
+    val emailRegex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9]+\\.)+[A-Za-z]{2,4}\$".toRegex()
+    val nameRegex = "^[A-Za-z\\s]{2,}\$".toRegex()
 
     val titleField = remember { mutableStateOf(TextFieldValue()) }
     val descriptionField = remember { mutableStateOf(TextFieldValue()) }
@@ -133,8 +136,8 @@ fun AppContent(application: Context) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        createPersonalizedTextfield(textField = titleField, name = "Insert Title", icon = Icons.Default.Email)
-        createPersonalizedTextfield(textField = descriptionField, name = "Insert Description", icon = Icons.Default.Email)
+        createPersonalizedTextfield(textField = titleField, name = "Insert Title", icon = Icons.Default.Email, emailRegex)
+        createPersonalizedTextfield(textField = descriptionField, name = "Insert Description", icon = Icons.Default.Email, nameRegex)
         //createPersonalizedTextfield(textField = priceField, name = "Insert Price", icon = Icons.Default.Email)
 
         /*

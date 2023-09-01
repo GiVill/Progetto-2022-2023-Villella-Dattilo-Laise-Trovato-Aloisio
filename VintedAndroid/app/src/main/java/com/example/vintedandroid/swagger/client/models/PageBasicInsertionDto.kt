@@ -29,7 +29,7 @@ data class PageBasicInsertionDto (
 
     val totalPages: kotlin.Int? = null,
     val totalElements: kotlin.Long? = null,
-    val pageable: String? = null, //Prima era di tipo -> PageableObject? //String?
+    val pageable: Any? = null, //Prima era di tipo -> PageableObject? //String?
     val first: kotlin.Boolean? = null,
     val last: kotlin.Boolean? = null,
     val size: kotlin.Int? = null,

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.vintedandroid.app-mergeDebugResources-64:/values-v16/values-v16.xml",
+            "outputFile": "com.example.vintedandroid.app-mergeDebugResources-66:/values-v16/values-v16.xml",
             "map": [
                 {
                     "source": "/home/fra/.gradle/caches/transforms-3/740b13c6aacf986a4a20be38916f32a7/transformed/core-1.9.0/res/values-v16/values-v16.xml",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/home/fra/.gradle/caches/transforms-3/6f49f6ceebb197fb36f1a6d334fec1f5/transformed/appcompat-1.1.0/res/values-v16/values-v16.xml",
+                    "source": "/home/fra/.gradle/caches/transforms-3/d3e32e1bb9ddfdea873fc2458b4867ad/transformed/appcompat-1.6.1/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

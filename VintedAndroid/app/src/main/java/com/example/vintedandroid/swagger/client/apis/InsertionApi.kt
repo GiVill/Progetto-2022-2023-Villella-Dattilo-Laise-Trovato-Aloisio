@@ -11,6 +11,7 @@
  */
 package com.example.vintedandroid.swagger.client.apis
 
+import androidx.compose.runtime.MutableState
 import com.example.vintedandroid.swagger.client.infrastructure.ApiClient
 import com.example.vintedandroid.swagger.client.infrastructure.ClientError
 import com.example.vintedandroid.swagger.client.infrastructure.ClientException
@@ -26,6 +27,7 @@ import com.example.vintedandroid.swagger.client.models.PageBasicInsertionDto
 import com.example.vintedandroid.swagger.client.models.V1InsertionsBody
 
 import com.example.vintedandroid.swagger.client.infrastructure.*
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class InsertionApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 

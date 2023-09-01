@@ -50,6 +50,14 @@ fun RegistrationScreen(navController: NavHostController, application: Context, l
     val addressNumberField = remember { mutableStateOf(TextFieldValue()) }
     val addressStreetField = remember { mutableStateOf(TextFieldValue()) }
 
+    val emailRegex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9]+\\.)+[A-Za-z]{2,4}\$".toRegex()
+    val nameRegex = "^[A-Za-z\\s]{2,}\$".toRegex()
+    val nicknameRegex = "^[A-Za-z0-9_-]{3,}\$".toRegex()
+    val addressCapRegex = "^\\d{5}\$".toRegex()
+    val addressCityRegex = "^[A-Za-z\\s]{2,}\$".toRegex()
+    val addressNumberRegex = "^\\d+\$".toRegex()
+    val addressStreetRegex = "^[A-Za-z0-9\\s]{2,}\$".toRegex()
+
     var passwordField = remember { mutableStateOf(TextFieldValue()) }
 
     var loginUnsuccessful = remember {mutableStateOf(false)}
@@ -83,15 +91,15 @@ fun RegistrationScreen(navController: NavHostController, application: Context, l
                     color = Color.Red,
                 )
             }
-            createPersonalizedTextfield(textField = emailField, name = "Email", Icons.Default.Email)
-            createPersonalizedTextfield(textField = nicknameField, name = "Nickname", Icons.Default.Person)
-            createPersonalizedTextfield(textField = firstnameField, name = "Firstname", Icons.Default.Person)
-            createPersonalizedTextfield(textField = lastnameField, name = "Lastname", Icons.Default.Person)
+            createPersonalizedTextfield(textField = emailField, name = "Email", Icons.Default.Email, emailRegex)
+            createPersonalizedTextfield(textField = nicknameField, name = "Nickname", Icons.Default.Person, nicknameRegex)
+            createPersonalizedTextfield(textField = firstnameField, name = "Firstname", Icons.Default.Person, nameRegex)
+            createPersonalizedTextfield(textField = lastnameField, name = "Lastname", Icons.Default.Person, nameRegex)
 
-            createPersonalizedTextfield(textField = addressCapField, name = "Address Cap", Icons.Default.Numbers)
-            createPersonalizedTextfield(textField = addressCityField, name = "Address City", Icons.Default.LocationCity)
-            createPersonalizedTextfield(textField = addressNumberField, name = "Address Number", Icons.Default.Numbers)
-            createPersonalizedTextfield(textField = addressStreetField, name = "Address Street", Icons.Default.Streetview)
+            createPersonalizedTextfield(textField = addressCapField, name = "Address Cap", Icons.Default.Numbers, addressCapRegex)
+            createPersonalizedTextfield(textField = addressCityField, name = "Address City", Icons.Default.LocationCity, addressCityRegex)
+            createPersonalizedTextfield(textField = addressNumberField, name = "Address Number", Icons.Default.Numbers, addressNumberRegex)
+            createPersonalizedTextfield(textField = addressStreetField, name = "Address Street", Icons.Default.Streetview, addressStreetRegex)
 
             createPersonalizedTextfieldPassword(textField = passwordField)
 
@@ -99,15 +107,24 @@ fun RegistrationScreen(navController: NavHostController, application: Context, l
                 onClick = {
                     buttonEnabled = false
                     loginUnsuccessful.value = false
-
-                    if(loginRegistrationViewModel.registration(emailField.value.text, passwordField.value.text, firstnameField.value.text, lastnameField.value.text, nicknameField.value.text, addressCapField.value.text.toInt(), addressCityField.value.text, addressNumberField.value.text.toInt(), addressStreetField.value.text)){
-                        navController.popBackStack()
-                        navController.navigate(ScreenController.Home.route)
-                    }
-                    else{
-                        loginUnsuccessful.value = true
-                        buttonEnabled = true
-                    }
+                        if (loginRegistrationViewModel.registration(
+                                emailField.value.text,
+                                passwordField.value.text,
+                                firstnameField.value.text,
+                                lastnameField.value.text,
+                                nicknameField.value.text,
+                                addressCapField.value.text.toInt(),
+                                addressCityField.value.text,
+                                addressNumberField.value.text.toInt(),
+                                addressStreetField.value.text
+                            )
+                        ) {
+                            navController.popBackStack()
+                            navController.navigate(ScreenController.Home.route)
+                        } else {
+                            loginUnsuccessful.value = true
+                            buttonEnabled = true
+                        }
                 },
                 modifier = Modifier.padding(8.dp),
                 enabled = buttonEnabled

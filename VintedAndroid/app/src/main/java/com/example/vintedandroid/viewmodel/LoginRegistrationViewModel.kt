@@ -77,6 +77,7 @@ class LoginRegistrationViewModel(application: Application) : ViewModel() {
         val isAddressStreetValid = addressStreet.matches(addressStreetRegex.toRegex())
 
         if(isEmailValid && isPasswordValid && isFirstNameValid && isLastNameValid && isNicknameValid && isAddressCapValid && isAddressCityValid && isAddressNumberValid && isAddressStreetValid){
+            Log.i("Login", "$isEmailValid , $email , ${email.matches(emailRegex.toRegex())}")
            return true
         }
         return false

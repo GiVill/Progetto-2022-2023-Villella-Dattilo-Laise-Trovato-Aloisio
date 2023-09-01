@@ -39,6 +39,7 @@ import com.example.vintedandroid.viewmodel.UserViewModel
 fun LoginScreen(navController: NavHostController, userViewModel: UserViewModel, loginRegistrationViewModel: LoginRegistrationViewModel) {
 
     val emailField = remember { mutableStateOf(TextFieldValue()) }
+    val emailRegex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9]+\\.)+[A-Za-z]{2,4}\$".toRegex()
     var passwordField = remember { mutableStateOf(TextFieldValue()) }
 
     //var userFromDB1 = userViewModel.getAllUserFromRoomDatabase()
@@ -76,7 +77,7 @@ fun LoginScreen(navController: NavHostController, userViewModel: UserViewModel, 
                         )
                     }
 
-                    createPersonalizedTextfield(textField = emailField, name = "Email", icon = Icons.Default.Email)
+                    createPersonalizedTextfield(textField = emailField, name = "Email", icon = Icons.Default.Email, emailRegex)
                     createPersonalizedTextfieldPassword(textField = passwordField)
 
                     loginButton(navController = navController, email = emailField.value.text, password = passwordField.value.text, loginUnsuccessful = loginUnsuccessful, loginRegistrationViewModel = loginRegistrationViewModel)
@@ -93,6 +94,7 @@ fun LoginScreen(navController: NavHostController, userViewModel: UserViewModel, 
 }
 
 //TODO Controllare che funzioni tutto correttamente
+@SuppressLint("SuspiciousIndentation")
 @Composable
 private fun loginButton(navController: NavHostController, email: String, password: String, loginUnsuccessful: MutableState<Boolean>, loginRegistrationViewModel: LoginRegistrationViewModel){
 

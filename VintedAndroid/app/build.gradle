@@ -89,7 +89,7 @@ dependencies {
     //Snackbar
     implementation 'com.google.android.material:material:1.1.0'
 
-    implementation "io.coil-kt:coil-compose:1.3.2"
+    implementation "io.coil-kt:coil-compose:2.4.0"
 
     implementation 'androidx.compose.material:material:1.0.0'
     implementation 'androidx.compose.ui:ui-tooling:1.0.0'
