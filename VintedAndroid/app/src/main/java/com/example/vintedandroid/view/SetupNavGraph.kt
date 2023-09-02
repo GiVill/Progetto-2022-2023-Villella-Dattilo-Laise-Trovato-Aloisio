@@ -13,15 +13,17 @@ import androidx.navigation.compose.composable
 import com.example.vintedandroid.swagger.client.apis.InsertionApi
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 import com.example.vintedandroid.viewmodel.CartViewModel
+import com.example.vintedandroid.viewmodel.ChatViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
 import com.example.vintedandroid.viewmodel.OfferViewModel
+import com.example.vintedandroid.viewmodel.ProductViewModel
 import com.example.vintedandroid.viewmodel.UpdatePasswordViewModel
 import com.example.vintedandroid.viewmodel.UserViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState", "RememberReturnType")
 @Composable
-fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context, homeViewModel: HomeViewModel, userViewModel: UserViewModel, cartViewModel: CartViewModel, loginRegistrationViewModel: LoginRegistrationViewModel, updatePasswordViewModel: UpdatePasswordViewModel, offerViewModel: OfferViewModel) {
+fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context, homeViewModel: HomeViewModel, userViewModel: UserViewModel, cartViewModel: CartViewModel, loginRegistrationViewModel: LoginRegistrationViewModel, updatePasswordViewModel: UpdatePasswordViewModel, offerViewModel: OfferViewModel, productViewModel: ProductViewModel, chatViewModel: ChatViewModel) {
 
     val insertionApi = InsertionApi()
 
@@ -35,43 +37,46 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
     NavHost(navController = navController, startDestination = ScreenController.Login.route) {
 
         composable(route = ScreenController.Home.route){
-            HomeScreen(itemsInCart, navController, searchedProduct, application, homeViewModel)
+            HomeActivity(itemsInCart, navController, searchedProduct, application, homeViewModel)
         }
         composable(route = ScreenController.Search.route) {
-            SearchScreen(searchText, insertionApi, navController, searchedProduct)
+            SearchActivity(searchText, insertionApi, navController, searchedProduct)
         }
         composable(route = ScreenController.Add.route){
-            AddScreen(application)
+            AddActivity(application)
         }
         composable(route = ScreenController.Cart.route){
-            CartScreen(cartViewModel)
+            CartActivity(cartViewModel)
         }
         composable(route = ScreenController.Profile.route){
-            ProfileScreen(userViewModel)
+            ProfileActivity(userViewModel)
         }
         composable(route = ScreenController.BottomBarProfile.route){
-            BottomBarProfile(navController, userViewModel, cartViewModel)
+            BottomBarProfileActivity(navController, userViewModel, cartViewModel)
         }
         composable(route = ScreenController.Order.route){
-            OrderScreen()
+            OrderActivity()
         }
         composable(route = ScreenController.Offer.route){
-            OfferActivity(offerViewModel = offerViewModel)
+            OfferActivity(offerViewModel)
         }
         composable(route = ScreenController.Feedback.route){
-            FeedbackScreen()
+            FeedbackActivity()
         }
         composable(route = ScreenController.Login.route){
-            LoginScreen(navController, userViewModel, loginRegistrationViewModel)
+            LoginActivity(navController, userViewModel, loginRegistrationViewModel)
         }
         composable(route = ScreenController.Register.route){
-            RegistrationScreen(navController, application, loginRegistrationViewModel)
+            RegistrationActivity(navController, application, loginRegistrationViewModel)
         }
         composable(route = ScreenController.Product.route){
-            ProductScreen(searchedProduct,itemsInCart, homeViewModel)
+            ProductActivity(searchedProduct,itemsInCart, homeViewModel, productViewModel, application)
         }
         composable(route = ScreenController.UpdatePassword.route){
-            UpdatePasswordScreen(updatePasswordViewModel)
+            UpdatePasswordActivity(updatePasswordViewModel)
+        }
+        composable(route = ScreenController.Chat.route){
+            ChatActivity(chatViewModel)
         }
 
     }

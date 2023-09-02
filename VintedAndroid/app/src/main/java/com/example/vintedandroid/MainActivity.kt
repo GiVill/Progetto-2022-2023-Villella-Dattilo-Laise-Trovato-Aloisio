@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.os.StrictMode
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -17,8 +20,9 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -28,11 +32,13 @@ import com.example.vintedandroid.theme.VintedAndroidTheme
 import com.example.vintedandroid.view.ScreenController
 import com.example.vintedandroid.view.SetupNavGraph
 import com.example.vintedandroid.model.application_status.internetChecker
-import com.example.vintedandroid.view.noConnectionScreen
+import com.example.vintedandroid.view.noConnectionActivity
 import com.example.vintedandroid.viewmodel.CartViewModel
+import com.example.vintedandroid.viewmodel.ChatViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
 import com.example.vintedandroid.viewmodel.OfferViewModel
+import com.example.vintedandroid.viewmodel.ProductViewModel
 import com.example.vintedandroid.viewmodel.UpdatePasswordViewModel
 import com.example.vintedandroid.viewmodel.UserViewModel
 
@@ -70,7 +76,9 @@ class MainActivity : ComponentActivity() {
                                     cartViewModel = CartViewModel(application),
                                     loginRegistrationViewModel = LoginRegistrationViewModel(application),
                                     updatePasswordViewModel = UpdatePasswordViewModel(application),
-                                    offerViewModel = OfferViewModel(application)
+                                    offerViewModel = OfferViewModel(application),
+                                    productViewModel = ProductViewModel(application),
+                                    chatViewModel = ChatViewModel(application, userViewModel = UserViewModel(application = application))
                                 )
                             }
                         } )
@@ -79,7 +87,7 @@ class MainActivity : ComponentActivity() {
                         navController.navigate(ScreenController.Login.route)
                         //LoginScreen(navController = navController, application) //Non funziona bene
                     }
-                } else { noConnectionScreen(application = application) }
+                } else { noConnectionActivity(application = application) }
             }
         }
     }
@@ -113,11 +121,20 @@ fun ApplicationTopBar(searchText: MutableState<String>, navController: NavHostCo
 
     TopAppBar(
         title = {
-            if(!topBarHandler){
-                Text("Vinted",
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
+            if(!topBarHandler) {
+                Row(Modifier.fillMaxWidth()) {
+                    Column(modifier = Modifier.weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(stringResource(R.string.vinted))
+                    }
+                    Column {
+                        Icon(
+                            imageVector = Icons.Default.Message,
+                            contentDescription = stringResource(R.string.message),
+                            modifier = Modifier.clickable { navController.navigate(ScreenController.Chat.route) }
+                        )
+                    }
+                }
             }
         },
         actions = {

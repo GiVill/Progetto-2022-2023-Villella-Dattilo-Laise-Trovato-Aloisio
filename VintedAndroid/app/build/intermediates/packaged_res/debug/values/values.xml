@@ -8,7 +8,37 @@
     <color name="teal_700">#FF018786</color>
     <color name="white">#FFFFFFFF</color>
     <string name="account_settings">Profilo</string>
+    <string name="add_cart">Add to Cart</string>
     <string name="app_name">VintedAndroid</string>
+    <string name="article">Article:</string>
+    <string name="connect_to_internet">Please connect to the internet</string>
+    <string name="contact_vendor">Contact Vendor</string>
     <string name="default_account">Default Account</string>
+    <string name="discard">Discard</string>
+    <string name="do_offer">Do an Offer</string>
+    <string name="email">Email</string>
+    <string name="go_back">Go Back</string>
+    <string name="go_to_login_page">Go To Login Page</string>
+    <string name="insert_message">Insert a Message</string>
+    <string name="login">Login</string>
+    <string name="login_failed">Login failed. Please try again.</string>
+    <string name="logout">Logout</string>
+    <string name="message">Message</string>
+    <string name="next_page">Next Page</string>
+    <string name="no_items_in_cart">No Items in Cart</string>
+    <string name="no_user_logged">No User Logged</string>
+    <string name="not_connected">\"You are not connected to the Internet!</string>
+    <string name="offer">Offer</string>
+    <string name="previous_page">Previous Page</string>
+    <string name="price">Price</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="retry_connection">Retry</string>
+    <string name="see_your_profile">See Your Profile</string>
+    <string name="send_feedbeck">Send Feedbeck</string>
+    <string name="send_message">Send Message</string>
+    <string name="sign_up">Need new account? Sign up!</string>
+    <string name="vinted">Vinted</string>
+    <string name="your_offers">Your Offers</string>
+    <string name="your_orders">Your Orders</string>
     <style name="Theme.VintedAndroid" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>

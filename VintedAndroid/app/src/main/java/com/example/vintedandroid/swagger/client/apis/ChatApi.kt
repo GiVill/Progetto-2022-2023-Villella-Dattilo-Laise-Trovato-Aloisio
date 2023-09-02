@@ -11,6 +11,8 @@
  */
 package com.example.vintedandroid.swagger.client.apis
 
+import android.content.Context
+import android.util.Log
 import com.example.vintedandroid.swagger.client.infrastructure.ApiClient
 import com.example.vintedandroid.swagger.client.infrastructure.ClientError
 import com.example.vintedandroid.swagger.client.infrastructure.ClientException
@@ -23,8 +25,13 @@ import com.example.vintedandroid.swagger.client.infrastructure.Success
 import com.example.vintedandroid.swagger.client.models.ChatDto
 
 import com.example.vintedandroid.swagger.client.infrastructure.*
+import com.example.vintedandroid.viewmodel.TokenViewModel
+import kotlinx.coroutines.flow.Flow
 
-class ChatApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
+class ChatApi(application: Context, basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
+
+    private val application = application
+
 
     /**
      * 
@@ -33,17 +40,33 @@ class ChatApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject
      * @return kotlin.Array<ChatDto>
      */
     @Suppress("UNCHECKED_CAST")
-    fun allChatUser(id: kotlin.Long): kotlin.Array<ChatDto> {
+    fun allChatUser(id: kotlin.Long): Flow<Array<ChatDto>> {
         val localVariableConfig = RequestConfig(
                 RequestMethod.GET,
                 "/v1/chat/user/{id}".replace("{" + "id" + "}", "$id")
         )
+
+        val headers = mutableMapOf<String, String>()
+
+        Log.i("Token", "token ->aaaaaaaaa")
+
+
+        val token = TokenViewModel(application = application).getToken()
+
+        Log.i("Token", "token -> $token")
+
+        // Add the Bearer token to the headers
+        headers["Authorization"] = "Bearer $token"
+
+        // Set the headers in the RequestConfig
+        localVariableConfig.headers = headers
+
         val response = request<kotlin.Array<ChatDto>>(
                 localVariableConfig
         )
 
         return when (response.responseType) {
-            ResponseType.Success -> (response as Success<*>).data as kotlin.Array<ChatDto>
+            ResponseType.Success -> (response as Success<*>).data as Flow<Array<ChatDto>>
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
             ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")

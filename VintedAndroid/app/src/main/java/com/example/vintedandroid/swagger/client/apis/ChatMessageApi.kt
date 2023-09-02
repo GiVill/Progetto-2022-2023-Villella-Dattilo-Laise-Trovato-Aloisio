@@ -11,6 +11,8 @@
  */
 package com.example.vintedandroid.swagger.client.apis
 
+import android.content.Context
+import android.util.Log
 import com.example.vintedandroid.swagger.client.infrastructure.ApiClient
 import com.example.vintedandroid.swagger.client.infrastructure.ClientError
 import com.example.vintedandroid.swagger.client.infrastructure.ClientException
@@ -24,8 +26,12 @@ import com.example.vintedandroid.swagger.client.models.ChatMessage
 import com.example.vintedandroid.swagger.client.models.NewMessageDto
 
 import com.example.vintedandroid.swagger.client.infrastructure.*
+import com.example.vintedandroid.viewmodel.TokenViewModel
 
-class ChatMessageApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
+class ChatMessageApi(application : Context, basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
+
+    private val application = application
+
 
     /**
      * 
@@ -60,10 +66,23 @@ class ChatMessageApi(basePath: kotlin.String = "https://192.168.1.90:8010/vinted
     @Suppress("UNCHECKED_CAST")
     fun insertMessage(body: NewMessageDto): kotlin.String {
         val localVariableBody: kotlin.Any? = body
-        val localVariableConfig = RequestConfig(
+        var localVariableConfig = RequestConfig(
                 RequestMethod.POST,
                 "/v1/message/insert"
         )
+
+        val headers = mutableMapOf<String, String>()
+
+        val token = TokenViewModel(application = application).getToken()
+
+        Log.i("Token", "token -> $token")
+
+        // Add the Bearer token to the headers
+        headers["Authorization"] = "Bearer $token"
+
+        // Set the headers in the RequestConfig
+        localVariableConfig.headers = headers
+
         val response = request<kotlin.String>(
                 localVariableConfig, localVariableBody
         )

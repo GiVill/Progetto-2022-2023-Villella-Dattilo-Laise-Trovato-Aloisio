@@ -16,7 +16,7 @@ class UserViewModel(application: Application) :ViewModel() {
 
     fun getAllUserFromRoomDatabase(): Flow<UserDatabaseDto?> {
         Log.i("UserViewModel::class", "getAllUserFromRoomDatabase()")
-        return AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getSingleUser()
+        return AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getSingleUserFlow()
     }
 
     //TODO Da testare

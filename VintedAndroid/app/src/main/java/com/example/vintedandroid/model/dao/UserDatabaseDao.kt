@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.vintedandroid.model.dto.CartDto
 import com.example.vintedandroid.model.dto.UserDatabaseDto
 import kotlinx.coroutines.flow.Flow
 
@@ -25,7 +24,10 @@ interface UserDatabaseDao {
     fun getAll(): Flow<UserDatabaseDto>
 
     @Query("SELECT * FROM userDatabaseDto LIMIT 1")
-    fun getSingleUser(): Flow<UserDatabaseDto>
+    fun getSingleUserFlow(): Flow<UserDatabaseDto>
+
+    @Query("SELECT * FROM userDatabaseDto LIMIT 1")
+    fun getSingleUser(): UserDatabaseDto
 
     @Query("select * from userDatabaseDto where id = :userId")
     fun getUserById(userId : Long ): UserDatabaseDto
