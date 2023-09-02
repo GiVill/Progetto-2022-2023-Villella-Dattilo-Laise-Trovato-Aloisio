@@ -12,3 +12,18 @@ img {
   line-height: 1;
   cursor: pointer;
 }
+
+.orders-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 9995;
+  left: 0%;
+  top: 0%;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0,0.9);
+  color: white;
+}

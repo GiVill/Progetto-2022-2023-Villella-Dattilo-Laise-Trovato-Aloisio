@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {ChatDto} from "../../../model/chatDto";
 import {CookiesService} from "../../../api/cookies.service";
 import {NewMessageDto} from "../../../model/newMessageDto";
@@ -6,6 +6,7 @@ import {ChatMessageService} from "../../../api/chatMessage.service";
 import {ChatMessageDto} from "../../../model/chatMessageDto";
 import {ChatService} from "../../../api/chat.service";
 import {BasicInsertion} from "../../../model/basicInsertion";
+import {interval, Subject, takeUntil} from "rxjs";
 
 
 @Component({
@@ -13,7 +14,7 @@ import {BasicInsertion} from "../../../model/basicInsertion";
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   noChat: Boolean = false;
   chat?: Array<ChatDto> = [];
   selectedChat!: ChatDto
@@ -21,6 +22,10 @@ export class ChatComponent implements OnInit {
   newMessage: string = '';
   selectedUserId?: number | null = null;
   myId= Number(this.cookiesService.getUserId())
+
+  private destroy$: Subject<void> = new Subject<void>();
+
+
 
 
   constructor(private chatMessageService: ChatMessageService,
@@ -37,6 +42,14 @@ export class ChatComponent implements OnInit {
         this.loadMessages(this.selectedChat.id!);
       }
     });
+
+    interval(3000) // Intervallo di 3 secondi
+      .pipe(
+        takeUntil(this.destroy$) // Unsubscribe quando il componente viene distrutto
+      )
+      .subscribe(() => {
+        this.loadMessages(this.selectedChat.id!);
+      });
   }
   async loadChat(): Promise<void> {
     try {
@@ -112,6 +125,12 @@ export class ChatComponent implements OnInit {
     console.log("After selecting user:", this.selectedChat);
     this.loadMessages(chat.id!);
     this.selectedUserId = chat.id;
+  }
+
+  ngOnDestroy(): void {
+    // Assicurati di distruggere l'intervallo quando il componente viene distrutto
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 

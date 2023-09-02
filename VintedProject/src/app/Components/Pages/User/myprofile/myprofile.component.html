@@ -103,7 +103,24 @@
 
 <!-- Finestra modale offerte -->
 <div class="offer-modal" *ngIf="OfferModal" (click)="closeOfferModal($event)">
-
+    <div class="content" style="margin-top: 30px">
+      <div style="max-height: 700px;">
+        <div class="header">
+          <h2 class="font">Le mie offerte:</h2>
+        </div>
+        <div class="body-content" style="margin-top: 30px; display: flex"  *ngIf="isAnyInsertion">
+          <div class="card-container">
+            <div class="card-row" >
+              <ng-container *ngFor="let item of myOffer; let i = index;">
+                <app-offer-card [offer]="item" class="card-item"></app-offer-card>
+                <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <button class="button showAll-button" (click)="addPageInsertion()" > Carica altro</button>
+      </div>
+    </div>
 </div>
 
 <!-- Finestra modale ordini -->
@@ -111,11 +128,12 @@
   <div class="content" style="margin-top: 30px">
     <div style="max-height: 700px;">
       <div class="header">
-        <h2 class="font">Le mie inserzioni:</h2>
+        <h2 class="font">I miei Ordini:</h2>
       </div>
       <div class="body-content" style="margin-top: 30px; display: flex"  *ngIf="isAnyOrder">
-
-
+        <ng-container *ngFor="let item of myOrder.content; let i = index;">
+        <app-order-card [order]="item" > </app-order-card>
+        </ng-container>
       </div>
       <button class="button showAll-button" (click)="addPageInsertion()" > Carica altro</button>
     </div>

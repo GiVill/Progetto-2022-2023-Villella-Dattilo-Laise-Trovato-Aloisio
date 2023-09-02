@@ -69,6 +69,7 @@ export class MyprofileComponent implements OnInit{
             this.myInsertion = insertionData;
             this.myOffer = offerData;
             this.myOrder = orderData ;
+            console.log("ordine" + orderData.content)
 
             if (!this.myInsertion?.empty) {
               this.isAnyInsertion = true;

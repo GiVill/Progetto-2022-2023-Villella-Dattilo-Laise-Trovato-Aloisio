@@ -11,17 +11,26 @@ import {CartComponent} from "../../../Pages/cart/cart.component";
 })
 export class OrderCardComponent {
   @Input() order!: OrderDto;
-
   isHovered = false;
+  OrderModal: boolean= false;
 
-  constructor(private router: Router,) {
+  constructor() {
   }
 
   onImageClick(): void {
-    this.router.navigate(['/Order', this.order]);
+    this.OrderModal=true;
   }
 
-  remove(insertionId: number | undefined): void {
-
+  closeOrderModal(event: any) {
+    if (event.target.classList.contains('orders-modal')) {
+      this.openOrderModal()
+    }
   }
+
+    openOrderModal() {
+      this.OrderModal = !this.OrderModal;
+    }
+
+
+
 }

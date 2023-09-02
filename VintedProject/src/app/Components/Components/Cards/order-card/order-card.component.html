@@ -5,8 +5,24 @@
   <div style="padding-left: 2%;">
     <div class="product-card">
       <!-- Visualizza i dettagli del prodotto -->
-      <h2>{{ order!.date}}</h2>
-      <p style="max-width: 250px">totale: {{ order!.total}}€</p>
+      <h2 style="color: black">{{ order!.date}}</h2>
+      <p style="max-width: 250px; color: black">totale: {{ order!.total}}€</p>
+      <p  style="color: black"> {{order.paymentMethod}}</p>
     </div>
   </div>
 </div>
+
+
+<!-- Finestra modale ordini -->
+<div class="orders-modal" *ngIf="OrderModal" (click)="closeOrderModal($event)">
+<div class="content" style="margin-top: 30px">
+  <div style="max-height: 700px;">
+    <div class="header">
+      <h2 class="font">Dettagli ordine:</h2>
+    </div>
+      <app-order [myOrder]="order" ></app-order>
+    </div>
+  </div>
+</div>
+
+

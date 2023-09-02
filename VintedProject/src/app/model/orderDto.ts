@@ -11,10 +11,10 @@
  */
 
 export interface OrderDto {
-    id: number;
-    date?: string;
+  id: number;
+  date?: string;
+  insertionIdList: Array<number>; // Provide a default empty array
   paymentMethod?: string;
-    insertionIdList?: Array<number>;
-    total?: number;
-    userId: number;
+  total?: number;
+  userId: number;
 }

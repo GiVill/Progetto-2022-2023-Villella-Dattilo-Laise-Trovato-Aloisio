@@ -1,7 +1,6 @@
-<ng-container *ngFor="let item of insertions.content let i = index;">
-  <app-cart-insertion-card [item]="item" class="card-item"></app-cart-insertion-card>
-</ng-container>
-<strong> Prodotti: </strong> {{ order!.insertionIdList}} <br>
-<strong>  Totale:  </strong> {{ order!.total}} <br>
-<strong>  Data:  </strong> {{order!.date}}<br>
+
+<strong> Prodotti: </strong> {{ myOrder!.insertionIdList}} <br>
+<strong>  Totale:  </strong> {{ myOrder!.total}} €<br>
+<strong>  Metodo di pagamento:  </strong> {{ myOrder!.paymentMethod}} <br>
+<strong>  Data:  </strong> {{myOrder!.date}}<br>
 

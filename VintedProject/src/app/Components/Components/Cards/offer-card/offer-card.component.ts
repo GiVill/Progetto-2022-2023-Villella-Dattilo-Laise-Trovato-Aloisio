@@ -38,9 +38,6 @@ export class OfferCardComponent implements OnInit{
              ) {
   }
 
-  onImageClick(): void {
-    this.router.navigate(['/Order', this.offer?.id]);
-  }
 
   ngOnInit(): void {
         if (this.offer?.status == "APPROVED")

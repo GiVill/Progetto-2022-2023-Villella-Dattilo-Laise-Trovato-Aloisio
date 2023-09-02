@@ -14,7 +14,7 @@
 }
 
 .selected-user {
-  background-color: #077782 !important; /* Cambia il colore di sfondo come preferisci */
+  background-color: #262626 !important;
   color: white;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .btn {
-  background-color: #0ABFCC;
+  background-color: #007b0f;
   color: white;
   padding: 15px 30px;
   border: none;
@@ -82,14 +82,14 @@
 }
 
 .own-message {
-  background-color: lightskyblue;
+  background-color: #0d9263;
   float: right;
   clear: both;
   text-align: left;
 }
 
 .other-message {
-  background-color: gray;
+  background-color: rgb(128, 128, 128);
   float: left;
   clear: both;
   text-align: left;

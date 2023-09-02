@@ -43,7 +43,7 @@ const routes: Routes = [
   {path: 'dash', component: DashboardComponent},
   {path: 'chat', component: ChatComponent},
   {path: 'private/:token', component: PrivateComponent},
-  {path: 'order/:order', component: OrderComponent},
+  {path: 'orders/:order', component: OrderComponent},
 
 
 ];
