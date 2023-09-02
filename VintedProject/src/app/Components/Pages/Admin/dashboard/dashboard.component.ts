@@ -7,6 +7,9 @@ import {OrderService} from "../../../../api/order.service";
 import {InsertionService} from "../../../../api/insertion.service";
 import {UserService} from "../../../../api/user.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {OfferService} from "../../../../api/offer.service";
+import {PageBuyngOfferDto} from "../../../../model/pageBuyngOfferDto";
+import {BuyingOfferDto} from "../../../../model/buyingOfferDto";
 
 @Component({
   selector: 'app-dashboard',
@@ -17,11 +20,14 @@ export class DashboardComponent {
   insertionId!: number;
   userId!: number ;
   orderId!: number;
+  offerId!: number;
+  InsertionId!: number;
   paymentId!: number | undefined;
   page=0;
   activeButton: string = 'getAllByUserId';
   userDtoArray: UserDto[] = [];
   orderDtoArray!: PageOrderDto;
+  offerDtoArray!: BuyingOfferDto[]
   paymentDtoArray: PaymentDto[] = [];
   insertionDtoArray!: PageBasicInsertionDto
   userEmail!: string;
@@ -30,8 +36,9 @@ export class DashboardComponent {
 
   constructor(private orderService : OrderService,
               private insertionService :InsertionService,
-              private userService :UserService,
+              private offerService :OfferService,
               private snackBar: MatSnackBar,
+
               ) {
   }
 
@@ -62,20 +69,15 @@ export class DashboardComponent {
     this.clearDataArrays();
   }
 
-  deleteOrder() {
-    this.activeButton = 'deleteOrder';
+
+  getAllOffer() {
+    this.activeButton = 'getAllOffer';
     // Clear other arrays when a different action is selected
     this.clearDataArrays();
   }
 
-  findAll() {
-    this.activeButton = 'findAll';
-    // Clear other arrays when a different action is selected
-    this.clearDataArrays();
-  }
-
-  deletePayment() {
-    this.activeButton = 'deletePayment';
+  deleteOffer() {
+    this.activeButton = 'deleteOffer';
     // Clear other arrays when a different action is selected
     this.clearDataArrays();
   }
@@ -140,6 +142,7 @@ export class DashboardComponent {
       this.orderService.getOrderDtoByIdByEmailPagedAdmin(this.userEmail, this.page).subscribe(
         (order: PageOrderDto) => {
           this.orderDtoArray = order;
+          console.log(order)
         },
         (error) => {
           this.snackBar.open('Non è stato possibile recuperare gli ordini', 'OK');
@@ -164,15 +167,47 @@ export class DashboardComponent {
    );
   }
 
-  searchFindAll() {
-
+  actionDeleteOffer(offerId) {
+    this.offerService.adminDeleteOffer(offerId).subscribe(
+      response => {
+        this.snackBar.open('Offerta Eliminata', 'OK');
+      },
+      error => {
+        this.snackBar.open('Non è stato possibile eliminare questa offerta', 'OK');
+        console.log("Errore", error);
+      }
+    );
   }
 
-  actionDeletePayment() {
-
+  actionGetOfferByUserId(){
+    if (this.userId) {
+      this.offerService.getAllByUserId(this.userId).subscribe(
+        (offer: BuyingOfferDto[]) => {
+          this.offerDtoArray = offer;
+          console.log(offer)
+        },
+        (error) => {
+          this.snackBar.open('Non è stato possibile recuperare le offerte', 'OK');
+          console.log("Error", error);
+        }
+      );
+    }else{
+      this.offerService.adminGetAllByInsertionId(this.insertionId).subscribe(
+        (order: BuyingOfferDto[]) => {
+          this.offerDtoArray = order;
+        },
+        (error) => {
+          this.snackBar.open('Non è stato possibile recuperare gli ordini', 'OK');
+          console.log("Error", error);
+        }
+      );
+    }
   }
+
+
 
   action() {
+    console.log(this.activeButton)
     switch (this.activeButton) {
       case 'deleteBasicInsertion':
         this.actionDeleteBasicInsertion(this.insertionId);
@@ -186,11 +221,11 @@ export class DashboardComponent {
       case 'deleteOrder':
         this.actionDeleteOrder(this.orderId);
         break;
-      case 'findAll':
-        this.searchFindAll();
+      case 'getAllOffer':
+        this.actionGetOfferByUserId();
         break;
-      case 'deletePayment':
-        this.actionDeletePayment();
+      case 'deleteOffer':
+        this.actionDeleteOffer(this.offerId);
         break;
       default:
         break;
@@ -203,6 +238,7 @@ export class DashboardComponent {
     this.paymentDtoArray = [];
     //this.insertionDtoArray= [];
   }
+
 }
 
 

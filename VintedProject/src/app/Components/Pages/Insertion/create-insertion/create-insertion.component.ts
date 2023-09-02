@@ -17,7 +17,7 @@ export class CreateInsertionComponent implements OnInit{
   brandOptions: BasicInsertionDto.BrandEnum[] = Object.values(BasicInsertionDto.BrandEnum);
   image !: File
   inserzione : BasicInsertionDto = {
-    description: "", price: 0, title: "", isPrivate:false,  userId: Number(this.cookieService.getUserId()),
+    description: "", price: 0, title: "", isPrivate:false, available:true,  userId: Number(this.cookieService.getUserId()),
   };
 
   constructor(private router: Router,

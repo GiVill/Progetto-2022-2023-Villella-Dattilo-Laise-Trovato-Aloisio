@@ -84,6 +84,7 @@ export class CookiesService implements OnInit {
   checkUserCookie(): void {
     const userCookie = this.cookieService.get('userEmail');
     if (userCookie) {
+      this.checkUserToken()
       this.logStringResult = userCookie;
     } else {
       this.logStringResult = 'Login';
