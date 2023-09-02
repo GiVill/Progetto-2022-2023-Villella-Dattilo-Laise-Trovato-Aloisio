@@ -10,6 +10,7 @@ import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.OrderService;
 import it.unical.ea.VintedProject.dto.OrderDto;
+import it.unical.ea.VintedProject.dto.enumeration.Status;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.sql.Insert;
@@ -56,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         order.setDate(LocalDate.now());
-
+        order.setStatus(Status.APPROVED);
         Order o = orderDao.save(order);
         return modelMapper.map(o, OrderDto.class);
     }
