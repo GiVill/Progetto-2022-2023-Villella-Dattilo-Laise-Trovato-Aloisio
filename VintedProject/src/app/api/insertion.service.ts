@@ -170,9 +170,9 @@ export class InsertionService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getAllInsertionByOrderId(id: number, observe?: 'body', reportProgress?: boolean): Observable<PageBasicInsertionDto>;
-  public getAllInsertionByOrderId(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PageBasicInsertionDto>>;
-  public getAllInsertionByOrderId(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PageBasicInsertionDto>>;
+  public getAllInsertionByOrderId(id: number, observe?: 'body', reportProgress?: boolean): Observable<BasicInsertionDto[]>;
+  public getAllInsertionByOrderId(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BasicInsertionDto[]>>;
+  public getAllInsertionByOrderId(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BasicInsertionDto[]>>;
   public getAllInsertionByOrderId(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
     if (id === null || id === undefined) {
@@ -206,7 +206,7 @@ export class InsertionService {
     const consumes: string[] = [
     ];
 
-    return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/user/orderinsertions`,
+    return this.httpClient.request<PageBasicInsertionDto>('get',`${this.basePath}/v1/insertions/order/${encodeURIComponent(String(id))}`,
       {
         params: queryParameters,
         withCredentials: this.configuration.withCredentials,

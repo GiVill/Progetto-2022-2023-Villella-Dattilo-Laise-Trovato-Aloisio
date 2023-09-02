@@ -129,7 +129,7 @@ export class MyprofileComponent implements OnInit{
         );
     }
   getUserInsertion(): void {
-    this.insertionService.getInsertionByUserId(this.userId, this.page).subscribe(
+    this.insertionService.getMyInsertion(this.page).subscribe(
       (data: PageBasicInsertionDto) => {
         if (data.content && data.content.length > 0) {
           this.myInsertion = data;
@@ -217,14 +217,29 @@ export class MyprofileComponent implements OnInit{
     this.getUserInsertion()
   }
 
+  subPageInsertion(){
+    this.page-=1;
+    this.getUserInsertion()
+  }
+
   addPageOffer() {
     this.page+=1;
     this.getUserOffer()
   }
 
+  subPageOffer(){
+    this.page-=1;
+    this.getUserInsertion()
+  }
+
   addPageOrder() {
     this.page+=1;
     this.getUserOrders()
+  }
+
+  subPageOrder(){
+    this.page-=1;
+    this.getUserInsertion()
   }
 
 

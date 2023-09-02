@@ -17,7 +17,7 @@ import {ActivatedRoute, Route} from "@angular/router";
 })
 export class OrderComponent implements OnInit{
   @Input() myOrder?: OrderDto
-  insertions!: PageBasicInsertionDto
+  insertions!: BasicInsertionDto[]
 
   constructor(private  insertionService: InsertionService,
               private  orderService: OrderService,
@@ -26,11 +26,9 @@ export class OrderComponent implements OnInit{
 
   ngOnInit(): void {
     console.log(this.myOrder)
-        this.myOrder!.insertionIdList?.map((cartItem) =>
-          this.insertionService.getAllInsertionByOrderId(cartItem).subscribe((insertionData: PageBasicInsertionDto) => {
-            this.insertions = insertionData;}))
-      }
-
-
-
+    this.insertionService.getAllInsertionByOrderId(this.myOrder?.id!).subscribe((insertionData: BasicInsertionDto[]) => {
+      console.log(insertionData)
+      this.insertions = insertionData ;})
+    console.log(this.insertions)
+    }
 }

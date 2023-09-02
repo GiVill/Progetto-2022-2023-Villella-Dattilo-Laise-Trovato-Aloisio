@@ -95,7 +95,10 @@
           </div>
         </div>
       </div>
-      <button class="button showAll-button" (click)="addPageInsertion()" > Carica altro</button>
+      <div style="display: flex;">
+        <button [disabled]="page == 0" class="button" (click)="subPageInsertion()" > Indietro</button>
+        <button [disabled]="page == myInsertion.totalPages!" class="button" (click)="addPageInsertion()" > Avanti</button>
+      </div>
     </div>
   </div>
 </div>
@@ -118,7 +121,10 @@
             </div>
           </div>
         </div>
-        <button class="button showAll-button" (click)="addPageInsertion()" > Carica altro</button>
+        <div style="display: flex;">
+          <button [disabled]="page == 0" class="button" (click)="subPageOffer()" > Indietro</button>
+          <button [disabled]="page == myInsertion.totalPages!" class="button" (click)="addPageOffer()" > Avanti</button>
+        </div>
       </div>
     </div>
 </div>
@@ -135,7 +141,10 @@
         <app-order-card [order]="item" > </app-order-card>
         </ng-container>
       </div>
-      <button class="button showAll-button" (click)="addPageInsertion()" > Carica altro</button>
+      <div style="display: flex;">
+        <button [disabled]="page == 0" class="button" (click)="subPageOrder()" > Indietro</button>
+        <button [disabled]="page == myInsertion.totalPages!" class="button" (click)="addPageOrder()" > Avanti</button>
+      </div>
     </div>
   </div>
 </div>
