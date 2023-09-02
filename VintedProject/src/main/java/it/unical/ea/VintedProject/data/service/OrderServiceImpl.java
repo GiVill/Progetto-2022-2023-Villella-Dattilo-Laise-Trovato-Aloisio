@@ -109,15 +109,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<OrderDto> getOrderDtoByUserIdPaged(Long UserId, int page){
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getId().equals(UserId) ){
-            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",UserId));
+    public Page<OrderDto> getOrderDtoByUserIdPaged(Long userId, int page){
+        loggedUserMethod.checkLoggedUser(userId);
+        Page<Order> orders = orderDao.findByUserId(userId,PageRequest.of(page, SIZE_FOR_PAGE));
+        List<Order> collect = orders.stream().toList();
+
+        List<OrderDto> orderDtoList = new ArrayList<>();
+
+        for (Order order: collect) {
+            List<Long> insertionIds = new ArrayList<>();
+            for (BasicInsertion insertion : order.getInsertionList()) {
+                insertionIds.add(insertion.getId());
+            }
+            OrderDto orderDto = modelMapper.map(order, OrderDto.class);
+            orderDto.setInsertionIdList(insertionIds);
+            orderDtoList.add(orderDto);
         }
-        Page<Order> orders = orderDao.findByUser(u,PageRequest.of(page, SIZE_FOR_PAGE));
-        List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());
-        System.out.println("SONO QUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII" + collect);
-        return new PageImpl<>(collect);
+        return new PageImpl<>(orderDtoList);
     }
 
     @Override
@@ -126,7 +134,7 @@ public class OrderServiceImpl implements OrderService {
         if(u.get().getEmail() == null ){
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present",UserId));
         }
-        Page<Order> orders = orderDao.findByUser(u,PageRequest.of(page, SIZE_FOR_PAGE));
+        Page<Order> orders = orderDao.findByUserId(u.get().getId(), PageRequest.of(page, SIZE_FOR_PAGE));
         List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }
@@ -137,7 +145,7 @@ public class OrderServiceImpl implements OrderService {
         if(u.get().getEmail() == null ){
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present",userEmail));
         }
-        Page<Order> orders = orderDao.findByUser(u,PageRequest.of(page, SIZE_FOR_PAGE));
+        Page<Order> orders = orderDao.findByUserId(u.get().getId(), PageRequest.of(page, SIZE_FOR_PAGE));
         List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);
     }

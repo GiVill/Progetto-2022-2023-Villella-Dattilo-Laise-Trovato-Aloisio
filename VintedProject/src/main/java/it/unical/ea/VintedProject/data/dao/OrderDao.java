@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface OrderDao extends JpaRepository<Order, Long> {
     //Return an Order using the id of a User
-    Page<Order> findByUser(Optional<User> user, Pageable page);
+    Page<Order> findByUserId(Long user, Pageable page);
 
     Page<Order> findAllByPaymentMethod(String method,Pageable page);
 
