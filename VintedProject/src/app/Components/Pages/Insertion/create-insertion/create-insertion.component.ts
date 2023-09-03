@@ -30,6 +30,7 @@ export class CreateInsertionComponent implements OnInit{
     const fileInput = event.target;
     const files = fileInput.files;
     this.image = files[0]
+
   }
   controllo(){
     if (!this.inserzione.title) {

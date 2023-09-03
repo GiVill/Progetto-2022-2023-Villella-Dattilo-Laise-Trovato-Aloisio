@@ -1,12 +1,11 @@
-<h2>Aggiorna nickname e password</h2>
-<div class="input-container">
-  <label for="nickname">Nuovo nickname:</label>
-  <input type="text" id="nickname" [(ngModel)]="newNickname">
-  <button mat-raised-button class="small-button" style="margin: 2%" (click)="saveNickname()">Salva</button>
-</div>
+<h2>Aggiorna password:</h2>
 
 <div class="input-container">
   <label for="password">Nuova password:</label>
-  <input type="password" id="password" [(ngModel)]="newPassword">
-  <button mat-raised-button class="small-button" style="margin: 2%" (click)="savePassword()">Salva</button>
+  <input type="password" id="password" style="margin-left: 1%" [(ngModel)]="newPassword">
+  <label for="password"  style="margin-left: 4%">Ripeti la password:</label>
+  <input type="password" id="checkPassword" style="margin-left: 1%" [(ngModel)]="checkPassword">
+  <button mat-raised-button class="small-button button" style="margin: 2%" (click)="savePassword()">Salva</button>
 </div>
+
+

@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {UserDto} from "../../../../model/userDto";
+import {UserService} from "../../../../api/user.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-profile-edit',
@@ -8,21 +10,26 @@ import {UserDto} from "../../../../model/userDto";
 })
 export class ProfileEditComponent {
   @Input() user: UserDto | undefined;
-  @Output() updatePassword: EventEmitter<string> = new EventEmitter<string>();
-  @Output() updateNickname: EventEmitter<string> = new EventEmitter<string>();
   newPassword: string = '';
-  newNickname: string = '';
+  checkPassword: string = '';
 
-  constructor() {}
+  constructor(private userService: UserService,
+              private snackBar: MatSnackBar) {}
 
   savePassword(): void {
-    this.updatePassword.emit(this.newPassword);
-    this.newPassword = '';
+    if (this.newPassword == this.checkPassword){
+      this.userService.updateUserPassword(this.newPassword).subscribe(() => {
+        this.snackBar.open("Password aggiornata" , "OK")
+        this.newPassword = '';
+        this.checkPassword = '';
+      })
+    } else{
+      this.snackBar.open("Le password non corrispondono" , "OK, RIPROVO")
+
+    }
+
   }
 
-  saveNickname(): void {
-    this.updateNickname.emit(this.newNickname);
-    this.newNickname = '';
-  }
+
 
 }

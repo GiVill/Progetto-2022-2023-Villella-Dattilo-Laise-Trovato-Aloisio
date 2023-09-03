@@ -1,8 +1,13 @@
 <div class="profile-page">
   <div class="profile-header">
     <div class="profile-picture">
-      <img [src]="user?.imageName ? 'https://localhost:8010/vintedProject-api/v1/images/' + user?.imageName : 'assets/resources/vestito.jpg'" alt="Profile Picture" class="round-image">
+      <label for="foto" class="custom-file-input">
+        <img [src]="user?.imageName ? 'https://localhost:8010/vintedProject-api/v1/images/' + user?.imageName : 'assets/resources/vestito.jpg'" alt="Profile Picture" class="round-image">
+        <div class="overlay">Clicca per caricare un'immagine</div>
+      </label>
+      <input type="file" id="foto" name="foto" accept="image/*" (change)="caricaFoto($event)" style="display: none;">
     </div>
+
     <div class="profile-info">
       <h1>Informazioni personali:</h1>
       <p>Nome: {{ user?.firstName }}</p>
@@ -14,7 +19,7 @@
     </div>
     <button mat-raised-button class="button" style="margin-left: 25%" [routerLink]="['/myprofile']" (click)="showUpdateSection()">Modifica informazioni</button>
   </div>
-  <app-profile-edit *ngIf="showUpdateSectionFlag" [user]="user" (updatePassword)="updatePassword($event)" (updateNickname)="updateNickname($event)"></app-profile-edit>
+  <app-profile-edit *ngIf="showUpdateSectionFlag" [user]="user"></app-profile-edit>
 
 
 

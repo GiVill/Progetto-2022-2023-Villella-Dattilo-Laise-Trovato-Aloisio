@@ -10,6 +10,8 @@ import {PageOrderDto} from "../../../../model/pageOrderDto";
 import {UserDto} from "../../../../model/userDto";
 import {BuyingOfferDto} from "../../../../model/buyingOfferDto";
 import {OfferService} from "../../../../api/offer.service";
+import {ImageService} from "../../../../api/image.service";
+import {ImagesUserBody} from "../../../../model/imagesUserBody";
 
 
 
@@ -32,6 +34,7 @@ export class MyprofileComponent implements OnInit{
   InsertionModal=false
   OfferModal = false
   OrderModal = false
+  private image: ImagesUserBody | undefined;
 
 
 
@@ -39,6 +42,7 @@ export class MyprofileComponent implements OnInit{
     private insertionService: InsertionService,
     private route: ActivatedRoute,
     private userService: UserService,
+    private imageService: ImageService,
     private orderService: OrderService,
     private offerService: OfferService,
     private cookieSevices: CookiesService,
@@ -156,26 +160,6 @@ export class MyprofileComponent implements OnInit{
     this.showUpdateSectionFlag = !this.showUpdateSectionFlag;
   }
 
-  updatePassword(newPassword: string): void {
-    if (this.userId && newPassword) {
-      this.userService.updateUserPassword(newPassword).subscribe(
-        (success: boolean) => {
-          // Password update successful
-          console.log('Password updated successfully.');
-        },
-        (error: any) => {
-          // Password update failed
-          console.log('Failed to update password:', error);
-        }
-      );
-    }
-  }
-
-  updateNickname(newNickname: string): void {
-    if (this.userId && newNickname) {
-
-    }
-  }
 
   openInsertionModal() {
     this.InsertionModal = !this.InsertionModal;
@@ -242,5 +226,25 @@ export class MyprofileComponent implements OnInit{
     this.getUserInsertion()
   }
 
+  caricaFoto(event: any) {
+    const fileInput = event.target;
+    const files = fileInput.files;
 
+    if (files && files.length > 0) {
+      this.image = { img: files[0] };
+      this.updateImage();
+    }
+  }
+
+  updateImage() {
+    this.imageService.insertUserImage(this.image!).subscribe(
+      (response) => {
+       console.log(response)
+
+      },
+      (error) => {
+        console.log('Si è verificato un errore durante il recupero delle offerte dell\'utente:', error);
+      }
+    );
+  }
 }

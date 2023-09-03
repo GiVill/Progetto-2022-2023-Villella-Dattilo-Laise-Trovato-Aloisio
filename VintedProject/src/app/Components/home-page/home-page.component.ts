@@ -41,18 +41,27 @@ export class HomePageComponent implements OnInit {
           });
         }
 
-
         this.insertionService.userGetAll(this.page).subscribe(
           (insertions: PageBasicInsertionDto) => {
+            if (insertions.content && insertions.content.length > 1) {
+              this.shuffleArray(insertions.content);
+            }
             this.feed = {
               ...insertions,
-              content: insertions.content?.slice(0, 6).sort(),
+              content: insertions.content?.slice(0, 6),
             };
           }
         );
-      }
-    );
+      })
   }
+
+  private shuffleArray(array: any[]): void {
+      for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
 
   getUserByUserId(userId: number): UserDto  {
     return <UserDto>this.users.find(user => user.id === userId);

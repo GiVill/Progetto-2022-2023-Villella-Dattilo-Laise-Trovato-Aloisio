@@ -9,7 +9,6 @@ import { ImageService } from './api/image.service';
 import { InsertionService } from './api/insertion.service';
 import { OfferService } from './api/offer.service';
 import { OrderService } from './api/order.service';
-import { PaymentService } from './api/payment.service';
 import { UserService } from './api/user.service';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { UserService } from './api/user.service';
     InsertionService,
     OfferService,
     OrderService,
-    PaymentService,
     UserService ]
 })
 export class ApiModule {

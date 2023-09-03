@@ -55,6 +55,7 @@ import {ChatMessageService} from "./api/chatMessage.service";
 import {OfferProfileCardComponent} from "./Components/Components/Cards/offer-profile-card/offer-profile-card.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import {OrderComponent} from "./Components/Pages/Order/order.component";
+import {ImageService} from "./api/image.service";
 
 
 
@@ -123,7 +124,7 @@ import {OrderComponent} from "./Components/Pages/Order/order.component";
       }
     })
   ],
-  providers: [CookieService,ChatService,ClipboardModule,JwtHelperService,InsertionService,ChatMessageService,AuthService,UserService,CartService,OrderService,OfferService],
+  providers: [CookieService,ChatService,ClipboardModule,JwtHelperService,ImageService,InsertionService,ChatMessageService,AuthService,UserService,CartService,OrderService,OfferService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -24,7 +24,7 @@ export class CartComponent implements OnInit {
 
   product: any[] = [];
   cartProduct?: BasicInsertionDto[];
-  selectedPaymentMethod: string | undefined;
+  selectedPaymentMethod: string = "CARD";
   paymentMethods: PaymentDto.PaymentMethodEnum[] = Object.values(PaymentDto.PaymentMethodEnum);
   ordineCreato = false;
   totalCost = 0;
@@ -135,7 +135,7 @@ export class CartComponent implements OnInit {
     this.orderService.userAddOrder(this.order!).subscribe((response) => {
         this.snackBar.open("Ordine creato ",)
         this.cookieService.delete('cartItems', '/');
-        this.ngOnInit()
+        this.clearCart()
       },
       (error) => {
         this.snackBar.open("Errore durante la creazione dell ordine")
