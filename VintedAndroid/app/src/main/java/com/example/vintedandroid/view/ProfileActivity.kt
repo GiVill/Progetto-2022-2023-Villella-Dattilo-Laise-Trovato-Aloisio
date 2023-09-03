@@ -36,17 +36,14 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.TextFieldValue
-import com.example.vintedandroid.view.config.ImageConfiguration
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import com.example.vintedandroid.view.config.PersonalizedAsyncImage
 import com.example.vintedandroid.view.config.createPersonalizedTextfieldPassword
 import com.example.vintedandroid.viewmodel.UserViewModel
 
 @Composable
-fun ProfileActivity(userViewModel: UserViewModel) {
-
-    val nicknameField = remember { mutableStateOf(TextFieldValue()) }
-    val emailField = remember { mutableStateOf(TextFieldValue()) }
-    val passwordField = remember { mutableStateOf(TextFieldValue()) }
-    var isTextFieldVisible1 by remember { mutableStateOf(false) }
+fun ProfileActivity(userViewModel: UserViewModel, navController: NavHostController) {
 
     val userFromDB: State<UserDatabaseDto?> = userViewModel.getAllUserFromRoomDatabase().collectAsState(initial = null)
 
@@ -67,77 +64,18 @@ fun ProfileActivity(userViewModel: UserViewModel) {
                         .fillMaxWidth()
                         .padding(8.dp))
                 {
-                    //modifyAccountInfoButton("Nickname")
-                    //modifyAccountInfoButton("Email")
-                    //modifyAccountInfoButton("Password")
-
 
                     Button(
-                        onClick = { isTextFieldVisible1 = !isTextFieldVisible1 },
+                        onClick = {
+                            navController.navigate(ScreenController.UpdatePassword.route)
+                                  },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp)
                     ) {
-                        Text(text = "Security & Password")
-                    }
-
-                    if (isTextFieldVisible1) {
-                        //TODO modifica Immagine
-                        createPersonalizedTextfieldPassword(textField = passwordField)
-
-                        Button(
-                            onClick = {
-                                Log.i("ProfileScreen::class","Typed text: pppppppppppppppppppp")
-                                // Perform the action when the send button is clicked
-                                performSendAction()
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(text = "Send")
-                        }
+                        Text(text = stringResource(R.string.change_password))
                     }
                 }
-        }
-    }
-}
-
-@Composable
-private fun modifyAccountInfoButton(subject: String){
-
-    var isTextFieldVisible by remember { mutableStateOf(false) }
-    var value by remember { mutableStateOf("") }
-
-    Card(modifier = Modifier.fillMaxWidth()) {//, onClick = {/*TODO*/}
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Button(
-                onClick = { isTextFieldVisible = !isTextFieldVisible },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-                Text(text = "Modify $subject")
-            }
-
-            if (isTextFieldVisible) {
-                TextField(
-                    value = value,
-                    onValueChange = { newText ->
-                        value = newText
-                    },
-                    label = { Text(text = "$subject") },
-                    placeholder = { Text(text = "Type your new $subject") }
-                )
-                Button(
-                    onClick = {
-                        Log.i("ProfileScreen::class","Typed text: $value")
-                        // Perform the action when the send button is clicked
-                        performSendAction()
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(text = "Send")
-                }
-            }
         }
     }
 }
@@ -147,10 +85,17 @@ private fun userDetail(userFromDB: State<UserDatabaseDto?>){
 
     Card {
         if (userFromDB.value?.imageName != null) {
+
+            PersonalizedAsyncImage(imageName = userFromDB.value?.imageName.toString(), subject = "ProfileActivity::class")
+
+
+            /*
             ImageConfiguration(
                 imageName = userFromDB.value?.imageName.toString(),
                 imageScale = ContentScale.Fit
             )
+
+             */
         } else {
 
             Icon(
@@ -185,7 +130,7 @@ private fun userDetail(userFromDB: State<UserDatabaseDto?>){
                         .padding(10.dp)
                         .weight(1f)
                 ) {
-                    Log.i("ProfileScreen", "email ${userFromDB.value?.email}")
+                    Log.i("ProfileActivity::class", "email ${userFromDB.value?.email}")
                     userFromDB.value?.let { Text(text = it.nickName) }
                     Divider()
                     userFromDB.value?.let { Text(text = it.firstName) }
@@ -199,10 +144,6 @@ private fun userDetail(userFromDB: State<UserDatabaseDto?>){
             }
         }
     }
-}
-
-private fun performSendAction() {
-    // Add your logic here to handle the send action
 }
 
 /*

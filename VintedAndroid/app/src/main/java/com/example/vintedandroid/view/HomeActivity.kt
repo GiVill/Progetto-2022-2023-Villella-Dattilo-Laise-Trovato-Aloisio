@@ -27,6 +27,7 @@ import coil.compose.AsyncImage
 import com.example.vintedandroid.R
 import com.example.vintedandroid.model.application_status.internetChecker
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
+import com.example.vintedandroid.view.config.PersonalizedAsyncImage
 import com.example.vintedandroid.viewmodel.HomeViewModel
 
 var page: Int = 0
@@ -121,10 +122,8 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
                 //horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                AsyncImage(
-                    model = "https://192.168.1.90:8010/vintedProject-api/v1/images/file_bf52168a-261d-469e-a1a4-55ba0da6fdac.jpg",
-                    contentDescription = "Async Image Of The Product"
-                )
+                PersonalizedAsyncImage(imageName = "file_bf52168a-261d-469e-a1a4-55ba0da6fdac.jpg", subject = "HomeActivity::class")
+
                 Divider()
 
                 Text(text = item.title)
@@ -163,21 +162,3 @@ fun PopupDialog(onDismiss: () -> Unit, content: @Composable () -> Unit) {
         }
     }
 }
-
-/*
-@Composable
-@Preview(showBackground = true)
-fun HomeScreenPreview() {
-
-    val itemsInCart = remember { mutableListOf<BasicInsertionDto?>() }
-
-    var searchedProduct = remember {
-        mutableStateOf(BasicInsertionDto(1L,"null", Float.MIN_VALUE,null,null,null,null,null,"",BasicInsertionDto.Brand.ADIDAS,BasicInsertionDto.Category.ABBIGLIAMENTO, 2L))
-
-    }
-
-    val navController = rememberNavController()
-
-    //HomeScreen(itemsInCart, navController, searchedProduct, )
-}
- */

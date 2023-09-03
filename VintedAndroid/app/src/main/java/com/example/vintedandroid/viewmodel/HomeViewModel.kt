@@ -38,10 +38,10 @@ class HomeViewModel(application: Application) : ViewModel() {
                 convertBasicInsertionDtoToCartDto(item).let {
                     AppDatabase.getInstance(context = application.applicationContext).cartDao().insert(it)
                 }
-                Log.i("HomeViewModel", "Item added on DB!")
+                Log.i("HomeViewModel::class", "Item added on DB!")
             }
         } else {
-            Log.i("HomeViewModel", "Cannot add the item because is already in the cart!")
+            Log.i("HomeViewModel::class", "Cannot add the item because is already in the cart!")
         }
     }
 

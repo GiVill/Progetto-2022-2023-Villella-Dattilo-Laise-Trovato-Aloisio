@@ -49,7 +49,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             CartActivity(cartViewModel)
         }
         composable(route = ScreenController.Profile.route){
-            ProfileActivity(userViewModel)
+            ProfileActivity(userViewModel, navController)
         }
         composable(route = ScreenController.BottomBarProfile.route){
             BottomBarProfileActivity(navController, userViewModel, cartViewModel)

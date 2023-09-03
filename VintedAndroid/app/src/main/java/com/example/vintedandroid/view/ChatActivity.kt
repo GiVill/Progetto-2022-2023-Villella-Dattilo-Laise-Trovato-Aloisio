@@ -11,6 +11,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.res.stringResource
+import com.example.vintedandroid.R
 import com.example.vintedandroid.swagger.client.models.ChatDto
 import com.example.vintedandroid.viewmodel.ChatViewModel
 
@@ -21,19 +23,22 @@ fun ChatActivity(chatViewModel: ChatViewModel) {
     //    val userFromDB1: State<UserDatabaseDto?> = userViewModel.getAllUserFromRoomDatabase().collectAsState(initial = null)
     //var allChat = chatViewModel.getAllChat()
 
-    val allChat: State<Array<ChatDto>?> = chatViewModel.getAllChat()!!.collectAsState(initial = null)
+    //val allChat: State<Array<ChatDto>?> = chatViewModel.getAllChat()!!.collectAsState(initial = null)
 
     Box(){
         Row(){
             Column() {
-                Text(text = "Contact")
+                Text(text = stringResource(R.string.contact))
                 Card {
                     LazyColumn {
+                        /*
                         if(allChat.value != null) {
                             items(allChat.value!!) { chatItem ->
                                 ChatRow(chatItem)
                             }
                         }
+
+                         */
                     }
                 }
             }

@@ -14,9 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.vintedandroid.R
 import com.example.vintedandroid.view.config.createPersonalizedTextfieldPassword
 import com.example.vintedandroid.viewmodel.UpdatePasswordViewModel
 
@@ -26,16 +28,8 @@ fun UpdatePasswordActivity(updatePasswordViewModel: UpdatePasswordViewModel) {
     var passwordField = remember { mutableStateOf(TextFieldValue()) }
     var passwordField2 = remember { mutableStateOf(TextFieldValue()) }
 
-    var loginUnsuccessful = remember {mutableStateOf(false)}
+    var mismatchPassword = remember {mutableStateOf(false)}
 
-
-    //            loginUnsuccessful.value = false
-    /*
-    else {
-                    loginUnsuccessful.value = true
-                    buttonEnabled = true
-                }
-     */
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -46,24 +40,24 @@ fun UpdatePasswordActivity(updatePasswordViewModel: UpdatePasswordViewModel) {
             .fillMaxSize()
             .padding(16.dp)
             .align(Alignment.Center)) {
-            Text(text = "Reset password", fontSize = 26.sp, modifier = Modifier.align(CenterHorizontally))
-            if(loginUnsuccessful.value){
-                Log.i("LoginScreen:class", "Login was unsuccessful!")
+            Text(text = stringResource(R.string.change_password), fontSize = 26.sp, modifier = Modifier.align(CenterHorizontally))
+            if(mismatchPassword.value){
+                Log.i("UpdatePassword:class", "Update Password was unsuccessful!")
                 passwordField = remember { mutableStateOf(TextFieldValue()) }
                 Text(
-                    text = "Password doesn't match. Please try again.",
+                    text = stringResource(R.string.missmatch_password),
                     modifier = Modifier.padding(16.dp),
                     color = Color.Red,
                 )
             }
-            Text(text = "Enter New Password", modifier = Modifier.align(CenterHorizontally))
+            Text(text = stringResource(R.string.enter_new_password), modifier = Modifier.align(CenterHorizontally))
             createPersonalizedTextfieldPassword(textField = passwordField)
-            Text(text = "Retype New Password", modifier = Modifier.align(CenterHorizontally))
+            Text(text = stringResource(R.string.type_password_again), modifier = Modifier.align(CenterHorizontally))
             createPersonalizedTextfieldPassword(textField = passwordField2)
             Button(onClick = {
-                loginUnsuccessful.value = false
+                mismatchPassword.value = false
                 if(!updatePasswordViewModel.updatePassword(passwordField.value.text, passwordField2.value.text)){
-                    loginUnsuccessful.value = true
+                    mismatchPassword.value = true
                     /*
                     if (loginUnsuccessful.value) {
                         Log.i("LoginScreen:class", "Login was unsuccessful!")
@@ -78,21 +72,11 @@ fun UpdatePasswordActivity(updatePasswordViewModel: UpdatePasswordViewModel) {
 
                 }
             },
-            modifier = Modifier.align(CenterHorizontally).padding(8.dp)) {
-                androidx.compose.material.Text(text = "Send New Password")
+            modifier = Modifier
+                .align(CenterHorizontally)
+                .padding(8.dp)) {
+                androidx.compose.material.Text(text = stringResource(R.string.send_new_password)+" (Da testare)")
             }
         }
     }
-    /*
-    Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = "LOGIN", fontSize = 48.sp)
-     */
-    
 }

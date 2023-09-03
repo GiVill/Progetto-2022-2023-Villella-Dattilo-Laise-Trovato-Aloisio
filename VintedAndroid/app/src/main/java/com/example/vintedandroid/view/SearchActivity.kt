@@ -12,12 +12,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.vintedandroid.swagger.client.apis.InsertionApi
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 import com.example.vintedandroid.swagger.client.models.PageBasicInsertionDto
 import kotlinx.coroutines.launch
+import com.example.vintedandroid.R
+
 
 @Composable
 fun SearchActivity(searchText: MutableState<String>, insertionApi: InsertionApi, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>) {
@@ -28,9 +31,7 @@ fun SearchActivity(searchText: MutableState<String>, insertionApi: InsertionApi,
     LaunchedEffect(searchText.value) {
 
         if (searchText.value != "") {
-
             coroutineScope.launch {
-                Log.i("tag", "You have typed this text: ${searchText.value}")
                 searchResults = insertionApi.getByTitle(searchText.value, 0)
             }
         }
@@ -160,12 +161,14 @@ fun SearchResultCard(result: BasicInsertionDto, navController: NavHostController
         Modifier
             .padding(16.dp)
             .clickable(onClick = {
-                searchedProduct.value = result;navController.popBackStack(); navController.navigate(ScreenController.Product.route)
+                searchedProduct.value = result;navController.popBackStack(); navController.navigate(
+                ScreenController.Product.route
+            )
             }),
         ) {
             Text(text = result.title, style = MaterialTheme.typography.h6)
             result.description?.let { Text(text = it, style = MaterialTheme.typography.body1) }
-            Text(text = "Prezzo: ${result.price}", style = MaterialTheme.typography.body2)
+            Text(text = stringResource(R.string.price)+": ${result.price}", style = MaterialTheme.typography.body2)
         }
     }
 }

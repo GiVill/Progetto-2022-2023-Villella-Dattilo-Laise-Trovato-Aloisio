@@ -31,6 +31,7 @@ import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.example.vintedandroid.R
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
+import com.example.vintedandroid.view.config.PersonalizedAsyncImage
 import com.example.vintedandroid.view.config.createPersonalizedTextfield
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import com.example.vintedandroid.viewmodel.ProductViewModel
@@ -56,10 +57,7 @@ fun ProductActivity(searchedProduct: MutableState<BasicInsertionDto>, itemsInCar
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            AsyncImage(
-                model = "https://192.168.1.90:8010/vintedProject-api/v1/images/file_bf52168a-261d-469e-a1a4-55ba0da6fdac.jpg",
-                contentDescription = "Async Image Of The Product"
-            )
+            PersonalizedAsyncImage(imageName = "file_bf52168a-261d-469e-a1a4-55ba0da6fdac.jpg", subject = "HomeActivity::class")
 
             searchedProductDisplayInfo(searchedProduct = searchedProduct)
             Button(
@@ -109,6 +107,8 @@ private fun searchedProductDisplayInfo(searchedProduct: MutableState<BasicInsert
             modifier = Modifier.padding(16.dp)
         )
     }
+    Text(text = "$${searchedProduct.value.price}")
+
 }
 
 @Composable

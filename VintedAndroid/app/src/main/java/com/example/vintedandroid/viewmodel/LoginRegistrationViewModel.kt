@@ -25,9 +25,9 @@ class LoginRegistrationViewModel(application: Application) : ViewModel() {
 
     fun login(email: String, password: String): Boolean {
         val loginUserDto = convertLoginUserDTO(email, password)     //Convert Login in userDto
-        val token = AuthApi().login(loginUserDto)                   //Make the call API
+        val token = AuthApi().login(loginUserDto)                   //Make the API call
         if(token.accessToken != null){                             //Check Token
-            Log.i("LoginScreen::class", "Login successful")
+            Log.i("LoginRegistrationViewModel::class", "Login successful")
             val loggedUser = convertUserDTOtoUserDB(token)          //Take the User from Token
             if (loggedUser != null) {                               //Check User
                 insertLoggedUserInDatabase(loggedUser)              //Insert User in Room Database
@@ -42,9 +42,9 @@ class LoginRegistrationViewModel(application: Application) : ViewModel() {
         if(checkEnteredText(email, password, firstname, lastname, nickname, addressCap, addressCity, addressNumber, addressStreet)) {
 
             val registrationUserDto = createNewUserDto(email, password, firstname, lastname, nickname, addressCap, addressCity, addressNumber, addressStreet)     //Convert Login in userDto
-            val token = AuthApi().signUp(registrationUserDto)                   //Make the call API
+            val token = AuthApi().signUp(registrationUserDto)                   //Make the API call
             if (token.accessToken != null) {                                       //Check Token
-                Log.i("LoginScreen::class", "Registration successful")
+                Log.i("LoginRegistrationViewModel::class", "Registration successful")
                 val registeredUser =
                     convertUserDTOtoUserDB(token)          //Take the User from Token
                 if (registeredUser != null) {                               //Check User
@@ -77,7 +77,7 @@ class LoginRegistrationViewModel(application: Application) : ViewModel() {
         val isAddressStreetValid = addressStreet.matches(addressStreetRegex.toRegex())
 
         if(isEmailValid && isPasswordValid && isFirstNameValid && isLastNameValid && isNicknameValid && isAddressCapValid && isAddressCityValid && isAddressNumberValid && isAddressStreetValid){
-            Log.i("Login", "$isEmailValid , $email , ${email.matches(emailRegex.toRegex())}")
+            Log.i("LoginRegistrationViewModel", "$isEmailValid , $email , ${email.matches(emailRegex.toRegex())}")
            return true
         }
         return false

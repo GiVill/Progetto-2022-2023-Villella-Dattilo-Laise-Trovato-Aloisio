@@ -1832,6 +1832,7 @@ int string abc_shareactionprovider_share_with_application 0x7f0f0019
 int string abc_toolbar_collapse_description 0x7f0f001a
 int string account_settings 0x7f0f001b
 int string add_cart 0x7f0f009d
+int string already_account_go_to_login 0x7f0f00bd
 int string androidx_startup 0x7f0f001c
 int string app_name 0x7f0f001d
 int string appbar_scrolling_view_behavior 0x7f0f001e
@@ -1841,6 +1842,7 @@ int string bottom_sheet_collapse_description 0x7f0f0020
 int string bottom_sheet_dismiss_description 0x7f0f0021
 int string bottom_sheet_drag_handle_description 0x7f0f0022
 int string bottom_sheet_expand_description 0x7f0f0023
+int string change_password 0x7f0f00bb
 int string character_counter_content_description 0x7f0f0024
 int string character_counter_overflowed_content_description 0x7f0f0025
 int string character_counter_pattern 0x7f0f0026
@@ -1850,6 +1852,7 @@ int string close_drawer 0x7f0f0029
 int string close_sheet 0x7f0f002a
 int string collapsed 0x7f0f002b
 int string connect_to_internet 0x7f0f009f
+int string contact 0x7f0f00c4
 int string contact_vendor 0x7f0f00b6
 int string date_input_headline 0x7f0f002c
 int string date_input_headline_description 0x7f0f002d
@@ -1890,6 +1893,8 @@ int string discard 0x7f0f00a0
 int string do_offer 0x7f0f00a1
 int string dropdown_menu 0x7f0f004f
 int string email 0x7f0f00a2
+int string enter_new_password 0x7f0f00be
+int string enter_your_password 0x7f0f00c5
 int string error_icon_content_description 0x7f0f0050
 int string expanded 0x7f0f0051
 int string exposed_dropdown_menu_content_description 0x7f0f0052
@@ -1906,6 +1911,7 @@ int string login 0x7f0f00a4
 int string login_failed 0x7f0f00a5
 int string logout 0x7f0f00a6
 int string message 0x7f0f00b9
+int string missmatch_password 0x7f0f00bf
 int string mtrl_badge_numberless_content_description 0x7f0f0059
 int string mtrl_chip_close_icon_content_description 0x7f0f005a
 int string mtrl_exceed_max_badge_number_suffix 0x7f0f005b
@@ -1949,6 +1955,7 @@ int string not_selected 0x7f0f007c
 int string off 0x7f0f007d
 int string offer 0x7f0f00ab
 int string on 0x7f0f007e
+int string password 0x7f0f00c6
 int string password_toggle_content_description 0x7f0f007f
 int string path_password_eye 0x7f0f0080
 int string path_password_eye_mask_strike_through 0x7f0f0081
@@ -1958,14 +1965,17 @@ int string previous_page 0x7f0f00ac
 int string price 0x7f0f00ad
 int string range_end 0x7f0f0084
 int string range_start 0x7f0f0085
+int string register_new_account 0x7f0f00c0
+int string registration_failed 0x7f0f00c1
 int string reset_password 0x7f0f00ae
 int string retry_connection 0x7f0f00af
 int string search_bar_search 0x7f0f0086
 int string search_menu_title 0x7f0f0087
 int string see_your_profile 0x7f0f00b0
 int string selected 0x7f0f0088
-int string send_feedbeck 0x7f0f00b1
+int string send_feedback 0x7f0f00c2
 int string send_message 0x7f0f00b8
+int string send_new_password 0x7f0f00bc
 int string sign_up 0x7f0f00b2
 int string snackbar_dismiss 0x7f0f0089
 int string status_bar_notification_info_overflow 0x7f0f008a
@@ -1987,6 +1997,8 @@ int string time_picker_period_toggle_description 0x7f0f0099
 int string time_picker_pm 0x7f0f009a
 int string tooltip_long_press_label 0x7f0f009b
 int string tooltip_pane_description 0x7f0f009c
+int string type_password_again 0x7f0f00c3
+int string type_your 0x7f0f00c7
 int string vinted 0x7f0f00ba
 int string your_offers 0x7f0f00b3
 int string your_orders 0x7f0f00b4

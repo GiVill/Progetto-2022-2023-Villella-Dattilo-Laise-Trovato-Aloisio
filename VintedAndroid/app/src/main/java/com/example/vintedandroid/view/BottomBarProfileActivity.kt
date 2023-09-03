@@ -2,7 +2,6 @@ package com.example.vintedandroid.view
 
 
 import android.annotation.SuppressLint
-import android.util.Log
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -50,7 +49,6 @@ fun BottomBarProfileActivity(navController: NavController, userViewModel: UserVi
     val userFromDB1: State<UserDatabaseDto?> = userViewModel.getAllUserFromRoomDatabase().collectAsState(initial = null)
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Log.i("hasd", "${userFromDB1.value?.email}")
         Text(
             text = stringResource(R.string.account_settings),
             modifier = Modifier.padding(10.dp),
@@ -87,7 +85,7 @@ fun BottomBarProfileActivity(navController: NavController, userViewModel: UserVi
 
                 SimilarButton(navController = navController, text = stringResource(R.string.your_orders), navigateTo = ScreenController.Order.route, icon = Icons.Filled.EuroSymbol)
                 SimilarButton(navController = navController, text = stringResource(R.string.your_offers), navigateTo = ScreenController.Offer.route, icon = Icons.Filled.LocalOffer)
-                SimilarButton(navController = navController, text = stringResource(R.string.send_feedbeck), navigateTo = ScreenController.Feedback.route, icon = Icons.Filled.Info)
+                SimilarButton(navController = navController, text = stringResource(R.string.send_feedback), navigateTo = ScreenController.Feedback.route, icon = Icons.Filled.Info)
                 SimilarButton(navController = navController, text = stringResource(R.string.reset_password), navigateTo = ScreenController.UpdatePassword.route, icon = Icons.Filled.LockReset)
 
                 logoutButton(userFromDB = userFromDB1, navController = navController, userViewModel= userViewModel,cartViewModel = cartViewModel)

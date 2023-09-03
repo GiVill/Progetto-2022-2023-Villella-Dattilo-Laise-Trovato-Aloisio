@@ -29,10 +29,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.vintedandroid.R
 import com.example.vintedandroid.view.config.createPersonalizedTextfield
 import com.example.vintedandroid.view.config.createPersonalizedTextfieldPassword
 import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
@@ -83,10 +85,10 @@ fun RegistrationActivity(navController: NavHostController, application: Context,
                 .verticalScroll(state = rememberScrollState())
         ) {
             if (loginUnsuccessful.value) {
-                Log.i("LoginScreen:class", "Login was unsuccessful!")
+                Log.i("RegistrationActivity:class", "Registration was unsuccessful!")
                 passwordField = remember { mutableStateOf(TextFieldValue()) }
                 Text(
-                    text = "Login failed. Please try again.",
+                    text = stringResource(R.string.registration_failed),
                     modifier = Modifier.padding(16.dp),
                     color = Color.Red,
                 )
@@ -128,14 +130,14 @@ fun RegistrationActivity(navController: NavHostController, application: Context,
                 },
                 modifier = Modifier.padding(8.dp),
                 enabled = buttonEnabled
-            ) { Text("Register") }
+            ) { Text(stringResource(R.string.register_new_account)) }
 
             Button(
                 onClick = { //navController.popBackStack();
                     navController.navigate(ScreenController.Login.route) },
                 modifier = Modifier.padding(8.dp)
             ) {
-                Text("Already have an account? Go to Login page")
+                Text(stringResource(R.string.already_account_go_to_login))
             }
         }
     }

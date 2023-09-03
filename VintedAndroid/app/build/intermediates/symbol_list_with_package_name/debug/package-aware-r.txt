@@ -1833,6 +1833,7 @@ string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
 string account_settings
 string add_cart
+string already_account_go_to_login
 string androidx_startup
 string app_name
 string appbar_scrolling_view_behavior
@@ -1842,6 +1843,7 @@ string bottom_sheet_collapse_description
 string bottom_sheet_dismiss_description
 string bottom_sheet_drag_handle_description
 string bottom_sheet_expand_description
+string change_password
 string character_counter_content_description
 string character_counter_overflowed_content_description
 string character_counter_pattern
@@ -1851,6 +1853,7 @@ string close_drawer
 string close_sheet
 string collapsed
 string connect_to_internet
+string contact
 string contact_vendor
 string date_input_headline
 string date_input_headline_description
@@ -1891,6 +1894,8 @@ string discard
 string do_offer
 string dropdown_menu
 string email
+string enter_new_password
+string enter_your_password
 string error_icon_content_description
 string expanded
 string exposed_dropdown_menu_content_description
@@ -1907,6 +1912,7 @@ string login
 string login_failed
 string logout
 string message
+string missmatch_password
 string mtrl_badge_numberless_content_description
 string mtrl_chip_close_icon_content_description
 string mtrl_exceed_max_badge_number_suffix
@@ -1950,6 +1956,7 @@ string not_selected
 string off
 string offer
 string on
+string password
 string password_toggle_content_description
 string path_password_eye
 string path_password_eye_mask_strike_through
@@ -1959,14 +1966,17 @@ string previous_page
 string price
 string range_end
 string range_start
+string register_new_account
+string registration_failed
 string reset_password
 string retry_connection
 string search_bar_search
 string search_menu_title
 string see_your_profile
 string selected
-string send_feedbeck
+string send_feedback
 string send_message
+string send_new_password
 string sign_up
 string snackbar_dismiss
 string status_bar_notification_info_overflow
@@ -1988,6 +1998,8 @@ string time_picker_period_toggle_description
 string time_picker_pm
 string tooltip_long_press_label
 string tooltip_pane_description
+string type_password_again
+string type_your
 string vinted
 string your_offers
 string your_orders

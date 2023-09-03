@@ -14,7 +14,7 @@
     <string name="go_to_login_page">Go To Login Page</string>
     <string name="your_orders">Your Orders</string>
     <string name="your_offers">Your Offers</string>
-    <string name="send_feedbeck">Send Feedbeck</string>
+    <string name="send_feedback">Send Feedback</string>
     <string name="reset_password">Reset Password</string>
     <string name="logout">Logout</string>
     <string name="login_failed">Login failed. Please try again.</string>
@@ -32,4 +32,16 @@
     <string name="send_message">Send Message</string>
     <string name="vinted">Vinted</string>
     <string name="message">Message</string>
+    <string name="change_password">Change Password</string>
+    <string name="send_new_password">Send New Password</string>
+    <string name="missmatch_password">Password doesn\'t match. Please try again.</string>
+    <string name="enter_new_password">Enter New Password</string>
+    <string name="type_password_again">Type Password Again</string>
+    <string name="register_new_account">Register New Account</string>
+    <string name="already_account_go_to_login">Already have an account? Go to Login page</string>
+    <string name="registration_failed" >Registration failed. Please try again.</string>
+    <string name="password">Password</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="type_your">Type your</string>
+    <string name="contact">Contact</string>
 </resources>

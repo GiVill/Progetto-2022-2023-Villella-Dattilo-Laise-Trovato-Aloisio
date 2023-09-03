@@ -23,7 +23,7 @@ class CartViewModel(application: Application) : ViewModel() {
     fun removeItemsInCartFromDatabase(item: CartDto){
         CoroutineScope(Dispatchers.IO).launch {
             AppDatabase.getInstance(context = application.applicationContext).cartDao().delete(item)
-            Log.i("CartScreen::class", "Item : $item removed from the cart")
+            Log.i("CartViewModel::class", "Item : $item removed from the cart")
         }
     }
 

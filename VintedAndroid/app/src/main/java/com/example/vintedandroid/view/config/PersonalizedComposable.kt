@@ -1,6 +1,6 @@
 package com.example.vintedandroid.view.config
 
-import android.graphics.drawable.Icon
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,7 +11,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
@@ -25,40 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-/*
-@Composable
-fun createPersonalizedTextfield(textField: MutableState<TextFieldValue>, name: String, icon: ImageVector){
-
-    //L'ImageVector dovrebbe essere qualcosa del tipo --> Icons.Default.Email
-
-    val isFieldSelected = remember { mutableStateOf(false) }
-
-    TextField(
-        value = textField.value,
-        onValueChange = { input ->
-            textField.value = input
-        },
-        leadingIcon = { Icon(imageVector = icon, contentDescription = "$name Icon") },
-        trailingIcon = {
-            if(isFieldSelected.value){
-                IconButton(
-                    onClick ={textField.value = TextFieldValue("") }
-                ) { Icon( imageVector = Icons.Default.Close, contentDescription = "$name Icon") } } },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp)
-            .onFocusChanged { focusState ->
-                isFieldSelected.value = focusState.isFocused
-            },
-        label = { Text(text = "$name") },
-        placeholder = { Text(text = "Type your $name") }
-    )
-}
-*/
+import coil.compose.AsyncImage
+import com.example.vintedandroid.R
 
 val emailRegex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9]+\\.)+[A-Za-z]{2,4}\$".toRegex()
 val nameRegex = "^[A-Za-z\\s]{2,}\$".toRegex()
@@ -97,19 +69,19 @@ fun createPersonalizedTextfield(
             .padding(10.dp)
             .border(
                 width = 1.dp,
-                color = if (!isFieldSelected.value && textField.value.text.isNotEmpty() && !regexPattern.matches(textField.value.text)) Color.Red else Color.Transparent,
+                color = if (!isFieldSelected.value && textField.value.text.isNotEmpty() && !regexPattern.matches(
+                        textField.value.text
+                    )
+                ) Color.Red else Color.Transparent,
                 shape = RoundedCornerShape(4.dp)
             )
             .onFocusChanged { focusState ->
                 isFieldSelected.value = focusState.isFocused
             },
         label = { Text(text = "$name") },
-        placeholder = { Text(text = "Type your $name") }
+        placeholder = { Text(text = stringResource(R.string.type_your)+" $name") }
     )
 }
-
-
-
 
 @Composable
 fun createPersonalizedTextfieldPassword(textField: MutableState<TextFieldValue>){
@@ -125,8 +97,8 @@ fun createPersonalizedTextfieldPassword(textField: MutableState<TextFieldValue>)
             textField.value = newText
             isErrorState.value = !passwordRegex.matches(newText.text)
         },
-        label = { Text(text = "Password") },
-        placeholder = { Text(text = "Enter your password") },
+        label = { Text(text = stringResource(R.string.password)) },
+        placeholder = { Text(text = stringResource(R.string.enter_your_password)) },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Outlined.Lock,
@@ -146,10 +118,24 @@ fun createPersonalizedTextfieldPassword(textField: MutableState<TextFieldValue>)
             .fillMaxWidth()
             .padding(10.dp)
             .border(
-            width = 1.dp,
-            color = if (isErrorState.value) Color.Red else Color.Transparent,
-            shape = RoundedCornerShape(4.dp)
-        )
+                width = 1.dp,
+                color = if (isErrorState.value) Color.Red else Color.Transparent,
+                shape = RoundedCornerShape(4.dp)
+            )
     )
 }
 
+
+const val fixedUrlForImage = "https://192.168.1.90:8010/vintedProject-api/v1/images/"
+const val logTag = "ImageConfiguration::class"
+
+@Composable
+fun PersonalizedAsyncImage(imageName: String?, subject: String) {
+
+    Log.i(logTag, "url: $fixedUrlForImage$imageName")
+
+    AsyncImage(
+        model = "$fixedUrlForImage$imageName",
+        contentDescription = "Async Image Of The $subject"
+    )
+}
