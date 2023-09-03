@@ -17,6 +17,7 @@ public interface BuyingOfferDao extends JpaRepository<BuyingOffer,Long> {
 
     List<BuyingOffer> findAllByUserId(Long userId);
 
+
     //trova le offerte maggiori uguali a quella passata
     //Return a list of ALL Offers with a price greater than AND equal to an amount
     List<BuyingOffer> findAllByPriceGreaterThanEqual(float price);

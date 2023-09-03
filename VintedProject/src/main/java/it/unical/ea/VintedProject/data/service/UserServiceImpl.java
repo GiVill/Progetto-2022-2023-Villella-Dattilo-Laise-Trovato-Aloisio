@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
             User user = loggedUserMethod.getEntireLoggedUser();
 
             keycloakTokenClient.updateUserPassword(newPassword);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setPassword(passwordEncoder.encode(newPassword));
             userDao.save(user);
             return true;
         }catch (Exception e){

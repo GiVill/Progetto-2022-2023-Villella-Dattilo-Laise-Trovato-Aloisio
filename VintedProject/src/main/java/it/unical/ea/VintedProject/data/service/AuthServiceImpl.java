@@ -43,8 +43,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public TokenDto doLogin(LoginUserDto data) {
         Optional<User> u = Optional.ofNullable(userDao.findUserByEmail(data.getEmail()).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("credentials.not.valid"))));
-        // NON FARE ALCUN sout DEGLI UTENTI! Data la pesantezza verrà dato un errore col toString() e col  java.lang.StackOverflowError
-        // System.out.println(u);
+
         if (u.isPresent() && passwordEncoder.matches(data.getPassword(), u.get().getPassword())){
             TokenDto tokenResponse =keycloakTokenClient.getToken(data.getEmail(), data.getPassword());
             UserDto userDto = modelMapper.map(u.get(),UserDto.class);

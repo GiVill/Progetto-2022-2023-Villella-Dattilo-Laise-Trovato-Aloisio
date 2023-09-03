@@ -93,6 +93,9 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     @Override
     public void acceptOffer(BuyingOfferDto buyingOfferDto) {
         Optional<BasicInsertion> insertion = insertionDao.findById(buyingOfferDto.getInsertionId());
+        for (BuyingOffer offer:insertion.get().getBuyingOffers()) {
+            buyingOfferDao.deleteById(offer.getId());
+        }
         if(loggedUserMethod.getLoggedUserId().equals(insertion.get().getUser().getId())){
             BuyingOffer buyingOffer = modelMapper.map(buyingOfferDto,BuyingOffer.class);
             buyingOfferDao.save(buyingOffer);
