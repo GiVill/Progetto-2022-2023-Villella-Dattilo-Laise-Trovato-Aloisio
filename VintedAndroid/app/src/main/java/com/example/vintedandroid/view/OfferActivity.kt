@@ -2,33 +2,35 @@ package com.example.vintedandroid.view
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.vintedandroid.swagger.client.models.BuyingOfferDto
 import com.example.vintedandroid.viewmodel.OfferViewModel
 
 
 @Composable
 fun OfferActivity(offerViewModel: OfferViewModel) {
 
-    var offers = null//offerViewModel.getOffer()
+    var offers = offerViewModel.getOffers()
 
-    Box(modifier = Modifier.fillMaxSize()){
-
-        if(offers != null){
-            ListOffers()
-        }else{
-            NoOffers()
+    LazyColumn{
+        items(offers){item ->
+            ListOffers(item)
         }
-
     }
 }
 
 @Composable
-fun ListOffers() {
+fun ListOffers(item : BuyingOfferDto) {
     Card(modifier = Modifier.fillMaxSize()){
-        Text("Informazioni delle offerte")
+        Text("Price "+ item.price)
+        Text("Insertion "+ item.insertionId)
+        Text("Status "+ item.status)
     }
 }
 

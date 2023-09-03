@@ -1,8 +1,11 @@
 package com.example.vintedandroid.viewmodel
 
 import android.app.Application
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.vintedandroid.model.AppDatabase
+import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.swagger.client.apis.ChatMessageApi
 import com.example.vintedandroid.swagger.client.apis.OfferApi
@@ -15,11 +18,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class ProductViewModel(application: Application) : ViewModel() {
+class ProductViewModel(application: Context) : ViewModel() {
     private val application = application
 
-    fun makeOffer(buyingOfferDto: BuyingOfferDto){
-        OfferApi().userAddBuyingOffer(buyingOfferDto)
+    fun makeOffer(basicInsertionDto: BasicInsertionDto){
+        val buyingOffer = convertBasicInsertionDtoToBuyingOfferDto(basicInsertionDto)
+        Log.i("Offer:",buyingOffer.toString())
+        OfferApi().userAddBuyingOffer(buyingOffer!!)
     }
 
     fun sendMessageToVendor(searchedProduct: BasicInsertionDto, message: String){
@@ -34,13 +39,15 @@ class ProductViewModel(application: Application) : ViewModel() {
     fun convertBasicInsertionDtoToBuyingOfferDto(basicInsertionDto : BasicInsertionDto): BuyingOfferDto?{
 
         return basicInsertionDto.id?.let {
-            BuyingOfferDto(
-                id = null,
-                price = basicInsertionDto.price,
-                status = null,
-                insertionId = it,
-                userId = basicInsertionDto.userId
-            )
+            LoggedUserDetails.getInstance().getCurrentUser().id?.let { it1 ->
+                BuyingOfferDto(
+                    id = null,
+                    price = basicInsertionDto.price,
+                    status = null,
+                    insertionId = it,
+                    userId = it1
+                )
+            }
         }
     }
 

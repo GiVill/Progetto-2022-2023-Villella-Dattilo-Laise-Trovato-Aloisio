@@ -8,7 +8,6 @@ import com.example.vintedandroid.model.dto.UserDatabaseDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
 class TokenViewModel(application: Context) : ViewModel() {
 
     private val application = application

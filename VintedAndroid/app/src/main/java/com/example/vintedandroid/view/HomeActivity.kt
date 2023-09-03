@@ -122,7 +122,7 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
                 //horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                PersonalizedAsyncImage(imageName = "file_bf52168a-261d-469e-a1a4-55ba0da6fdac.jpg", subject = "HomeActivity::class")
+                PersonalizedAsyncImage(imageName = "file_9f90dd54-a53e-4683-82dc-ab9b0172b613.jpg", subject = "HomeActivity::class")
 
                 Divider()
 

@@ -11,6 +11,8 @@
  */
 package com.example.vintedandroid.swagger.client.apis
 
+import android.util.Log
+import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.swagger.client.infrastructure.ApiClient
 import com.example.vintedandroid.swagger.client.infrastructure.ClientError
 import com.example.vintedandroid.swagger.client.infrastructure.ClientException
@@ -231,6 +233,10 @@ class OfferApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
                 RequestMethod.POST,
                 "/v1/offers"
         )
+        val mutableHeaders = localVariableConfig.headers.toMutableMap()
+        mutableHeaders["Authorization"] = "Bearer ${LoggedUserDetails.getInstance().getCurrentUser().accessToken}"
+        LoggedUserDetails.getInstance().getCurrentUser().accessToken?.let { Log.i("TOKEN : ", it) }
+        Log.i("DIO: ",mutableHeaders.toString())
         val response = request<BuyingOfferDto>(
                 localVariableConfig, localVariableBody
         )

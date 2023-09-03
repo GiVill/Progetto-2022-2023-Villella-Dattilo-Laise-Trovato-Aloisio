@@ -8,10 +8,12 @@ import com.example.vintedandroid.swagger.client.models.LoginUserDto
 import com.example.vintedandroid.swagger.client.models.NewUserDto
 import com.example.vintedandroid.swagger.client.models.TokenDto
 import com.example.vintedandroid.model.AppDatabase
+import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.model.dto.UserDatabaseDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 class LoginRegistrationViewModel(application: Application) : ViewModel() {
 
@@ -25,12 +27,14 @@ class LoginRegistrationViewModel(application: Application) : ViewModel() {
 
     fun login(email: String, password: String): Boolean {
         val loginUserDto = convertLoginUserDTO(email, password)     //Convert Login in userDto
-        val token = AuthApi().login(loginUserDto)                   //Make the API call
-        if(token.accessToken != null){                             //Check Token
+        val tokenResponse = AuthApi().login(loginUserDto)                   //Make the API call
+        if(tokenResponse.accessToken != null){                             //Check Token
             Log.i("LoginRegistrationViewModel::class", "Login successful")
-            val loggedUser = convertUserDTOtoUserDB(token)          //Take the User from Token
+            val loggedUser = convertUserDTOtoUserDB(tokenResponse)          //Take the User from Token
             if (loggedUser != null) {                               //Check User
                 insertLoggedUserInDatabase(loggedUser)              //Insert User in Room Database
+                LoggedUserDetails.getInstance().setCurrentUser(loggedUser)
+
                 return true
             }
         }

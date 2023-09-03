@@ -4,7 +4,7 @@
             "outputFile": "com.example.vintedandroid.app-mergeDebugResources-66:/values-tr/values-tr.xml",
             "map": [
                 {
-                    "source": "/home/fra/.gradle/caches/transforms-3/0a897c2f5b4a9b6e1a63e6a72c5c08c3/transformed/ui-1.4.3/res/values-tr/values-tr.xml",
+                    "source": "C:\\Users\\ville\\.gradle\\caches\\transforms-3\\0a897c2f5b4a9b6e1a63e6a72c5c08c3\\transformed\\ui-1.4.3\\res\\values-tr\\values-tr.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,24 +21,7 @@
                     }
                 },
                 {
-                    "source": "/home/fra/.gradle/caches/transforms-3/740b13c6aacf986a4a20be38916f32a7/transformed/core-1.9.0/res/values-tr/values-tr.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "84",
-                        "startColumns": "4",
-                        "startOffsets": "8375",
-                        "endColumns": "100",
-                        "endOffsets": "8471"
-                    }
-                },
-                {
-                    "source": "/home/fra/.gradle/caches/transforms-3/2e32b04a44a594e7a9e92cf52e5d96b0/transformed/material3-1.1.0/res/values-tr/values-tr.xml",
+                    "source": "C:\\Users\\ville\\.gradle\\caches\\transforms-3\\2e32b04a44a594e7a9e92cf52e5d96b0\\transformed\\material3-1.1.0\\res\\values-tr\\values-tr.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -55,7 +38,24 @@
                     }
                 },
                 {
-                    "source": "/home/fra/.gradle/caches/transforms-3/d3e32e1bb9ddfdea873fc2458b4867ad/transformed/appcompat-1.6.1/res/values-tr/values-tr.xml",
+                    "source": "C:\\Users\\ville\\.gradle\\caches\\transforms-3\\740b13c6aacf986a4a20be38916f32a7\\transformed\\core-1.9.0\\res\\values-tr\\values-tr.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "84",
+                        "startColumns": "4",
+                        "startOffsets": "8375",
+                        "endColumns": "100",
+                        "endOffsets": "8471"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\ville\\.gradle\\caches\\transforms-3\\d3e32e1bb9ddfdea873fc2458b4867ad\\transformed\\appcompat-1.6.1\\res\\values-tr\\values-tr.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

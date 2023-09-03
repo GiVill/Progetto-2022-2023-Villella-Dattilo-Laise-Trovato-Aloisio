@@ -57,7 +57,7 @@ fun ProductActivity(searchedProduct: MutableState<BasicInsertionDto>, itemsInCar
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            PersonalizedAsyncImage(imageName = "file_bf52168a-261d-469e-a1a4-55ba0da6fdac.jpg", subject = "HomeActivity::class")
+            PersonalizedAsyncImage(imageName = "file_298cb090-7684-4704-bcf0-4862a209dbb8.png", subject = "HomeActivity::class")
 
             searchedProductDisplayInfo(searchedProduct = searchedProduct)
             Button(
@@ -81,7 +81,7 @@ fun ProductActivity(searchedProduct: MutableState<BasicInsertionDto>, itemsInCar
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ){
-                Text(text = stringResource(R.string.offer)+"(Da Testare)")
+                Text(text = stringResource(R.string.offer))
             }
             if (showMakeOfferDialog) {
                 makeOfferActivity(onDismiss = { showMakeOfferDialog = false }, searchedProduct.value, productViewModel, application)
@@ -140,8 +140,7 @@ fun makeOfferActivity(onDismiss: () -> Unit, basicInsertionDto: BasicInsertionDt
                     }
                     Button(
                         onClick = {
-                        val buyingOffer = productViewModel.convertBasicInsertionDtoToBuyingOfferDto(basicInsertionDto)
-                        productViewModel.makeOffer(buyingOffer!!)
+                        productViewModel.makeOffer(basicInsertionDto)
                         Toast.makeText(application.applicationContext, "Offert Sended", Toast.LENGTH_SHORT).show()
                         onDismiss()
 

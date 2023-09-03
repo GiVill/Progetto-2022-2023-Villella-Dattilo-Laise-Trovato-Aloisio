@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
                                     loginRegistrationViewModel = LoginRegistrationViewModel(application),
                                     updatePasswordViewModel = UpdatePasswordViewModel(application),
                                     offerViewModel = OfferViewModel(application),
-                                    productViewModel = ProductViewModel(application),
+                                    productViewModel = ProductViewModel(application,),
                                     chatViewModel = ChatViewModel(application, userViewModel = UserViewModel(application = application))
                                 )
                             }
