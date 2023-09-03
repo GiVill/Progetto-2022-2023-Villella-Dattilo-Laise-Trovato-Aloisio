@@ -12,7 +12,7 @@ class OfferViewModel(application: Application) : ViewModel() {
 
     fun getOffers(): Array<BuyingOfferDto>{
         val offers = OfferApi().getAllByUser()
-        Log.i("OfferViewModel::class", "getOffers: $ offers")
+        Log.i("OfferViewModel::class", "getOffers: $offers")
         return offers
     }
 }

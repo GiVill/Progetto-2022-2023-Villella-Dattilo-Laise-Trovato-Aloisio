@@ -160,6 +160,8 @@ class OfferApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
                 RequestMethod.GET,
                 "/v1/offers/user"
         )
+        ConfigureAuthorizationBearer(localVariableConfig)
+
         val response = request<kotlin.Array<BuyingOfferDto>>(
                 localVariableConfig
         )
@@ -233,10 +235,9 @@ class OfferApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
                 RequestMethod.POST,
                 "/v1/offers"
         )
-        val mutableHeaders = localVariableConfig.headers.toMutableMap()
-        mutableHeaders["Authorization"] = "Bearer ${LoggedUserDetails.getInstance().getCurrentUser().accessToken}"
-        LoggedUserDetails.getInstance().getCurrentUser().accessToken?.let { Log.i("TOKEN : ", it) }
-        Log.i("DIO: ",mutableHeaders.toString())
+
+        ConfigureAuthorizationBearer(localVariableConfig)
+
         val response = request<BuyingOfferDto>(
                 localVariableConfig, localVariableBody
         )
@@ -249,6 +250,28 @@ class OfferApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
             ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
         }
     }
+    /*
+    @Suppress("UNCHECKED_CAST")
+    fun userAddBuyingOffer(body: BuyingOfferDto): BuyingOfferDto {
+        val localVariableBody: kotlin.Any? = body
+        val localVariableConfig = RequestConfig(
+                RequestMethod.POST,
+                "/v1/offers"
+        )
+        val response = request<BuyingOfferDto>(
+                localVariableConfig, localVariableBody
+        )
+
+        return when (response.responseType) {
+            ResponseType.Success -> (response as Success<*>).data as BuyingOfferDto
+            ResponseType.Informational -> TODO()
+            ResponseType.Redirection -> TODO()
+            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
+        }
+    }
+     */
+
     /**
      * 
      * 

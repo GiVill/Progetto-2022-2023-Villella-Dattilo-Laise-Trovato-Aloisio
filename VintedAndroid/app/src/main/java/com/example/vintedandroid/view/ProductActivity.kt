@@ -57,7 +57,7 @@ fun ProductActivity(searchedProduct: MutableState<BasicInsertionDto>, itemsInCar
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            PersonalizedAsyncImage(imageName = "file_298cb090-7684-4704-bcf0-4862a209dbb8.png", subject = "HomeActivity::class")
+            //PersonalizedAsyncImage(imageName = "file_298cb090-7684-4704-bcf0-4862a209dbb8.png", subject = "HomeActivity::class")
 
             searchedProductDisplayInfo(searchedProduct = searchedProduct)
             Button(

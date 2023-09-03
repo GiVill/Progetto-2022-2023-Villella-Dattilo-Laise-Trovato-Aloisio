@@ -88,14 +88,6 @@ private fun userDetail(userFromDB: State<UserDatabaseDto?>){
 
             PersonalizedAsyncImage(imageName = userFromDB.value?.imageName.toString(), subject = "ProfileActivity::class")
 
-
-            /*
-            ImageConfiguration(
-                imageName = userFromDB.value?.imageName.toString(),
-                imageScale = ContentScale.Fit
-            )
-
-             */
         } else {
 
             Icon(
