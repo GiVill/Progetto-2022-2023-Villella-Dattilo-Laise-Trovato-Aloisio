@@ -1,12 +1,16 @@
 package com.example.vintedandroid.view
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
-import androidx.compose.material3.Card
+import androidx.compose.material.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.vintedandroid.swagger.client.models.BuyingOfferDto
@@ -20,17 +24,24 @@ fun OfferActivity(offerViewModel: OfferViewModel) {
 
     LazyColumn{
         items(offers){item ->
-            ListOffers(item)
+            ListOffers(item,offerViewModel)
+            Divider()
         }
     }
 }
 
 @Composable
-fun ListOffers(item : BuyingOfferDto) {
-    Card(modifier = Modifier.fillMaxSize()){
-        Text("Price "+ item.price)
-        Text("Insertion "+ item.insertionId)
-        Text("Status "+ item.status)
+fun ListOffers(item : BuyingOfferDto,offerViewModel: OfferViewModel) {
+    var insertion = offerViewModel.getInsertionByOffer(2)
+    Card(modifier = Modifier.fillMaxWidth()){
+        Column {
+            Text(insertion.title)
+            Row {
+                Text("Price "+ item.price)
+                Text("Status "+ item.status)
+            }
+
+        }
     }
 }
 
