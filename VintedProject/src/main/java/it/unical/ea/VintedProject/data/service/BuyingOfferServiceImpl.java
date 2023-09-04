@@ -12,6 +12,7 @@ import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BuyingOfferDto;
+import it.unical.ea.VintedProject.dto.enumeration.Status;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -94,7 +95,8 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     public void acceptOffer(BuyingOfferDto buyingOfferDto) {
         Optional<BasicInsertion> insertion = insertionDao.findById(buyingOfferDto.getInsertionId());
         for (BuyingOffer offer:insertion.get().getBuyingOffers()) {
-            buyingOfferDao.deleteById(offer.getId());
+            offer.setStatus(Status.REFUSED);
+            buyingOfferDao.save(offer);
         }
         if(loggedUserMethod.getLoggedUserId().equals(insertion.get().getUser().getId())){
             BuyingOffer buyingOffer = modelMapper.map(buyingOfferDto,BuyingOffer.class);
