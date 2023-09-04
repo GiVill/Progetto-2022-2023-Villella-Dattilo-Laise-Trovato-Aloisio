@@ -24,4 +24,6 @@ public class BuyingOfferDto {
     @NotNull
     private Long userId;
 
+    private boolean paid;
+
 }

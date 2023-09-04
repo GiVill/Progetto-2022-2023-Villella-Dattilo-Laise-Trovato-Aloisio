@@ -30,7 +30,7 @@ public class ChatServicesImpl implements ChatService {
     private final UserDao userDao;
     private final MessageLang messageLang;
     private final ModelMapper modelMapper;
-    private final BasicInsertionService basicInsertionService;
+
 
 
     @Override

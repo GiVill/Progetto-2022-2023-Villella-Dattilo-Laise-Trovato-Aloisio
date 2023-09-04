@@ -121,6 +121,16 @@ public class BuyingOfferController {
 
     }
 
+    @PutMapping("/offers/refuse")
+    public HttpStatus refuseOffers (@RequestBody @Valid BuyingOfferDto buyingOfferDto) {
+        // Check the Token, if not ok: THROW Exception.
+        // Delete a BuyingOffer using the ID.
+        // No Throw on Deletion
+        buyingOfferService.refuseOffer(buyingOfferDto);
+        return HttpStatus.OK;
+
+    }
+
 
     //TODO:PUT
 

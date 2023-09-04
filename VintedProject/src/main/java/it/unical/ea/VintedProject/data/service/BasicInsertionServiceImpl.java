@@ -32,11 +32,9 @@ import java.util.stream.Collectors;
 public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     private final BasicInsertionDao basicInsertionDao;
-    private final UserService userService;
-    private final UserDao userDao;
     private final OrderDao orderDao;
     private final ModelMapper modelMapper;
-    private final static int SIZE_FOR_PAGE = 5;
+    private final static int SIZE_FOR_PAGE = 10;
     private final MessageLang messageLang;
     private final LoggedUserMethod loggedUserMethod;
 
@@ -97,7 +95,7 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
 
     @Override
     public BasicInsertionDto getInsertionByIdAndIsPrivateEqualsFalse(Long id) {
-        BasicInsertion basicInsertion = basicInsertionDao.findByIdAndIsPrivateIsFalseAndAvailableIsTrue(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present",id)));
+        BasicInsertion basicInsertion = basicInsertionDao.findByIdAndIsPrivateIsFalse(id).orElseThrow(() -> new EntityNotFoundException(messageLang.getMessage("insertion.not.present",id)));
         return modelMapper.map(basicInsertion, BasicInsertionDto.class);
     }
 

@@ -27,7 +27,7 @@ public interface BasicInsertionDao extends JpaRepository<BasicInsertion,Long> {
 
     Page<BasicInsertion> findAllByIsPrivateIsFalseAndAvailableIsTrue(PageRequest aLong);
 
-    Optional<BasicInsertion> findByIdAndIsPrivateIsFalseAndAvailableIsTrue(Long aLong);
+    Optional<BasicInsertion> findByIdAndIsPrivateIsFalse(Long aLong);
 
     //Return a PAGEABLE of Insertion fetched by User id
     Page<BasicInsertion> findAllByUserId(Long uLong, Pageable pageable);

@@ -59,6 +59,13 @@ public class OrderController {
         return ResponseEntity.ok(orderService.save(orderDto));
     }
 
+    @PostMapping("/offer/orders")
+    public ResponseEntity<OrderDto> userAddOfferOrder(@RequestBody OrderDto orderDto, Long offerId) {
+        //Save an orderDto and return
+        loggedUserMethod.checkLoggedUser(orderDto.getUserId());
+        return ResponseEntity.ok(orderService.Offersave(orderDto, offerId));
+    }
+
     @DeleteMapping("/admin/orders/{orderId}")
     public ResponseEntity<Void> deleteOrderById(@PathVariable("orderId") Long orderId) {
         // Check the Token, if ok: delete an Order using the ID.

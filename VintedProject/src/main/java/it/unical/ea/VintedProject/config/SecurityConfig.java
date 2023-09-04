@@ -75,6 +75,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/v1/orders").permitAll()                                     //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.DELETE, "/v1/admin/orders/{orderId}").permitAll()                   //.hasRole(ADMIN)
                 .requestMatchers(HttpMethod.DELETE, "/v1/orders").permitAll()                                   //.hasAnyRole(USER,ADMIN)
+                .requestMatchers(HttpMethod.POST, "/v1/offer/orders").permitAll()                                   //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.GET, "/v1/orders/user/{page}").permitAll()                          //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.GET, "/v1/admin/orders/user/{userId}/{page}").permitAll()           //.hasRole(ADMIN)
                 //INSERTION
@@ -106,6 +107,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/v1/admin/offers/{offerId}").permitAll()                      //.hasRole(ADMIN)
                 .requestMatchers(HttpMethod.POST, "/v1/admin/offers").permitAll()                               //.hasRole(ADMIN)
                 .requestMatchers(HttpMethod.POST, "/v1/offers").permitAll()                                     //.hasAnyRole(USER,ADMIN)
+                .requestMatchers(HttpMethod.POST, "/v1/offers/accept").permitAll()                                     //.hasAnyRole(USER,ADMIN)
+                .requestMatchers(HttpMethod.POST, "/v1/offers/refuse").permitAll()                                     //.hasAnyRole(USER,ADMIN)
                 .requestMatchers(HttpMethod.DELETE, "/v1/admin/offers/{idOffer}").permitAll()                   //.hasRole(ADMIN)
                 .requestMatchers(HttpMethod.DELETE, "/v1/offers").permitAll()                                   //.hasAnyRole(USER,ADMIN)
                 //AUTH

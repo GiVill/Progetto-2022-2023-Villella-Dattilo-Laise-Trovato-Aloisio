@@ -26,4 +26,6 @@ public interface BuyingOfferService {
     List<BuyingOfferDto> getByInsertionId(Long insertionId);
 
     List<BuyingOfferDto> getAll();
+
+    void refuseOffer(BuyingOfferDto buyingOfferDto);
 }

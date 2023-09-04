@@ -3,12 +3,16 @@ import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
+import it.unical.ea.VintedProject.data.dao.BuyingOfferDao;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
+import it.unical.ea.VintedProject.data.entities.BuyingOffer;
 import it.unical.ea.VintedProject.data.entities.Order;
 import it.unical.ea.VintedProject.data.entities.User;
+import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
 import it.unical.ea.VintedProject.data.service.interfaces.OrderService;
+import it.unical.ea.VintedProject.dto.BuyingOfferDto;
 import it.unical.ea.VintedProject.dto.OrderDto;
 import it.unical.ea.VintedProject.dto.enumeration.Status;
 import jakarta.persistence.EntityNotFoundException;
@@ -38,11 +42,39 @@ public class OrderServiceImpl implements OrderService {
     private final ModelMapper modelMapper;
     private final MessageLang messageLang;
     private final LoggedUserMethod loggedUserMethod;
+    private final BuyingOfferService buyingOfferService;
     private final static int SIZE_FOR_PAGE = 5;
     //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
 
     @Override
     public OrderDto save(OrderDto orderDto) {
+
+        //TODO: DEVO FARE UNA SAVE PRIMA PERCHé MI SERVE L'ID DELL'ORDINE PER CREARE LE RELAZIONI CON INSERTION DOPO
+        Order order = orderDao.save(modelMapper.map(orderDto, Order.class));
+
+        for (Long id:orderDto.getInsertionIdList()) {
+            Optional<BasicInsertion> insertion = insertionDao.findById(id);
+            if(insertion.isPresent()){
+                insertion.get().setAvailable(false);
+                insertion.get().setOrder(order);
+                insertionDao.save(insertion.get());
+            }
+        }
+
+        order.setDate(LocalDate.now());
+        order.setStatus(Status.APPROVED);
+        Order o = orderDao.save(order);
+        return modelMapper.map(o, OrderDto.class);
+    }
+
+    @Override
+    public OrderDto Offersave(OrderDto orderDto, Long offerId) {
+        BuyingOfferDto offer = buyingOfferService.getOfferById(offerId);
+        if(offer == null){
+            throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present",offerId));
+        }
+        offer.setPaid(true);
+        buyingOfferService.save(offer);
 
         //TODO: DEVO FARE UNA SAVE PRIMA PERCHé MI SERVE L'ID DELL'ORDINE PER CREARE LE RELAZIONI CON INSERTION DOPO
         Order order = orderDao.save(modelMapper.map(orderDto, Order.class));

@@ -30,7 +30,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     private final ChatMessageDao chatMessageDao;
     private final UserDao userDao;
     private final MessageLang messageLang;
-    private final ModelMapper modelMapper;
     private final UserService userService;
     private final BasicInsertionService basicInsertionService;
 

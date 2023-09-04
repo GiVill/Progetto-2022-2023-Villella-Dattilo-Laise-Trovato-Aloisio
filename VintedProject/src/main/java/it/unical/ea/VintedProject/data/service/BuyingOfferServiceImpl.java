@@ -1,29 +1,24 @@
 package it.unical.ea.VintedProject.data.service;
 
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
-import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
 import it.unical.ea.VintedProject.data.dao.BuyingOfferDao;
-import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.BuyingOffer;
-import it.unical.ea.VintedProject.data.entities.User;
+import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
-import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.BuyingOfferDto;
 import it.unical.ea.VintedProject.dto.enumeration.Status;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.BadRequestException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -94,12 +89,28 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
     @Override
     public void acceptOffer(BuyingOfferDto buyingOfferDto) {
         Optional<BasicInsertion> insertion = insertionDao.findById(buyingOfferDto.getInsertionId());
+        insertion.get().setAvailable(false);
+        insertionDao.save(insertion.get());
         for (BuyingOffer offer:insertion.get().getBuyingOffers()) {
             offer.setStatus(Status.REFUSED);
             buyingOfferDao.save(offer);
         }
         if(loggedUserMethod.getLoggedUserId().equals(insertion.get().getUser().getId())){
             BuyingOffer buyingOffer = modelMapper.map(buyingOfferDto,BuyingOffer.class);
+            buyingOfferDao.save(buyingOffer);
+        }
+        else {
+            throw new BadRequestException(messageLang.getMessage("access.denied"));
+        }
+    }
+
+    @Override
+    public void refuseOffer(BuyingOfferDto buyingOfferDto) {
+        Optional<BasicInsertion> insertion = insertionDao.findById(buyingOfferDto.getInsertionId());
+
+        if(loggedUserMethod.getLoggedUserId().equals(insertion.get().getUser().getId())){
+            BuyingOffer buyingOffer = modelMapper.map(buyingOfferDto,BuyingOffer.class);
+            buyingOffer.setStatus(Status.REFUSED);
             buyingOfferDao.save(buyingOffer);
         }
         else {

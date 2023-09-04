@@ -11,6 +11,8 @@ public interface OrderService {
 
     OrderDto save(OrderDto orderDto);
 
+    OrderDto Offersave(OrderDto orderDto, Long offerId);
+
     void add(Order order);
 
     Order save(Order order);
