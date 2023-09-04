@@ -11,6 +11,8 @@ import {ErrorService} from "../../../../api/error.service";
 import {Configuration} from "../../../../configuration";
 
 
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,6 +23,8 @@ export class LoginComponent implements OnInit{
   isFlipped: boolean = false;
   passwordCheck: string = '';
   isRegistrationMode: boolean = false;
+
+
 
 
   login: LoginUserDto = {
@@ -113,8 +117,7 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
     this.checkUserCookie()
-
-  }
+      }
 
   checkUserCookie(): void {
     const userCookie = this.cookieService.get('username');
@@ -159,6 +162,7 @@ export class LoginComponent implements OnInit{
     }
     return true;
   }
+
 
 
 

@@ -41,8 +41,10 @@
             <p style="color: black">Stato offerta: {{offer.status}}</p>
             <p style="color: black">Prezzo offerto: {{offer.price}}€</p>
             <div class="offer-buttons">
-              <button class="btn" (click)="acceptOffer(i)" >ACCETTA</button>
-              <button class="btn" (click)="deleteOffer(i)">RIFIUTA</button>
+              <p *ngIf="offer.status === 'APPROVED'" STYLE="color: #007b0f"> OFFERTA ACCETTATA </p>
+              <button class="btn" *ngIf="offer.status !== 'APPROVED'" (click)="acceptOffer(i)">ACCETTA</button>
+              <button class="btn" *ngIf="offer.status !== 'APPROVED'" (click)="deleteOffer(i)">RIFIUTA</button>
+
             </div>
           </div>
         </div>

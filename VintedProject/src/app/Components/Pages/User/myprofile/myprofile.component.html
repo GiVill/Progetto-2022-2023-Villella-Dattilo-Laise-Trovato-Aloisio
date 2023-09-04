@@ -72,7 +72,7 @@
           <div style="margin: 15%"> </div>
           <div class="card-container">
             <div class="card-row" >
-              <ng-container *ngFor="let item of myOrder.content!; let i = index;">
+              <ng-container *ngFor="let item of myOrder?.content; let i = index;">
                 <app-order-card [order]="item" class="card-item"></app-order-card>
                 <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
               </ng-container>
@@ -116,19 +116,14 @@
         <div class="header">
           <h2 class="font">Le mie offerte:</h2>
         </div>
-        <div class="body-content" style="margin-top: 30px; display: flex"  *ngIf="isAnyInsertion">
+        <div class="body-content" style="margin-top: 30px; display: flex"  *ngIf="isAnyOffer">
           <div class="card-container">
             <div class="card-row" >
               <ng-container *ngFor="let item of myOffer; let i = index;">
                 <app-offer-card [offer]="item" class="card-item"></app-offer-card>
-                <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
               </ng-container>
             </div>
           </div>
-        </div>
-        <div style="display: flex;">
-          <button [disabled]="page == 0" class="button" (click)="subPageOffer()" > Indietro</button>
-          <button [disabled]="page == myInsertion.totalPages!" class="button" (click)="addPageOffer()" > Avanti</button>
         </div>
       </div>
     </div>
@@ -142,7 +137,7 @@
         <h2 class="font">I miei Ordini:</h2>
       </div>
       <div class="body-content" style="margin-top: 30px; display: flex"  *ngIf="isAnyOrder">
-        <ng-container *ngFor="let item of myOrder.content; let i = index;">
+        <ng-container *ngFor="let item of myOrder?.content; let i = index;">
         <app-order-card [order]="item" > </app-order-card>
         </ng-container>
       </div>

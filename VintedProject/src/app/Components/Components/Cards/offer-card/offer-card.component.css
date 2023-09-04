@@ -19,6 +19,7 @@ img {
   padding: 10px;
   border-radius: 10px;
   position: relative; /* Enable relative positioning */
+  color: black;
 }
 
 .content-container {

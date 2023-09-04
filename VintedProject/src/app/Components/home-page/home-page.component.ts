@@ -3,6 +3,7 @@ import {UserDto} from "../../model/userDto";
 import {PageBasicInsertionDto} from "../../model/pageBasicInsertionDto";
 import {InsertionService} from "../../api/insertion.service";
 import {UserService} from "../../api/user.service";
+import {CookieService} from "ngx-cookie-service";
 
 
 
@@ -19,7 +20,8 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     private insertionService: InsertionService,
-    private userService: UserService
+    private userService: UserService,
+    private cookieService: CookieService
   ) {}
 
   ngOnInit(): void {

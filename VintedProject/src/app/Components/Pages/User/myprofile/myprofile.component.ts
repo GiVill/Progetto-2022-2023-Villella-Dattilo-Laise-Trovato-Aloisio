@@ -23,8 +23,8 @@ import {ImagesUserBody} from "../../../../model/imagesUserBody";
 export class MyprofileComponent implements OnInit{
   user: UserDto | undefined;
   myInsertion!: PageBasicInsertionDto;
-  myOrder!: PageOrderDto;
-  myOffer!:Array<BuyingOfferDto>;
+  myOrder?: PageOrderDto;
+  myOffer?:Array<BuyingOfferDto>;
   page = 0;
   isAnyInsertion = false;
   isAnyOrder = false;
@@ -34,7 +34,7 @@ export class MyprofileComponent implements OnInit{
   InsertionModal=false
   OfferModal = false
   OrderModal = false
-  private image: ImagesUserBody | undefined;
+  private img: File | undefined
 
 
 
@@ -73,7 +73,6 @@ export class MyprofileComponent implements OnInit{
             this.myInsertion = insertionData;
             this.myOffer = offerData;
             this.myOrder = orderData ;
-            console.log("ordine" + orderData.content)
 
             if (!this.myInsertion?.empty) {
               this.isAnyInsertion = true;
@@ -94,30 +93,6 @@ export class MyprofileComponent implements OnInit{
       }
     );
   }
-
-  updateOffer(){
-      const offerObservable = this.offerService.getAllByUser();
-    forkJoin([
-      offerObservable,
-    ]).subscribe(([offerData]) => {
-        this.myOffer = offerData;
-
-        if (this.myInsertion?.empty) {
-            this.isAnyInsertion = true;
-        }
-
-        if (this.myOrder?.empty) {
-            this.isAnyOrder = true;
-        }
-
-        console.log('All data retrieved:', this.myInsertion, this.myOffer, this.myOrder);
-    }, (error) => {
-        console.log('An error occurred:', error);
-    });
-  }
-
-
-
 
     getUserOrders(): void {
         this.orderService.getUserOrders(this.page).subscribe(
@@ -145,10 +120,10 @@ export class MyprofileComponent implements OnInit{
     );
   }
   getUserOffer(): void {
-    this.offerService.getAllByUserId(this.page).subscribe(
+    console.log(this.page)
+    this.offerService.getAllByUser().subscribe(
       (data: Array<BuyingOfferDto>) => {
           this.myOffer = data;
-
       },
       (error) => {
         console.log('Si è verificato un errore durante il recupero delle offerte dell\'utente:', error);
@@ -213,7 +188,7 @@ export class MyprofileComponent implements OnInit{
 
   subPageOffer(){
     this.page-=1;
-    this.getUserInsertion()
+    this.getUserOffer()
   }
 
   addPageOrder() {
@@ -223,7 +198,7 @@ export class MyprofileComponent implements OnInit{
 
   subPageOrder(){
     this.page-=1;
-    this.getUserInsertion()
+    this.getUserOrders()
   }
 
   caricaFoto(event: any) {
@@ -231,19 +206,20 @@ export class MyprofileComponent implements OnInit{
     const files = fileInput.files;
 
     if (files && files.length > 0) {
-      this.image = { img: files[0] };
+      this.img = files[0]
+
       this.updateImage();
     }
   }
 
   updateImage() {
-    this.imageService.insertUserImage(this.image!).subscribe(
+
+    this.imageService.insertUserImage(this.img!).subscribe(
       (response) => {
        console.log(response)
-
       },
       (error) => {
-        console.log('Si è verificato un errore durante il recupero delle offerte dell\'utente:', error);
+        console.log('Si è verificato un errore durante ilcaricamento dell immagine:', error);
       }
     );
   }

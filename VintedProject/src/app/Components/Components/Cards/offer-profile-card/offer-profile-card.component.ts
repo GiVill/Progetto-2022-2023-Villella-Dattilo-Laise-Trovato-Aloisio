@@ -20,7 +20,7 @@ import {forkJoin} from "rxjs";
 })
 export class OfferProfileCardComponent implements OnInit{
   user: UserDto | undefined;
-  @Input() insertion!: BasicInsertionDto; // Receive the BasicInsertionDto input
+  @Input() insertion!: BasicInsertionDto;
   @Input() offer?: BuyingOfferDto;
   isHovered = false;
   accepted: boolean = false;

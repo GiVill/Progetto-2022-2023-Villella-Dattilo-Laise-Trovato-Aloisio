@@ -50,7 +50,7 @@ export class OfferCardComponent implements OnInit{
   deleteOffer() {
     this.offerService.userDeleteOffer(this.offer!).subscribe((response) => {
       this.snackBar.open("Offerta eliminata", )
-      this.myProfile.updateOffer();
+      this.myProfile.getUserOffer();
       },
       (error) => {
         this.snackBar.open("Errore nell'eliminazione dell offerta")
@@ -63,7 +63,7 @@ export class OfferCardComponent implements OnInit{
   }
 
   createOrder() {
-    if (this.product?.id != undefined) {
+    if (this.product?.id != undefined && !this.accepted) {
       const order: OrderDto = {
         id: 0,
         total: this.offer?.price,

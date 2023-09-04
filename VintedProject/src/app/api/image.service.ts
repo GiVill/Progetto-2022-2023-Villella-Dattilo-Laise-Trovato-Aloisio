@@ -268,10 +268,10 @@ export class ImageService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public insertUserImage(body: ImagesUserBody, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public insertUserImage(body: ImagesUserBody, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public insertUserImage(body: ImagesUserBody, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public insertUserImage(body: ImagesUserBody, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public insertUserImage(body: File, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public insertUserImage(body: File, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public insertUserImage(body: File, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public insertUserImage(body: File, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling insertUserImage.');
