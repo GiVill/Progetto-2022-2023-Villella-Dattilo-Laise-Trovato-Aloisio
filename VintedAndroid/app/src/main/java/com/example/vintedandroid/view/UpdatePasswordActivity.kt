@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.Text
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -75,7 +75,7 @@ fun UpdatePasswordActivity(updatePasswordViewModel: UpdatePasswordViewModel) {
             modifier = Modifier
                 .align(CenterHorizontally)
                 .padding(8.dp)) {
-                androidx.compose.material.Text(text = stringResource(R.string.send_new_password)+" (Da testare)")
+                Text(text = stringResource(R.string.send_new_password)+" (Da testare)")
             }
         }
     }

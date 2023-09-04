@@ -16,26 +16,13 @@ data class UserDatabaseDto (
     @ColumnInfo(name="email")val email: kotlin.String? = null,
     @ColumnInfo(name="password")val password: kotlin.String? = null,
     @ColumnInfo(name="image_name")val imageName: kotlin.String? = null,
-    //@ColumnInfo(name="birthDate")val birthDate: kotlin.String? = null,
-    //@ColumnInfo(name="gender")val gender: UserDto.Gender? = null,
     @ColumnInfo(name="address_street")val addressStreet: kotlin.String? = null,
     @ColumnInfo(name="address_number")val addressNumber: kotlin.Int? = null,
     @ColumnInfo(name="address_city")val addressCity: kotlin.String? = null,
     @ColumnInfo(name="address_cap")val addressCap: kotlin.Int? = null,
     @ColumnInfo(name="address_state")val addressState: kotlin.String? = null,
     @ColumnInfo(name="address_region")val addressRegion: kotlin.String? = null,
-    @ColumnInfo(name="access_token")val accessToken: kotlin.String? = null
-) {
-    /**
-     *
-     * Values: MALE,FEMALE,OTHER
-     */
-    /*
-    enum class Gender(val value: kotlin.String){
-        MALE("MALE"),
-        FEMALE("FEMALE"),
-        OTHER("OTHER");
-    }
+    @ColumnInfo(name="access_token")val accessToken: kotlin.String? = null,
+    @ColumnInfo(name="refresh_token")val refreshToken: kotlin.String? = null //TODO Ricordati di implementarlo
 
-     */
-}
+)

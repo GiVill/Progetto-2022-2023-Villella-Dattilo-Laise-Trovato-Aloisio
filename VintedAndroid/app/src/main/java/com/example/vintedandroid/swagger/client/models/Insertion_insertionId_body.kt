@@ -18,6 +18,9 @@ package com.example.vintedandroid.swagger.client.models
  */
 data class InsertionInsertionIdBody (
 
-    val img: kotlin.Array<kotlin.Byte>? = null
+    var img: ByteArray? = null
+
+    //ByteArray
+    //kotlin.Array<kotlin.Byte>?
 ) {
 }

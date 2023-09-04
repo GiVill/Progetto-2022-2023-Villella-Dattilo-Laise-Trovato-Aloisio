@@ -297,11 +297,25 @@ class InsertionApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedPr
                 localVariableConfig
         )
 
+        val b = BasicInsertionDto(
+            id = null,
+            title = "",
+            price = 0f,
+            description = "",
+            creationDate = null, // Puoi specificare una data valida qui se necessario
+            isPrivate = null,
+            imageName = null,
+            brand = null,
+            category = null,
+            available = null,
+            userId = 12345L
+        )
+
         return when (response.responseType) {
             ResponseType.Success -> (response as Success<*>).data as BasicInsertionDto
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
-            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ClientError -> b//throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
             ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
         }
     }

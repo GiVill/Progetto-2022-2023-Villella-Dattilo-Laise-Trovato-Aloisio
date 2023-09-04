@@ -70,19 +70,6 @@ class ChatMessageApi(application : Context, basePath: kotlin.String = "https://1
                 RequestMethod.POST,
                 "/v1/message/insert"
         )
-
-        val headers = mutableMapOf<String, String>()
-
-        val token = TokenViewModel(application = application).getToken()
-
-        Log.i("Token", "token -> $token")
-
-        // Add the Bearer token to the headers
-        headers["Authorization"] = "Bearer $token"
-
-        // Set the headers in the RequestConfig
-        localVariableConfig.headers = headers
-
         val response = request<kotlin.String>(
                 localVariableConfig, localVariableBody
         )

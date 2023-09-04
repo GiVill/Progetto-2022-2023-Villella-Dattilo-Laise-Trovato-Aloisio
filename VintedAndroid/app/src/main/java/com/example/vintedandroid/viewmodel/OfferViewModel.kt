@@ -20,7 +20,14 @@ class OfferViewModel(application: Application) : ViewModel() {
     }
 
     fun getInsertionByOffer(insertionId : Long ): BasicInsertionDto{
-        val insertion = insertionApi.getInsertionById(insertionId)
-        return insertion
+        return insertionApi.getInsertionById(insertionId)
+    }
+
+    fun deleteOffer(buyingOfferDto: BuyingOfferDto){
+
+        //TODO Da controllare
+        Log.i("OfferViewModel", "deleteOffer: $buyingOfferDto")
+        Log.i("sdfs", "${buyingOfferDto.status}")
+        OfferApi().userDeleteOffer(buyingOfferDto)
     }
 }

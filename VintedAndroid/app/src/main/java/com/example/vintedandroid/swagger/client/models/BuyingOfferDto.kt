@@ -24,7 +24,7 @@ data class BuyingOfferDto (
 
     val id: kotlin.Long? = null,
     val price: kotlin.Float,
-    val status: Status? = null,
+    var status: Status? = null,
     val insertionId: kotlin.Long,
     val userId: kotlin.Long
 ) {
@@ -33,8 +33,8 @@ data class BuyingOfferDto (
     * Values: PENDING,APPROVED,REFUSED
     */
     enum class Status(val value: kotlin.String){
-        PENDING("PENDING"),
-        APPROVED("APPROVED"),
-        REFUSED("REFUSED");
+        PENDING("\"PENDING\""),
+        APPROVED("\"APPROVED\""),
+        REFUSED("\"REFUSED\"");
     }
 }

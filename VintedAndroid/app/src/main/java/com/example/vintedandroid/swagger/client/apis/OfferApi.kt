@@ -285,10 +285,11 @@ class OfferApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
                 RequestMethod.DELETE,
                 "/v1/offers"
         )
+        ConfigureAuthorizationBearer(localVariableConfig)
+
         val response = request<kotlin.String>(
                 localVariableConfig, localVariableBody
         )
-
         return when (response.responseType) {
             ResponseType.Success -> (response as Success<*>).data as kotlin.String
             ResponseType.Informational -> TODO()

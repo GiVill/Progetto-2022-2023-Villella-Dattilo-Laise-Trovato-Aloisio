@@ -1950,12 +1950,15 @@ string mtrl_picker_toggle_to_year_selection
 string navigation_menu
 string next_page
 string no_items_in_cart
+string no_offers
+string no_orders
 string no_user_logged
 string not_connected
 string not_selected
 string off
 string offer
 string on
+string order_details
 string password
 string password_toggle_content_description
 string path_password_eye
@@ -1979,6 +1982,7 @@ string send_message
 string send_new_password
 string sign_up
 string snackbar_dismiss
+string status
 string status_bar_notification_info_overflow
 string suggestions_available
 string switch_role

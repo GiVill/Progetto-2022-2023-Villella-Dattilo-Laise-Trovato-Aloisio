@@ -41,9 +41,12 @@ string message
 string missmatch_password
 string next_page
 string no_items_in_cart
+string no_offers
+string no_orders
 string no_user_logged
 string not_connected
 string offer
+string order_details
 string password
 string previous_page
 string price
@@ -56,6 +59,7 @@ string send_feedback
 string send_message
 string send_new_password
 string sign_up
+string status
 string type_password_again
 string type_your
 string vinted

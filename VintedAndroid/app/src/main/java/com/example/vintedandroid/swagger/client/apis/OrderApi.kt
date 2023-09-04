@@ -25,6 +25,7 @@ import com.example.vintedandroid.swagger.client.models.OrderDto
 import com.example.vintedandroid.swagger.client.models.PageOrderDto
 
 import com.example.vintedandroid.swagger.client.infrastructure.*
+import kotlinx.coroutines.flow.Flow
 
 class OrderApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
@@ -213,6 +214,7 @@ class OrderApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
                 RequestMethod.GET,
                 "/v1/orders/user/{page}".replace("{" + "page" + "}", "$page")
         )
+        ConfigureAuthorizationBearer(localVariableConfig)
         val response = request<PageOrderDto>(
                 localVariableConfig
         )

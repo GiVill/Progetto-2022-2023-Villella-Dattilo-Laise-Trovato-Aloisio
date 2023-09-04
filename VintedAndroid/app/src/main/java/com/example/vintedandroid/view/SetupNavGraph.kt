@@ -12,18 +12,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.vintedandroid.swagger.client.apis.InsertionApi
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
+import com.example.vintedandroid.viewmodel.AddViewModel
 import com.example.vintedandroid.viewmodel.CartViewModel
 import com.example.vintedandroid.viewmodel.ChatViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
 import com.example.vintedandroid.viewmodel.OfferViewModel
+import com.example.vintedandroid.viewmodel.OrderViewModel
 import com.example.vintedandroid.viewmodel.ProductViewModel
 import com.example.vintedandroid.viewmodel.UpdatePasswordViewModel
 import com.example.vintedandroid.viewmodel.UserViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState", "RememberReturnType")
 @Composable
-fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context, homeViewModel: HomeViewModel, userViewModel: UserViewModel, cartViewModel: CartViewModel, loginRegistrationViewModel: LoginRegistrationViewModel, updatePasswordViewModel: UpdatePasswordViewModel, offerViewModel: OfferViewModel, productViewModel: ProductViewModel, chatViewModel: ChatViewModel) {
+fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context, homeViewModel: HomeViewModel, userViewModel: UserViewModel, cartViewModel: CartViewModel, loginRegistrationViewModel: LoginRegistrationViewModel, updatePasswordViewModel: UpdatePasswordViewModel, offerViewModel: OfferViewModel, productViewModel: ProductViewModel, chatViewModel: ChatViewModel, orderViewModel: OrderViewModel, addViewModel: AddViewModel) {
 
     val insertionApi = InsertionApi()
 
@@ -43,7 +45,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             SearchActivity(searchText, insertionApi, navController, searchedProduct)
         }
         composable(route = ScreenController.Add.route){
-            AddActivity(application)
+            AddActivity(application, addViewModel)
         }
         composable(route = ScreenController.Cart.route){
             CartActivity(cartViewModel)
@@ -55,7 +57,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             BottomBarProfileActivity(navController, userViewModel, cartViewModel)
         }
         composable(route = ScreenController.Order.route){
-            OrderActivity()
+            OrderActivity(orderViewModel = orderViewModel)
         }
         composable(route = ScreenController.Offer.route){
             OfferActivity(offerViewModel)

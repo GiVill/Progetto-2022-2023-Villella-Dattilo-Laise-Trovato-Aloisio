@@ -12,12 +12,22 @@ class TokenViewModel(application: Context) : ViewModel() {
 
     private val application = application
 
-    fun getToken(): String{
-        var loggedUser: UserDatabaseDto? = null
+    /*
+    fun get(): UserDatabaseDto{
+        var loggedUser: UserDatabaseDto
         CoroutineScope(Dispatchers.IO).launch {
             loggedUser = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getSingleUser()
+            return loggedUser
         }
-        return loggedUser?.accessToken!!
+        return null
+    }
+
+     */
+    fun get(callback: (UserDatabaseDto?) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val loggedUser = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getSingleUser()
+            callback(loggedUser)
+        }
     }
 
 

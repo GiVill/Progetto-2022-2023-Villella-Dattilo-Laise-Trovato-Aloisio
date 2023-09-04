@@ -25,7 +25,7 @@
     <string name="retry_connection">Retry</string>
     <string name="not_connected">\"You are not connected to the Internet!</string>
     <string name="do_offer">Do an Offer</string>
-    <string name="price">Price</string>
+    <string name="price">Price: </string>
     <string name="go_back">Go Back</string>
     <string name="contact_vendor">Contact Vendor</string>
     <string name="insert_message">Insert a Message</string>
@@ -44,4 +44,8 @@
     <string name="enter_your_password">Enter your password</string>
     <string name="type_your">Type your</string>
     <string name="contact">Contact</string>
+    <string name="status">Status: </string>
+    <string name="no_offers">No Offers</string>
+    <string name="no_orders">No Orders</string>
+    <string name="order_details">Order Details:</string>
 </resources>

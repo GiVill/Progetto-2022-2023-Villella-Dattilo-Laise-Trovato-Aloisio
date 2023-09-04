@@ -1949,12 +1949,15 @@ int string mtrl_picker_toggle_to_year_selection 0x7f0f008e
 int string navigation_menu 0x7f0f008f
 int string next_page 0x7f0f0090
 int string no_items_in_cart 0x7f0f0091
+int string no_offers 0x7f0f00c8
+int string no_orders 0x7f0f00c9
 int string no_user_logged 0x7f0f0092
 int string not_connected 0x7f0f0093
 int string not_selected 0x7f0f0094
 int string off 0x7f0f0095
 int string offer 0x7f0f0096
 int string on 0x7f0f0097
+int string order_details 0x7f0f00ca
 int string password 0x7f0f0098
 int string password_toggle_content_description 0x7f0f0099
 int string path_password_eye 0x7f0f009a
@@ -1978,6 +1981,7 @@ int string send_message 0x7f0f00ab
 int string send_new_password 0x7f0f00ac
 int string sign_up 0x7f0f00ad
 int string snackbar_dismiss 0x7f0f00ae
+int string status 0x7f0f00c7
 int string status_bar_notification_info_overflow 0x7f0f00af
 int string suggestions_available 0x7f0f00b0
 int string switch_role 0x7f0f00b1

@@ -1,8 +1,10 @@
 package com.example.vintedandroid
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -28,19 +30,27 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.vintedandroid.model.AppDatabase
+import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.theme.VintedAndroidTheme
 import com.example.vintedandroid.view.ScreenController
 import com.example.vintedandroid.view.SetupNavGraph
 import com.example.vintedandroid.model.application_status.internetChecker
+import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.view.noConnectionActivity
+import com.example.vintedandroid.viewmodel.AddViewModel
 import com.example.vintedandroid.viewmodel.CartViewModel
 import com.example.vintedandroid.viewmodel.ChatViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
 import com.example.vintedandroid.viewmodel.OfferViewModel
+import com.example.vintedandroid.viewmodel.OrderViewModel
 import com.example.vintedandroid.viewmodel.ProductViewModel
 import com.example.vintedandroid.viewmodel.UpdatePasswordViewModel
 import com.example.vintedandroid.viewmodel.UserViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -58,35 +68,40 @@ class MainActivity : ComponentActivity() {
 
                     val searchText = remember { mutableStateOf("") }
 
-                    var controlloSuToken = true //questa variabile servirebbe per capire se all'avvio dell'app hai fatto il login oppure no. Per ora non fa nessun controllo
+                    Scaffold(
+                        topBar = { ApplicationTopBar(searchText, navController) },
+                        bottomBar = { ApplicationBottomBar(navController) },
+                        content = {
+                        Box(modifier = Modifier.padding(it)) {
 
-                    if(controlloSuToken) {
-
-                        Scaffold(
-                            topBar = { ApplicationTopBar(searchText, navController) },
-                            bottomBar = { ApplicationBottomBar(navController) },
-                            content = {
-                            Box(modifier = Modifier.padding(it)) {
-                                SetupNavGraph(
-                                    navController = navController,
-                                    searchText = searchText,
-                                    application = application.applicationContext,
-                                    homeViewModel =  HomeViewModel(application),
-                                    userViewModel = UserViewModel(application),
-                                    cartViewModel = CartViewModel(application),
-                                    loginRegistrationViewModel = LoginRegistrationViewModel(application),
-                                    updatePasswordViewModel = UpdatePasswordViewModel(application),
-                                    offerViewModel = OfferViewModel(application),
-                                    productViewModel = ProductViewModel(application,),
-                                    chatViewModel = ChatViewModel(application, userViewModel = UserViewModel(application = application))
-                                )
+                            SetupNavGraph(
+                                navController = navController,
+                                searchText = searchText,
+                                application = application.applicationContext,
+                                homeViewModel =  HomeViewModel(application),
+                                userViewModel = UserViewModel(application),
+                                cartViewModel = CartViewModel(application),
+                                loginRegistrationViewModel = LoginRegistrationViewModel(application),
+                                updatePasswordViewModel = UpdatePasswordViewModel(application),
+                                offerViewModel = OfferViewModel(application),
+                                productViewModel = ProductViewModel(application,),
+                                chatViewModel = ChatViewModel(application, userViewModel = UserViewModel(application = application)),
+                                orderViewModel = OrderViewModel(application),
+                                addViewModel = AddViewModel(application)
+                            )
+                            getToken(application) { logged ->
+                                if (logged != null) {
+                                    //TODO Refresh Token
+                                    LoggedUserDetails.getInstance().setCurrentUser(logged)
+                                    Log.i("MainActivity::class", "${LoggedUserDetails.getInstance().getCurrentUser()}")
+                                }
+                                else{
+                                    Log.i("MainActivity::class", "No User in DB")
+                                    //navController.navigate(ScreenController.Login.route)
+                                }
                             }
-                        } )
-                    }
-                    else{
-                        navController.navigate(ScreenController.Login.route)
-                        //LoginScreen(navController = navController, application) //Non funziona bene
-                    }
+                        }
+                    } )
                 } else { noConnectionActivity(application = application) }
             }
         }
@@ -231,6 +246,12 @@ fun ApplicationBottomBar(navController: NavHostController) {//,selectedIndex: Mu
     }
 }
 
+private fun getToken(application: Context, callback: (UserDatabaseDto?) -> Unit) {
+    CoroutineScope(Dispatchers.IO).launch {
+        val loggedUser = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getSingleUser()
+        callback(loggedUser)
+    }
+}
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {

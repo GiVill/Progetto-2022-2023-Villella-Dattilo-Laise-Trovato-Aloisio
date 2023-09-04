@@ -32,12 +32,15 @@
     <string name="missmatch_password">Password doesn\'t match. Please try again.</string>
     <string name="next_page">Next Page</string>
     <string name="no_items_in_cart">No Items in Cart</string>
+    <string name="no_offers">No Offers</string>
+    <string name="no_orders">No Orders</string>
     <string name="no_user_logged">No User Logged</string>
     <string name="not_connected">\"You are not connected to the Internet!</string>
     <string name="offer">Offer</string>
+    <string name="order_details">Order Details:</string>
     <string name="password">Password</string>
     <string name="previous_page">Previous Page</string>
-    <string name="price">Price</string>
+    <string name="price">Price: </string>
     <string name="register_new_account">Register New Account</string>
     <string name="registration_failed">Registration failed. Please try again.</string>
     <string name="reset_password">Reset Password</string>
@@ -47,6 +50,7 @@
     <string name="send_message">Send Message</string>
     <string name="send_new_password">Send New Password</string>
     <string name="sign_up">Need new account? Sign up!</string>
+    <string name="status">Status: </string>
     <string name="type_password_again">Type Password Again</string>
     <string name="type_your">Type your</string>
     <string name="vinted">Vinted</string>

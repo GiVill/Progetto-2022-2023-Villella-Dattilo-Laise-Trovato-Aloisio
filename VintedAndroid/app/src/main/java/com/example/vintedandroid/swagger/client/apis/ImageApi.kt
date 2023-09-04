@@ -28,9 +28,9 @@ import com.example.vintedandroid.swagger.client.infrastructure.*
 class ImageApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
     /**
-     * 
-     * 
-     * @param userId  
+     *
+     *
+     * @param userId
      * @return void
      */
     fun adminDeleteImage(userId: kotlin.Long): Unit {
@@ -51,9 +51,9 @@ class ImageApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
         }
     }
     /**
-     * 
-     * 
-     * @param insertionId  
+     *
+     *
+     * @param insertionId
      * @return void
      */
     fun adminDeleteImageInsertion(insertionId: kotlin.Long): Unit {
@@ -74,9 +74,9 @@ class ImageApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
         }
     }
     /**
-     * 
-     * 
-     * @param imagePath  
+     *
+     *
+     * @param imagePath
      * @return kotlin.Array<kotlin.Byte>
      */
     @Suppress("UNCHECKED_CAST")
@@ -98,10 +98,10 @@ class ImageApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
         }
     }
     /**
-     * 
-     * 
-     * @param body  
-     * @param insertionId  
+     *
+     *
+     * @param body
+     * @param insertionId
      * @return kotlin.Boolean
      */
     @Suppress("UNCHECKED_CAST")
@@ -111,6 +111,7 @@ class ImageApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
                 RequestMethod.POST,
                 "/v1/images/insertion/{insertionId}".replace("{" + "insertionId" + "}", "$insertionId")
         )
+        ConfigureAuthorizationBearer(localVariableConfig)
         val response = request<kotlin.Boolean>(
                 localVariableConfig, localVariableBody
         )

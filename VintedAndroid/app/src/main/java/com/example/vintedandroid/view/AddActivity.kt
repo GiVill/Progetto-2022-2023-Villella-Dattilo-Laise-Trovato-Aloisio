@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.ImageView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.launch
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -24,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,8 +32,11 @@ import coil.annotation.ExperimentalCoilApi
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
@@ -53,18 +56,40 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileNotFoundException
-
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.stringResource
+import com.example.vintedandroid.R
+import com.example.vintedandroid.viewmodel.AddViewModel
 
 @Composable
-fun AddActivity(application: Context) {
-    AppContent(application)
+fun AddActivity(application: Context, addViewModel: AddViewModel) {
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicturePreview()) {
+        if (it != null) {
+            addViewModel.updateImage(it,2)
+        }
+    } // Take a picture
+
+
+
+    Card {
+
+        Icon(
+            Icons.Filled.Add,
+            contentDescription = stringResource(R.string.type_password_again),
+            modifier = Modifier
+                .size(40.dp)
+                .padding(5.dp)
+                .clickable { launcher.launch() /* here we launch the code to take a picture */ }
+        )
+    }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
-fun AppContent(application: Context) {
+fun AppContent(application: Context, ) {
 
 
+}
+/*
     val emailRegex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9]+\\.)+[A-Za-z]{2,4}\$".toRegex()
     val nameRegex = "^[A-Za-z\\s]{2,}\$".toRegex()
 
@@ -294,6 +319,8 @@ fun AppContent(application: Context) {
         }
 
     }
+
+ */
 }
 
 private fun convertBasicInsertionDTO(title: String, description: String, price: Float, id: Long?): BasicInsertionDto {
@@ -437,8 +464,6 @@ fun pickImage() {
 
 */
 
-@Preview
-@Composable
-fun AddScreenPreview() {
-    //AddScreen()
-}
+
+ */
+ */

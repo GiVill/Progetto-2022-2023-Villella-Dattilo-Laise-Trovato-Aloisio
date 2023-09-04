@@ -1,9 +1,12 @@
 package com.example.vintedandroid.swagger.client.apis
 
+import android.util.Log
 import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.swagger.client.infrastructure.RequestConfig
 
 fun ConfigureAuthorizationBearer(localVariableConfig: RequestConfig): RequestConfig {
+    Log.i("Bearer", "${LoggedUserDetails.getInstance().getCurrentUser().accessToken}")
+
     val headers = mutableMapOf<String, String>()
     // Add the Bearer token to the headers
     headers["Authorization"] = "Bearer ${LoggedUserDetails.getInstance().getCurrentUser().accessToken}"
