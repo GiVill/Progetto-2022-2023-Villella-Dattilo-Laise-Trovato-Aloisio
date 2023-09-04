@@ -126,9 +126,9 @@ export class ProductCardComponent implements OnInit{
   }
 
 
-  deleteOffer(it: number) {
+ refuseOffer(it: number) {
     console.log([it])
-    this.offerService.acceptOffers(this.offers![it]).subscribe(response => {
+    this.offerService.refuseOffers(this.offers![it]).subscribe(response => {
         this.offer()
         this.snackBar.open("Offerta rifiutata" , "OK")
       },

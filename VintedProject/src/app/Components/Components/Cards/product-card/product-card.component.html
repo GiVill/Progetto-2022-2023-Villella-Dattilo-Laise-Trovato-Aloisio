@@ -41,12 +41,13 @@
             <p style="color: black">Stato offerta: {{offer.status}}</p>
             <p style="color: black">Prezzo offerto: {{offer.price}}€</p>
             <div class="offer-buttons">
-              <p *ngIf="offer.status === 'APPROVED'" STYLE="color: #007b0f"> OFFERTA ACCETTATA </p>
-              <p *ngIf="offer.status === 'REFUSED'" STYLE="color: #007b0f"> OFFERTA RIFIUTATA </p>
               <button class="btn" *ngIf="offer.status !== 'APPROVED' && offer.status !== 'REFUSED'" (click)="acceptOffer(i)">ACCETTA</button>
-              <button class="btn" *ngIf="offer.status !== 'APPROVED' && offer.status !== 'REFUSED'" (click)="deleteOffer(i)">RIFIUTA</button>
+              <button class="btn" *ngIf="offer.status !== 'APPROVED' && offer.status !== 'REFUSED'" (click)="refuseOffer(i)">RIFIUTA</button>
             </div>
+            <p *ngIf="offer.status === 'APPROVED'" STYLE="color: #007b0f"> OFFERTA ACCETTATA </p>
+            <p *ngIf="offer.status === 'REFUSED'" STYLE="color: red"> OFFERTA RIFIUTATA </p>
           </div>
+        </div>
         <div *ngIf="(i + 1) % 3 === 0 || i === offers.length - 1" class="clearfix"></div>
       </div>
     </div>
