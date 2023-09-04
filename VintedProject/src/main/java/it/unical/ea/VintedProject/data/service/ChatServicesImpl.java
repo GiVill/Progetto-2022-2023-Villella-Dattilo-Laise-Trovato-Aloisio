@@ -80,7 +80,6 @@ public class ChatServicesImpl implements ChatService {
         if(u.get().getEmail() == null){
             throw new EntityNotFoundException(messageLang.getMessage("user.not.present"));
         }
-
          chatMessageService.insertNewChat(chat);
     }
 

@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
     private final ModelMapper modelMapper;
     private final MessageLang messageLang;
     private final LoggedUserMethod loggedUserMethod;
-    private final BuyingOfferService buyingOfferService;
+    private final BuyingOfferDao buyingOfferDao;
     private final static int SIZE_FOR_PAGE = 5;
     //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
 
@@ -69,12 +69,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto Offersave(OrderDto orderDto, Long offerId) {
-        BuyingOfferDto offer = buyingOfferService.getOfferById(offerId);
+        Optional<BuyingOffer> offer = buyingOfferDao.findById(offerId);
         if(offer == null){
             throw new EntityNotFoundException(messageLang.getMessage("user.offer.not.present",offerId));
         }
-        offer.setPaid(true);
-        buyingOfferService.save(offer);
+        offer.get().setPaid(true);
+        buyingOfferDao.save(offer.get());
 
         //TODO: DEVO FARE UNA SAVE PRIMA PERCHé MI SERVE L'ID DELL'ORDINE PER CREARE LE RELAZIONI CON INSERTION DOPO
         Order order = orderDao.save(modelMapper.map(orderDto, Order.class));

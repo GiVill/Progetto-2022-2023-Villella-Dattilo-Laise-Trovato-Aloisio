@@ -4,6 +4,7 @@ import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.config.utility.FileUtil;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
+import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
@@ -33,7 +34,7 @@ public class ImageServiceImpl implements ImageService {
 
     //TODO: MESSAGGI DI ERRORE
 
-    private final UserService userService;
+    private final UserDao userDao;
     private final BasicInsertionService insertionService;
     private final MessageLang messageLang;
     private final LoggedUserMethod loggedUserMethod;
@@ -83,7 +84,7 @@ public class ImageServiceImpl implements ImageService {
 
             u.setImageName(orgName);
 
-            userService.save(u);
+            userDao.save(u);
 
             return true;
         }catch (Exception e){ return false; }
@@ -119,16 +120,16 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void deleteImageUser(Long id) {
-        User user = userService.getUserById(id);
-        String newPath =  relativePathToUploads + user.getImageName();
+        Optional<User> user = userDao.findById(id);
+        String newPath =  relativePathToUploads + user.get().getImageName();
 
         File file = new File(newPath);
 
         if (file.exists() && file.isFile()) {
             if (file.delete()) {
                 log.info("File deleted successfully");
-                user.setImageName(null);
-                userService.save(user);
+                user.get().setImageName(null);
+                userDao.save(user.get());
             } else {
                 log.info("Impossible to eliminate the file");
             }
