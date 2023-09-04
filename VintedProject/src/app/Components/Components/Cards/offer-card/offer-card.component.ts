@@ -63,7 +63,7 @@ export class OfferCardComponent implements OnInit{
   }
 
   createOrder() {
-    if (this.product?.id != undefined && !this.accepted) {
+    if (this.product?.id != undefined && this.accepted) {
       const order: OrderDto = {
         id: 0,
         total: this.offer?.price,
