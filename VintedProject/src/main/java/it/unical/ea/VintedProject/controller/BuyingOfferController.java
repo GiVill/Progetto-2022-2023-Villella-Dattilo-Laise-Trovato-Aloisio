@@ -86,7 +86,7 @@ public class BuyingOfferController {
     public ResponseEntity<BuyingOfferDto> userAddBuyingOffer (@RequestBody @Valid BuyingOfferDto offer){
         // Create a BuyingOffer using the Dto
         // No Throw on Save
-
+        offer.setStatus(Status.PENDING);
         loggedUserMethod.getLoggedUserId(offer.getUserId());
         return ResponseEntity.ok(buyingOfferService.save(offer));
     }

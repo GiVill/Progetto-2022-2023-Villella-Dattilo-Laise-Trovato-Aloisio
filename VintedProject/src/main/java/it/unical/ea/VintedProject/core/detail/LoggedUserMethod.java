@@ -56,6 +56,7 @@ public class LoggedUserMethod {
 
     public Long getLoggedUserId(Long userId){
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
+        System.out.println("JWT class: "+ jwtAuthConverter.getIdKeycloak());
 
         Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() ->  new BadRequestException(messageLang.getMessage("access.denied"))));
         System.out.println(LoggedUserDetail.getInstance().getEmail() + " getLoggedUserId ARGS");
