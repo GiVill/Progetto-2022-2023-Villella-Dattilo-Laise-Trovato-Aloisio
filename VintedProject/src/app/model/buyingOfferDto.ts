@@ -14,9 +14,10 @@ import {BuyingOffer} from "./buyingOffer";
 export interface BuyingOfferDto {
     id?: number;
     price: number;
-    status: string
+    status: BuyingOffer.StatusEnum;
     insertionId: number;
     userId: number;
+    paid?: boolean
 }
 export namespace BuyingOfferDto {
     export type StatusEnum = 'PENDING' | 'APPROVED' | 'REFUSED';

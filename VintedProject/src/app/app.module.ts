@@ -26,7 +26,7 @@ import {CatalogComponent} from "./Components/Pages/Insertion/catalog/catalog.com
 import {ProfileComponent} from "./Components/Pages/User/profile/profile.component";
 import {CartComponent} from "./Components/Pages/cart/cart.component";
 import {LoginComponent} from "./Components/Pages/User/login/login.component";
-import {CartInsertionCardComponent} from "./Components/Components/Cards/cart-insertion-card/cart-insertion-card.component";
+import {CartProductCardComponent} from "./Components/Components/Cards/cart-product-card/cart-product-card.component";
 import { CreateInsertionComponent } from './Components/Pages/Insertion/create-insertion/create-insertion.component';
 import { JwtModule  } from '@auth0/angular-jwt';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -76,7 +76,7 @@ import {ImageService} from "./api/image.service";
     UserInsertionComponent,
     ProfileComponent,
     CartComponent,
-    CartInsertionCardComponent,
+    CartProductCardComponent,
     LoginComponent,
     PrivateComponent,
     CreateInsertionComponent,

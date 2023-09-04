@@ -103,6 +103,10 @@ export class ProductCardComponent implements OnInit{
     this.offer();
   }
 
+  stopClickPropagation(event: Event): void {
+    event.stopPropagation();
+  }
+
   closeOfferModal(event: any): void {
     this.offerModalOpen = false;
   }
@@ -123,9 +127,8 @@ export class ProductCardComponent implements OnInit{
 
 
   deleteOffer(it: number) {
-    console.log(this.offers![it])
-    this.offerService.userDeleteOffer(this.offers![it]).subscribe(response => {
-
+    console.log([it])
+    this.offerService.acceptOffers(this.offers![it]).subscribe(response => {
         this.offer()
         this.snackBar.open("Offerta rifiutata" , "OK")
       },

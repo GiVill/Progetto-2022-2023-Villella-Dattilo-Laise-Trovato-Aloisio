@@ -15,9 +15,10 @@ import { User } from './user';
 export interface BuyingOffer {
     id: number;
     price: number;
-    status: string
+    status: BuyingOffer.StatusEnum;
     insertion: BasicInsertion;
     user?: User;
+    paid: boolean
 }
 export namespace BuyingOffer {
     export type StatusEnum = 'PENDING' | 'APPROVED' | 'REFUSED';

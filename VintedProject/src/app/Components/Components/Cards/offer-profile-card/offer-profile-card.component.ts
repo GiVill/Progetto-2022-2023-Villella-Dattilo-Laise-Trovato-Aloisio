@@ -44,6 +44,7 @@ export class OfferProfileCardComponent implements OnInit{
     this.basicInsertion.getInsertionById(this.offer?.insertionId!).subscribe(
       (data: BasicInsertionDto) => {
         this.insertion = data;
+        console.log(data)
 
         // Create observables for each API call
         const userObservable = this.userService.getUserDtoById(this.insertion?.userId);

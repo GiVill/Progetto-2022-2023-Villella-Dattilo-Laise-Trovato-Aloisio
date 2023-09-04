@@ -22,14 +22,13 @@
         <br>
         <strong> Prezzo:  </strong> {{ insertion?.price }}€ <br>
         <br>
-         La spedizione sono cazzi tuoi
       </p>
     </div>
     <div class="button-container">
-      <button class="btn buy-button" *ngIf="!isProductInCart && !isMyProduct" (click)="addToCart()">Acquista</button>
+      <button class="btn buy-button" *ngIf="!isProductInCart && !isMyProduct && insertion?.available" (click)="addToCart()">Acquista</button>
       <p class="btn buy-button disabled" style="text-align: center; color: black" *ngIf="isProductInCart">Prodotto nel carrello</p>
-      <button class="btn second-button" *ngIf="!isMyProduct" (click)="openOfferModal()">Fai un'offerta</button>
-      <button class="btn second-button" *ngIf=" !isMyProduct" (click)="openMessageModal()">Contatta il venditore</button>
+      <button class="btn second-button" *ngIf="!isMyProduct && insertion?.available" (click)="openOfferModal()">Fai un'offerta</button>
+      <button class="btn second-button" *ngIf=" !isMyProduct && insertion?.available" (click)="openMessageModal()">Contatta il venditore</button>
     </div>
     <div class="image-thumbnails">
       <div *ngFor="let image of insertion?.imageName" class="thumbnail" (click)="openModal()">

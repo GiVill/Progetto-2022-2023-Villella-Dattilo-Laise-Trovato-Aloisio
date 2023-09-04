@@ -25,7 +25,7 @@ export class OfferCardComponent implements OnInit{
   @Input() product?: BasicInsertionDto;
   isHovered = false;
   accepted: boolean = false;
-  paymentMethods: PaymentDto.PaymentMethodEnum[] = Object.values(PaymentDto.PaymentMethodEnum);
+  refused: boolean = false;
 
 
   constructor(private router: Router,
@@ -35,6 +35,7 @@ export class OfferCardComponent implements OnInit{
               private orderService: OrderService,
               private cookieServices: CookiesService,
               private snackBar: MatSnackBar,
+
              ) {
   }
 
@@ -42,7 +43,9 @@ export class OfferCardComponent implements OnInit{
   ngOnInit(): void {
         if (this.offer?.status == "APPROVED")
           this.accepted=true;
-      }
+        if (this.offer?.status == "REFUSED")
+        this.refused=true;
+}
 
 
 
@@ -57,25 +60,26 @@ export class OfferCardComponent implements OnInit{
         console.error('Error fetching product:', error);
       }
     );{
-
     }
-
   }
 
   createOrder() {
-    if (this.product?.id != undefined && !this.accepted) {
+    if (this.product?.id != undefined && this.accepted) {
       const order: OrderDto = {
         id: 0,
         total: this.offer?.price,
-        paymentMethod: this.paymentMethods.toString(),
+        paymentMethod: "CARD",
         insertionIdList: [this.product.id],
         userId: Number(this.cookieServices.getUserId())
       };
       console.log(order)
-      this.orderService.userAddOrder(order).subscribe((response) => {
+      this.orderService.userAddOfferOrder(order, this.offer?.id!).subscribe((response) => {
           this.snackBar.open("Ordine creato ",)
+        this.myProfile.getUserOffer()
+          this.myProfile.getUserOrders()
         },
         (error) => {
+        console.log(error)
           this.snackBar.open("Errore durante la creazione dell ordine")
         }
       );

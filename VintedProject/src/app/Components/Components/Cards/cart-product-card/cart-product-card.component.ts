@@ -6,10 +6,10 @@ import {CartComponent} from "../../../Pages/cart/cart.component";
 
 @Component({
   selector: 'app-cart-insertion-card',
-  templateUrl: './cart-insertion-card.component.html',
-  styleUrls: ['./cart-insertion-card.component.css']
+  templateUrl: './cart-product-card.component.html',
+  styleUrls: ['./cart-product-card.component.css']
 })
-export class CartInsertionCardComponent {
+export class CartProductCardComponent {
   @Input() item: BasicInsertionDto | undefined;
 
   isHovered = false;
