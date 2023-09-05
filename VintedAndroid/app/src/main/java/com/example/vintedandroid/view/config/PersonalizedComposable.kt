@@ -2,10 +2,15 @@ package com.example.vintedandroid.view.config
 
 import android.util.Log
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -21,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.focus.onFocusChanged
@@ -126,6 +132,29 @@ fun createPersonalizedTextfieldPassword(textField: MutableState<TextFieldValue>)
                 shape = RoundedCornerShape(4.dp)
             )
     )
+}
+
+@Composable
+fun createCheckbox(checkStatus: MutableState<Boolean>) {
+
+    Column(
+        modifier = Modifier
+            .padding(2.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Checkbox(
+            checked = checkStatus.value,
+            onCheckedChange = { isChecked ->
+                checkStatus.value = isChecked
+            },
+            modifier = Modifier.padding(2.dp),
+            colors = CheckboxDefaults.colors(checkedColor = Color.Green),
+
+        )
+        Spacer(modifier = Modifier.height(2.dp))
+        Text(text = "Do you want to make it private?")
+    }
 }
 
 

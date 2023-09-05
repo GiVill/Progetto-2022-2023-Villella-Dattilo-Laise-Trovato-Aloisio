@@ -48,4 +48,5 @@
     <string name="no_offers">No Offers</string>
     <string name="no_orders">No Orders</string>
     <string name="order_details">Order Details:</string>
+    <string name="add_image">Add Image</string>
 </resources>

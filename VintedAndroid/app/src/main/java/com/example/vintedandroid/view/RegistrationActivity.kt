@@ -41,7 +41,7 @@ import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun RegistrationActivity(navController: NavHostController, application: Context, loginRegistrationViewModel: LoginRegistrationViewModel) {
+fun RegistrationActivity(navController: NavHostController, loginRegistrationViewModel: LoginRegistrationViewModel) {
 
     val emailField = remember { mutableStateOf(TextFieldValue()) }
     val nicknameField = remember { mutableStateOf(TextFieldValue()) }

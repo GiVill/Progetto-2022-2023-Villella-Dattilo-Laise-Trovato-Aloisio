@@ -57,7 +57,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             BottomBarProfileActivity(navController, userViewModel, cartViewModel)
         }
         composable(route = ScreenController.Order.route){
-            OrderActivity(orderViewModel = orderViewModel)
+            OrderActivity(orderViewModel)
         }
         composable(route = ScreenController.Offer.route){
             OfferActivity(offerViewModel)
@@ -69,7 +69,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             LoginActivity(navController, userViewModel, loginRegistrationViewModel)
         }
         composable(route = ScreenController.Register.route){
-            RegistrationActivity(navController, application, loginRegistrationViewModel)
+            RegistrationActivity(navController, loginRegistrationViewModel)
         }
         composable(route = ScreenController.Product.route){
             ProductActivity(searchedProduct,itemsInCart, homeViewModel, productViewModel, application)

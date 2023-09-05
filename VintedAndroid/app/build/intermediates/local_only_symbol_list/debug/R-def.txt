@@ -18,6 +18,7 @@ mipmap ic_launcher_round
 raw vinted
 string account_settings
 string add_cart
+string add_image
 string already_account_go_to_login
 string app_name
 string article

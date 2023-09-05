@@ -690,6 +690,7 @@
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <string name="account_settings">Profilo</string>
     <string name="add_cart">Add to Cart</string>
+    <string name="add_image">Add Image</string>
     <string name="already_account_go_to_login">Already have an account? Go to Login page</string>
     <string name="androidx_startup" translatable="false">androidx.startup</string>
     <string name="app_name">VintedAndroid</string>

@@ -11,19 +11,20 @@
  */
 package com.example.vintedandroid.swagger.client.apis
 
-import com.example.vintedandroid.swagger.client.infrastructure.ApiClient
-import com.example.vintedandroid.swagger.client.infrastructure.ClientError
-import com.example.vintedandroid.swagger.client.infrastructure.ClientException
-import com.example.vintedandroid.swagger.client.infrastructure.RequestConfig
-import com.example.vintedandroid.swagger.client.infrastructure.RequestMethod
-import com.example.vintedandroid.swagger.client.infrastructure.ResponseType
-import com.example.vintedandroid.swagger.client.infrastructure.ServerError
-import com.example.vintedandroid.swagger.client.infrastructure.ServerException
-import com.example.vintedandroid.swagger.client.infrastructure.Success
+import android.graphics.Bitmap
+import com.example.vintedandroid.model.LoggedUserDetails
+import com.example.vintedandroid.swagger.client.infrastructure.*
 import com.example.vintedandroid.swagger.client.models.ImagesUserBody
 import com.example.vintedandroid.swagger.client.models.InsertionInsertionIdBody
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
+import java.io.ByteArrayOutputStream
+import java.io.IOException
 
-import com.example.vintedandroid.swagger.client.infrastructure.*
 
 class ImageApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
@@ -105,23 +106,30 @@ class ImageApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
      * @return kotlin.Boolean
      */
     @Suppress("UNCHECKED_CAST")
-    fun insertInsertionImage(body: InsertionInsertionIdBody, insertionId: kotlin.Long): kotlin.Boolean {
-        val localVariableBody: kotlin.Any? = body
-        val localVariableConfig = RequestConfig(
-                RequestMethod.POST,
-                "/v1/images/insertion/{insertionId}".replace("{" + "insertionId" + "}", "$insertionId")
-        )
-        ConfigureAuthorizationBearer(localVariableConfig)
-        val response = request<kotlin.Boolean>(
-                localVariableConfig, localVariableBody
-        )
+    fun insertInsertionImage(bitmap: Bitmap, insertionId: kotlin.Long): kotlin.Boolean {
 
-        return when (response.responseType) {
-            ResponseType.Success -> (response as Success<*>).data as kotlin.Boolean
-            ResponseType.Informational -> TODO()
-            ResponseType.Redirection -> TODO()
-            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
-            ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        val byteArray = stream.toByteArray()
+
+        val url = "https://192.168.1.90:8010/vintedProject-api/v1/images/insertion/{insertionId}".replace("{" + "insertionId" + "}", "$insertionId")
+
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("img", "image.jpg", RequestBody.create("image/jpeg".toMediaType(), byteArray))
+            .build()
+
+        val request = Request.Builder()
+            .url(url) // Replace with your backend URL
+            .addHeader("Authorization", "Bearer ${LoggedUserDetails.getInstance().getCurrentUser().accessToken}")
+            .post(requestBody)
+            .build()
+
+        try {
+            val response: Response = OkHttpClient().newCall(request).execute()
+            return response.isSuccessful
+        } catch (e: IOException) {
+            return false
         }
     }
     /**

@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <string name="account_settings">Profilo</string>
     <string name="add_cart">Add to Cart</string>
+    <string name="add_image">Add Image</string>
     <string name="already_account_go_to_login">Already have an account? Go to Login page</string>
     <string name="app_name">VintedAndroid</string>
     <string name="article">Article:</string>

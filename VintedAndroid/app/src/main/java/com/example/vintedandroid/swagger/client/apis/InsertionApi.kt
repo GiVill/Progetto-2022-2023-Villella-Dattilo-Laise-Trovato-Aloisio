@@ -11,7 +11,9 @@
  */
 package com.example.vintedandroid.swagger.client.apis
 
+import android.graphics.Bitmap
 import androidx.compose.runtime.MutableState
+import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.swagger.client.infrastructure.ApiClient
 import com.example.vintedandroid.swagger.client.infrastructure.ClientError
 import com.example.vintedandroid.swagger.client.infrastructure.ClientException
@@ -27,7 +29,16 @@ import com.example.vintedandroid.swagger.client.models.PageBasicInsertionDto
 import com.example.vintedandroid.swagger.client.models.V1InsertionsBody
 
 import com.example.vintedandroid.swagger.client.infrastructure.*
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.MutableStateFlow
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
+import java.io.ByteArrayOutputStream
+import java.io.IOException
 
 class InsertionApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
@@ -38,7 +49,38 @@ class InsertionApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedPr
      * @return BasicInsertionDto
      */
     @Suppress("UNCHECKED_CAST")
-    fun addInsertion(body: V1InsertionsBody? = null): BasicInsertionDto {
+    fun addInsertion(bitmap: Bitmap, insertionDto: BasicInsertionDto): Boolean {
+
+        //Log.i()
+        //TODO da inserire nel body l'insertionDto
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        val byteArray = stream.toByteArray()
+
+        val insertionDtoJson = Gson().toJson(insertionDto)
+
+        val url = "https://192.168.1.90:8010/vintedProject-api/v1/insertions"
+
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("basicInsertionDto", insertionDtoJson)
+            .addFormDataPart("img", "image.jpg", RequestBody.create("image/jpeg".toMediaType(), byteArray))
+            .build()
+
+        val request = Request.Builder()
+            .url(url) // Replace with your backend URL
+            .addHeader("Authorization", "Bearer ${LoggedUserDetails.getInstance().getCurrentUser().accessToken}")
+            .post(requestBody)
+            .build()
+
+        try {
+            val response: Response = OkHttpClient().newCall(request).execute()
+            return response.isSuccessful
+        } catch (e: IOException) {
+            return false
+        }
+
+        /*
         val localVariableBody: kotlin.Any? = body
         val localVariableConfig = RequestConfig(
                 RequestMethod.POST,
@@ -55,6 +97,8 @@ class InsertionApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedPr
             ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
             ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
         }
+
+         */
     }
     /**
      * 

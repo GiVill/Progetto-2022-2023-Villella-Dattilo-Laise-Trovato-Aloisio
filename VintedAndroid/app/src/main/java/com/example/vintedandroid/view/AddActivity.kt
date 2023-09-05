@@ -1,68 +1,52 @@
 package com.example.vintedandroid.view
 
-import android.content.ContentResolver
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
-import android.util.Log
-import android.widget.ImageView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
-import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.MonetizationOn
+import androidx.compose.material.icons.filled.Title
 import androidx.compose.ui.text.input.TextFieldValue
 
-import coil.compose.rememberImagePainter
-import com.example.vintedandroid.swagger.client.apis.InsertionApi
-import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 //import com.example.vintedandroid.swagger.client.models.UserUserIdBody
-import com.example.vintedandroid.model.AppDatabase
-import com.example.vintedandroid.model.dto.UserDatabaseDto
-import com.example.vintedandroid.swagger.client.apis.ImageApi
 import com.example.vintedandroid.view.config.createPersonalizedTextfield
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.FileNotFoundException
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import com.example.vintedandroid.R
+import com.example.vintedandroid.view.config.createCheckbox
 import com.example.vintedandroid.viewmodel.AddViewModel
 
 @Composable
 fun AddActivity(application: Context, addViewModel: AddViewModel) {
+
+    val titleField = remember { mutableStateOf(TextFieldValue()) }
+    val descriptionField = remember { mutableStateOf(TextFieldValue()) }
+    val priceField = remember { mutableStateOf(TextFieldValue()) }
+    val checkStatus = remember { mutableStateOf(false) }
+
+    val nameRegex = "^[A-Za-z\\s]{2,}\$".toRegex()
+    val numberRegex = "^\\d+\$".toRegex()
+
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicturePreview()) {
         if (it != null) {
             addViewModel.updateImage(it,2)
@@ -71,24 +55,33 @@ fun AddActivity(application: Context, addViewModel: AddViewModel) {
 
 
 
-    Card {
+    Box(Modifier.fillMaxSize()) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            createPersonalizedTextfield(textField = titleField, name = "Title Of Insertion", icon = Icons.Default.Title, regexPattern = nameRegex)
+            createPersonalizedTextfield(textField = descriptionField, name = "Description Of Insertion", icon = Icons.Default.Description, regexPattern = nameRegex)
+            createPersonalizedTextfield(textField = priceField, name = "Price Of Insertion", icon = Icons.Default.MonetizationOn, regexPattern = numberRegex)
+            createCheckbox(checkStatus = checkStatus)
 
-        Icon(
-            Icons.Filled.Add,
-            contentDescription = stringResource(R.string.type_password_again),
-            modifier = Modifier
-                .size(40.dp)
-                .padding(5.dp)
-                .clickable { launcher.launch() /* here we launch the code to take a picture */ }
-        )
+            Card(modifier = Modifier.padding(6.dp)) {
+                Row {
+                    Text("Add An Image")
+                    Icon(
+                        Icons.Filled.Add,
+                        contentDescription = stringResource(R.string.add_image),
+                        modifier = Modifier
+                            .size(40.dp)
+                            .padding(4.dp)
+                            .clickable { launcher.launch() } //launch the code to take a picture
+                    )
+                }
+            }
+            Button(onClick = { addViewModel.addInsertion(titleField.value.text, descriptionField.value.text, priceField.value.text.toFloat(), checkStatus.value) }) {
+                Text("Send New Insertion")
+            }
+        }
     }
 }
 
-@Composable
-fun AppContent(application: Context, ) {
-
-
-}
 /*
     val emailRegex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9]+\\.)+[A-Za-z]{2,4}\$".toRegex()
     val nameRegex = "^[A-Za-z\\s]{2,}\$".toRegex()

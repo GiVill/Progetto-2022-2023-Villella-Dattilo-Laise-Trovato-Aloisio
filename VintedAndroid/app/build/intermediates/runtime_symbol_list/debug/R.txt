@@ -1832,6 +1832,7 @@ int string abc_shareactionprovider_share_with_application 0x7f0f0019
 int string abc_toolbar_collapse_description 0x7f0f001a
 int string account_settings 0x7f0f001b
 int string add_cart 0x7f0f001c
+int string add_image 0x7f0f00cb
 int string already_account_go_to_login 0x7f0f001d
 int string androidx_startup 0x7f0f001e
 int string app_name 0x7f0f001f

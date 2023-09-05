@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.vintedandroid.swagger.client.apis.ImageApi
 import com.example.vintedandroid.swagger.client.apis.InsertionApi
+import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 import com.example.vintedandroid.swagger.client.models.InsertionInsertionIdBody
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
@@ -14,16 +15,45 @@ import kotlin.math.absoluteValue
 
 class AddViewModel (application: Application) : ViewModel() {
 
-    fun updateImage(bitmap: Bitmap, insertionId: Long) {
-        val a = InsertionInsertionIdBody(
-            img= bitmapToByteArray(bitmap)
-        )
-        ImageApi().insertInsertionImage(a, insertionId)
+    var bitmap: Bitmap? = null
 
+    fun updateImage(bitmap: Bitmap, insertionId: Long) {
+        this.bitmap = bitmap
+        //ImageApi().insertInsertionImage(bitmap, insertionId)
+    }
+
+    fun addInsertion(title: String, description: String, price: Float, isPrivate: Boolean){
+        val insertionDto = convertToInsertionDto(title, description, price, isPrivate)
+        Log.i("AddInsertion", "$insertionDto , $bitmap")
+        bitmap?.let { InsertionApi().addInsertion(it, insertionDto) }
+    }
+
+    fun convertToInsertionDto(title: String, description: String, price: Float, isPrivate: Boolean): BasicInsertionDto{
+
+        return BasicInsertionDto(
+            title = title,
+            price = price,
+            description = description,
+            isPrivate = isPrivate,
+            userId = 0
+        )
+        /*
+            val id: Long? = null,
+    val title: String,
+    val price: Float,
+    val description: String,
+    val creationDate: Any? = null,
+    val isPrivate: Boolean? = null,
+    val imageName: String? = null,
+    val brand: BasicInsertionDto.Brand? = null,
+    val category: BasicInsertionDto.Category? = null,
+    val available: Boolean? = null,
+    val userId: Long
+             */
     }
 
 
-
+/*
     // Function to convert Bitmap to byte array
     fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
         val outputStream = ByteArrayOutputStream()
@@ -38,6 +68,8 @@ class AddViewModel (application: Application) : ViewModel() {
         Log.i("getByteArrayFromBitmap", "${byteBuffer.array().contentToString()}")
         return byteBuffer.array()
     }
+
+ */
 
     /*
     fun updateBitmap(bitmap: Bitmap?) {
