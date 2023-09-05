@@ -42,25 +42,18 @@ fun ChatActivity(chatViewModel: ChatViewModel,  navController: NavHostController
     //var allChat = chatViewModel.getAllChat()
 
     //val allChat: State<Array<ChatDto>?> = chatViewModel.getAllChat()!!.collectAsState(initial = null)
+    val chatFromDB: Array<ChatDto>? = chatViewModel.getAllChat()!!
 
     Box() {
         Row() {
-            val chatFromDB: Array<ChatDto>? =
-                chatViewModel.getAllChat()!!
-
             Column(modifier = Modifier.fillMaxSize()) {
                 androidx.compose.material3.Text(
-                    text = stringResource(R.string.MY_CHATS),
+                    text = stringResource(R.string.my_chats),
                     modifier = Modifier.padding(10.dp),
                     style = TextStyle(fontSize = Typography.titleLarge.fontSize, color = Color.White)
                 )
                 Column {
-
-
                     chatFromDB?.forEach { chat ->
-                        // TODO: Andrebbero presi solo gli ordini pubblici
-
-
                         if (!chat.insertionTitle.isNullOrEmpty()) {
 
                             ClickableText(
@@ -71,7 +64,6 @@ fun ChatActivity(chatViewModel: ChatViewModel,  navController: NavHostController
                                 },
                                 style = TextStyle(color = Color.White,fontSize = Typography.titleMedium.fontSize) // Imposta il colore del testo su bianco
                             )
-
                         }
 
                         Divider()

@@ -24,7 +24,7 @@ data class BuyingOfferDto (
 
     val id: kotlin.Long? = null,
     val price: kotlin.Float,
-    var status: Status? = null,
+    var status: String? = null,
     val insertionId: kotlin.Long,
     val userId: kotlin.Long
 ) {

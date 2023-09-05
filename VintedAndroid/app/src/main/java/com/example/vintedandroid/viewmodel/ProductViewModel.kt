@@ -36,6 +36,18 @@ class ProductViewModel(application: Context) : ViewModel() {
         ChatMessageApi(application).insertMessage(newMessageDto)
     }
 
+    fun getAllOffersFromInsertion(insertionId: Long): Array<BuyingOfferDto>{
+        return OfferApi().userGetAllByInsertionId(insertionId)
+    }
+
+    fun acceptOffer(buyingOfferDto: BuyingOfferDto){
+        OfferApi().acceptOffers(buyingOfferDto)
+    }
+
+    fun deleteOffer(buyingOfferDto: BuyingOfferDto){
+        OfferApi().userDeleteOffer(buyingOfferDto)
+    }
+
     fun convertBasicInsertionDtoToBuyingOfferDto(basicInsertionDto : BasicInsertionDto): BuyingOfferDto?{
 
         return basicInsertionDto.id?.let {

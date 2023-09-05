@@ -4,6 +4,7 @@ import android.app.Application
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.swagger.client.apis.ImageApi
 import com.example.vintedandroid.swagger.client.apis.InsertionApi
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
@@ -25,18 +26,35 @@ class AddViewModel (application: Application) : ViewModel() {
     fun addInsertion(title: String, description: String, price: Float, isPrivate: Boolean){
         val insertionDto = convertToInsertionDto(title, description, price, isPrivate)
         Log.i("AddInsertion", "$insertionDto , $bitmap")
-        bitmap?.let { InsertionApi().addInsertion(it, insertionDto) }
+        bitmap?.let {
+            if (insertionDto != null) {
+                if(InsertionApi().addInsertion(it, insertionDto)){
+                    Log.i("k", "k")
+                }
+                else{
+                    Log.i("non k", "non k")
+                }
+            }
+        }
     }
 
-    fun convertToInsertionDto(title: String, description: String, price: Float, isPrivate: Boolean): BasicInsertionDto{
+    fun convertToInsertionDto(title: String, description: String, price: Float, isPrivate: Boolean): BasicInsertionDto?{
 
-        return BasicInsertionDto(
-            title = title,
-            price = price,
-            description = description,
-            isPrivate = isPrivate,
-            userId = 0
-        )
+        return LoggedUserDetails.getInstance().getCurrentUser().id?.let {
+            BasicInsertionDto(
+                id = null,
+                title = title,
+                price = price,
+                description = description,
+                creationDate = null,
+                isPrivate = isPrivate,
+                imageName = null,
+                brand = null,//BasicInsertionDto.Brand.ADIDAS,
+                category = null, //
+                available= true,
+                userId = it
+            )
+        }
         /*
             val id: Long? = null,
     val title: String,

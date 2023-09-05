@@ -41,6 +41,7 @@ class OfferApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
                 RequestMethod.PUT,
                 "/v1/offers/accept"
         )
+        ConfigureAuthorizationBearer(localVariableConfig)
         val response = request<kotlin.String>(
                 localVariableConfig, localVariableBody
         )
@@ -286,7 +287,6 @@ class OfferApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
                 "/v1/offers"
         )
         ConfigureAuthorizationBearer(localVariableConfig)
-
         val response = request<kotlin.String>(
                 localVariableConfig, localVariableBody
         )
@@ -310,6 +310,7 @@ class OfferApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
                 RequestMethod.GET,
                 "/v1/offers/insertion/{insertionId}".replace("{" + "insertionId" + "}", "$insertionId")
         )
+        ConfigureAuthorizationBearer(localVariableConfig)
         val response = request<kotlin.Array<BuyingOfferDto>>(
                 localVariableConfig
         )

@@ -85,13 +85,13 @@ fun HomeActivity(itemsInCart: MutableList<BasicInsertionDto?>, navController: Na
                             }
                             Button(
                                 onClick = {
-                                    if(page < pageInsertion.totalPages!!) {
+                                    if(page <= pageInsertion.totalPages!!) {
                                         //isLoaded = false
                                         page += 1
                                         pageInsertion = viewModel.getAllInsertion(page)
                                     }
                                 },
-                                enabled = pageInsertion.totalPages != page
+                                enabled = pageInsertion.totalPages!! >= page
                             ) { Text(text = stringResource(R.string.next_page)) }
                         }
                     }

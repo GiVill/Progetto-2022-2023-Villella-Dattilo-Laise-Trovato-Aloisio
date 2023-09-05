@@ -43,6 +43,7 @@ import com.example.vintedandroid.viewmodel.CartViewModel
 import com.example.vintedandroid.viewmodel.ChatViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
+import com.example.vintedandroid.viewmodel.MyInsertionViewModel
 import com.example.vintedandroid.viewmodel.OfferViewModel
 import com.example.vintedandroid.viewmodel.OrderViewModel
 import com.example.vintedandroid.viewmodel.ProductViewModel
@@ -87,7 +88,8 @@ class MainActivity : ComponentActivity() {
                                 productViewModel = ProductViewModel(application,),
                                 chatViewModel = ChatViewModel(application, userViewModel = UserViewModel(application = application)),
                                 orderViewModel = OrderViewModel(application),
-                                addViewModel = AddViewModel(application)
+                                addViewModel = AddViewModel(application),
+                                myInsertionViewModel = MyInsertionViewModel(application)
                             )
                             getToken(application) { logged ->
                                 if (logged != null) {

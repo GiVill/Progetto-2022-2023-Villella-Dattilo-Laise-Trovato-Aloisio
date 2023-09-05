@@ -17,6 +17,7 @@ import com.example.vintedandroid.viewmodel.CartViewModel
 import com.example.vintedandroid.viewmodel.ChatViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
+import com.example.vintedandroid.viewmodel.MyInsertionViewModel
 import com.example.vintedandroid.viewmodel.OfferViewModel
 import com.example.vintedandroid.viewmodel.OrderViewModel
 import com.example.vintedandroid.viewmodel.ProductViewModel
@@ -25,7 +26,7 @@ import com.example.vintedandroid.viewmodel.UserViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState", "RememberReturnType")
 @Composable
-fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context, homeViewModel: HomeViewModel, userViewModel: UserViewModel, cartViewModel: CartViewModel, loginRegistrationViewModel: LoginRegistrationViewModel, updatePasswordViewModel: UpdatePasswordViewModel, offerViewModel: OfferViewModel, productViewModel: ProductViewModel, chatViewModel: ChatViewModel, orderViewModel: OrderViewModel, addViewModel: AddViewModel) {
+fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context, homeViewModel: HomeViewModel, userViewModel: UserViewModel, cartViewModel: CartViewModel, loginRegistrationViewModel: LoginRegistrationViewModel, updatePasswordViewModel: UpdatePasswordViewModel, offerViewModel: OfferViewModel, productViewModel: ProductViewModel, chatViewModel: ChatViewModel, orderViewModel: OrderViewModel, addViewModel: AddViewModel, myInsertionViewModel: MyInsertionViewModel) {
 
     val insertionApi = InsertionApi()
 
@@ -79,6 +80,9 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
         }
         composable(route = ScreenController.Chat.route){
             ChatActivity(chatViewModel, navController)
+        }
+        composable(route = ScreenController.MyInsertion.route){
+            MyInsertionActivity(application, myInsertionViewModel, navController)
         }
 
     }

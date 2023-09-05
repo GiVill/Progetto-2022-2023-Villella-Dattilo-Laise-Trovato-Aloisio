@@ -11,6 +11,8 @@
  */
 package com.example.vintedandroid.swagger.client.models
 
+import java.io.Serializable
+
 
 /**
  * 
@@ -30,7 +32,7 @@ data class BasicInsertionDto (
 
     val id: kotlin.Long? = null,
     val title: kotlin.String,
-    val price: kotlin.Float,
+    var price: kotlin.Float,
     val description: kotlin.String,
     val creationDate: Any? = null, //java.time.LocalDate
     val isPrivate: kotlin.Boolean? = null,
