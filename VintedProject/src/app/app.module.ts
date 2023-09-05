@@ -56,6 +56,7 @@ import {OfferProfileCardComponent} from "./Components/Components/Cards/offer-pro
 import {MatDialogModule} from "@angular/material/dialog";
 import {OrderComponent} from "./Components/Pages/Order/order.component";
 import {ImageService} from "./api/image.service";
+import {UserServiceNoCookie} from "./api/user.service.noCookie";
 
 
 
@@ -124,7 +125,7 @@ import {ImageService} from "./api/image.service";
       }
     })
   ],
-  providers: [CookieService,ChatService,ClipboardModule,JwtHelperService,ImageService,InsertionService,ChatMessageService,AuthService,UserService,CartService,OrderService,OfferService],
+  providers: [CookieService,ChatService,ClipboardModule, UserServiceNoCookie ,JwtHelperService,ImageService,InsertionService,MyprofileComponent,ChatMessageService,AuthService,UserService,CartService,OrderService,OfferService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

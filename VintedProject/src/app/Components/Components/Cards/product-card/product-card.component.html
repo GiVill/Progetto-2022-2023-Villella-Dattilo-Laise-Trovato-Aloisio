@@ -2,7 +2,7 @@
   <div class="image-container">
     <img class="rounded-image" [src]="imageName" (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
 
-    <strong class="description" style="color: green; margin-left: 20%" *ngIf="!item?.available">Venduta</strong>
+    <h1 class="description" style="color: green; margin-left: 20%" *ngIf="!item?.available">Venduta</h1>
     <button *ngIf="item?.userId==myid && item?.available"  style="display: flex; bottom: 2px; margin: 5px; left: 25%;" (click)="openOfferModal()" > Visualizza offerte</button>
 
   </div>

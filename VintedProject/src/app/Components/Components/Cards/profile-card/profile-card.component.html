@@ -4,7 +4,9 @@
     <div style="display: flex">
       <div class="name">{{ user?.firstName }}</div>
       <div style="display: flex">
-      <div class="name" *ngIf="insertion?.isPrivate" style="margin-left: 150%; color: red">PRIVATA</div>
+        <div class="name" *ngIf="insertion?.isPrivate" style="margin-left: 150%; color: red">PRIVATA</div>
+        <button *ngIf="insertion?.userId === myUserId && insertion?.isPrivate && profile && insertion?.available" style=" margin-left:8%" class="button" (click)="deleteInsertion()" > X </button>
+        <button *ngIf="insertion?.userId === myUserId && !insertion?.isPrivate && profile && insertion?.available" style=" margin-left:740%" class="button" (click)="deleteInsertion()" > X </button>
       </div>
     </div>
 

@@ -6,6 +6,8 @@ import {AuthService} from "./auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {TokenDto} from "../model/tokenDto";
 import {async} from "rxjs";
+import {UserServiceNoCookie} from "./user.service.noCookie";
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,7 @@ export class CookiesService implements OnInit {
     private router: Router,
     private cookieService: CookieService,
     private authService: AuthService,
+    private userServiceNoCookie: UserServiceNoCookie,
     private jwtHelper: JwtHelperService,
     private snackBar: MatSnackBar,
   ) {}
@@ -28,6 +31,21 @@ export class CookiesService implements OnInit {
   getTokent(){
     this.checkUserToken()
     return this.cookieService.get('jwtToken')
+  }
+
+  checkAdmin() {
+    this.userServiceNoCookie.getUserDtoById(Number(this.getUserId())).subscribe(
+      (response) => {
+        if (response.role == "ADMIN"){
+          return true
+        }else{
+          return false
+        }
+      },
+      (error: any) => {
+        return false
+      })
+    return false
   }
 
   async getRefreshToken(): Promise<boolean> {

@@ -16,6 +16,7 @@
                   <li><a  [routerLink]="['/category' , 'ABBIGLIAMENTO']">Abbigliamento</a></li>
                   <li><a  [routerLink]="['/category' , 'BARCHE']">Barche</a></li>
                   <li><a  [routerLink]="['/category' , 'SPORT']">Sport</a></li>
+                  <li><a  [routerLink]="['/category' , 'ALTRO']">Altro</a></li>
                 </ul> <!-- Fine del sotto-menu -->
               </li> <!-- Chiudo il list-item -->
               <!--qui altri list-item -->
@@ -52,7 +53,7 @@
     <button mat-button [routerLink]="['/category' , 'xiaomi']">Xiaomi</button>
     <button mat-button [routerLink]="['/category' , 'Puma']">Puma</button>
     <button mat-button [routerLink]="['/category' , 'Fila']">Fila</button>
-    <button mat-button [routerLink]="['/dash']" >Amministazione</button>
+    <button mat-button *ngIf="isAdmin" [routerLink]="['/dash']" >Amministazione</button>
     <button mat-button [routerLink]="['/cart']">Accesso rapido al carrello</button>
   </div>
 </div>

@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {AppComponent} from "../../../app.component";
 import {CookieService} from "ngx-cookie-service";
 import {CookiesService} from "../../../api/cookies.service";
+import {UserService} from "../../../api/user.service";
 
 @Component({
   selector: 'app-main-nav',
@@ -15,6 +16,7 @@ export class MainNavComponent implements OnInit{
   showFiller!: boolean;
   showSubMenu: boolean = false;
   logStringResult: string | undefined;
+  isAdmin: boolean = false;
 
   constructor(
               private router: Router,
@@ -26,8 +28,14 @@ export class MainNavComponent implements OnInit{
   ngOnInit(): void {
     this.cookieService.checkUserCookie()
     this.logStringResult = this.cookieService.logStringResultfun()
-    //this.getUserString()
+    if (this.cookieService.checkAdmin())
+      this.isAdmin=true;
+    else{
+      this.isAdmin=false;
+    }
   }
+
+
 
   getUserString(){
     return this.logStringResult = this.cookieService.logStringResultfun()

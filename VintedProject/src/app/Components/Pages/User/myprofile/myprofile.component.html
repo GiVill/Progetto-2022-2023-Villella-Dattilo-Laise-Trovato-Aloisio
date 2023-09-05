@@ -34,7 +34,7 @@
             <div class="card-container">
               <div class="card-row">
                 <ng-container *ngFor="let item of myInsertion?.content; let i = index;">
-                  <app-profile-card [user]="user" [userId]="item.userId" [insertion]="item" class="card-item"></app-profile-card>
+                  <app-profile-card [user]="user" [userId]="item.userId" [insertion]="item" [profile]="true" class="card-item"></app-profile-card>
                   <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
                 </ng-container>
               </div>
@@ -94,7 +94,7 @@
         <div class="card-container">
           <div class="card-row" >
             <ng-container *ngFor="let item of myInsertion?.content; let i = index;">
-              <app-profile-card [user]="user" [userId]="item.userId" [insertion]="item" class="card-item"></app-profile-card>
+              <app-profile-card [user]="user" [userId]="item.userId" [insertion]="item" [profile]="true" class="card-item"></app-profile-card>
               <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
             </ng-container>
           </div>
