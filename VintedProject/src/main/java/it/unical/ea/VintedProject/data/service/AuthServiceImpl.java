@@ -7,6 +7,7 @@ import it.unical.ea.VintedProject.data.service.interfaces.AuthService;
 import it.unical.ea.VintedProject.dto.LoginUserDto;
 import it.unical.ea.VintedProject.dto.NewUserDto;
 import it.unical.ea.VintedProject.dto.UserDto;
+import it.unical.ea.VintedProject.dto.enumeration.Role;
 import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
 import it.unical.ea.VintedProject.security.keycloak.TokenDto;
 import jakarta.persistence.EntityNotFoundException;

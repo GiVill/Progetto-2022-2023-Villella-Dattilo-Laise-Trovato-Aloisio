@@ -185,7 +185,7 @@ public class KeycloakTokenClient {
 
             // Get realm role "app_user" (requires view-realm role)
             RoleRepresentation appUserRole = realmResource.roles()//
-                    .get("app_user").toRepresentation();
+                    .get("app_admin").toRepresentation();
 
 
             // Assign realm role tester to user

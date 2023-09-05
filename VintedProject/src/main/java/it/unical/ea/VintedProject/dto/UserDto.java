@@ -19,6 +19,7 @@ public class UserDto {
     private String lastName;
     private String imageName;
     private String nickname;
+    private String role;
     @Email(message = "email.not.valid")
     private String email;
     private String addressStreet;
