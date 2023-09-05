@@ -1,5 +1,6 @@
 package it.unical.ea.VintedProject.dto;
 
+import it.unical.ea.VintedProject.dto.enumeration.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class NewUserDto {
     @Email(message = "email.not.valid")
     private String email;
 
+    private Role role;
     private String lastname;
     private String addressStreet;
     private Integer addressNumber;

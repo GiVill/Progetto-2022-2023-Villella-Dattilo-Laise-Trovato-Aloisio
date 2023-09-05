@@ -5,6 +5,7 @@ import it.unical.ea.VintedProject.data.entities.*;
 import it.unical.ea.VintedProject.data.service.interfaces.*;
 import it.unical.ea.VintedProject.dto.NewUserDto;
 import it.unical.ea.VintedProject.dto.enumeration.PaymentMethod;
+import it.unical.ea.VintedProject.dto.enumeration.Role;
 import it.unical.ea.VintedProject.dto.enumeration.Status;
 import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
 import lombok.RequiredArgsConstructor;
@@ -69,7 +70,7 @@ public class DbGenerator implements ApplicationRunner {
             CSVParser usersCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(usersRes.getInputStream()));
             for (CSVRecord record : usersCsv) {
-                insertUser(record.get(0),record.get(1), record.get(2), record.get(3),record.get(4),record.get(5));
+                insertUser(record.get(0),record.get(1), record.get(2), record.get(3),record.get(4),record.get(5),record.get(6));
             }
 
             CSVParser ordersCsv = CSVFormat.DEFAULT.withDelimiter(';')
@@ -163,7 +164,7 @@ public class DbGenerator implements ApplicationRunner {
     }
 */
     private void insertUser(String nickName,String firstName, String lastName,String email,String password,
-                            String phoneNumber) {
+                            String phoneNumber,String role) {
 
         Address address = new Address("via boh","666","Napoli","880434","Italy","Lombardia");
         User user = new User();
@@ -174,6 +175,7 @@ public class DbGenerator implements ApplicationRunner {
         user.setPassword(password);
         user.setPhoneNumber(Integer.valueOf(phoneNumber));
         user.setAddress(address);
+        user.setRole(Role.valueOf(role));
 
         keycloakTokenClient.userRegister(modelMapper.map(user, NewUserDto.class));
 
@@ -228,6 +230,6 @@ public class DbGenerator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-      //createDb();
+      createDb();
     }
 }
