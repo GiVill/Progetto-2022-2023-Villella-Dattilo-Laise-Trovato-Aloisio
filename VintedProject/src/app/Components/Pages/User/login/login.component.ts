@@ -19,7 +19,6 @@ import {Configuration} from "../../../../configuration";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit{
-
   isFlipped: boolean = false;
   passwordCheck: string = '';
   isRegistrationMode: boolean = false;
@@ -42,7 +41,8 @@ export class LoginComponent implements OnInit{
     addressStreet: '',
     addressNumber: 0,
     addressCity: '',
-    addressCap: 0
+    addressCap: 0,
+    role: "USER"
 
   };
   private configuration: Configuration ={
