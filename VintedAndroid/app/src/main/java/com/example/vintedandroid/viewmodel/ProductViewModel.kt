@@ -1,6 +1,5 @@
 package com.example.vintedandroid.viewmodel
 
-import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -12,10 +11,8 @@ import com.example.vintedandroid.swagger.client.apis.OfferApi
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 import com.example.vintedandroid.swagger.client.models.BuyingOfferDto
 import com.example.vintedandroid.swagger.client.models.NewMessageDto
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ProductViewModel(application: Context) : ViewModel() {
@@ -33,7 +30,7 @@ class ProductViewModel(application: Context) : ViewModel() {
             loggedUser = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getSingleUser()
         }
         val newMessageDto = convertStringToNewMessageDto(loggedUser, searchedProduct, message)
-        ChatMessageApi(application).insertMessage(newMessageDto)
+        //ChatMessageApi(application).insertMessage(newMessageDto)
     }
 
     fun getAllOffersFromInsertion(insertionId: Long): Array<BuyingOfferDto>{

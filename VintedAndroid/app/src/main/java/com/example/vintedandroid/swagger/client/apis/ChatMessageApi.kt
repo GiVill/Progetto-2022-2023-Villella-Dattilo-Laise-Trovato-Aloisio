@@ -11,8 +11,6 @@
  */
 package com.example.vintedandroid.swagger.client.apis
 
-import android.content.Context
-import android.util.Log
 import com.example.vintedandroid.swagger.client.infrastructure.ApiClient
 import com.example.vintedandroid.swagger.client.infrastructure.ClientError
 import com.example.vintedandroid.swagger.client.infrastructure.ClientException
@@ -26,9 +24,8 @@ import com.example.vintedandroid.swagger.client.models.ChatMessage
 import com.example.vintedandroid.swagger.client.models.NewMessageDto
 
 import com.example.vintedandroid.swagger.client.infrastructure.*
-import com.example.vintedandroid.viewmodel.TokenViewModel
 
-class ChatMessageApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
+class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
     /**
      * 

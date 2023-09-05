@@ -48,7 +48,7 @@ fun ChatActivity(chatViewModel: ChatViewModel,  navController: NavHostController
         Row() {
             Column(modifier = Modifier.fillMaxSize()) {
                 androidx.compose.material3.Text(
-                    text = stringResource(R.string.my_chats),
+                    text = stringResource(R.string.MY_CHATS),
                     modifier = Modifier.padding(10.dp),
                     style = TextStyle(fontSize = Typography.titleLarge.fontSize, color = Color.White)
                 )

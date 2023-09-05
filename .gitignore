@@ -1,2 +1,6 @@
 
+
 VintedAndroid/local.properties
+VintedAndroid/app/build/*
+VintedAndroid/.gradle/*
+VintedAndroid/.idea/*
