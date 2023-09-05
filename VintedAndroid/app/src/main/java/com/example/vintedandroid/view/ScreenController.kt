@@ -15,5 +15,6 @@ sealed class ScreenController(val route: String){
     object Product:ScreenController(route = "product")
     object UpdatePassword:ScreenController(route = "update_password")
     object Chat:ScreenController(route = "chat")
+    object ChatMessage:ScreenController(route = "chatMessage")
 
 }

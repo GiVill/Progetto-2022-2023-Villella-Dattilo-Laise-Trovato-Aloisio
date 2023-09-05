@@ -23,6 +23,7 @@ import com.example.vintedandroid.swagger.client.infrastructure.ServerError
 import com.example.vintedandroid.swagger.client.infrastructure.ServerException
 import com.example.vintedandroid.swagger.client.infrastructure.Success
 import com.example.vintedandroid.swagger.client.models.ChatDto
+import androidx.compose.runtime.State
 
 import com.example.vintedandroid.swagger.client.infrastructure.*
 import com.example.vintedandroid.viewmodel.TokenViewModel
@@ -37,7 +38,7 @@ class ChatApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject
      * @return kotlin.Array<ChatDto>
      */
     @Suppress("UNCHECKED_CAST")
-    fun allChatUser(id: kotlin.Long): Flow<Array<ChatDto>> {
+    fun allChatUser(id: kotlin.Long): Array<ChatDto> {
         val localVariableConfig = RequestConfig(
                 RequestMethod.GET,
                 "/v1/chat/user/{id}".replace("{" + "id" + "}", "$id")
@@ -47,7 +48,7 @@ class ChatApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject
         )
 
         return when (response.responseType) {
-            ResponseType.Success -> (response as Success<*>).data as Flow<Array<ChatDto>>
+            ResponseType.Success -> (response as Success<*>).data as Array<ChatDto>
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
             ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")

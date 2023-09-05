@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+#Tue Sep 05 18:00:30 CEST 2023
+base.0=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.10=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+base.11=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes3.dex
+base.12=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes4.dex
+base.2=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\11\\classes.dex
+base.3=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
+base.4=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
+base.5=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\5\\classes.dex
+base.6=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\6\\classes.dex
+base.7=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\7\\classes.dex
+base.8=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\8\\classes.dex
+base.9=C\:\\Users\\umby1\\Documents\\GitHub\\VintedProject-android\\VintedAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex
+=======
 #Tue Sep 05 16:39:22 CEST 2023
 base.0=/home/fra/GitHub/VintedProject-Android/VintedProject/VintedAndroid/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/home/fra/GitHub/VintedProject-Android/VintedProject/VintedAndroid/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
@@ -12,6 +28,7 @@ base.6=/home/fra/GitHub/VintedProject-Android/VintedProject/VintedAndroid/app/bu
 base.7=/home/fra/GitHub/VintedProject-Android/VintedProject/VintedAndroid/app/build/intermediates/dex/debug/mergeProjectDexDebug/7/classes.dex
 base.8=/home/fra/GitHub/VintedProject-Android/VintedProject/VintedAndroid/app/build/intermediates/dex/debug/mergeProjectDexDebug/8/classes.dex
 base.9=/home/fra/GitHub/VintedProject-Android/VintedProject/VintedAndroid/app/build/intermediates/dex/debug/mergeProjectDexDebug/9/classes.dex
+>>>>>>> a870ddd4f2150e5bb2a2ac3c763889c5e0fea684
 path.0=classes.dex
 path.1=0/classes.dex
 path.10=classes2.dex

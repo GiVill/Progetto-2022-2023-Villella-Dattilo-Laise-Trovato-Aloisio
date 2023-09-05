@@ -48,5 +48,9 @@
     <string name="no_offers">No Offers</string>
     <string name="no_orders">No Orders</string>
     <string name="order_details">Order Details:</string>
+<<<<<<< HEAD
+    <string name="MY_CHATS">Chat List:</string>
+=======
     <string name="add_image">Add Image</string>
+>>>>>>> a870ddd4f2150e5bb2a2ac3c763889c5e0fea684
 </resources>

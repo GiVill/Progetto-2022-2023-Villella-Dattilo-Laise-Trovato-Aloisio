@@ -16,6 +16,7 @@ drawable ic_profile
 mipmap ic_launcher
 mipmap ic_launcher_round
 raw vinted
+string MY_CHATS
 string account_settings
 string add_cart
 string add_image

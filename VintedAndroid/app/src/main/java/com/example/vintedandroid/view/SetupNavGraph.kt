@@ -78,7 +78,7 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
             UpdatePasswordActivity(updatePasswordViewModel)
         }
         composable(route = ScreenController.Chat.route){
-            ChatActivity(chatViewModel)
+            ChatActivity(chatViewModel, navController)
         }
 
     }

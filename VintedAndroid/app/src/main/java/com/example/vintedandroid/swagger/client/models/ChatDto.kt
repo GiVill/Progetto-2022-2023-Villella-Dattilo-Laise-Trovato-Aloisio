@@ -25,6 +25,8 @@ data class ChatDto (
     val user1: kotlin.Long? = null,
     val user2: kotlin.String? = null,
     val chatMessage: ChatMessage? = null,
-    val basicInsertion: BasicInsertion? = null
-) {
-}
+    val basicInsertion: BasicInsertion? = null,
+    val insertionTitle: kotlin.String? = null,
+    val user2NameLastname: kotlin.String? = null
+)
+
