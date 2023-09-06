@@ -11,6 +11,7 @@
  */
 package com.example.vintedandroid.swagger.client.apis
 
+import android.util.Log
 import com.example.vintedandroid.swagger.client.infrastructure.ApiClient
 import com.example.vintedandroid.swagger.client.infrastructure.ClientError
 import com.example.vintedandroid.swagger.client.infrastructure.ClientException
@@ -24,7 +25,7 @@ import com.example.vintedandroid.swagger.client.models.ChatMessage
 import com.example.vintedandroid.swagger.client.models.NewMessageDto
 
 import com.example.vintedandroid.swagger.client.infrastructure.*
-import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
+import kotlinx.coroutines.flow.Flow
 
 class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
@@ -35,7 +36,7 @@ class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject
      * @return kotlin.Array<ChatMessage>
      */
     @Suppress("UNCHECKED_CAST")
-    fun allChatMessage(chatId: kotlin.Long): kotlin.Array<ChatMessage> {
+    fun allChatMessage(chatId: String?): Array<ChatMessage> {
         val localVariableConfig = RequestConfig(
                 RequestMethod.GET,
                 "/v1/chat/message/{chatId}".replace("{" + "chatId" + "}", "$chatId")
@@ -47,7 +48,7 @@ class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject
         )
 
         return when (response.responseType) {
-            ResponseType.Success -> (response as Success<*>).data as kotlin.Array<ChatMessage>
+            ResponseType.Success -> (response as Success<*>).data as Array<ChatMessage>
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
             ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
@@ -61,7 +62,7 @@ class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject
      * @return kotlin.String
      */
     @Suppress("UNCHECKED_CAST")
-    fun insertMessage(body: NewMessageDto): kotlin.String {
+    fun insertMessage(body: NewMessageDto): Int {
         val localVariableBody: kotlin.Any? = body
         var localVariableConfig = RequestConfig(
                 RequestMethod.POST,
@@ -72,6 +73,7 @@ class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject
                 localVariableConfig, localVariableBody
         )
 
+        Log.i("dsda", response.toString())
         return when (response.responseType) {
             ResponseType.Success -> TODO()
             ResponseType.Informational -> TODO()

@@ -15,17 +15,19 @@ import androidx.navigation.NavHostController
 import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.swagger.client.models.ChatMessage
 import com.example.vintedandroid.viewmodel.ChatMessageViewModel
+import androidx.compose.foundation.layout.Spacer
 
- @Composable
+
+@Composable
 fun ChatMessageActivity(
     chatId: String?,
     chatMessageViewModel: ChatMessageViewModel,
     navController: NavHostController,
 ) {
     val messages: Array<ChatMessage>? =
-        chatId?.let { chatMessageViewModel.getAllMessages(it.toLong()) }
+        chatId?.let { chatMessageViewModel.getAllMessages(it) }
 
-     var reciver: Long = 0;
+    var reciver: Long = 0;
 
     Column(
         modifier = Modifier
@@ -38,8 +40,8 @@ fun ChatMessageActivity(
                 val backgroundColor = if (isMe) Color.DarkGray else Color.White
                 val textColor = if (isMe) Color.White else Color.Black
                 val alignment = if (isMe) Alignment.End else Alignment.Start
-                if (message.sender  != LoggedUserDetails.getInstance().getCurrentUser().id)
-                    reciver= message.sender!!;
+                if (message.sender != LoggedUserDetails.getInstance().getCurrentUser().id)
+                    reciver = message.sender!!;
 
                 Card(
                     modifier = Modifier
@@ -89,7 +91,7 @@ fun ChatMessageActivity(
                 },
                 placeholder = { Text("Scrivi un messaggio...") },
                 singleLine = true,
-                textStyle = TextStyle(color = Color.Black)
+                textStyle = TextStyle(color = Color.White)
             )
 
             IconButton(
@@ -97,7 +99,11 @@ fun ChatMessageActivity(
                     // Qui gestisci l'invio del messaggio
                     if (newMessageText.isNotBlank()) {
                         if (chatId != null) {
-                            chatMessageViewModel.sendMessage(newMessageText, chatId.toLong() ,reciver)
+                            chatMessageViewModel.sendMessage(
+                                newMessageText,
+                                chatId.toLong(),
+                                reciver
+                            )
                         }
                         newMessageText = ""
                     }
@@ -111,6 +117,9 @@ fun ChatMessageActivity(
         }
     }
 }
+
+
+
 
 
 
