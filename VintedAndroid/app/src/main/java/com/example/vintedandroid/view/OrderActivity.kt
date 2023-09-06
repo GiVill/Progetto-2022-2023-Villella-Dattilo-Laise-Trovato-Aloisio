@@ -38,19 +38,33 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.vintedandroid.R
 import com.example.vintedandroid.swagger.client.models.OrderDto
+import com.example.vintedandroid.swagger.client.models.PageOrderDto
 import com.example.vintedandroid.viewmodel.OrderViewModel
+
 
 @Composable
 fun OrderActivity(orderViewModel: OrderViewModel) {
+    var pageOrder = 0
 
+    val orderHistory = remember { mutableListOf<PageOrderDto>() }
 
-    var order by remember { mutableStateOf(orderViewModel.getOrders(page)) }
+    var order by remember { mutableStateOf(orderViewModel.getOrders(pageOrder)) }
+
+    Log.i("PAGES", order.toString())
 
 
     LazyColumn(modifier = Modifier.fillMaxSize()){
-        if(order.results.isNotEmpty()) {
-            items(order.results) { item ->
-                ListOrder(item = item, orderViewModel)
+        while(order.empty != true){
+            orderHistory.add(order)
+            order = orderViewModel.getOrders(pageOrder)
+            pageOrder += 1
+        }
+        if(orderHistory.isNotEmpty()) {
+            items(orderHistory) { item ->
+                Log.i("ITEM", item.toString())
+                for(order in item.results){
+                    ListOrder(item = order, orderViewModel)
+                }
             }
         }
         else{
@@ -60,6 +74,13 @@ fun OrderActivity(orderViewModel: OrderViewModel) {
         }
     }
 }
+
+/*
+ CircularProgressIndicator(
+            modifier = Modifier
+                .size(50.dp)
+        )
+ */
 
 @Composable
 fun ListOrder(item: OrderDto, orderViewModel: OrderViewModel) {

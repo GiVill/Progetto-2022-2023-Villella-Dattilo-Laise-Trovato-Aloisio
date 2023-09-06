@@ -3,7 +3,7 @@
     <string name="default_account">Default Account</string>
     <string name="account_settings">Profilo</string>
     <string name="add_cart">Add to Cart</string>
-    <string name="offer">Offer</string>
+    <string name="offer">Make an Offer</string>
     <string name="previous_page">Previous Page</string>
     <string name="next_page">Next Page</string>
     <string name="article">Article:</string>
@@ -12,8 +12,8 @@
     <string name="see_your_profile">See Your Profile</string>
     <string name="no_user_logged">No User Logged</string>
     <string name="go_to_login_page">Go To Login Page</string>
-    <string name="your_orders">Your Orders</string>
-    <string name="your_offers">Your Offers</string>
+    <string name="my_orders">My Orders</string>
+    <string name="my_offers">My Offers</string>
     <string name="send_feedback">Send Feedback</string>
     <string name="reset_password">Reset Password</string>
     <string name="logout">Logout</string>
@@ -52,5 +52,6 @@
     <string name="add_image">Add Image</string>
     <string name="My_Insertions">My insertions:</string>
     <string name="view_offers">View offers</string>
+    <string name="create_order">Create Order</string>
 
 </resources>

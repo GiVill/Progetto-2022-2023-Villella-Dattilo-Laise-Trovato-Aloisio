@@ -10,7 +10,7 @@ import java.util.UUID
 @Entity(tableName = "cartDto")
 data class CartDto(
 
-    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    @PrimaryKey val id: Long? = null,
     @ColumnInfo(name="title") val title:String,
     @ColumnInfo(name="price") val price: Float,
     @ColumnInfo(name="description") val description: String? = null,

@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -32,8 +34,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -41,6 +47,7 @@ import coil.compose.AsyncImage
 import com.example.vintedandroid.R
 import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
+import com.example.vintedandroid.swagger.client.models.BuyingOfferDto
 import com.example.vintedandroid.view.config.PersonalizedAsyncImage
 import com.example.vintedandroid.view.config.createPersonalizedTextfield
 import com.example.vintedandroid.viewmodel.HomeViewModel
@@ -238,40 +245,67 @@ fun PrivateItemCard(searchedProduct: MutableState<BasicInsertionDto>, productVie
             for (offer in allOffers) {
                 Log.i("offer", "${offer}")
 
+                val statusColor = when (offer.status) {
+                    BuyingOfferDto.Status.PENDING -> Color.Magenta
+                    BuyingOfferDto.Status.APPROVED -> Color.Green
+                    BuyingOfferDto.Status.REFUSED -> Color.Red
+                    else -> Color.Black // Colore predefinito per gli altri stati
+                }
+
                 Card(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(6.dp)) {
+                        .fillMaxWidth()){
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         //verticalAlignment = Alignment.CenterVertically, // Allinea verticalmente gli elementi
                         horizontalArrangement = Arrangement.SpaceBetween // Spaziatura tra gli elementi orizzontali
                     ){
                         Column {
-                            Text(text = "${offer.price}")
-                            Text(text = "${offer.status}")
-                        }
-                        Spacer(modifier = Modifier.width(130.dp))
-                        Column{
-
-                            Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween) {
-
-                                Button(onClick = {
-                                    productViewModel.acceptOffer(offer)
-                                }) {
-                                    Icon(
-                                        imageVector = Icons.Default.Check,
-                                        contentDescription = "Check Icon"
-                                    )
+                            Text(text = stringResource(R.string.price) +" ${offer.price} $")
+                            val statusText = buildAnnotatedString {
+                                append(stringResource(id = R.string.status))
+                                append(" ")
+                                withStyle(style = SpanStyle(color = statusColor)) {
+                                    append(offer.status.toString())
                                 }
-                                Button(onClick = { productViewModel.deleteOffer(offer) },
-                                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Close,
-                                        contentDescription = "Close Icon",
-                                    )
 
+                            }
+
+                            Text(
+                                text = statusText
+                            )
+                        }
+                        if(offer.status == BuyingOfferDto.Status.PENDING) {
+
+                            Spacer(modifier = Modifier.width(90.dp))
+                            Column {
+
+                                Row(
+                                    Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+
+                                    Button(
+                                        modifier = Modifier.size(45.dp),
+                                        onClick = {
+                                        productViewModel.acceptOffer(offer)
+                                    }) {
+                                        Icon(
+                                            imageVector = Icons.Default.Check,
+                                            contentDescription = "Check Icon"
+                                        )
+                                    }
+                                    Button(
+                                        modifier = Modifier.size(45.dp),
+                                        onClick = { productViewModel.deleteOffer(offer) },
+                                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Close,
+                                            contentDescription = "Close Icon",
+                                        )
+
+                                    }
                                 }
                             }
                         }

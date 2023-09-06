@@ -2,6 +2,7 @@ package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -23,14 +24,18 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
 import com.example.vintedandroid.R
+import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.application_status.internetChecker
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
+import com.example.vintedandroid.swagger.client.models.PageBasicInsertionDto
 import com.example.vintedandroid.view.config.PersonalizedAsyncImage
 import com.example.vintedandroid.viewmodel.HomeViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-var page: Int = 0
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "CoroutineCreationDuringComposition",
     "StateFlowValueCalledInComposition"
@@ -38,19 +43,27 @@ var page: Int = 0
 @Composable
 fun HomeActivity(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>, application: Context, viewModel: HomeViewModel) {
 
+    var page: Int = 0
 
     var pageInsertion by remember { mutableStateOf(viewModel.getAllInsertion(page)) }
-    var allInsertion = mutableListOf<BasicInsertionDto>()
+    var allInsertion = remember { mutableStateOf(mutableListOf<PageBasicInsertionDto>()) }
+
+
     //var isLoaded by remember { mutableStateOf(false) }
 
     //LaunchedEffect(pageInsertion) { isLoaded = true }
 
     if (internetChecker(application)) {
+
+        LaunchedEffect(Unit) {
+            allInsertion.value.add(pageInsertion)
+        }
+
         Box(modifier = Modifier.fillMaxSize()) {
 
             //if (isLoaded) {
-                allInsertion.addAll(pageInsertion.results)
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
+                   // allInsertion.add(pageInsertion)
                     item {
                         Box(
                             modifier = Modifier
@@ -66,33 +79,39 @@ fun HomeActivity(itemsInCart: MutableList<BasicInsertionDto?>, navController: Na
                             Spacer(modifier = Modifier.height(16.dp))
                         }
                     }
-                    items(allInsertion) { item ->
-                        ItemCart(item, itemsInCart, navController, searchedProduct, viewModel)
+                    /*
+                    if(orderHistory.isNotEmpty()) {
+                        items(orderHistory) { item ->
+                            Log.i("ITEM", item.toString())
+                            for(order in item.results){
+                                ListOrder(item = order, orderViewModel)
+                            }
+                        }
+                    }
+
+                     */
+                    Log.i("INSERTION",allInsertion.toString())
+                    items(allInsertion.value) { item ->
+                        Log.i("ITEM",item.toString())
+                        for(insertion in item.results){
+                            Log.i("INSE",insertion.toString())
+                            ItemCart(insertion, itemsInCart, navController, searchedProduct, viewModel)
+                        }
                     }
                     item {
-                        Row (modifier = Modifier.fillMaxSize()){
+                        Row (modifier = Modifier.fillMaxSize()) {
                             Button(
                                 onClick = {
-                                    if (page > 0) {
-                                        //isLoaded = false
-                                        page -= 1
-                                        pageInsertion = viewModel.getAllInsertion(page)
-                                    }
+                                    Log.i("ENTRATO",page.toString())
+                                    page +=1
+                                    pageInsertion = viewModel.getAllInsertion(page)
+                                    allInsertion.value.add(pageInsertion)
+                                    Log.i("ENTRATO",allInsertion.toString())
+
                                 },
-                                enabled = page > 0
                             ) {
                                 Text(text = stringResource(R.string.previous_page))
                             }
-                            Button(
-                                onClick = {
-                                    if(page <= pageInsertion.totalPages!!) {
-                                        //isLoaded = false
-                                        page += 1
-                                        pageInsertion = viewModel.getAllInsertion(page)
-                                    }
-                                },
-                                enabled = pageInsertion.totalPages!! >= page
-                            ) { Text(text = stringResource(R.string.next_page)) }
                         }
                     }
                 }
@@ -111,7 +130,7 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
             .fillMaxWidth()
             .padding(16.dp)
             .clickable(onClick = {
-                searchedProduct.value = item
+                searchedProduct.value = item //da togliere
                 navController.navigate(ScreenController.Product.route)
             }),
         elevation = 4.dp

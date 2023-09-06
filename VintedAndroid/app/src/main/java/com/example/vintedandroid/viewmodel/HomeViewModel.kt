@@ -48,6 +48,7 @@ class HomeViewModel(application: Application) : ViewModel() {
     private fun convertBasicInsertionDtoToCartDto(item: BasicInsertionDto): CartDto {
 
         return CartDto(
+            id = item.id,
             title = item.title,
             price = item.price,
             description = item.description,

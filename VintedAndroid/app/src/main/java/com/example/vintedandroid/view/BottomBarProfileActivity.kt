@@ -85,8 +85,8 @@ fun BottomBarProfileActivity(navController: NavController, userViewModel: UserVi
                 Spacer(modifier = Modifier.height(15.dp))
 
                 SimilarButton(navController = navController, text = stringResource(R.string.My_Insertions), navigateTo = ScreenController.MyInsertion.route, icon = Icons.Filled.MyLocation)
-                SimilarButton(navController = navController, text = stringResource(R.string.your_orders), navigateTo = ScreenController.Order.route, icon = Icons.Filled.EuroSymbol)
-                SimilarButton(navController = navController, text = stringResource(R.string.your_offers), navigateTo = ScreenController.Offer.route, icon = Icons.Filled.LocalOffer)
+                SimilarButton(navController = navController, text = stringResource(R.string.my_orders), navigateTo = ScreenController.Order.route, icon = Icons.Filled.EuroSymbol)
+                SimilarButton(navController = navController, text = stringResource(R.string.my_offers), navigateTo = ScreenController.Offer.route, icon = Icons.Filled.LocalOffer)
                 SimilarButton(navController = navController, text = stringResource(R.string.send_feedback), navigateTo = ScreenController.Feedback.route, icon = Icons.Filled.Info)
                 SimilarButton(navController = navController, text = stringResource(R.string.reset_password), navigateTo = ScreenController.UpdatePassword.route, icon = Icons.Filled.LockReset)
 

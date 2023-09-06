@@ -23,7 +23,7 @@ data class BuyingOffer (
 
     val id: kotlin.Long? = null,
     val price: kotlin.Float? = null,
-    val status: Status? = null,
+    val status: String? = null,
     val insertion: BasicInsertion? = null,
     val user: User? = null
 ) {

@@ -25,6 +25,7 @@ import com.example.vintedandroid.swagger.client.infrastructure.Success
 import com.example.vintedandroid.swagger.client.models.BuyingOfferDto
 
 import com.example.vintedandroid.swagger.client.infrastructure.*
+import com.google.gson.Gson
 
 class OfferApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
@@ -281,6 +282,7 @@ class OfferApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
      */
     @Suppress("UNCHECKED_CAST")
     fun userDeleteOffer(body: BuyingOfferDto): kotlin.String {
+
         val localVariableBody: kotlin.Any? = body
         val localVariableConfig = RequestConfig(
                 RequestMethod.DELETE,

@@ -98,7 +98,7 @@ fun SetupNavGraph(
             ChatActivity(chatViewModel, navController)
         }
         composable(route = ScreenController.MyInsertion.route){
-            MyInsertionActivity(application, myInsertionViewModel, navController)
+            MyInsertionActivity(application,searchedProduct, myInsertionViewModel, navController)
         }
         composable(route = ScreenController.ChatMessage.route + "/{chatId}") { backStackEntry ->
             val chatId = backStackEntry.arguments?.getString("chatId")

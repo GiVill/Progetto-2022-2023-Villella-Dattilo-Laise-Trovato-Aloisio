@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.dto.CartDto
+import com.example.vintedandroid.swagger.client.apis.OrderApi
+import com.example.vintedandroid.swagger.client.models.OrderDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -31,6 +33,10 @@ class CartViewModel(application: Application) : ViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             AppDatabase.getInstance(context = application.applicationContext).cartDao().deleteAll()
         }
+    }
+
+    fun createOrder(newOrder : OrderDto) {
+        OrderApi().userAddOrder(newOrder)
     }
 
 }

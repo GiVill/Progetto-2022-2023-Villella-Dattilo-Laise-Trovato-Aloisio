@@ -25,6 +25,7 @@ class OfferViewModel(application: Application) : ViewModel() {
 
     fun deleteOffer(buyingOfferDto: BuyingOfferDto){
 
+        buyingOfferDto.status = BuyingOfferDto.Status.PENDING
         //TODO Da controllare
         Log.i("OfferViewModel", "deleteOffer: $buyingOfferDto")
         Log.i("sdfs", "${buyingOfferDto.status}")

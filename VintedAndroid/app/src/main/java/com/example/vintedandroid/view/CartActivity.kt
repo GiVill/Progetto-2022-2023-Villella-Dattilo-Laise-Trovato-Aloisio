@@ -2,6 +2,7 @@ package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +22,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import com.example.vintedandroid.R
+import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.model.dto.CartDto
+import com.example.vintedandroid.swagger.client.models.Order
+import com.example.vintedandroid.swagger.client.models.OrderDto
 import com.example.vintedandroid.viewmodel.CartViewModel
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -39,14 +43,33 @@ fun CartActivity(cartViewModel: CartViewModel) {
 fun ListOfItem(cartItemsState: MutableList<CartDto>, cartViewModel: CartViewModel) {
     //if(isLoaded){
     if (cartItemsState.isNotEmpty()) {
+        var totalCost : Float = 0f
+        var insertionIdList: MutableList<Long> = mutableListOf()
         LazyColumn {
             items(cartItemsState) { cartItem ->
                     Log.i("Cart", "item in cart is: $cartItem")
+                totalCost += cartItem.price
+                cartItem.id?.let { insertionIdList.add(it) }
                     ItemsInCart(
                         item = cartItem,
                         cartViewModel = cartViewModel
                     )
                 }
+            item {
+                Button(onClick = {
+                    var newOrder = LoggedUserDetails.getInstance().getCurrentUser().id?.let {
+                        OrderDto(0,null,"PAYPAL",insertionIdList.toTypedArray(),totalCost,
+                            it
+                        )
+                    }
+                    if (newOrder != null) {
+                        cartViewModel.createOrder(newOrder)
+                    }
+                    //Toast.makeText(application.applicationContext, "Offert Sended", Toast.LENGTH_SHORT).show()
+                }) {
+                    Text(stringResource(R.string.create_order))
+                }
+            }
             }
         } else {
             NoItemsInCart()

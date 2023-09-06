@@ -40,7 +40,8 @@ import com.example.vintedandroid.viewmodel.HomeViewModel
 import com.example.vintedandroid.viewmodel.MyInsertionViewModel
 
 @Composable
-fun MyInsertionActivity(application: Context, myInsertionViewModel: MyInsertionViewModel, navController: NavHostController) {
+fun MyInsertionActivity(application: Context, searchedProduct: MutableState<BasicInsertionDto>, myInsertionViewModel: MyInsertionViewModel, navController: NavHostController) {
+    var page = 0
     var pageInsertion by remember { mutableStateOf(myInsertionViewModel.getMyInsertion(page)) }
     var allInsertion = mutableListOf<BasicInsertionDto>()
     //var isLoaded by remember { mutableStateOf(false) }
@@ -69,7 +70,7 @@ fun MyInsertionActivity(application: Context, myInsertionViewModel: MyInsertionV
                     }
                 }
                 items(allInsertion) { item ->
-                    ItemCart(item, navController = navController)
+                    ItemCart(searchedProduct,item, navController = navController)
                 }
                 item {
                     Row (modifier = Modifier.fillMaxSize()){
@@ -104,7 +105,7 @@ fun MyInsertionActivity(application: Context, myInsertionViewModel: MyInsertionV
 }
 
 @Composable
-fun ItemCart(item: BasicInsertionDto, navController: NavHostController) {
+fun ItemCart(searchedProduct: MutableState<BasicInsertionDto>,item: BasicInsertionDto, navController: NavHostController) {
 
 
     Card(
@@ -113,6 +114,7 @@ fun ItemCart(item: BasicInsertionDto, navController: NavHostController) {
             .padding(16.dp)
             .clickable {
                 //TODO Da aggiustare
+                searchedProduct.value = item
                 navController.navigate(ScreenController.Product.route)
             },
         elevation = 4.dp
