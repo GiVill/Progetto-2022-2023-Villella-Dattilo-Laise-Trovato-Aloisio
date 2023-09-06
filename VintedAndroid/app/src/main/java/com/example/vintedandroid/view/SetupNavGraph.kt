@@ -14,6 +14,7 @@ import com.example.vintedandroid.swagger.client.apis.InsertionApi
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 import com.example.vintedandroid.viewmodel.AddViewModel
 import com.example.vintedandroid.viewmodel.CartViewModel
+import com.example.vintedandroid.viewmodel.ChatMessageViewModel
 import com.example.vintedandroid.viewmodel.ChatViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
@@ -26,7 +27,22 @@ import com.example.vintedandroid.viewmodel.UserViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState", "RememberReturnType")
 @Composable
-fun SetupNavGraph(navController: NavHostController, searchText: MutableState<String>, application: Context, homeViewModel: HomeViewModel, userViewModel: UserViewModel, cartViewModel: CartViewModel, loginRegistrationViewModel: LoginRegistrationViewModel, updatePasswordViewModel: UpdatePasswordViewModel, offerViewModel: OfferViewModel, productViewModel: ProductViewModel, chatViewModel: ChatViewModel, orderViewModel: OrderViewModel, addViewModel: AddViewModel, myInsertionViewModel: MyInsertionViewModel) {
+fun SetupNavGraph(
+    navController: NavHostController,
+    searchText: MutableState<String>,
+    application: Context,
+    homeViewModel: HomeViewModel,
+    userViewModel: UserViewModel,
+    cartViewModel: CartViewModel,
+    loginRegistrationViewModel: LoginRegistrationViewModel,
+    updatePasswordViewModel: UpdatePasswordViewModel,
+    offerViewModel: OfferViewModel,
+    productViewModel: ProductViewModel,
+    chatViewModel: ChatViewModel,
+    orderViewModel: OrderViewModel,
+    addViewModel: AddViewModel,
+    myInsertionViewModel: MyInsertionViewModel,
+    ChatMessageViewModel: ChatMessageViewModel, ) {
 
     val insertionApi = InsertionApi()
 
@@ -84,6 +100,11 @@ fun SetupNavGraph(navController: NavHostController, searchText: MutableState<Str
         composable(route = ScreenController.MyInsertion.route){
             MyInsertionActivity(application, myInsertionViewModel, navController)
         }
+        composable(route = ScreenController.ChatMessage.route + "/{chatId}") { backStackEntry ->
+            val chatId = backStackEntry.arguments?.getString("chatId")
+            ChatMessageActivity(chatId, ChatMessageViewModel, navController)
+        }
+
 
     }
 

@@ -35,7 +35,7 @@ import com.example.vintedandroid.viewmodel.ChatViewModel
 
 
 @Composable
-fun ChatActivity(chatViewModel: ChatViewModel,  navController: NavHostController) {
+fun ChatActivity( chatViewModel: ChatViewModel,  navController: NavHostController) {
 
 
     //    val userFromDB1: State<UserDatabaseDto?> = userViewModel.getAllUserFromRoomDatabase().collectAsState(initial = null)
@@ -47,33 +47,26 @@ fun ChatActivity(chatViewModel: ChatViewModel,  navController: NavHostController
     Box() {
         Row() {
             Column(modifier = Modifier.fillMaxSize()) {
-                androidx.compose.material3.Text(
-                    text = stringResource(R.string.MY_CHATS),
-                    modifier = Modifier.padding(10.dp),
-                    style = TextStyle(fontSize = Typography.titleLarge.fontSize, color = Color.White)
-                )
-                Column {
-                    chatFromDB?.forEach { chat ->
-                        if (!chat.insertionTitle.isNullOrEmpty()) {
-
-                            ClickableText(
-                                text = AnnotatedString(chat.insertionTitle)+ AnnotatedString(" | "  ) + AnnotatedString(chat.user2NameLastname!!),
-                                modifier = Modifier.padding(20.dp),
-                                onClick = { offset ->
-                                    navController.navigate(ScreenController.ChatMessage.route)
-                                },
-                                style = TextStyle(color = Color.White,fontSize = Typography.titleMedium.fontSize) // Imposta il colore del testo su bianco
-                            )
-                        }
-
-                        Divider()
-                        Spacer(modifier = Modifier.height(15.dp))
+                chatFromDB?.forEach { chat ->
+                    if (!chat.insertionTitle.isNullOrEmpty()) {
+                        ClickableText(
+                            text = AnnotatedString(chat.insertionTitle) + AnnotatedString(" | "  ) + AnnotatedString(chat.user2NameLastname!!),
+                            modifier = Modifier.padding(20.dp),
+                            onClick = { offset ->
+                                navController.navigate("${ScreenController.ChatMessage.route}/${chat.id}")
+                            },
+                            style = TextStyle(color = Color.White, fontSize = Typography.titleMedium.fontSize)
+                        )
                     }
+
+                    Divider()
+                    Spacer(modifier = Modifier.height(15.dp))
                 }
+            }
             }
         }
     }
-}
+
 
 
 
@@ -86,5 +79,5 @@ fun ChatRow(chatItem :  ChatDto) {
         chatItem.user2?.let { Text(text = it) }
 
     }
-
 }
+

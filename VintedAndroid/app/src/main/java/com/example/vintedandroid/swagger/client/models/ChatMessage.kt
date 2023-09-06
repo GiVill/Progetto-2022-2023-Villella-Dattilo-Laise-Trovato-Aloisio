@@ -30,7 +30,6 @@ data class ChatMessage (
     val reciver: kotlin.Long? = null,
     val nickname: kotlin.String? = null,
     val message: kotlin.String? = null,
-    val date: java.time.LocalDateTime? = null,
     val seen: kotlin.Boolean? = null,
     val chat: kotlin.Long? = null
 ) {

@@ -24,6 +24,7 @@ import com.example.vintedandroid.swagger.client.models.ChatMessage
 import com.example.vintedandroid.swagger.client.models.NewMessageDto
 
 import com.example.vintedandroid.swagger.client.infrastructure.*
+import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 
 class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject-api") : ApiClient(basePath) {
 
@@ -39,6 +40,8 @@ class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject
                 RequestMethod.GET,
                 "/v1/chat/message/{chatId}".replace("{" + "chatId" + "}", "$chatId")
         )
+
+
         val response = request<kotlin.Array<ChatMessage>>(
                 localVariableConfig
         )
@@ -52,9 +55,9 @@ class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject
         }
     }
     /**
-     * 
-     * 
-     * @param body  
+     *
+     *
+     * @param body
      * @return kotlin.String
      */
     @Suppress("UNCHECKED_CAST")
@@ -64,12 +67,13 @@ class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject
                 RequestMethod.POST,
                 "/v1/message/insert"
         )
+
         val response = request<kotlin.String>(
                 localVariableConfig, localVariableBody
         )
 
         return when (response.responseType) {
-            ResponseType.Success -> (response as Success<*>).data as kotlin.String
+            ResponseType.Success -> TODO()
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
             ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")

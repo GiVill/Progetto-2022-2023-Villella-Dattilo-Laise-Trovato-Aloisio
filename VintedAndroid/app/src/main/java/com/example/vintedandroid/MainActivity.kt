@@ -40,6 +40,7 @@ import com.example.vintedandroid.model.dto.UserDatabaseDto
 import com.example.vintedandroid.view.noConnectionActivity
 import com.example.vintedandroid.viewmodel.AddViewModel
 import com.example.vintedandroid.viewmodel.CartViewModel
+import com.example.vintedandroid.viewmodel.ChatMessageViewModel
 import com.example.vintedandroid.viewmodel.ChatViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
@@ -75,6 +76,18 @@ class MainActivity : ComponentActivity() {
                         content = {
                         Box(modifier = Modifier.padding(it)) {
 
+                            val chatId = getToken(application) { logged ->
+                                if (logged != null) {
+                                    //TODO Refresh Token
+                                    LoggedUserDetails.getInstance().setCurrentUser(logged)
+                                    Log.i("MainActivity::class", "${LoggedUserDetails.getInstance().getCurrentUser()}")
+                                }
+                                else{
+                                    Log.i("MainActivity::class", "No User in DB")
+                                    //navController.navigate(ScreenController.Login.route)
+                                }
+                            }
+
                             SetupNavGraph(
                                 navController = navController,
                                 searchText = searchText,
@@ -89,7 +102,8 @@ class MainActivity : ComponentActivity() {
                                 chatViewModel = ChatViewModel(application, userViewModel = UserViewModel(application = application)),
                                 orderViewModel = OrderViewModel(application),
                                 addViewModel = AddViewModel(application),
-                                myInsertionViewModel = MyInsertionViewModel(application)
+                                myInsertionViewModel = MyInsertionViewModel(application),
+                                ChatMessageViewModel = ChatMessageViewModel(application)
                             )
                             getToken(application) { logged ->
                                 if (logged != null) {
