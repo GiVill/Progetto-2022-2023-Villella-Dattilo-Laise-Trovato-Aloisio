@@ -36,8 +36,12 @@ export class ProductCardComponent implements OnInit{
       this.imageName = 'assets/resources/vestito.jpg'
     }
 
+    if (this.item?.title && this.item.title.length > 20) {
+      this.item.title = this.item.title.substr(0, 20) + '...';
+    }
+
     if (this.item?.description && this.item.description.length > 33) {
-      this.item.description = this.item.description.substr(0, 33) + '...';
+      this.item.description = this.item.description.substr(0, 28) + '...';
     }
   }
 

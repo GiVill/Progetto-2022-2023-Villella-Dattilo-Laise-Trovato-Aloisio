@@ -44,13 +44,13 @@
   <button class="button btn" [routerLink]="['/brand' , 'Rebook']" >Rebook</button>
   <button class="button btn" [routerLink]="['/brand' , 'Asix']" >Asix</button>
   <button class="button btn" [routerLink]="['/brand' , 'Sony']" >Sony</button>
-  <button class="button btn" [routerLink]="['/brand' , 'Altro']" >Altro</button>
+  <button class="button btn" [routerLink]="['/brand' , 'ALTRO']" >Altro</button>
 </div>
 </div>
 
 
 
-<div class="insertion-container" style="margin-bottom: 20px" *ngIf="mostRequested">
+<div class="insertion-container" style="margin-bottom: 20px" *ngIf="feed">
   <div class="body-content">
     <div style="background-color: #c3d0cd; max-height: 700px;">
       <div class="header">
@@ -59,7 +59,7 @@
       </div>
       <div class="card-container">
         <div class="card-row">
-          <div style="margin-bottom: 10px" *ngFor="let item of mostRequested.content" class="card-item">
+          <div style="margin-bottom: 10px" *ngFor="let item of feed.content" class="card-item">
             <app-profile-card [user]="getUserByUserId(item.userId)"  [userId]="item.userId" [insertion]="item"></app-profile-card>
           </div>
 

@@ -902,12 +902,13 @@ export class InsertionService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -961,12 +962,13 @@ export class InsertionService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             '*/*'
@@ -1010,10 +1012,10 @@ export class InsertionService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.configuration.accessToken) {
+        if (this.CookiesService.getTokent()) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
+                ? this.CookiesService.getTokent()
+                : this.CookiesService.getTokent();
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
         // to determine the Accept header

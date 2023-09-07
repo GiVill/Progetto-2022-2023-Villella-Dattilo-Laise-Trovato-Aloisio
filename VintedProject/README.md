@@ -28,4 +28,16 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Design
 
-![HOME](percorso/relativo/all'immagine.jpg)
+Desig della homepage:
+
+![HOME](/src/assets/resources/samples/Homepage1.png)
+![HOME](/src/assets/resources/samples/Homepage2.png)
+![HOME](/src/assets/resources/samples/Homepage3.png)
+
+
+Desig della pagina dell'inserzione:
+
+![HOME](/src/assets/resources/samples/Pegina Inserzione.png)
+
+Desig della pagina del profilo:
+

@@ -120,6 +120,19 @@
   cursor: pointer;
 }
 
+.card-container-vertical{
+  overflow-y: auto; /* Abilita lo scorrimento verticale quando il contenuto supera l'altezza massima */
+  padding: 0 20px;
+  margin: 2px;
+}
+
+.card-item-vertical {
+  flex: 1 1 auto;
+  max-height: 8%;
+  /* width: 350px; Rimuovi questa riga */
+  width: 100%; /* Aggiungi questa riga */
+}
+
 .card-container {
   overflow-x: auto;
   padding: 0 20px;
