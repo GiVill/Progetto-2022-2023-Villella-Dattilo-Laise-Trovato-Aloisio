@@ -52,29 +52,29 @@ export class ProductCardComponent implements OnInit{
 
   share24(){
     this.insertionService.generate24hToken(Number(this.item?.id)).subscribe(response => {
-        console.log("Capability generata", response);
-        this.clipboardService.copyFromContent(String(response))
+        this.snackBar.open("Codice copiato nella clipboard.", "OK")
+             this.clipboardService.copyFromContent(String(response))
       },
       error => {
       if (error.status == 200){
-        this.snackBar.open("Codice copiato nella clipboard.")
+        this.snackBar.open("Codice copiato nella clipboard.", "OK")
         this.clipboardService.copyFromContent("localhost:4200/private/"+String(error.error.text))
       }
-        console.log("Errore durante la generazione", error);
+        this.snackBar.open("Errore nella generazione del codice.", "RIPROVA")
       })
   }
 
   share8766(){
     this.insertionService.generateYearToken(Number(this.item?.id)).subscribe(response => {
-        console.log("Capability generata", response);
+        this.snackBar.open("Codice copiato nella clipboard.", "OK")
         this.clipboardService.copyFromContent(String(response))
       },
       error => {
         if (error.status == 200){
-          this.snackBar.open("Codice copiato nella clipboard.")
+          this.snackBar.open("Codice copiato nella clipboard.", "OK")
           this.clipboardService.copyFromContent("localhost:4200/private/"+String(error.error.text))
         }
-        console.log("Errore durante la generazione", error);
+        this.snackBar.open("Errore nella generazione del codice.", "RIPROVA")
       })
   }
 
@@ -86,10 +86,10 @@ export class ProductCardComponent implements OnInit{
       (data: BuyingOfferDto[]) => {
         this.offers = data;
         this.sortOffersByPriceDescending();
-        console.log(data)
+
       },
       (error) => {
-        console.log('Si è verificato un errore durante il recupero delle altre offerte', error);
+        this.snackBar.open("Errore durante il recupero delle offerte.", "RIPROVA")
       }
     );
   }
@@ -112,7 +112,7 @@ export class ProductCardComponent implements OnInit{
   }
 
   sortOffersByPriceDescending() {
-    this.offers?.sort((a, b) => b.price - a.price); // Ordina le offerte per prezzo decrescente
+    this.offers?.sort((a, b) => b.price - a.price);
   }
 
   acceptOffer(it: number) {
@@ -127,7 +127,6 @@ export class ProductCardComponent implements OnInit{
 
 
  refuseOffer(it: number) {
-    console.log([it])
     this.offerService.refuseOffers(this.offers![it]).subscribe(response => {
         this.offer()
         this.snackBar.open("Offerta rifiutata" , "OK")

@@ -28,7 +28,7 @@ export class UserInsertionComponent implements OnInit{
 
       },
       (error) => {
-        console.log('Si è verificato un errore durante il recupero dell\'inserzione:', error);
+        console.log('Errore nel recupero dei dati.', error);
       }
     );
   }

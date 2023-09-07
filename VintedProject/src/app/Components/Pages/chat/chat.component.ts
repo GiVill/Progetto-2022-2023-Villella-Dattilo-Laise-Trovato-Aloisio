@@ -5,8 +5,8 @@ import {NewMessageDto} from "../../../model/newMessageDto";
 import {ChatMessageService} from "../../../api/chatMessage.service";
 import {ChatMessageDto} from "../../../model/chatMessageDto";
 import {ChatService} from "../../../api/chat.service";
-import {BasicInsertion} from "../../../model/basicInsertion";
 import {interval, Subject, takeUntil} from "rxjs";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -30,6 +30,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   constructor(private chatMessageService: ChatMessageService,
               private chatService: ChatService,
+              private snackBar: MatSnackBar,
               private cookiesService: CookiesService) {}
 
   async ngOnInit():  Promise<void> {
@@ -58,11 +59,9 @@ export class ChatComponent implements OnInit, OnDestroy {
       if (chats) {
         this.selectedChat = chats[0];
       }
-      console.log(chats);
       this.loadMessages(this.selectedChat.id!);
     } catch (error) {
       this.noChat=true;
-      console.error('Error fetching users:', error);
     }
 
   }
@@ -71,10 +70,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.chatMessageService.allChatMessage(this.selectedChat.id!).subscribe(
       (messages: Array<ChatDto>) => {
         this.messages = messages;
-        console.log(messages)
       },
-      (error) => {
-        console.error('Error fetching messages:', error);
+      () => {
       }
     );
   }
@@ -94,17 +91,15 @@ export class ChatComponent implements OnInit, OnDestroy {
         message: this.newMessage,
         chatId: this.selectedChat.id,
       };
-      console.log("sender: " + newMessageDto.sender);
-      console.log("receiver: " + newMessageDto.reciver);
-      console.log("message: " + newMessageDto.message);
-      console.log("chatId: " + newMessageDto.chatId);
+
       this.chatMessageService.insertMessage(newMessageDto).subscribe(
 
         (response: string) => {
-          console.log(response)
+
           if (response=="ok") {
             this.loadMessages(this.selectedChat.id!);
             this.newMessage = '';
+            this.snackBar.open("Messaggio inviato." , "OK")
           }
         },
         (error) => {
@@ -112,7 +107,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.loadMessages(this.selectedChat.id!);
             this.newMessage = '';
           }else {
-            console.error('Error sending message:', error);
+            this.snackBar.open("Errore, messaggio non inviato." , "RIPROVA")
           }
         }
       );
@@ -120,9 +115,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   onSelectChat(chat: ChatDto): void {
-    console.log("Before selecting user:", chat);
     this.selectedChat = chat;
-    console.log("After selecting user:", this.selectedChat);
     this.loadMessages(chat.id!);
     this.selectedUserId = chat.id;
   }

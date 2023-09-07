@@ -37,8 +37,6 @@ loadInsertions(): void {
         });
       });
     }
-
-    console.log(this.catalog);
   });
 }
 
@@ -56,8 +54,6 @@ loadmore() {
           this.users.push(user);
         });
       });
-
-      console.log(this.catalog);
     }
   });
 }

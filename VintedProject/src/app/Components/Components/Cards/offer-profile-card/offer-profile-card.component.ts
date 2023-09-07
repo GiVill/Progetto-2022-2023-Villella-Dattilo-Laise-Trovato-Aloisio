@@ -23,15 +23,11 @@ export class OfferProfileCardComponent implements OnInit{
   @Input() insertion!: BasicInsertionDto;
   @Input() offer?: BuyingOfferDto;
   isHovered = false;
-  accepted: boolean = false;
-  paymentMethods: PaymentDto.PaymentMethodEnum[] = Object.values(PaymentDto.PaymentMethodEnum);
+
 
 
   constructor(private router: Router,
               private basicInsertion: InsertionService,
-              private offerService: OfferService,
-              private orderService: OrderService,
-              private cookieServices: CookiesService,
               private snackBar: MatSnackBar,
               private userService: UserService
   ) {
@@ -44,24 +40,18 @@ export class OfferProfileCardComponent implements OnInit{
     this.basicInsertion.getInsertionById(this.offer?.insertionId!).subscribe(
       (data: BasicInsertionDto) => {
         this.insertion = data;
-        console.log(data)
-
-        // Create observables for each API call
         const userObservable = this.userService.getUserDtoById(this.insertion?.userId);
-
-        // Combine observables using forkJoin
         forkJoin([userObservable]).subscribe(
           ([user]) => {
             this.user = user;
-            console.log(this.user);
           },
           (error) => {
-            console.error("Error getting user:", error);
+            this.snackBar.open("Errore nel caricamento delle informazioni dell'utente", "RIPROVA")
           }
         );
       },
       (error: any) => {
-        console.error("Error getting insertion:", error);
+        this.snackBar.open("Errore nel caricamento delle inserzioni dell'utente", "RIPROVA")
       }
     );
   }

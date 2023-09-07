@@ -83,26 +83,23 @@ export class DashboardComponent {
   }
 
   actionGetAllByUserId() {
-    console.log(this.userId);
     if (this.userId){
       this.insertionService.getInsertionByUserId(this.userId, this.page).subscribe(
         (insertions: PageBasicInsertionDto) => {
           this.insertionDtoArray = { ...insertions };
-          console.log(this.insertionDtoArray);
         },
         (error) => {
-          console.log("Error", error);
+          this.snackBar.open('Errore nel recupero delle inserzioni', 'RIPROVA');
         }
       );
     }else{
-      console.log(this.userEmail);
       this.insertionService.getInsertionByUserEmail(this.userEmail, this.page).subscribe(
         (insertions: PageBasicInsertionDto) => {
           this.insertionDtoArray = { ...insertions };
-          console.log(this.insertionDtoArray);
         },
         (error) => {
-          console.log("Error", error);
+          this.snackBar.open('Errore nel recupero delle inserzioni', 'RIPROVA');
+
         }
       );
     }
@@ -113,13 +110,9 @@ export class DashboardComponent {
       response => {
         this.actionGetAllByUserId()
         this.snackBar.open('Inserzione Eliminata', 'OK');
-
-        console.log("Inserzione Eliminata", response);
       },
       error => {
         this.snackBar.open('Non è stato possibile eliminare questa inserzione', 'OK');
-
-        console.log("Errore", error);
       }
     );
   }
@@ -134,20 +127,15 @@ export class DashboardComponent {
         },
         (error) => {
           this.snackBar.open('Non è stato possibile recuperare gli ordini', 'OK');
-
-          console.log("Error", error);
         }
       );
     }else{
       this.orderService.getOrderDtoByIdByEmailPagedAdmin(this.userEmail, this.page).subscribe(
         (order: PageOrderDto) => {
           this.orderDtoArray = order;
-          console.log(order)
         },
         (error) => {
           this.snackBar.open('Non è stato possibile recuperare gli ordini', 'OK');
-
-          console.log("Error", error);
         }
       );
     }
@@ -157,12 +145,10 @@ export class DashboardComponent {
    this.orderService.deleteOrderById(orderId).subscribe(
      response => {
        this.snackBar.open('Ordine Eliminato', 'OK');
-       console.log("Ordine Eliminato", response);
 
      },
      error => {
        this.snackBar.open('Non è stato possibile eliminare questo ordine', 'OK');
-       console.log("Errore", error);
      }
    );
   }
@@ -174,7 +160,6 @@ export class DashboardComponent {
       },
       error => {
         this.snackBar.open('Non è stato possibile eliminare questa offerta', 'OK');
-        console.log("Errore", error);
       }
     );
   }
@@ -184,11 +169,9 @@ export class DashboardComponent {
       this.offerService.getAllByUserId(this.userId).subscribe(
         (offer: BuyingOfferDto[]) => {
           this.offerDtoArray = offer;
-          console.log(offer)
         },
         (error) => {
           this.snackBar.open('Non è stato possibile recuperare le offerte', 'OK');
-          console.log("Error", error);
         }
       );
     }else{
@@ -198,7 +181,6 @@ export class DashboardComponent {
         },
         (error) => {
           this.snackBar.open('Non è stato possibile recuperare gli ordini', 'OK');
-          console.log("Error", error);
         }
       );
     }
@@ -207,7 +189,6 @@ export class DashboardComponent {
 
 
   action() {
-    console.log(this.activeButton)
     switch (this.activeButton) {
       case 'deleteBasicInsertion':
         this.actionDeleteBasicInsertion(this.insertionId);

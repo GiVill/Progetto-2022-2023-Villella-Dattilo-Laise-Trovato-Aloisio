@@ -25,10 +25,7 @@ export class OrderComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log(this.myOrder)
     this.insertionService.getAllInsertionByOrderId(this.myOrder?.id!).subscribe((insertionData: BasicInsertionDto[]) => {
-      console.log(insertionData)
       this.insertions = insertionData ;})
-    console.log(this.insertions)
     }
 }

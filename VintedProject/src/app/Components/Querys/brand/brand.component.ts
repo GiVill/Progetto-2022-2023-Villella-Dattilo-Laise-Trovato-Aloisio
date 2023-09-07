@@ -40,7 +40,6 @@ export class BrandComponent implements OnInit{
       }
     });
 
-    console.log(this.Brandedinsertion)
   }
 
   getUserByUserId(userId: number): UserDto  {

@@ -69,7 +69,6 @@ export class PrivateComponent implements OnInit{
         (data: BasicInsertionDto) => {
           this.insertion = data;
           this.id=this.insertion.id
-          console.log(this.insertion);
           if (this.insertion?.userId) {
             this.userService.getUserDtoById(this.insertion.userId).subscribe(
               (userData: UserDto) => {
@@ -87,14 +86,13 @@ export class PrivateComponent implements OnInit{
                       });
                     });
                   },
-                  (error) => {
-
-                    console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
+                  () => {
+                    this.snackBar.open("Si è verificato un errore durante il recupero delle inserzioni dell\'utente.")
                   }
                 );
               },
-              (error) => {
-                console.log('Si è verificato un errore durante il recupero dell\'utente:', error);
+              () => {
+                this.snackBar.open("Si è verificato un errore durante il recupero delle informazioni dell\'utente.")
               }
             );
 
@@ -104,7 +102,7 @@ export class PrivateComponent implements OnInit{
           if (!this.error.redirectToErrorPage(error)) {
             this.error.redirectToErrorPage(error)
           }
-          console.log('Si è verificato un errore durante il recupero dell\'inserzione:', error);
+          this.snackBar.open("Si è verificato un errore durante il  recupero dell\'inserzione.")
         }
 
       );
@@ -129,7 +127,6 @@ export class PrivateComponent implements OnInit{
       this.cartService.addToCart(this?.id);
     }
     this.checkProductInCart();
-    console.log(this.isProductInCart)
   }
 
   checkProductInCart(): void {
@@ -185,20 +182,16 @@ export class PrivateComponent implements OnInit{
         insertionId: this.insertion?.id!,
         userId: Number(this.cookiesService.getUserId()),
       };
-      console.log(buyingOffer)
       this.buyngOffer.userAddBuyingOffer(buyingOffer).subscribe(
         (response) => {
           this.snackBar.open("Offerta inviata con successo. Puoi verificare lo stato nel tuo profilo",  "OK")
-          console.log('Offerta inviata con successo:', response);
           this.closeOfferModal();
         },
         (error) => {
-          console.error('Errore durante l\'invio dell\'offerta:', error);
           this.snackBar.open("Errore nell'invio dell'offerta",  "OK")
         }
       );
     } else {
-      console.error('L\'importo dell\'offerta deve essere maggiore di 0' );
       this.snackBar.open("l'offerta deve essere maggiore di 0", "OK")
     }
   }
@@ -214,11 +207,9 @@ export class PrivateComponent implements OnInit{
         user2NameLastname: (this.user?.firstName + " " + this.user?.lastName),
         insertionTitle: this.insertion?.title,
       };
-      console.log(newChatDto)
       this.chatMessageService.newChat(newChatDto).subscribe(
 
         (response: string) => {
-          console.log(response)
           this.snackBar.open("Messaggio inviato con successo", "OK")
           this.closeMessageModal()
         },

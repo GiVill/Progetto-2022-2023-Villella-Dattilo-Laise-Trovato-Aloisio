@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {HttpClient} from "@angular/common/http";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class CartService {
 
 
   constructor( private cookieService: CookieService,
+               private snackBar: MatSnackBar,
                private httpClient: HttpClient) { }
 
 
@@ -22,13 +24,13 @@ export class CartService {
       }
       const existingProductIndex = cartItems.findIndex(item => item.insertion_id === insertionId);
       if (existingProductIndex !== -1) {
-        console.log("Prodotto già nel carrello");
+        this.snackBar.open("Prodotto gia nel carrello" , "OK")
       } else {
         cartItems.push({ insertion_id: insertionId });
       }
       this.cookieService.set('cartItems', JSON.stringify(cartItems), 1, '/');
     } else {
-      console.log("ID di inserzione non definito");
+      this.snackBar.open("Inserzione non disponibile" , "RIPROVA");
     }
   }
 

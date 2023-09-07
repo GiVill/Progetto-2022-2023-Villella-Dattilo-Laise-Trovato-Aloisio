@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../../api/user.service";
 import {ErrorService} from "../../../../api/error.service";
 import {CookiesService} from "../../../../api/cookies.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 ;
 
 
@@ -31,6 +32,7 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private error: ErrorService,
+    private snackBar: MatSnackBar,
     private cookieservice: CookiesService,
   ) {}
 
@@ -46,7 +48,6 @@ export class ProfileComponent implements OnInit {
     ).subscribe(
       (user: UserDto) => {
         this.user = user;
-        console.log(this.user)
         this.insertionService.getInsertionByUserId(this.id!, this.page).subscribe(
           (data: PageBasicInsertionDto) => {
             this.userInsertion = data;
@@ -55,17 +56,15 @@ export class ProfileComponent implements OnInit {
                 this.userService.getUserDtoById(userId).subscribe((user: UserDto) => {
                   this.users.push(user);
                 });
-
-
               },
-              (error) => {
-                console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
+              () => {
+              this.snackBar.open("Errore nel caricamento delle inserzioni" , "RIPROVA")
               }
             );
           },
           (error) => {
+            this.snackBar.open("Errore nel caricamento delle informazioni dell'utente" , "RIPROVA")
 
-            console.log('Si è verificato un errore durante il recupero dell\'utente:', error);
           }
         );
 
@@ -75,7 +74,7 @@ export class ProfileComponent implements OnInit {
         if (!this.error.redirectToErrorPage(error)) {
           this.error.redirectToErrorPage(error)
         }
-      console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
+        this.snackBar.open("Errore nel caricamento delle inserzioni" , "RIPROVA")
     }
       );
   }

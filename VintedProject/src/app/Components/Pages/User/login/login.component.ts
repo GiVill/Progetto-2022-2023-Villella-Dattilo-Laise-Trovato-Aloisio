@@ -80,7 +80,6 @@ export class LoginComponent implements OnInit{
   logIn(): void {
     this.authService.login(this.login).subscribe(
       response => {
-        console.log(response)
         const userCookie = this.cookieService.get('userEmail');
         if (!userCookie) {
           // Salva le informazioni dell'utente nei cookie
@@ -105,11 +104,9 @@ export class LoginComponent implements OnInit{
         }
       },
       error => {
-        console.log(error);
         this.snackBar.open('Credenziali errate!', 'OK');
       }
     );
-    console.log(this.configuration.accessToken)
   }
 
 
@@ -138,7 +135,6 @@ export class LoginComponent implements OnInit{
         this.flipCard();
       },
       (error: any) => {
-        console.log('ERRORE REGISTRAZIONE => ', error);
         if (!this.error.redirectToErrorPage(error)) {
           this.snackBar.open('Errore registrazione, riprova più tardi!', 'OK');
         }

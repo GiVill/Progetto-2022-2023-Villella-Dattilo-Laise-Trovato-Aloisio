@@ -58,8 +58,6 @@ export class CartComponent implements OnInit {
       this.product = [];
     }
     this.loadProductDetails();
-    console.log(this.product);
-    console.log(this.cookieService.get('userId'));
   }
 
   loadProductDetails(): void {
@@ -80,8 +78,8 @@ export class CartComponent implements OnInit {
             this.cartProduct = this.loadedProducts; // Assign the array of loaded products to cartProduct
           }
         },
-        (error) => {
-          console.log('Si è verificato un errore durante il recupero delle altre inserzioni dell\'utente:', error);
+        () => {
+          this.snackBar.open("Errore durante il recupero delle inserzioni. Un prodotto potrebbe non essere più disponibile." , "RIPROVA")
         }
       );
     }
@@ -119,7 +117,7 @@ export class CartComponent implements OnInit {
 
   createOrder(): void {
     if (this.product.length === 0) {
-      console.log("Nessun prodotto nel carrello. Impossibile creare l'ordine.");
+      this.snackBar.open("Nessun prodotto nel carrello..." , "OK")
       return;
     }
 
@@ -133,22 +131,18 @@ export class CartComponent implements OnInit {
 
 
     this.orderService.userAddOrder(this.order!).subscribe((response) => {
-        this.snackBar.open("Ordine creato ",)
+        this.snackBar.open("Ordine creato, controlla nel tuo profilo.", "OK")
         this.cookieService.delete('cartItems', '/');
         this.clearCart()
       },
       (error) => {
-        this.snackBar.open("Errore durante la creazione dell ordine")
+        this.snackBar.open("Errore durante la creazione dell ordine." , "RIPROVA")
       }
     );
     {
-      this.snackBar.open("Errore durante la creazione dell ordine")
-      this.ordineCreato = false;
-      this.orderSuccess = false;
-      this.orderError = true;
+      this.snackBar.open("Errore durante la creazione dell ordine." , "RIPROVA")
     }
 
-    console.log(this.order)
 
   }
 

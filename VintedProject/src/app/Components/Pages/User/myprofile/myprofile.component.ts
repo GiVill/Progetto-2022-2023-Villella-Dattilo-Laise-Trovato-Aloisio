@@ -12,6 +12,7 @@ import {BuyingOfferDto} from "../../../../model/buyingOfferDto";
 import {OfferService} from "../../../../api/offer.service";
 import {ImageService} from "../../../../api/image.service";
 import {ImagesUserBody} from "../../../../model/imagesUserBody";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 
@@ -45,6 +46,7 @@ export class MyprofileComponent implements OnInit{
     private imageService: ImageService,
     private orderService: OrderService,
     private offerService: OfferService,
+    private snackBar: MatSnackBar,
     private cookieSevices: CookiesService,
   ) {}
 
@@ -83,11 +85,9 @@ export class MyprofileComponent implements OnInit{
             if (this.myOffer) {
               this.isAnyOffer = true;
             }
-
-            console.log('All data retrieved:', this.myInsertion, this.myOffer, this.myOrder);
           },
           (error) => {
-            console.log('An error occurred:', error);
+            this.snackBar.open("Errore nel recupero dei dati.", "RIPROVA")
           }
         );
       }
@@ -103,7 +103,7 @@ export class MyprofileComponent implements OnInit{
                 }
             },
             (error) => {
-                console.log('Si è verificato un errore durante il recupero degli ordini dell\'utente:', error);
+              this.snackBar.open("Errore nel recupero dei dati.", "RIPROVA")
             }
         );
     }
@@ -115,18 +115,17 @@ export class MyprofileComponent implements OnInit{
         }
       },
       (error) => {
-        console.log('Si è verificato un errore durante il recupero delle inserzioni dell\'utente:', error);
+        this.snackBar.open("Errore nel recupero dei dati.", "RIPROVA")
       }
     );
   }
   getUserOffer(): void {
-    console.log(this.page)
     this.offerService.getAllByUser().subscribe(
       (data: Array<BuyingOfferDto>) => {
           this.myOffer = data;
       },
       (error) => {
-        console.log('Si è verificato un errore durante il recupero delle offerte dell\'utente:', error);
+        this.snackBar.open("Errore nel recupero dei dati.", "RIPROVA")
       }
     );
   }
@@ -216,10 +215,10 @@ export class MyprofileComponent implements OnInit{
 
     this.imageService.insertUserImage(this.img!).subscribe(
       (response) => {
-       console.log(response)
+
       },
       (error) => {
-        console.log('Si è verificato un errore durante ilcaricamento dell immagine:', error);
+        this.snackBar.open("Errore nel caricamento dell'immagine.", "RIPROVA")
       }
     );
   }

@@ -28,14 +28,11 @@ export class OfferCardComponent implements OnInit{
   refused: boolean = false;
 
 
-  constructor(private router: Router,
-              private basicInsertion: InsertionService,
-              private offerService: OfferService,
+  constructor(private offerService: OfferService,
               private myProfile: MyprofileComponent,
               private orderService: OrderService,
               private cookieServices: CookiesService,
               private snackBar: MatSnackBar,
-
              ) {
   }
 
@@ -52,12 +49,11 @@ export class OfferCardComponent implements OnInit{
 
   deleteOffer() {
     this.offerService.userDeleteOffer(this.offer!).subscribe((response) => {
-      this.snackBar.open("Offerta eliminata", )
+      this.snackBar.open("Offerta eliminata", "OK")
       this.myProfile.getUserOffer();
       },
       (error) => {
-        this.snackBar.open("Errore nell'eliminazione dell offerta")
-        console.error('Error fetching product:', error);
+        this.snackBar.open("Errore nell'eliminazione dell offerta" , "RIPROVA")
       }
     );{
     }
@@ -72,15 +68,13 @@ export class OfferCardComponent implements OnInit{
         insertionIdList: [this.product.id],
         userId: Number(this.cookieServices.getUserId())
       };
-      console.log(order)
       this.orderService.userAddOfferOrder(order, this.offer?.id!).subscribe((response) => {
           this.snackBar.open("Ordine creato ",)
         this.myProfile.getUserOffer()
           this.myProfile.getUserOrders()
         },
         (error) => {
-        console.log(error)
-          this.snackBar.open("Errore durante la creazione dell ordine")
+          this.snackBar.open("Errore durante la creazione dell ordine" , "RIPROVA")
         }
       );
       {

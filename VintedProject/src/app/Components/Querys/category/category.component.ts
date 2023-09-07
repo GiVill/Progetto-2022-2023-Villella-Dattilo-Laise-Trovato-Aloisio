@@ -31,7 +31,6 @@ export class CategoryComponent implements OnInit{
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.category = String(params.get('categoryName'));
-      console.log(this.category)
       this.getProductsByCategory();
     });
   }
@@ -39,7 +38,7 @@ export class CategoryComponent implements OnInit{
 
   public getProductsByCategory() {
     if (!this.category || this.category.trim() === '') {
-      console.log("OH NO")
+      console.log("Non dovresti essere qui...")
     }
 
     this.insertionService.getByCategory(this.category!,this.pageNumber).subscribe((insertions: PageBasicInsertionDto) => {

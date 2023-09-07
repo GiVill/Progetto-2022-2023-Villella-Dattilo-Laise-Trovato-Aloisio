@@ -60,23 +60,15 @@ export class CreateInsertionComponent implements OnInit{
 
   creaInserzione() {
     if( this.controllo()){
-      console.log(this.inserzione)
-      console.log(this.image)
-      console.log(this.inserzione)
       this.insertionService.addInsertion(this.inserzione, this.image).subscribe(
 
         response => {
-          console.log(this.inserzione)
-          console.log("OK => ",response)
-          //TODO
           this.snackBar.open("Inserzione creata con successo", 'OK');
           this.router.navigate(['/']);
         },
         error => {
-          console.log("ERRORE REGISTRAZIONE INSERZIONE => ",error)
-          console.log(this.inserzione)
           this.snackBar.open("Errore. Riprovare.", 'OK');
-          //TODO
+
         }
       );
 
