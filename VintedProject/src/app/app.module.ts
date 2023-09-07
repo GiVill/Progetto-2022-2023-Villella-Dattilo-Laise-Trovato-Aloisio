@@ -21,7 +21,6 @@ import {FormsModule} from "@angular/forms";
 import {MainNavComponent} from "./Components/Components/main-nav/main-nav.component";
 import {ProductCardComponent} from "./Components/Components/Cards/product-card/product-card.component";
 import {InsertionPageComponent} from "./Components/Pages/Insertion/insertion-page/insertion-page.component";
-import {UserInsertionComponent} from "./Components/Pages/User/user-insertion/user-insertion.component";
 import {CatalogComponent} from "./Components/Pages/Insertion/catalog/catalog.component";
 import {ProfileComponent} from "./Components/Pages/User/profile/profile.component";
 import {CartComponent} from "./Components/Pages/cart/cart.component";
@@ -74,7 +73,6 @@ import {UserServiceNoCookie} from "./api/user.service.noCookie";
     SearchComponent,
     CategoryComponent,
     CatalogComponent,
-    UserInsertionComponent,
     ProfileComponent,
     CartComponent,
     CartProductCardComponent,

@@ -1,43 +1,59 @@
-# VintedFrontEnd
+## Disposizione dei File:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
+scr/app/api: Contiene tutti i services <br>
+scr/app/Components: Contiene tutti componenti<br>
+scr/app/model: Contiene tutti i Dto<br>
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Dentro Components troviamo:<br>
+    Components: Contiene tutte le componenti più piccole dell'interfaccia come le Cards.<br>
+    home-page: La pagina principale.<br>
+    Pages: Le componenti più grandi come il carrello, la chat, le inserzioni.<br>
+    Querys: Sono pagine molto simili dove cambia il caricamento dei components.<br>
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Dentro Pages abbiamo la logica in questo modo:<br>
+    Dentro User troviamo tutto quello che riguarda l'utente come per esempio il login, il profilo.<br>
+    Dentro Insertion troviamo tutto quello che riguarda le inserzioni come per esempio la pagina delle inserzioni, la creazione dell'inerzione o il catalog che fa vedere tutte le inserzioni.<br>
+    
 
 ## Design
 
 Desig della homepage:
-
 ![HOME](/src/assets/resources/samples/Homepage1.png)
 ![HOME](/src/assets/resources/samples/Homepage2.png)
 ![HOME](/src/assets/resources/samples/Homepage3.png)
 
 
-Desig della pagina dell'inserzione:
+Desig della pagina dove viene create un inserzione:
+![HOME](/src/assets/resources/samples/Crea%20Inserzione.png)
 
-![HOME](/src/assets/resources/samples/Pegina Inserzione.png)
+Desig della pagina della registrazione:
+![HOME](/src/assets/resources/samples/Registrazione.png)
 
-Desig della pagina del profilo:
+Desig della pagina del login:
+![HOME](/src/assets/resources/samples/Login.png)
 
+Desig del mio profilo (con visualizzazione delle inserzioni private):
+![HOME](/src/assets/resources/samples/capability.png)
+![HOME](/src/assets/resources/samples/Mio%20profilo2.png)
+
+
+Design delle pagini delle inserzioni(anche private)
+![HOME](/src/assets/resources/samples/Private.png)
+
+
+Desig della pagina del profilo degli altri utenti:
+![HOME](/src/assets/resources/samples/Profilo%20Altri%20Utenti.png)
+
+
+E tanto altro. Basta ricordarsi di usare --force qunado siesegue npm install.
+
+
+## Development server
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
