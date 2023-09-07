@@ -1,5 +1,6 @@
 package com.example.vintedandroid.view
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -103,6 +104,7 @@ fun ListOffers(offer : BuyingOfferDto,offerViewModel: OfferViewModel) {
                     )
                     if(offer.status == BuyingOfferDto.Status.PENDING) {
                         Button(onClick = {
+                            Log.i("OFFER",offer.toString())
                             offerViewModel.deleteOffer(offer)
                         }) {
                             Icon(

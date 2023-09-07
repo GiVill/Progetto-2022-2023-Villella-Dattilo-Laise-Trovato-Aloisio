@@ -15,6 +15,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -24,98 +25,60 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.example.vintedandroid.R
-import com.example.vintedandroid.model.AppDatabase
+import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.model.application_status.internetChecker
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
-import com.example.vintedandroid.swagger.client.models.PageBasicInsertionDto
 import com.example.vintedandroid.view.config.PersonalizedAsyncImage
 import com.example.vintedandroid.viewmodel.HomeViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "CoroutineCreationDuringComposition",
-    "StateFlowValueCalledInComposition"
+    "StateFlowValueCalledInComposition", "MutableCollectionMutableState"
 )
 @Composable
 fun HomeActivity(itemsInCart: MutableList<BasicInsertionDto?>, navController: NavHostController, searchedProduct: MutableState<BasicInsertionDto>, application: Context, viewModel: HomeViewModel) {
-
     var page: Int = 0
 
-    var pageInsertion by remember { mutableStateOf(viewModel.getAllInsertion(page)) }
-    var allInsertion = remember { mutableStateOf(mutableListOf<PageBasicInsertionDto>()) }
+    val insertions by remember { mutableStateOf(viewModel.getAllInsertion(page)) }
 
-
-    //var isLoaded by remember { mutableStateOf(false) }
-
-    //LaunchedEffect(pageInsertion) { isLoaded = true }
 
     if (internetChecker(application)) {
-
-        LaunchedEffect(Unit) {
-            allInsertion.value.add(pageInsertion)
-        }
-
         Box(modifier = Modifier.fillMaxSize()) {
 
-            //if (isLoaded) {
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
-                   // allInsertion.add(pageInsertion)
-                    item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(6.dp)
-                        ) {
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text(
-                                text = stringResource(R.string.article),
-                                fontSize = 20.sp,
-                                textAlign = TextAlign.Center
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
-                        }
-                    }
-                    /*
-                    if(orderHistory.isNotEmpty()) {
-                        items(orderHistory) { item ->
-                            Log.i("ITEM", item.toString())
-                            for(order in item.results){
-                                ListOrder(item = order, orderViewModel)
-                            }
-                        }
-                    }
-
-                     */
-                    Log.i("INSERTION",allInsertion.toString())
-                    items(allInsertion.value) { item ->
-                        Log.i("ITEM",item.toString())
-                        for(insertion in item.results){
-                            Log.i("INSE",insertion.toString())
-                            ItemCart(insertion, itemsInCart, navController, searchedProduct, viewModel)
-                        }
-                    }
-                    item {
-                        Row (modifier = Modifier.fillMaxSize()) {
-                            Button(
-                                onClick = {
-                                    Log.i("ENTRATO",page.toString())
-                                    page +=1
-                                    pageInsertion = viewModel.getAllInsertion(page)
-                                    allInsertion.value.add(pageInsertion)
-                                    Log.i("ENTRATO",allInsertion.toString())
-
-                                },
-                            ) {
-                                Text(text = stringResource(R.string.previous_page))
-                            }
-                        }
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(6.dp)
+                    ) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = stringResource(R.string.article),
+                            fontSize = 20.sp,
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
-            //} else{ CircularProgressIndicator(modifier = Modifier.align(Alignment.Center)) }
+                items(insertions) { item ->
+                    ItemCart(item, itemsInCart, navController, searchedProduct, viewModel)
+                }
+                item {
+                    Row (modifier = Modifier.fillMaxSize(),
+                        horizontalArrangement = Arrangement.Center){
+                        Button(
+                            onClick = {
+                                page += 1
+                                viewModel.getAllInsertion(page)
+                            },
+                        ) { Text(text = stringResource(R.string.load_more)) }
+                    }
+                }
+            }
         }
     } else { noConnectionActivity(application = application)  }
 }
@@ -130,39 +93,44 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
             .fillMaxWidth()
             .padding(16.dp)
             .clickable(onClick = {
-                searchedProduct.value = item //da togliere
+                searchedProduct.value = item
                 navController.navigate(ScreenController.Product.route)
             }),
         elevation = 4.dp
     ) {
-            Column(modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-                //horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+        Column(modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-                PersonalizedAsyncImage(imageName = item.imageName, subject = "HomeActivity::class")
+            PersonalizedAsyncImage(imageName = item.imageName, subject = "HomeActivity::class")
 
-                Divider()
+            Divider()
 
-                Text(text = item.title)
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = item.description)
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "$${item.price}")
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = {
-                    showDialog = true
-                    viewModel.insertBasicInsertionDtoOnCartDto(item = item, itemsInCart = itemsInCart)
-                }) {
-                    Text(text = stringResource(R.string.add_cart))
-                }
-                if (showDialog) {
-                    PopupDialog(onDismiss = { showDialog = false }) {
-                        Text("${item.title} added in cart!")
+            Text(text = item.title)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = item.description)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "$${item.price}")
+            Spacer(modifier = Modifier.height(16.dp))
+                if(item.userId != LoggedUserDetails.getInstance().getCurrentUser().id) {
+                    Button(onClick = {
+                        showDialog = true
+                        viewModel.insertBasicInsertionDtoOnCartDto(
+                            item = item,
+                            itemsInCart = itemsInCart
+                        )
+                    }) {
+                        Text(text = stringResource(R.string.add_cart))
+                    }
+                    if (showDialog) {
+                        PopupDialog(onDismiss = { showDialog = false }) {
+                            Text("${item.title} added in cart!")
+                        }
                     }
                 }
-            }
+        }
     }
 }
 
@@ -178,6 +146,6 @@ fun PopupDialog(onDismiss: () -> Unit, content: @Composable () -> Unit) {
                 .wrapContentHeight()
         ) {
             content()
+            }
         }
-    }
 }

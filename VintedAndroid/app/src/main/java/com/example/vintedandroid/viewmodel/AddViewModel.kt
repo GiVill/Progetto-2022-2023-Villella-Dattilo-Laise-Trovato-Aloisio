@@ -83,6 +83,7 @@ class AddViewModel (application: Application) : ViewModel() {
     }
 
 
+
 /*
     // Function to convert Bitmap to byte array
     fun bitmapToByteArray(bitmap: Bitmap): ByteArray {

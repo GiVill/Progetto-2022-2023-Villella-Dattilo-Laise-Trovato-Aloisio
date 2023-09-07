@@ -52,9 +52,10 @@ class ProductViewModel(application: Context) : ViewModel() {
                 BuyingOfferDto(
                     id = null,
                     price = basicInsertionDto.price,
-                    status = null,
+                    status = BuyingOfferDto.Status.PENDING,
                     insertionId = it,
-                    userId = it1
+                    userId = it1,
+                    paid = false
                 )
             }
         }

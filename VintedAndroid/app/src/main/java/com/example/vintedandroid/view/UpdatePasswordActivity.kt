@@ -4,10 +4,11 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
-import androidx.compose.material3.Card
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -53,59 +55,47 @@ fun UpdatePasswordActivity(updatePasswordViewModel: UpdatePasswordViewModel, app
             .fillMaxSize()
             .padding(16.dp)
             .align(Alignment.Center)) {
-            Text(text = stringResource(R.string.change_password), fontSize = 26.sp, modifier = Modifier.align(CenterHorizontally))
-            if(mismatchPassword.value){
-                Log.i("UpdatePassword:class", "Update Password was unsuccessful!")
-                passwordField = remember { mutableStateOf(TextFieldValue()) }
-                Text(
-                    text = stringResource(R.string.missmatch_password),
-                    modifier = Modifier.padding(16.dp),
-                    color = Color.Red,
-                )
-            }
-            Text(text = stringResource(R.string.enter_new_password), modifier = Modifier.align(CenterHorizontally))
-            createPersonalizedTextfieldPasswordWithSpecifiedRegex(textField = passwordField, passwordRegex = passwordRegex){ regexValidation ->
-                isValid = regexValidation
-            }
-            Text(text = stringResource(R.string.type_password_again), modifier = Modifier.align(CenterHorizontally))
-            createPersonalizedTextfieldPasswordWithSpecifiedRegex(textField = passwordField2, passwordRegex = passwordRegex){ regexValidation ->
-                isValidSecond = regexValidation
-            }
-            Button(onClick = {
-                mismatchPassword.value = false
-                if(isValid && isValidSecond) {
-                    if (!updatePasswordViewModel.updatePassword(
-                            passwordField.value.text,
-                            passwordField2.value.text
-                        )
-                    ) {
-                        mismatchPassword.value = true
-
-                        //TODO
-                        /*
-                    if (loginUnsuccessful.value) {
-                        Log.i("LoginScreen:class", "Login was unsuccessful!")
-                        passwordField = remember { mutableStateOf(TextFieldValue()) }
-                        Text(
-                            text = "Login failed. Please try again.",
-                            modifier = Modifier.padding(16.dp),
-                            color = Color.Red,
-                        )
-                    }
-                     */
-
-                    }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = stringResource(R.string.change_password), fontSize = 26.sp)
+                if(mismatchPassword.value){
+                    Log.i("UpdatePassword:class", "Update Password was unsuccessful!")
+                    passwordField = remember { mutableStateOf(TextFieldValue()) }
+                    Text(
+                        text = stringResource(R.string.missmatch_password),
+                        modifier = Modifier.padding(16.dp),
+                        color = Color.Red,
+                    )
                 }
-                else{
-                    //TODO da aggiustare il messaggio
-                    Toast.makeText(application.applicationContext, "The Password should be of at least 8 character, at least one letter and at least one digit", Toast.LENGTH_LONG).show()
+                Text(text = stringResource(R.string.enter_new_password))
+                createPersonalizedTextfieldPasswordWithSpecifiedRegex(textField = passwordField, passwordRegex = passwordRegex){ regexValidation ->
+                    isValid = regexValidation
                 }
-            },
-            modifier = Modifier
-                .align(CenterHorizontally)
-                .padding(8.dp)) {
-                Text(text = stringResource(R.string.send_new_password)+" (Da testare)")
+                Text(text = stringResource(R.string.type_password_again))
+                createPersonalizedTextfieldPasswordWithSpecifiedRegex(textField = passwordField2, passwordRegex = passwordRegex){ regexValidation ->
+                    isValidSecond = regexValidation
+                }
+                Button(onClick = {
+                    mismatchPassword.value = false
+                    if(isValid && isValidSecond) {
+                        if (!updatePasswordViewModel.updatePassword(
+                                passwordField.value.text,
+                                passwordField2.value.text
+                            )
+                        ) {
+                            mismatchPassword.value = true
+                        }
+                    }
+                    else{
+                        //TODO da aggiustare il messaggio
+                        Toast.makeText(application.applicationContext, "The Password should be of at least 8 character, at least one letter and at least one digit", Toast.LENGTH_LONG).show()
+                    }
+                },
+                    modifier = Modifier
+                        .padding(8.dp)) {
+                    Text(text = stringResource(R.string.send_new_password)+" (Da testare)")
+                }
             }
         }
+
     }
 }

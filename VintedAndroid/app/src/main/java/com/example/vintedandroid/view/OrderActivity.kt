@@ -50,14 +50,12 @@ fun OrderActivity(orderViewModel: OrderViewModel) {
 
     var order by remember { mutableStateOf(orderViewModel.getOrders(pageOrder)) }
 
-    Log.i("PAGES", order.toString())
-
 
     LazyColumn(modifier = Modifier.fillMaxSize()){
         while(order.empty != true){
             orderHistory.add(order)
-            order = orderViewModel.getOrders(pageOrder)
             pageOrder += 1
+            order = orderViewModel.getOrders(pageOrder)
         }
         if(orderHistory.isNotEmpty()) {
             items(orderHistory) { item ->
@@ -105,7 +103,7 @@ fun ListOrder(item: OrderDto, orderViewModel: OrderViewModel) {
             ) {
                 Text(item.id.toString())
                 Text(item.paymentMethod.toString())
-                Text(item.total.toString())
+                Text(item.total.toString()+"$")
                 Text(item.date.toString())
             }
         }
@@ -147,8 +145,6 @@ fun PopupDialogOrder(onDismiss: () -> Unit, orderViewModel: OrderViewModel, inse
                     Text(text = stringResource(R.string.order_details), Modifier.align(CenterHorizontally))
                     Divider()
                     for (insertionId in insertionIdList) {
-
-                        //TODO Andrebbero presi solo gli ordini pubblici
                         var insertion = orderViewModel.getInsertionById(insertionId)
                         if(!insertion.title.equals("")) {
                             Row {

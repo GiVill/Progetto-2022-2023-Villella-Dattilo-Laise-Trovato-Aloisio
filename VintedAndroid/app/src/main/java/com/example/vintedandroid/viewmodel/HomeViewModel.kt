@@ -3,6 +3,8 @@ package com.example.vintedandroid.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import com.example.vintedandroid.swagger.client.apis.InsertionApi
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
@@ -18,11 +20,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class HomeViewModel(application: Application) : ViewModel() {
 
     private val application = application
+    private val insertions : SnapshotStateList<BasicInsertionDto> = mutableStateListOf()
 
-    fun getAllInsertion(page: Int): PageBasicInsertionDto {
-        var insertion = InsertionApi().userGetAll(page)
-        Log.i("HomeViewModel::class", "getAllInsertion -> ${insertion.results}")
-        return insertion
+
+    fun getAllInsertion(page: Int): SnapshotStateList<BasicInsertionDto> {
+        val pageInsertion = InsertionApi().userGetAll(page)
+        insertions.addAll(pageInsertion.results)
+        Log.i("HomeViewModel::class", "getAllInsertion -> ${insertions}")
+        return insertions
     }
 
     fun getAllInsertionByCategory(category: String): PageBasicInsertionDto {

@@ -42,17 +42,12 @@ import com.example.vintedandroid.viewmodel.MyInsertionViewModel
 @Composable
 fun MyInsertionActivity(application: Context, searchedProduct: MutableState<BasicInsertionDto>, myInsertionViewModel: MyInsertionViewModel, navController: NavHostController) {
     var page = 0
-    var pageInsertion by remember { mutableStateOf(myInsertionViewModel.getMyInsertion(page)) }
-    var allInsertion = mutableListOf<BasicInsertionDto>()
-    //var isLoaded by remember { mutableStateOf(false) }
 
-    //LaunchedEffect(pageInsertion) { isLoaded = true }
+    var insertions by remember { mutableStateOf(myInsertionViewModel.getMyInsertion(page)) }
 
     if (internetChecker(application)) {
         Box(modifier = Modifier.fillMaxSize()) {
 
-            //if (isLoaded) {
-            allInsertion.addAll(pageInsertion.results)
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 item {
                     Box(
@@ -69,37 +64,21 @@ fun MyInsertionActivity(application: Context, searchedProduct: MutableState<Basi
                         Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
-                items(allInsertion) { item ->
+                items(insertions) { item ->
                     ItemCart(searchedProduct,item, navController = navController)
                 }
                 item {
-                    Row (modifier = Modifier.fillMaxSize()){
+                    Row (modifier = Modifier.fillMaxSize(),
+                        horizontalArrangement = Arrangement.Center) {
                         Button(
                             onClick = {
-                                if (page > 0) {
-                                    //isLoaded = false
-                                    page -= 1
-                                    pageInsertion = myInsertionViewModel.getMyInsertion(page)
-                                }
+                                page += 1
+                                myInsertionViewModel.getMyInsertion(page)
                             },
-                            enabled = page > 0
-                        ) {
-                            Text(text = stringResource(R.string.previous_page))
-                        }
-                        Button(
-                            onClick = {
-                                if(page <= pageInsertion.totalPages!!) {
-                                    //isLoaded = false
-                                    page += 1
-                                    pageInsertion = myInsertionViewModel.getMyInsertion(page)
-                                }
-                            },
-                            enabled = pageInsertion.totalPages!! >= page
-                        ) { Text(text = stringResource(R.string.next_page)) }
+                        ) { Text(text = stringResource(R.string.load_more)) }
                     }
                 }
             }
-            //} else{ CircularProgressIndicator(modifier = Modifier.align(Alignment.Center)) }
         }
     } else { noConnectionActivity(application = application)  }
 }
@@ -107,13 +86,11 @@ fun MyInsertionActivity(application: Context, searchedProduct: MutableState<Basi
 @Composable
 fun ItemCart(searchedProduct: MutableState<BasicInsertionDto>,item: BasicInsertionDto, navController: NavHostController) {
 
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
             .clickable {
-                //TODO Da aggiustare
                 searchedProduct.value = item
                 navController.navigate(ScreenController.Product.route)
             },
@@ -122,7 +99,7 @@ fun ItemCart(searchedProduct: MutableState<BasicInsertionDto>,item: BasicInserti
         Column(modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth(),
-            //horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             PersonalizedAsyncImage(imageName = item.imageName, subject = "HomeActivity::class")
@@ -133,7 +110,7 @@ fun ItemCart(searchedProduct: MutableState<BasicInsertionDto>,item: BasicInserti
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = item.description)
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "$${item.price}")
+            Text(text = "${item.price}$")
             Spacer(modifier = Modifier.height(16.dp))
 
         }

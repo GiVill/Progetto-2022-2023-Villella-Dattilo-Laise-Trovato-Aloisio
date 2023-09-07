@@ -47,21 +47,20 @@ data class BasicInsertionDto (
     * Values: ADIDAS,PUMA,NIKE,MICROSOFT,XIAOMI,NOTHING,GUESS,PUMPLING,FILA,ONZE,GOJIANG,REBOOK,NEWBALANCE,ASIX,SONY,ALTRO
     */
     enum class Brand(val value: kotlin.String){
-        ADIDAS("Adidas"),
-        PUMA("Puma"),
-        NIKE("Nike"),
-        MICROSOFT("Microsoft"),
-        XIAOMI("Xiaomi"),
-        NOTHING("Nothing"),
-        GUESS("Guess"),
-        PUMPLING("Pumpling"),
-        FILA("Fila"),
-        ONZE("Onze"),
-        GOJIANG("Gojiang"),
-        REBOOK("Rebook"),
-        NEWBALANCE("New_Balance"),
-        ASIX("Asix"),
-        SONY("Sony"),
+        Adidas("Adidas"),
+        Puma("Puma"),
+        Nike("Nike"),
+        Microsoft("Microsoft"),
+        Xiaomi("Xiaomi"),
+        Nothing("Nothing"),
+        Guess("Guess"),
+        Pumpling("Pumpling"),
+        Fila("Fila"),
+        Onze("Onze"),
+        Gojiang("Gojiang"),
+        Rebook("Rebook"),
+        Asix("Asix"),
+        Sony("Sony"),
         ALTRO("ALTRO");
     }
     /**

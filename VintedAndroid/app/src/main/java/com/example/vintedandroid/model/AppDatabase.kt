@@ -11,7 +11,7 @@ import com.example.vintedandroid.model.dto.CartDto
 import com.example.vintedandroid.model.dao.UserDatabaseDao
 
 
-@Database(entities = [UserDatabaseDto::class, CartDto::class], version = 3, exportSchema = false) //Il valore di version deve essere equivalente (o superiore di 1) al numero di entities inserite
+@Database(entities = [UserDatabaseDto::class, CartDto::class], version = 4, exportSchema = false) //Il valore di version deve essere equivalente (o superiore di 1) al numero di entities inserite
 //@TypeConverters(LocalDateConverter::class)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun userDatabaseDao(): UserDatabaseDao

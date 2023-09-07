@@ -2,6 +2,7 @@ package com.example.vintedandroid.viewmodel
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.dto.CartDto
@@ -36,7 +37,14 @@ class CartViewModel(application: Application) : ViewModel() {
     }
 
     fun createOrder(newOrder : OrderDto) {
-        OrderApi().userAddOrder(newOrder)
+        val order =OrderApi().userAddOrder(newOrder)
+        Log.i("orderRetun",order.toString())
+        if(order.id != 0L){
+            deleteAll()
+            Toast.makeText(application.applicationContext, "Order Created", Toast.LENGTH_SHORT).show()
+        } else{
+            Toast.makeText(application.applicationContext, "ERROR!", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

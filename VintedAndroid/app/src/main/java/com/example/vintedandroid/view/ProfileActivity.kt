@@ -49,7 +49,7 @@ fun ProfileActivity(userViewModel: UserViewModel, navController: NavHostControll
 
     Column(modifier = Modifier.fillMaxSize()) {
             Text(
-                text = stringResource(R.string.account_settings),
+                text = stringResource(R.string.profile),
                 modifier = Modifier.padding(10.dp),
                 style = TextStyle(fontSize = Typography.titleLarge.fontSize)
             )
@@ -107,15 +107,15 @@ private fun userDetail(userFromDB: State<UserDatabaseDto?>){
                         .padding(10.dp)
                         .weight(1f)
                 ) {
-                    Text(text = "Nickname:")
+                    Text(text = stringResource(R.string.nickname))
                     Divider()
-                    Text(text = "Firstname:")
+                    Text(text = stringResource(R.string.firstname))
                     Divider()
-                    Text(text = "Lastname:")
+                    Text(text = stringResource(R.string.lastname))
                     Divider()
-                    Text(text = "Email:")
+                    Text(text = stringResource(R.string.email))
                     Divider()
-                    Text(text = "Address:")
+                    Text(text = stringResource(R.string.address))
                 }
                 Column(
                     Modifier
@@ -137,14 +137,3 @@ private fun userDetail(userFromDB: State<UserDatabaseDto?>){
         }
     }
 }
-
-/*
-@Preview(showBackground = true)
-@Composable
-fun ProfileScreenPreview() {
-    val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh","","ciao@yahoo.it",
-        "10-05-2001",UserDto.Gender.MALE,"via napoli",8,"Lamezia",21312,
-        "Italy","asdojad")
-    //ProfileScreen(user)
-}
- */

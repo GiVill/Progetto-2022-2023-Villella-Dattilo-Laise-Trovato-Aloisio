@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,9 +19,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.material.RadioButton
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import com.example.vintedandroid.R
 import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.model.dto.CartDto
@@ -42,10 +49,13 @@ fun CartActivity(cartViewModel: CartViewModel) {
 @Composable
 fun ListOfItem(cartItemsState: MutableList<CartDto>, cartViewModel: CartViewModel) {
     //if(isLoaded){
+    val radioOptions = listOf(Order.PaymentMethod.PAYPAL, Order.PaymentMethod.CARD, Order.PaymentMethod.MARK)
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
+
     if (cartItemsState.isNotEmpty()) {
         var totalCost : Float = 0f
         var insertionIdList: MutableList<Long> = mutableListOf()
-        LazyColumn {
+        LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
             items(cartItemsState) { cartItem ->
                     Log.i("Cart", "item in cart is: $cartItem")
                 totalCost += cartItem.price
@@ -56,9 +66,36 @@ fun ListOfItem(cartItemsState: MutableList<CartDto>, cartViewModel: CartViewMode
                     )
                 }
             item {
+                Column(Modifier.selectableGroup()) {
+                    radioOptions.forEach { text ->
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .height(56.dp)
+                                .selectable(
+                                    selected = (text == selectedOption),
+                                    onClick = { onOptionSelected(text) },
+                                    role = Role.RadioButton
+                                )
+                                .padding(horizontal = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = (text == selectedOption),
+                                onClick = null // null recommended for accessibility with screenreaders
+                            )
+                            Text(
+                                text = text.toString(),
+                                modifier = Modifier.padding(start = 16.dp)
+                            )
+                            }
+                        }
+                }
+            }
+            item {
                 Button(onClick = {
                     var newOrder = LoggedUserDetails.getInstance().getCurrentUser().id?.let {
-                        OrderDto(0,null,"PAYPAL",insertionIdList.toTypedArray(),totalCost,
+                        OrderDto(0,null,selectedOption.toString(),insertionIdList.toTypedArray(),totalCost,
                             it
                         )
                     }

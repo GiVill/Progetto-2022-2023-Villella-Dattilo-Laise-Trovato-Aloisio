@@ -11,6 +11,7 @@
  */
 package com.example.vintedandroid.swagger.client.apis
 
+import android.util.Log
 import com.example.vintedandroid.swagger.client.infrastructure.ApiClient
 import com.example.vintedandroid.swagger.client.infrastructure.ClientError
 import com.example.vintedandroid.swagger.client.infrastructure.ClientException
@@ -260,11 +261,13 @@ class OrderApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
      */
     @Suppress("UNCHECKED_CAST")
     fun userAddOrder(body: OrderDto): OrderDto {
+        val order = OrderDto(0L,null,null,null,null,0L)
         val localVariableBody: kotlin.Any? = body
         val localVariableConfig = RequestConfig(
                 RequestMethod.POST,
                 "/v1/orders"
         )
+        ConfigureAuthorizationBearer(localVariableConfig)
         val response = request<OrderDto>(
                 localVariableConfig, localVariableBody
         )
@@ -273,7 +276,7 @@ class OrderApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProjec
             ResponseType.Success -> (response as Success<*>).data as OrderDto
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
-            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ClientError -> order//throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
             ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
         }
     }

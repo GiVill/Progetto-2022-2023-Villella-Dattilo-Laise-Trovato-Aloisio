@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">VintedAndroid</string>
     <string name="default_account">Default Account</string>
-    <string name="account_settings">Profilo</string>
     <string name="add_cart">Add to Cart</string>
     <string name="offer">Make an Offer</string>
     <string name="previous_page">Previous Page</string>
@@ -18,7 +17,7 @@
     <string name="reset_password">Reset Password</string>
     <string name="logout">Logout</string>
     <string name="login_failed">Login failed. Please try again.</string>
-    <string name="email">Email</string>
+    <string name="email">Email:</string>
     <string name="login">Login</string>
     <string name="sign_up">Need new account? Sign up!</string>
     <string name="connect_to_internet">Please connect to the internet</string>
@@ -57,5 +56,11 @@
     <string name="title_of_insertion">Title Of Insertion</string>
     <string name="description_of_insertion">Description Of Insertion</string>
     <string name="price_of_insertion">Price Of Insertion</string>
+    <string name="feedback">FEEDBACK</string>
+    <string name="load_more">Load More</string>
+    <string name="nickname">Nickname:</string>
+    <string name="firstname">Firstname:</string>
+    <string name="lastname">Lastname:</string>
+    <string name="address">Address:</string>
 
 </resources>

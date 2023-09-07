@@ -11,6 +11,7 @@
  */
 package com.example.vintedandroid.swagger.client.apis
 
+import android.util.Log
 import com.example.vintedandroid.swagger.client.infrastructure.ApiClient
 import com.example.vintedandroid.swagger.client.infrastructure.ClientError
 import com.example.vintedandroid.swagger.client.infrastructure.ClientException
@@ -129,11 +130,12 @@ class UserApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject
      */
     @Suppress("UNCHECKED_CAST")
     fun updateUserPassword(body: kotlin.String): kotlin.Boolean {
-        val localVariableBody: kotlin.Any? = body
+        val localVariableBody: kotlin.String = body
         val localVariableConfig = RequestConfig(
                 RequestMethod.PUT,
                 "/v1/password"
         )
+        ConfigureAuthorizationBearer(localVariableConfig)
         val response = request<kotlin.Boolean>(
                 localVariableConfig, localVariableBody
         )

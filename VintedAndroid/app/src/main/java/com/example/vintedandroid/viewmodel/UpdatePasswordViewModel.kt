@@ -8,22 +8,12 @@ class UpdatePasswordViewModel(application: Application) : ViewModel() {
 
     private val application = application
 
-    fun updatePassword(newPassword: String, newPassword2: String): Boolean{
+    fun updatePassword(newPassword: String, newPassword2: String): Boolean {
 
-        if(newPassword.equals(newPassword2)){
-            //TODO
-            //UserApi().updateUserPassword(newPassword)
+        if (newPassword.equals(newPassword2)) {
+            UserApi().updateUserPassword(newPassword.replace("\"", ""))
             return true
         }
         return false
     }
-
-
-            /*
-            fun getAllInsertion(): PageBasicInsertionDto {
-        var insertion = InsertionApi().all4(0)
-        Log.i("HomeViewModel::class", "getAllInsertion -> $insertion")
-        return insertion
-    }
-             */
 }
