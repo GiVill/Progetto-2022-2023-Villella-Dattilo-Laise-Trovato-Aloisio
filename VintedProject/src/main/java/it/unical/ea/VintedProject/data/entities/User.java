@@ -71,18 +71,4 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<BasicInsertion> insertions;
 
-
-
-    /*
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Chat> chats;
-
-    //per avere due utenti invece che gli id
-        @ManyToMany(mappedBy = "idUser1")
-    private List<Chat> sender;
-
-    // Relazione ManyToMany tra User e Chat per i receiver
-    @ManyToMany(mappedBy = "idUser2")
-    private List<Chat> receiver;
-*/
 }

@@ -32,16 +32,14 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserDto signUp(NewUserDto newUserDto) {
-        System.out.println(newUserDto);
         User user = modelMapper.map(newUserDto, User.class);
         if(user != null){
-            System.out.println("ENTRATO "+user.toString());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.save(user);
             emailSender.sendSimpleEmail(user.getEmail(),"Ocarina Coders", "Benvenuto in Ocarina Shop!");
             return modelMapper.map(user, UserDto.class);
         }
-        throw new EntityNotFoundException("non sono riuscito a fare la registrazione. PS: Questo messaggio non è stato internazionalizzato ed esploderà tra 3...2...1... papà");
+        throw new EntityNotFoundException(messageLang.getMessage("user.not.present"));
     }
 
     @Override

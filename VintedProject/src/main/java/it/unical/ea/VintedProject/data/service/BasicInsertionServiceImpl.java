@@ -108,7 +108,6 @@ public class BasicInsertionServiceImpl implements BasicInsertionService {
             List<BasicInsertionDto> collect = basicInsertionDao.findAllByOrder(order.get()).stream().map(s -> modelMapper.map(s, BasicInsertionDto.class)).collect(Collectors.toList());
             return collect;
         } else {
-            //TODO: MESSAGGIO DI ERRORE DA SISTEAMRE
              throw new EntityNotFoundException(messageLang.getMessage("insertion.not.present",orderId));
         }
     }

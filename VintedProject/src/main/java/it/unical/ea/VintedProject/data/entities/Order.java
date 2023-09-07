@@ -50,8 +50,3 @@ public class Order {
     private List<BasicInsertion> insertionList ;
 
 }
-/*
-    @OneToOne(mappedBy = "order")
-    @Lazy
-    private Payment payment;
- */

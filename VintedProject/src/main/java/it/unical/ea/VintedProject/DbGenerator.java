@@ -32,16 +32,11 @@ public class DbGenerator implements ApplicationRunner {
 
     private final PasswordEncoder passwordEncoder;
     private final KeycloakTokenClient keycloakTokenClient;
-    private final AuthService authService;
     private final ModelMapper modelMapper;
 
 
     @Value("classpath:data/users.csv")
     private Resource usersRes;
-
-    /*
-    @Value("classpath:data/payments.csv")
-    private Resource paymentsRes;*/
 
     @Value("classpath:data/orders.csv")
     private Resource ordersRes;
@@ -86,12 +81,6 @@ public class DbGenerator implements ApplicationRunner {
             }
 
 
-           /* CSVParser paymentsCsv = CSVFormat.DEFAULT.withDelimiter(';')
-                    .parse(new InputStreamReader(paymentsRes.getInputStream()));
-            for (CSVRecord record : paymentsCsv) {
-                insertPayment(record.get(0), record.get(1));
-            }*/
-
             CSVParser buyingoffertsCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(buyingoffertsRes.getInputStream()));
             for (CSVRecord record : buyingoffertsCsv) {
@@ -101,8 +90,6 @@ public class DbGenerator implements ApplicationRunner {
             CSVParser chatCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(chatRes.getInputStream()));
             for (CSVRecord record : chatCsv) {
-                //System.out.println(record.get(0)+ record.get(1) +record.get(2)+ record.get(3));
-                //insertChat(userService.getUserById(Long.valueOf(record.get(0))), userService.getUserById(Long.valueOf(record.get(1))), record.get(2), record.get(3));
                 insertChat(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4));
             }
 
@@ -152,17 +139,6 @@ public class DbGenerator implements ApplicationRunner {
         orderService.save(order);
 
     }
-/*
-    private void insertPayment(String idOrder, String idUser) {
-        Payment payment = new Payment();
-        payment.setPaymentMethod(PaymentMethod.PAYPAL);
-        payment.setStatus(Status.PENDING);
-        payment.setOrder(orderService.findById(Long.valueOf(idOrder)));
-        payment.setUser(userService.getUserById(Long.valueOf(idUser)));
-
-        paymentService.save(payment);
-    }
-*/
     private void insertUser(String nickName,String firstName, String lastName,String email,String password,
                             String phoneNumber,String role) {
 

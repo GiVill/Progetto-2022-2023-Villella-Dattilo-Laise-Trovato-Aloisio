@@ -26,7 +26,6 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
-    private final static int SIZE_FOR_PAGE = 10;
     private final MessageLang messageLang;
     private final LoggedUserMethod loggedUserMethod;
 

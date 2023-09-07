@@ -40,12 +40,10 @@ public class OrderServiceImpl implements OrderService {
     private final LoggedUserMethod loggedUserMethod;
     private final BuyingOfferDao buyingOfferDao;
     private final static int SIZE_FOR_PAGE = 5;
-    //private LoggedUserDetail loggedUser = LoggedUserDetail.getInstance();
+
 
     @Override
     public OrderDto save(OrderDto orderDto) {
-
-        //TODO: DEVO FARE UNA SAVE PRIMA PERCHé MI SERVE L'ID DELL'ORDINE PER CREARE LE RELAZIONI CON INSERTION DOPO
         Order order = orderDao.save(modelMapper.map(orderDto, Order.class));
 
         for (Long id:orderDto.getInsertionIdList()) {
@@ -72,7 +70,6 @@ public class OrderServiceImpl implements OrderService {
         offer.get().setPaid(true);
         buyingOfferDao.save(offer.get());
 
-        //TODO: DEVO FARE UNA SAVE PRIMA PERCHé MI SERVE L'ID DELL'ORDINE PER CREARE LE RELAZIONI CON INSERTION DOPO
         Order order = orderDao.save(modelMapper.map(orderDto, Order.class));
 
         for (Long id:orderDto.getInsertionIdList()) {
@@ -104,7 +101,6 @@ public class OrderServiceImpl implements OrderService {
         if(order.getUser().getId().equals(u.getId())){
 
             OrderDto orderDto = modelMapper.map(order, OrderDto.class);
-            //TODO: LE LISTE DI ID NEI DTO NON FUNZIONANO NEL MODEL MAPPER
 
             List<Long> insertionIds = new ArrayList<>();
             for (BasicInsertion insertion : order.getInsertionList()) {
@@ -120,7 +116,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrderById(Long orderId) {
-        //loggedUser.checkLoggedUser(...);
         orderDao.deleteById(orderId);
     }
 
@@ -182,7 +177,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderDto> getOrderDtoByPaymentPaged(String method, int page) {
-        //TODO AGGIUNGERE I CONTROLLI
         Page<Order> orders = orderDao.findAllByPaymentMethod(method,PageRequest.of(page,SIZE_FOR_PAGE));
         List<OrderDto> collect = orders.stream().map(s -> modelMapper.map(s, OrderDto.class)).collect(Collectors.toList());
         return new PageImpl<>(collect);

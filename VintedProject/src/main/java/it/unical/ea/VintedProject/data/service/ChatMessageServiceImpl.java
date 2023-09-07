@@ -56,63 +56,13 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     public List<ChatMessage> allChatMessageByChat_id(Long chatId) {
         loggedUserMethod.checkLoggedUser();
         List<ChatMessage> list = chatMessageDao.findAllByChatOrderByDateAsc(chatId);
-        System.out.println(list);
 
 
         if (list.isEmpty()) {
             throw new EntityNotFoundException(messageLang.getMessage("chat.not.present"));
         }
-
-        //Set<ChatMessage> uniqueChatMessages = new HashSet<>(list);
-        //List<ChatMessage> uniqueList = new ArrayList<>(uniqueChatMessages);
         return list;
     }
-
-
-/*
-    @Override
-    public List<ChatDto> allMessageByUserId(Long id1, Long id2) {
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if(u.get().getEmail() == null || !u.get().getId().equals(id1)){
-            throw new EntityNotFoundException(messageLang.getMessage("user.not.present",id1));
-        }
-        List<ChatDto> list =  chatDao.findBySenderAndReciverOrderByDateAsc(id1, id2).stream().map(s -> modelMapper.map(s, ChatDto.class)).collect(Collectors.toList());
-
-        //TODO Verificare se funziona (Setta l'ultimo messaggio caricato come seen=true)
-        List<ChatDto> list2 = chatDao.findByReciverAndSenderOrderByDateAsc(id2, id1)
-                .stream()
-                .map(s -> {
-                    ChatDto chatDto = modelMapper.map(s, ChatDto.class);
-                    String mex =s.getMessage();
-                    ChatDto message = list.get(list.size()-1);
-                    System.out.println(mex.equals(message.getMessage()));
-                    System.out.println(!list.isEmpty());
-                    if (!list.isEmpty() && mex.equals(message.getMessage())) {
-                        System.out.println("ENTRO");
-                        message.setSeen(true);
-                        s.setSeen(true);
-                        chatDao.save(s);
-                    }
-                    System.out.println(s+" "+list.get(list.size()-1));
-                    return chatDto;
-                })
-                .collect(Collectors.toList());
-
-
-        List<ChatDto> unite = new ArrayList<ChatDto>();
-
-        unite.addAll(list);
-        unite.addAll(list2);
-
-        Collections.sort(unite, new ChatDtoComparator());
-
-
-        if(list.isEmpty()){
-            throw new EntityNotFoundException(messageLang.getMessage("chat.not.present",id1));
-        }
-        return unite;
-    }
-    */
 
 
     @Override
@@ -165,8 +115,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
             chatMessage.setChat(chat.getId());
             chatMessageDao.save(chatMessage);
-            System.out.println(chat);
-            System.out.println(chatMessage);
             emailSender.sendSimpleEmail(user2.getEmail(),"Ocarina Coders","Hai una nuova chat!");
 
         } else {

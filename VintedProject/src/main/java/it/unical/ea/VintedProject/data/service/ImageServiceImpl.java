@@ -181,15 +181,5 @@ public class ImageServiceImpl implements ImageService {
         }
     }
 
-    /*
-    try {
-         String fileName = file.getOriginalFilename();
-         String filePath = "/path/to/save/" + fileName;
-         file.transferTo(new File(filePath));
-         return "Immagine caricata con successo.";
-       } catch (IOException e) {
-         return "Errore durante il caricamento dell'immagine: " + e.getMessage();
-       }
-     */
 
 }

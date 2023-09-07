@@ -39,11 +39,6 @@ public class ChatServicesImpl implements ChatService {
     }
 
     @Override
-    public void update(Chat chatMessage) {
-        //da vedere se serve
-    }
-
-    @Override
     public void delete(Chat chat) {
         Long id = loggedUserMethod.getLoggedUserId();
         if(id.equals(chat.getUser1()) || !id.equals(chat.getUser2()) ){

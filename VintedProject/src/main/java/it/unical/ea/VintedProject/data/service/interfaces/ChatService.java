@@ -13,8 +13,6 @@ public interface ChatService {
 
     void save(Chat chat);
 
-    void update(Chat chat);
-
     void delete(Chat chat);
 
     List<ChatDto> allChatByUserId(Long id);

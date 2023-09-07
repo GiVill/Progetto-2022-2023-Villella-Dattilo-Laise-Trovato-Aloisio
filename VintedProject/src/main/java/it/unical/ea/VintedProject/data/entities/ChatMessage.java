@@ -57,17 +57,3 @@ public class ChatMessage {
     }
 }
 
-/*  Per avere gli id invece che gli utenti
-    @ManyToMany
-    @JoinTable(name = "CHAT_SENDER",
-            joinColumns = @JoinColumn(name = "chat_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> idUser1;
-
-    // Relazione ManyToMany tra Chat e User per i receiver
-    @ManyToMany
-    @JoinTable(name = "CHAT_RECEIVER",
-            joinColumns = @JoinColumn(name = "chat_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> idUser2;
-*/
