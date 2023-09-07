@@ -1,7 +1,6 @@
 package it.unical.ea.VintedProject.security.keycloak;
 
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
-import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.dto.NewUserDto;
 import lombok.RequiredArgsConstructor;

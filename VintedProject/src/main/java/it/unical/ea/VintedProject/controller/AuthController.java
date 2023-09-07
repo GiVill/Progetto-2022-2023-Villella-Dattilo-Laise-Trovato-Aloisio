@@ -21,8 +21,6 @@ import java.util.Objects;
 @Tag(name = "Auth") //Name displayed on swagger
 public class AuthController {
 
-    //TODO Scrivere meglio sign up
-
     private final AuthService authService;
     private final KeycloakTokenClient keycloakTokenClient;
 
@@ -34,7 +32,6 @@ public class AuthController {
             UserDto userDto = authService.signUp(newUserDto);
             if(userDto != null) {
                 token.setUserDto(userDto);
-                //TODO Probabilmente va aggiustato, andrebbe messo acnhe lo user nel TokenResponse
                 return ResponseEntity.ok(token);
             }
             return null;

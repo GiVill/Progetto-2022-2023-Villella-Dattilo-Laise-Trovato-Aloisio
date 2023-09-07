@@ -1,7 +1,6 @@
 package it.unical.ea.VintedProject.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.service.interfaces.ImageService;
 import lombok.RequiredArgsConstructor;

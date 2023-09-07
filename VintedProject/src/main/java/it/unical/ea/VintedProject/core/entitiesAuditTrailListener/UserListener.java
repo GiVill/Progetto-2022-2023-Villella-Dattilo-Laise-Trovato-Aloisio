@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserListener{
 
-    //private UserService userService;
-
     @PostLoad
     private void afterLoad(User user){ log.info("[USER AUDIT] user loaded from database: " + user.getId()); }
 

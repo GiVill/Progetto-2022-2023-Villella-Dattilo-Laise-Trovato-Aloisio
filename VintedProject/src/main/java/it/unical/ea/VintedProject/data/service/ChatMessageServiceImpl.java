@@ -2,7 +2,7 @@ package it.unical.ea.VintedProject.data.service;
 
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
 import it.unical.ea.VintedProject.config.newsletter.EmailSender;
-import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
+import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.dao.ChatDao;
 import it.unical.ea.VintedProject.data.dao.ChatMessageDao;
 import it.unical.ea.VintedProject.data.dao.UserDao;
@@ -17,7 +17,6 @@ import it.unical.ea.VintedProject.dto.NewChatDto;
 import it.unical.ea.VintedProject.dto.NewMessageDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,6 +33,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     private final MessageLang messageLang;
     private final UserService userService;
     private final BasicInsertionService basicInsertionService;
+    private final LoggedUserMethod loggedUserMethod;
 
 
     @Override
@@ -54,10 +54,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     @Override
     public List<ChatMessage> allChatMessageByChat_id(Long chatId) {
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if (u.get().getEmail() == null) {
-            throw new EntityNotFoundException(messageLang.getMessage("chat.not.present", chatId));
-        }
+        loggedUserMethod.checkLoggedUser();
         List<ChatMessage> list = chatMessageDao.findAllByChatOrderByDateAsc(chatId);
         System.out.println(list);
 
@@ -122,10 +119,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     public void insertMessageChat(NewMessageDto newMessageDto) {
 
 
-        Optional<User> u = userDao.findUserByEmail(LoggedUserDetail.getInstance().getEmail());
-        if (u.get().getEmail() == null || !u.get().getId().equals(newMessageDto.getSender())) {
-            throw new EntityNotFoundException(messageLang.getMessage("user.not.present", newMessageDto.getSender()));
-        }
+        loggedUserMethod.getLoggedUserId(newMessageDto.getSender());
 
         Chat chat = chatDao.getById(newMessageDto.getChatId());
 

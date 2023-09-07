@@ -23,13 +23,13 @@ public class LoggedUserMethod {
     public void checkLoggedUser(){
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
         userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() ->  new BadRequestException(messageLang.getMessage("access.denied")));
-        System.out.println(LoggedUserDetail.getInstance().getEmail() + " checkLoggedUser");
+        System.out.println(jwtAuthConverter.getEmail() + " checkLoggedUser");
     }
     public void checkLoggedUser(Long userId){
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
 
         Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() ->  new BadRequestException(messageLang.getMessage("access.denied"))));
-        System.out.println(LoggedUserDetail.getInstance().getEmail() + " checkLoggedUser ARGS");
+        System.out.println(jwtAuthConverter.getEmail() + " checkLoggedUser ARGS");
 
         if(!user.get().getId().equals(userId)){ //|| user.get().getId().equals(userService.getUserById(userId).getId())
             throw new BadRequestException(messageLang.getMessage("access.denied")); //throw new RuntimeException("NON HAI I PERMESSI; (DEVI LOGGARTI)");
@@ -40,7 +40,7 @@ public class LoggedUserMethod {
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
 
         Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() -> new BadRequestException(messageLang.getMessage("access.denied"))));
-        System.out.println(LoggedUserDetail.getInstance().getEmail() + " getLoggedUserId");
+        System.out.println(jwtAuthConverter.getEmail() + " getLoggedUserId");
 
         return user.get().getId();
     }
@@ -49,7 +49,7 @@ public class LoggedUserMethod {
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
 
         Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() -> new BadRequestException(messageLang.getMessage("access.denied"))));
-        System.out.println(LoggedUserDetail.getInstance().getEmail() + " getLoggedUserId");
+        System.out.println(jwtAuthConverter.getEmail() + " getLoggedUserId");
 
         return jwtAuthConverter.getIdKeycloak();
     }
@@ -59,7 +59,7 @@ public class LoggedUserMethod {
         System.out.println("JWT class: "+ jwtAuthConverter.getIdKeycloak());
 
         Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() ->  new BadRequestException(messageLang.getMessage("access.denied"))));
-        System.out.println(LoggedUserDetail.getInstance().getEmail() + " getLoggedUserId ARGS");
+        System.out.println(jwtAuthConverter.getEmail() + " getLoggedUserId ARGS");
 
         if(!user.get().getId().equals(userId)){ // || user.get().getId().equals(userService.getUserById(userId).getId())
             throw new BadRequestException(messageLang.getMessage("access.denied"));
@@ -72,7 +72,7 @@ public class LoggedUserMethod {
         System.out.println("JWT class: "+ jwtAuthConverter.getEmail());
 
         Optional<User> user = Optional.ofNullable(userDao.findUserByEmail(jwtAuthConverter.getEmail()).orElseThrow(() ->  new BadRequestException(messageLang.getMessage("access.denied"))));
-        System.out.println(LoggedUserDetail.getInstance().getEmail() + " getEntireLoggedUser");
+        System.out.println(jwtAuthConverter.getEmail() + " getEntireLoggedUser");
 
         return user.get();
     }

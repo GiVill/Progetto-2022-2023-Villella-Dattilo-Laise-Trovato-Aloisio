@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InsertionListener {
 
-    //private BasicInsertionService insertionService;
 
     @PostLoad
     private void afterLoad(BasicInsertion insertion){ log.info("[INSERTION AUDIT] insertion loaded with id: " + insertion.getId()); }

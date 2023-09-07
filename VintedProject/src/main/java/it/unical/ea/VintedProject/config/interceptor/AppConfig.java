@@ -14,7 +14,6 @@ public class AppConfig implements WebMvcConfigurer {
     //list of endpoint with rate limiter (Bucket)
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //TODO: Aggiungere i giusti endpoint
         registry.addInterceptor(interceptor)
                 .addPathPatterns("/vintedProject-api/v1/users/{idUser}")
                 .addPathPatterns("/vintedProject-api/v1/orders/{orderId}")

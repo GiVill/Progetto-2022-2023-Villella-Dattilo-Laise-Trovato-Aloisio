@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -31,24 +32,6 @@ public class InsertionController {
     private final ImageService imageService;
     private final LoggedUserMethod loggedUserMethod;
 
-
-    /*
-    getAll
-    getInsertionById
-    getInsertionByUserId
-    getInsertionByUserEmail
-    addInsertion
-    deleteInsertionById
-    deleteInsertionForAdmin
-    deleteAllInsertionByUserId
-    getByTitle
-    getByBrand
-    getByCategory
-    modifyInsertion
-    modifyInsertionById
-    generateCapabilities
-    getPrivateInsertion
-    */
 
     @GetMapping("/insertions")
     public ResponseEntity<Page<BasicInsertionDto>> userGetAll(@RequestParam("page") int page){
@@ -176,11 +159,6 @@ public class InsertionController {
     }
 
 
-
-
-
-
-
     @GetMapping("/insertions/24h/token/{idInsertion}")
     public ResponseEntity<String> generate24hToken(@PathVariable("idInsertion") Long insertionId){
         //check if insertion.user.id is logged.user.id
@@ -198,8 +176,4 @@ public class InsertionController {
         return ResponseEntity.ok(basicInsertionService.getPrivateInsertion(token));
     }
 
-
-    //TODO aggiornare il security config delle API tutte
-    //TODO verificare tutti i messaggi di errore delle eccezioni intendo
-    
 }

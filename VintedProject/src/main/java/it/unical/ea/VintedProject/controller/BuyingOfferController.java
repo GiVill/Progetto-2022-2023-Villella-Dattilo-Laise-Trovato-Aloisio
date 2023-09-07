@@ -2,7 +2,6 @@ package it.unical.ea.VintedProject.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
-import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
@@ -17,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.BadRequestException;
 import java.util.List;
 
 @RestController
@@ -45,7 +43,6 @@ public class BuyingOfferController {
     }
 
     @GetMapping("/admin/offers/user/{idUser}")
-    //TODO: AGGIUNGERE AL SECURITY CON.
     public ResponseEntity<List<BuyingOfferDto>> getAllByUserId(@PathVariable("idUser") Long idUser) {
         // find an Insertion using the ID.
         // No Throw on the find!
@@ -131,7 +128,5 @@ public class BuyingOfferController {
 
     }
 
-
-    //TODO:PUT
 
 }

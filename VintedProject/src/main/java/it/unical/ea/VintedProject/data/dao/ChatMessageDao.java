@@ -15,7 +15,7 @@ public interface ChatMessageDao extends JpaRepository<ChatMessage,Long> {
 
     List<ChatMessage> findAllBySenderOrderByDateAsc(Long id);
 
-    //non so se verra utilizzata
+
     List<ChatMessage> findAllByReciver(Long id);
 
     List<ChatMessage> findAllByReciverOrderByDateAsc(Long id);

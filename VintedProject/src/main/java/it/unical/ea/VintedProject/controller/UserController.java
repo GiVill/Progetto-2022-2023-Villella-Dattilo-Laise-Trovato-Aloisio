@@ -3,7 +3,6 @@ package it.unical.ea.VintedProject.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.service.interfaces.UserService;
 import it.unical.ea.VintedProject.dto.UserDto;
@@ -28,7 +27,6 @@ public class UserController {
     @Autowired
     private HttpServletRequest request;
 
-    //TODO: Forse questo @Operation si può eliminare?
     @Operation(
             description = "Get endpoint for user",
             summary = "this is the list of user",

@@ -1,6 +1,5 @@
 package it.unical.ea.VintedProject.config;
 
-import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
@@ -56,7 +55,6 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 
         setEmail(jwt);
         setIdKeycloak(jwt);
-        getUserInformation(jwt);
         String claimName = JwtClaimNames.SUB;
         if (principleAttribute != null) {
             claimName = principleAttribute;
@@ -80,30 +78,13 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 
         resourceRoles = (Collection<String>) resource.get("roles");
 
+        System.out.println(resourceRoles);
+
         return resourceRoles
                 .stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toSet());
     }
-
-
-    private void getUserInformation(Jwt jwt){
-        LoggedUserDetail.getInstance().setIdKeycloak(jwt.getClaim("sub"));
-        LoggedUserDetail.getInstance().setUsername(jwt.getClaim("preferred_username"));
-        LoggedUserDetail.getInstance().setEmail(jwt.getClaim("email"));
-        LoggedUserDetail.getInstance().setSessionId(jwt.getClaim("sid"));
-    }
-
-    /*
-    private void setEmail(Jwt jwt){
-        System.out.println();
-        email = jwt.getClaim("email");
-    }
-    public String getEmail(){
-        return email;
-    }
-
-     */
 
     private void setEmail(Jwt jwt){
         emailThreadLocal.set(jwt.getClaim("email"));
