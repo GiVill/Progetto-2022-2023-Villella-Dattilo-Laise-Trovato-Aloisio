@@ -223,10 +223,10 @@ checkProductInCart(): void {
         },
         (error) => {
           if (error.statusText=="OK") {
-            this.snackBar.open("Messaggio inviato")
+            this.snackBar.open("Messaggio inviato" , "OK")
             this.closeMessageModal()
           }else {
-            this.snackBar.open("Errore nell'invio del messaggio")
+            this.snackBar.open("Errore nell'invio del messaggio" , "RIPROVA")
             this.closeModal()
           }
         }
