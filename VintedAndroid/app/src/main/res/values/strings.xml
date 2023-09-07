@@ -10,7 +10,7 @@
     <string name="discard">Discard</string>
     <string name="no_items_in_cart">No Items in Cart</string>
     <string name="see_your_profile">See Your Profile</string>
-    <string name="no_user_logged">No User Logged</string>
+    <string name="no_user_logged_in">No User Logged In</string>
     <string name="go_to_login_page">Go To Login Page</string>
     <string name="my_orders">My Orders</string>
     <string name="my_offers">My Offers</string>
@@ -53,5 +53,9 @@
     <string name="My_Insertions">My insertions:</string>
     <string name="view_offers">View offers</string>
     <string name="create_order">Create Order</string>
+    <string name="profile">Profile</string>
+    <string name="title_of_insertion">Title Of Insertion</string>
+    <string name="description_of_insertion">Description Of Insertion</string>
+    <string name="price_of_insertion">Price Of Insertion</string>
 
 </resources>

@@ -83,7 +83,7 @@ fun SetupNavGraph(
             FeedbackActivity()
         }
         composable(route = ScreenController.Login.route){
-            LoginActivity(navController, userViewModel, loginRegistrationViewModel)
+            LoginActivity(navController, userViewModel, loginRegistrationViewModel, application)
         }
         composable(route = ScreenController.Register.route){
             RegistrationActivity(navController, loginRegistrationViewModel)
@@ -92,7 +92,7 @@ fun SetupNavGraph(
             ProductActivity(searchedProduct,itemsInCart, homeViewModel, productViewModel, application)
         }
         composable(route = ScreenController.UpdatePassword.route){
-            UpdatePasswordActivity(updatePasswordViewModel)
+            UpdatePasswordActivity(updatePasswordViewModel, application)
         }
         composable(route = ScreenController.Chat.route){
             ChatActivity(chatViewModel, navController)

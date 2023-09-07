@@ -51,7 +51,7 @@ fun BottomBarProfileActivity(navController: NavController, userViewModel: UserVi
 
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
-            text = stringResource(R.string.account_settings),
+            text = stringResource(R.string.profile),
             modifier = Modifier.padding(10.dp),
             style = TextStyle(fontSize = Typography.titleLarge.fontSize)
         )
@@ -150,11 +150,16 @@ private fun logoutButton(userFromDB : State<UserDatabaseDto?>, navController: Na
 @Composable
 private fun noUserLoggedIn(navController: NavController){
     Card(modifier = Modifier.fillMaxWidth()) {
-        Text(text = stringResource(R.string.no_user_logged))
-        Button(onClick = {
-            navController.navigate(ScreenController.Login.route)
-        }){
-            Text(text = stringResource(R.string.go_to_login_page))
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = stringResource(R.string.no_user_logged_in))
+            Button(onClick = {
+                navController.navigate(ScreenController.Login.route)
+            }) {
+                Text(text = stringResource(R.string.go_to_login_page))
+            }
         }
     }
 }

@@ -103,7 +103,11 @@ fun RegistrationActivity(navController: NavHostController, loginRegistrationView
             createPersonalizedTextfield(textField = addressNumberField, name = "Address Number", Icons.Default.Numbers, addressNumberRegex)
             createPersonalizedTextfield(textField = addressStreetField, name = "Address Street", Icons.Default.Streetview, addressStreetRegex)
 
-            createPersonalizedTextfieldPassword(textField = passwordField)
+            createPersonalizedTextfieldPassword(textField = passwordField){ regexValidation ->
+                if(!regexValidation){
+                    Log.i("Update", "OOOOO NOOOOO, ${passwordField.value.text} , $regexValidation")
+                }
+            }
 
             Button(
                 onClick = {

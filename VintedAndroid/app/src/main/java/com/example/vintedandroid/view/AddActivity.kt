@@ -5,6 +5,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -57,13 +58,14 @@ fun AddActivity(application: Context, addViewModel: AddViewModel) {
 
     Box(Modifier.fillMaxSize()) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            createPersonalizedTextfield(textField = titleField, name = "Title Of Insertion", icon = Icons.Default.Title, regexPattern = nameRegex)
-            createPersonalizedTextfield(textField = descriptionField, name = "Description Of Insertion", icon = Icons.Default.Description, regexPattern = nameRegex)
-            createPersonalizedTextfield(textField = priceField, name = "Price Of Insertion", icon = Icons.Default.MonetizationOn, regexPattern = numberRegex)
+            createPersonalizedTextfield(textField = titleField, name = stringResource(R.string.title_of_insertion), icon = Icons.Default.Title, regexPattern = nameRegex)
+            createPersonalizedTextfield(textField = descriptionField, name = stringResource(R.string.description_of_insertion), icon = Icons.Default.Description, regexPattern = nameRegex)
+            createPersonalizedTextfield(textField = priceField, name = stringResource(R.string.price_of_insertion), icon = Icons.Default.MonetizationOn, regexPattern = numberRegex)
             createCheckbox(checkStatus = checkStatus)
 
             Card(modifier = Modifier.padding(6.dp)) {
-                Row {
+                Row(horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically) {
                     Text("Add An Image")
                     Icon(
                         Icons.Filled.Add,
@@ -75,7 +77,9 @@ fun AddActivity(application: Context, addViewModel: AddViewModel) {
                     )
                 }
             }
-            Button(onClick = { addViewModel.addInsertion(titleField.value.text, descriptionField.value.text, priceField.value.text.toFloat(), checkStatus.value) }) {
+            Button(onClick = {
+                addViewModel.addInsertion(titleField.value.text, descriptionField.value.text, priceField.value.text.toFloat(), checkStatus.value)
+            }) {
                 Text("Send New Insertion")
             }
         }

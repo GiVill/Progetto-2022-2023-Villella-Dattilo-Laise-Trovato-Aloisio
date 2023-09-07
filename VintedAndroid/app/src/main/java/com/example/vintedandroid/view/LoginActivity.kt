@@ -1,7 +1,9 @@
 package com.example.vintedandroid.view
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +32,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.res.stringResource
 import com.example.vintedandroid.R
+import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.view.config.createPersonalizedTextfield
 import com.example.vintedandroid.view.config.createPersonalizedTextfieldPassword
 import com.example.vintedandroid.viewmodel.LoginRegistrationViewModel
@@ -38,11 +41,12 @@ import com.example.vintedandroid.viewmodel.UserViewModel
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun LoginActivity(navController: NavHostController, userViewModel: UserViewModel, loginRegistrationViewModel: LoginRegistrationViewModel) {
+fun LoginActivity(navController: NavHostController, userViewModel: UserViewModel, loginRegistrationViewModel: LoginRegistrationViewModel, application: Context) {
 
     val emailField = remember { mutableStateOf(TextFieldValue()) }
     val emailRegex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9]+\\.)+[A-Za-z]{2,4}\$".toRegex()
     var passwordField = remember { mutableStateOf(TextFieldValue()) }
+    var isValid by remember { mutableStateOf(false) }
 
     //var userFromDB1 = userViewModel.getAllUserFromRoomDatabase()
 
@@ -58,7 +62,9 @@ fun LoginActivity(navController: NavHostController, userViewModel: UserViewModel
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //if(userFromDB.isEmpty() ) {
 
-                Column(
+        if(LoggedUserDetails.getInstance().getCurrentUser().id == null){
+            Log.i("LoginActivity", "No user is logged")
+            Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
@@ -80,9 +86,12 @@ fun LoginActivity(navController: NavHostController, userViewModel: UserViewModel
                     }
 
                     createPersonalizedTextfield(textField = emailField, name = stringResource(R.string.email), icon = Icons.Default.Email, emailRegex)
-                    createPersonalizedTextfieldPassword(textField = passwordField)
+                    createPersonalizedTextfieldPassword(textField = passwordField){ regexValidation ->
+                        isValid = regexValidation
+                        Log.i("a", "${passwordField.value.text} , $regexValidation")
+                    }
 
-                    loginButton(navController = navController, email = emailField.value.text, password = passwordField.value.text, loginUnsuccessful = loginUnsuccessful, loginRegistrationViewModel = loginRegistrationViewModel)
+                    loginButton(navController = navController, email = emailField.value.text, password = passwordField.value.text, loginUnsuccessful = loginUnsuccessful, loginRegistrationViewModel = loginRegistrationViewModel, isValid = isValid, application = application)
                     goToRegistrationButton(navController = navController)
 
                 }
@@ -92,26 +101,37 @@ fun LoginActivity(navController: NavHostController, userViewModel: UserViewModel
                 //navController.navigate(ScreenController.Home.route)
             //}
         //}
+    }else{
+        Log.i("LoginActivity", "A user is logged")
+            navController.popBackStack()
+            navController.navigate(ScreenController.Home.route)
+        }
     }
 }
 
 //TODO Controllare che funzioni tutto correttamente
 @SuppressLint("SuspiciousIndentation")
 @Composable
-private fun loginButton(navController: NavHostController, email: String, password: String, loginUnsuccessful: MutableState<Boolean>, loginRegistrationViewModel: LoginRegistrationViewModel){
+private fun loginButton(navController: NavHostController, email: String, password: String, loginUnsuccessful: MutableState<Boolean>, loginRegistrationViewModel: LoginRegistrationViewModel, isValid: Boolean, application: Context){
 
     var buttonEnabled by remember { mutableStateOf(true) }
     Button(
         onClick = {
             buttonEnabled = false
             loginUnsuccessful.value = false
-                if(loginRegistrationViewModel.login(email, password)){
+            if(isValid) {
+                if (loginRegistrationViewModel.login(email, password)) {
                     navController.popBackStack()
                     navController.navigate(ScreenController.Home.route)
                 } else {
                     loginUnsuccessful.value = true
                     buttonEnabled = true
                 }
+            }else{
+                buttonEnabled = true
+                Toast.makeText(application.applicationContext, "The Password is Too Short!", Toast.LENGTH_SHORT).show()
+                Log.i("Login", "The Password is Too Short!")
+            }
         },
         modifier = Modifier.padding(8.dp),
         enabled = buttonEnabled

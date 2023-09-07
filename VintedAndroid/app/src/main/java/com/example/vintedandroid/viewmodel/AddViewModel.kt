@@ -3,6 +3,7 @@ package com.example.vintedandroid.viewmodel
 import android.app.Application
 import android.graphics.Bitmap
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.swagger.client.apis.ImageApi
@@ -17,6 +18,8 @@ import kotlin.math.absoluteValue
 class AddViewModel (application: Application) : ViewModel() {
 
     var bitmap: Bitmap? = null
+    private val application = application
+
 
     fun updateImage(bitmap: Bitmap, insertionId: Long) {
         this.bitmap = bitmap
@@ -28,13 +31,22 @@ class AddViewModel (application: Application) : ViewModel() {
         Log.i("AddInsertion", "$insertionDto , $bitmap")
         bitmap?.let {
             if (insertionDto != null) {
-                if(InsertionApi().addInsertion(it, insertionDto)){
-                    Log.i("k", "k")
+                if(LoggedUserDetails.getInstance().getCurrentUser().id != null){
+                    if(InsertionApi().addInsertion(it, insertionDto)){
+                        Toast.makeText(application.applicationContext, "Insertion Sended", Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        Toast.makeText(application.applicationContext, "There was an error with the server", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 else{
-                    Log.i("non k", "non k")
+                    Toast.makeText(application.applicationContext, "You need to login first!", Toast.LENGTH_SHORT).show()
                 }
             }
+            else{
+                Toast.makeText(application.applicationContext, "You need to login first!", Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 
