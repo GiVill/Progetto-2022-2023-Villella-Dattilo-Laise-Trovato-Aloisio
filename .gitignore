@@ -9,3 +9,7 @@
 /VintedProject/src/main/resources/dbdata/*
 /VintedProject/src/main/resources/image/*
 /VintedProject/target/*
+VintedAndroid/local.properties
+VintedAndroid/app/build/*
+VintedAndroid/.gradle/*
+VintedAndroid/.idea/
