@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit{
     addressNumber: 0,
     addressCity: '',
     addressCap: 0,
-    role: "USER"
 
   };
   private configuration: Configuration ={
