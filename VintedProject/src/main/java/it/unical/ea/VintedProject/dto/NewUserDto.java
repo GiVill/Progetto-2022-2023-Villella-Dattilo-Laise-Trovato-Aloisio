@@ -26,7 +26,7 @@ public class NewUserDto {
     @Email(message = "email.not.valid")
     private String email;
 
-    private Role role;
+
     private String lastname;
     private String addressStreet;
     private Integer addressNumber;
