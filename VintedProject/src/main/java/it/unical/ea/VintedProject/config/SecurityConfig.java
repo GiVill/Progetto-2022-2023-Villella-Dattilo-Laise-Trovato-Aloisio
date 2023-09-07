@@ -34,7 +34,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf()
-                    .disable()
+                .disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
                         "/api/v1/auth/**",
@@ -138,8 +138,8 @@ public class SecurityConfig {
 
         http
                 .oauth2ResourceServer()
-                    .jwt()
-                        .jwtAuthenticationConverter(jwtAuthConverter);
+                .jwt()
+                .jwtAuthenticationConverter(jwtAuthConverter);
 
         http.sessionManagement().sessionCreationPolicy(STATELESS);
 
