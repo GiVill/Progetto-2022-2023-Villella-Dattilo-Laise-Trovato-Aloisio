@@ -1,0 +1,141 @@
+.chat-container {
+  display: flex;
+}
+
+.user-list {
+  width: 30%;
+  border-right: 1px solid #ccc;
+  padding: 1rem;
+}
+
+.chat-window {
+  flex: 1;
+  padding: 1rem;
+}
+
+.selected-user {
+  background-color: #262626 !important;
+  color: white;
+}
+
+.messages {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.message {
+  margin-bottom: 1rem;
+}
+
+.chat-window {
+  flex: 1;
+  min-height: 80vh;
+  height: 80%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Posiziona la chat in basso */
+}
+
+.message-input {
+  display: flex;
+  bottom: 0;
+  margin-top: auto;
+  z-index: 1;
+  padding-top: 1rem;
+
+& input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+& button {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #007b0f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
+
+.btn {
+  background-color: #007b0f;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 50%;
+  width: 100%;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.mess-container {
+  border-radius: 5px;
+  padding: 8px 12px;
+  max-width: 70%;
+  margin:0.5%;
+
+}
+
+.own-message {
+  background-color: #0d9263;
+  float: right;
+  clear: both;
+  text-align: left;
+}
+
+.other-message {
+  background-color: rgb(128, 128, 128);
+  float: left;
+  clear: both;
+  text-align: left;
+}
+
+.no-chat-message-container {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.no-chat-message-container p {
+  color: white;
+  text-align: center;
+  margin: 0;
+}
+
+.chat-container {
+  display: flex;
+}
+
+.user-list {
+  width: 30%;
+  border-right: 1px solid #ccc;
+  padding: 1rem;
+}
+
+
+.chat-content-wrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.chat-content-wrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}

@@ -1,0 +1,10 @@
+
+<strong>  Totale:  </strong> {{ myOrder!.total}} €<br>
+<strong>  Metodo di pagamento:  </strong> {{ myOrder!.paymentMethod}} <br>
+<strong>  Data:  </strong> {{myOrder!.date}}<br>
+<strong> Prodotti: </strong>
+<p></p>
+<ng-container *ngFor="let item of insertions; let i = index;">
+  <p>{{item.title}}</p>
+</ng-container>
+

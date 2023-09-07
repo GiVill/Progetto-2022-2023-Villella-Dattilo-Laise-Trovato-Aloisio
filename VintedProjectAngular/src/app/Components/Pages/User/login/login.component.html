@@ -1,0 +1,64 @@
+<div class="mainContainer">
+  <img class="backgroundImage" src="assets/resources/login-background.jpg">
+  <div class="loginCardContainer" [ngClass]="{flipped: isFlipped}">
+    <div class="front">
+      <h2>LOGIN</h2>
+      <form id="log" style="display: flex;">
+        <div id="firstColumn">
+          <label style="margin: 0 5px;">Email:</label>
+          <input type="email" style="margin: 0 5px;" [(ngModel)]="login.email" name="loginMail">
+          <label style="margin: 0 5px; margin-top: 10%;">Password:</label>
+          <input type="password" style="margin: 0 5px; margin-top: 3%;" [(ngModel)]="login.password" name="loginPassword">
+        </div>
+      </form>
+      <button mat-flat-button [disabled]="!isLoginFormValid()" style="margin-top: 12%; color: rgb(3, 90, 3);" (click)="logIn()">Accedi</button>
+      <button mat-flat-button style="margin-top: 12%;" (click)="flipCard()">Passa alla registrazione</button>
+    </div>
+    <div class="back">
+      <h2>REGISTRAZIONE</h2>
+      <form id="registration" style="display: flex;">
+        <div id="secondColumn">
+          <label style="margin: 0 25%;margin-top: 3%;">Nickname:</label>
+          <input type="email" style="margin: 0 25%; width: 50%;" [(ngModel)]="newUser.nickname" name="registerNick" maxlength="15">
+
+          <label style="margin: 0 25%;margin-top: 5%;">Nome:</label>
+          <input type="email" style="margin: 0 25%; width: 50%;" [(ngModel)]="newUser.firstname" name="registerName" maxlength="12">
+
+          <label style="margin: 0 25%;margin-top: 5%;">Cognome:</label>
+          <input type="email" style="margin: 0 25%; width: 50%;" [(ngModel)]="newUser.lastname" name="registerSur" maxlength="12">
+
+          <label style="margin: 0 25%;margin-top: 5%;">Email:</label>
+          <input type="email" style="margin: 0 25%; width: 50%;" [(ngModel)]="newUser.email" name="registerMail" maxlength="20">
+
+          <label style="margin: 0 25%; margin-top: 5%;">Password:</label>
+          <input type="password" style="margin: 0 25%; width: 50%;" [(ngModel)]="newUser.password" name="registerPassword" maxlength="15">
+
+          <label style="margin: 0 25%; margin-top: 5%;">Conferma password:</label>
+          <input type="password" style="margin: 0 25%; width: 50%;" [(ngModel)]="passwordCheck" name="registerConfirmPassword" maxlength="15">
+
+          <hr style="margin-top: 8%; width: 99%; background-color: black; border-color: black " >
+          <div style="display: flex;">
+            <label style="margin: 0 5px; margin-top: 5%;">Indirizzo:</label>
+            <label style="margin: 0 5px; margin-top: 5%; margin-left: 63%">Civico:</label>
+          </div>
+          <div style="display: flex;">
+            <input type="text" style="margin: 0 5px; width: 72%;" [(ngModel)]="newUser.addressStreet" name="registerAddressStreet" maxlength="100">
+            <input type="text" style="margin: 0 5px; width: 9%;" [(ngModel)]="newUser.addressNumber" name="registerAddressNumber" maxlength="4">
+          </div>
+          <div style="display: flex;">
+          <label style="margin: 0 5px; margin-top: 5%;">Città::</label>
+            <label style="margin: 0 5px; margin-top: 5%; margin-left: 67%">CAP:</label>
+          </div>
+          <div style="display: flex;">
+            <input type="text" style="margin: 0 5px; width: 70%;" [(ngModel)]="newUser.addressCity" name="registerAddressCity" maxlength="50">
+            <input type="text" style="margin: 0 5px; width: 12%;" [(ngModel)]="newUser.addressCap" name="registerAddressCap" maxlength="5">
+          </div>
+        </div>
+      </form>
+      <div style="display: flex;">
+      <button mat-flat-button style="margin-top: 12%; margin-right: 10%" (click)="flipCard()">Passa all'accesso</button>
+        <button mat-flat-button style="margin-top: 12%; color: rgb(3, 90, 3);" [disabled]="!isRegistrationFormValid()" (click)="signUp()">Registrati</button>
+      </div>
+    </div>
+  </div>
+</div>

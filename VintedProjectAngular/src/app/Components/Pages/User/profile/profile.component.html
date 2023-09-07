@@ -1,0 +1,31 @@
+<div class="profile-page">
+  <div class="profile-header">
+    <div class="profile-picture">
+
+      <img  [src]="user?.imageName ? 'https://localhost:8010/vintedProject-api/v1/images/' + user?.imageName : 'assets/resources/vestito.jpg'" alt="Profile Picture" class="round-image">
+    </div>
+    <div class="profile-info">
+      <h1>Informazioni Utente</h1>
+      <h3>Nickname: {{ user?.nickname }}</h3>
+      <h3>Nome: {{ user?.firstName }}</h3>
+      <h3>Cognome: {{ user?.lastName }}</h3>
+      <h3>Email: {{ user?.email }}</h3>
+    </div>
+  </div>
+</div>
+  <div class="userContainer" >
+    <div style="width: 100%;">
+      <h2>Altri post di {{user?.firstName}}</h2>
+      <div class="card-container">
+        <div class="card-row">
+          <div *ngFor="let item of userInsertion?.content" class="card-item">
+            <div class="user-insertion-card">
+              <div class="card-row" style="margin: 20px">
+                <app-profile-card [user]="getUserByUserId(item.userId)" [userId]="item.userId" [insertion]="item"></app-profile-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

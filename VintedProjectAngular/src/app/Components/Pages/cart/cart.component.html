@@ -1,0 +1,31 @@
+<div class="insertion-container" style="margin: 5%" *ngIf="areProduct">
+  <div class="card-container">
+    <div class="card-row">
+      <ng-container *ngFor="let item of cartProduct; let i = index;">
+        <app-cart-insertion-card [item]="item" class="card-item"></app-cart-insertion-card>
+      </ng-container>
+    </div>
+  </div>
+  <hr style="position: absolute; bottom: 22%; left: 20px; right: 20px; border: none; border-top: 1px solid #ccc;">
+  <div style="margin: 8%">
+    <div class="payment-container" style="display: flex">
+      <div class="payment-methods" style=" bottom: 20px; left: 20px;">
+        <h2>Metodi di pagamento disponibili:</h2>
+        <ul>
+          <li style="margin: 5%" *ngFor="let method of paymentMethods">
+            <label>
+              <input type="radio" name="paymentMethod" [value]="method" [(ngModel)]="selectedPaymentMethod">
+              {{ method }}
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div class="button-container" style=" margin-left: 800px; left: 10px">
+        <h2 style="margin: 50px"> Totale: {{totalCost}}€</h2>
+        <button class="button" (click)="createOrder()">Acquista</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+

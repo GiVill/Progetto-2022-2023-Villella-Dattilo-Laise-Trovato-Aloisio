@@ -1,0 +1,7 @@
+<div class="profile-card">
+  <div class="profile-info">
+    <img class="rounded-image" [src]="user?.imageName ? 'https://localhost:8010/vintedProject-api/v1/images/' + user?.imageName : 'assets/resources/vestito.jpg'" (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false" alt="Profile">
+    <div class="name">{{ user?.firstName }}</div>
+  </div>
+  <app-offer-card *ngIf="insertion && !offer?.paid" [offer]="offer" [product]="insertion"> </app-offer-card>
+</div>

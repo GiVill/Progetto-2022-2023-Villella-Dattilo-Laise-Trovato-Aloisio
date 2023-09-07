@@ -1,0 +1,15 @@
+<div class="profile-card" [ngStyle]="{'background-color': insertion?.isPrivate ? '#bababa' : '#f1f1f1'}">
+  <div class="profile-info">
+    <img class="rounded-image" [src]="user?.imageName ? 'https://localhost:8010/vintedProject-api/v1/images/' + user?.imageName : 'assets/resources/vestito.jpg'" (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false" alt="Profile">
+    <div style="display: flex">
+      <div class="name">{{ user?.firstName }}</div>
+      <div style="display: flex">
+        <div class="name" *ngIf="insertion?.isPrivate" style="margin-left: 150%; color: red">PRIVATA</div>
+        <button *ngIf="insertion?.userId === myUserId && insertion?.isPrivate && profile && insertion?.available" style=" margin-left:8%" class="button" (click)="deleteInsertion()" > X </button>
+        <button *ngIf="insertion?.userId === myUserId && !insertion?.isPrivate && profile && insertion?.available" style=" margin-left:740%" class="button" (click)="deleteInsertion()" > X </button>
+      </div>
+    </div>
+
+  </div>
+  <app-product-card *ngIf="insertion" [item]="insertion"></app-product-card>
+</div>

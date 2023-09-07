@@ -1,0 +1,72 @@
+<div class="image-container">
+  <img  src="assets/resources/imageProva.jpg" alt="Immagine di prova">
+  <div class="cardOver">
+    <mat-card>
+      <img mat-card-img src="assets/resources/CardOverlay.png">
+      <button mat-stroked-button style="background-color: #4aba91; "  [routerLink]="['/newinsertion']" >CREA INSERZIONE</button>
+    </mat-card>
+  </div>
+</div>
+<div class="insertion-container" *ngIf="mostRequested">
+  <div class="body-content" style="margin-top: 30px">
+    <div style="max-height: 700px;">
+      <div class="header">
+        <h2 class="font">Articoli più richiesti</h2>
+        <button class="showAll-button" [routerLink]="['/catalog']">Vedi tutti</button>
+      </div>
+      <div class="card-container">
+        <div class="card-row" >
+          <div style="margin-bottom: 10px;"  *ngFor="let item of mostRequested.content" class="card-item">
+            <app-profile-card [user]="getUserByUserId(item.userId)" [userId]="item.userId" [insertion]="item"></app-profile-card>
+          </div>
+          <button type="button" class="btn btn-secondary" style="width: 400px; min-width: 200px;  margin-right: 10px"  [routerLink]="['/catalog']">Vedi tutti i prodotti</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="height: 30px; min-width: 30px"></div>
+
+<div class="body-content" style="min-height: 250px !important;">
+<h2 class="font">Ricerca per brand</h2>
+<div style="height: 20px; min-width: 20px"></div>
+<div style="flex-wrap: wrap; display: flex;">
+  <button class="button btn" [routerLink]="['/brand' , 'Adidas']" >Adidas</button>
+  <button class="button btn" [routerLink]="['/brand' , 'Puma']" >Puma</button>
+  <button class="button btn" [routerLink]="['/brand' , 'Nike']" >Nike</button>
+  <button class="button btn" [routerLink]="['/brand' , 'Microsoft']" >Microsoft</button>
+  <button class="button btn" [routerLink]="['/brand' , 'Xiaomi']" >Xiaomi</button>
+  <button class="button btn" [routerLink]="['/brand' , 'Nothing']" >Nothing</button>
+  <button class="button btn" [routerLink]="['/brand' , 'Guess']" >Guess</button>
+  <button class="button btn" [routerLink]="['/brand' , 'Fila']" >Fila</button>
+  <button class="button btn" [routerLink]="['/brand' , 'Onze']" >Onze</button>
+  <button class="button btn" [routerLink]="['/brand' , 'Gojiang']" >Gojiang</button>
+  <button class="button btn" [routerLink]="['/brand' , 'Rebook']" >Rebook</button>
+  <button class="button btn" [routerLink]="['/brand' , 'Asix']" >Asix</button>
+  <button class="button btn" [routerLink]="['/brand' , 'Sony']" >Sony</button>
+  <button class="button btn" [routerLink]="['/brand' , 'ALTRO']" >Altro</button>
+</div>
+</div>
+
+
+
+<div class="insertion-container" style="margin-bottom: 20px" *ngIf="feed">
+  <div class="body-content">
+    <div style="background-color: #c3d0cd; max-height: 700px;">
+      <div class="header">
+        <h2 class="font">Feed</h2>
+        <button class="showAll-button">Vedi tutti</button>
+      </div>
+      <div class="card-container">
+        <div class="card-row">
+          <div style="margin-bottom: 10px" *ngFor="let item of feed.content" class="card-item">
+            <app-profile-card [user]="getUserByUserId(item.userId)"  [userId]="item.userId" [insertion]="item"></app-profile-card>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-bottom-of-the-barrel style="width: 500px; margin-top: 50px; "> </app-bottom-of-the-barrel>

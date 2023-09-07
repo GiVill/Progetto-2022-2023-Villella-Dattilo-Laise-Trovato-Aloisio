@@ -1,0 +1,12 @@
+<div class="insertion-container" *ngIf="insertion">
+  <div class="body-content" style="margin-top: 30px; min-height: 722px">
+    <div class="card-container">
+      <div class="card-row">
+        <ng-container *ngFor="let item of insertion?.content; let i = index;">
+          <app-profile-card [user]="getUserByUserId(item.userId)" [userId]="item.userId" [insertion]="item"> </app-profile-card>
+          <ng-container *ngIf="(i + 1) % 6 === 0" class="clearfix"></ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

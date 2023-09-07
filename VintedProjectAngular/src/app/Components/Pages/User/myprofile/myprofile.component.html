@@ -1,0 +1,151 @@
+<div class="profile-page">
+  <div class="profile-header">
+    <div class="profile-picture">
+      <label for="foto" class="custom-file-input">
+        <img [src]="user?.imageName ? 'https://localhost:8010/vintedProject-api/v1/images/' + user?.imageName : 'assets/resources/vestito.jpg'" alt="Profile Picture" class="round-image">
+        <div class="overlay">Clicca per caricare un'immagine</div>
+      </label>
+      <input type="file" id="foto" name="foto" accept="image/*" (change)="caricaFoto($event)" style="display: none;">
+    </div>
+
+    <div class="profile-info">
+      <h1>Informazioni personali:</h1>
+      <p>Nome: {{ user?.firstName }}</p>
+      <p>Cognome: {{ user?.lastName }}</p>
+      <p>Email: {{ user?.email }}</p>
+      <p>Indirizzo: {{ user?.addressStreet}}, {{ user?.addressNumber }}</p>
+      <p> {{ user?.addressCity }} , {{ user?.addressCap }}</p>
+      <p> {{ user?.addressState }}</p>
+    </div>
+    <button mat-raised-button class="button" style="margin-left: 25%" [routerLink]="['/myprofile']" (click)="showUpdateSection()">Modifica informazioni</button>
+  </div>
+  <app-profile-edit *ngIf="showUpdateSectionFlag" [user]="user"></app-profile-edit>
+
+
+
+    <div class="body-content" style="margin-top: 30px">
+      <div style="max-height: 700px;">
+        <div class="header">
+          <h2 class="font">Le mie inserzioni</h2>
+          <button class="showAll-button"  (click)="openInsertionModal()">Vedi tutte</button>
+        </div>
+
+          <div class="body-content" style="margin-top: 30px"  *ngIf="isAnyInsertion">
+            <div class="card-container">
+              <div class="card-row">
+                <ng-container *ngFor="let item of myInsertion?.content; let i = index;">
+                  <app-profile-card [user]="user" [userId]="item.userId" [insertion]="item" [profile]="true" class="card-item"></app-profile-card>
+                  <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="body-content" style="margin-top: 30px" *ngIf="isAnyOffer">
+      <div style="max-height: 700px;">
+        <div class="header">
+          <h2 class="font">Le mie offerte</h2>
+          <button class="showAll-button" (click)="openOfferModal()">Vedi tutti</button>
+        </div>
+        <div style="margin: 15%"> </div>
+      <div class="card-container">
+        <div class="card-row">
+          <ng-container *ngFor="let item of myOffer; let i = index;">
+            <app-offer-profile-card  *ngIf="!item.paid" [offer]="item"  class="card-item"></app-offer-profile-card>
+            <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  <div class="body-content" style="margin-top: 30px" *ngIf="isAnyOrder">
+        <div style="max-height: 700px;">
+          <div class="header">
+            <h2 class="font">I miei ordini</h2>
+            <button class="showAll-button" (click)="openOrderModal()" >Vedi tutti</button>
+          </div>
+          <div style="margin: 15%"> </div>
+          <div class="card-container">
+            <div class="card-row" >
+              <ng-container *ngFor="let item of myOrder?.content; let i = index;">
+                <app-order-card [order]="item" class="card-item"></app-order-card>
+                <ng-container *ngIf="(i + 1) % 5 === 0" class="clearfix"></ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- Finestra modale inserzioni -->
+<div class="insertion-modal" *ngIf="InsertionModal" (click)="closeInsertionModal($event)">
+  <div class="content" style="margin-top: 30px">
+    <div style="max-height: 700px;">
+      <div class="header">
+        <h2 class="font">Le mie inserzioni:</h2>
+      </div>
+      <div class="body-content" style="margin-top: 30px; display: flex"  *ngIf="isAnyInsertion">
+        <div class="card-container">
+          <div class="card-row" >
+            <ng-container  *ngFor="let item of myInsertion?.content; let i = index;">
+              <app-profile-card [user]="user" [userId]="item.userId" [insertion]="item" [profile]="true" class="card-item"></app-profile-card>
+              <ng-container  class="clearfix"></ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex;">
+        <button [disabled]="page == 0" class="button" (click)="subPageInsertion()" > Indietro</button>
+        <button [disabled]="page == myInsertion.totalPages!" class="button" (click)="addPageInsertion()" > Avanti</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Finestra modale offerte -->
+<div class="offer-modal" *ngIf="OfferModal" (click)="closeOfferModal($event)">
+    <div class="content" style="margin-top: 30px">
+      <div style="max-height: 700px;">
+        <div class="header">
+          <h2 class="font">Le mie offerte:</h2>
+        </div>
+        <div class="body-content" style="margin-top: 30px; display: flex"  *ngIf="isAnyOffer">
+          <div class="card-container">
+            <div class="card-row" >
+              <ng-container *ngFor="let item of myOffer; let i = index;">
+                <app-offer-card [offer]="item" class="card-item"></app-offer-card>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Finestra modale ordini -->
+<div class="order-modal" *ngIf="OrderModal" (click)="closeOrderModal($event)">
+  <div class="content" style="margin-top: 30px">
+    <div style="max-height: 700px;">
+      <div class="header">
+        <h2 class="font">I miei Ordini:</h2>
+      </div>
+      <div class="body-content" style="margin-top: 30px; display: flex"  *ngIf="isAnyOrder">
+        <ng-container *ngFor="let item of myOrder?.content; let i = index;">
+        <app-order-card [order]="item" > </app-order-card>
+        </ng-container>
+      </div>
+      <div style="display: flex;">
+        <button [disabled]="page == 0" class="button" (click)="subPageOrder()" > Indietro</button>
+        <button [disabled]="page == myInsertion.totalPages!" class="button" (click)="addPageOrder()" > Avanti</button>
+      </div>
+    </div>
+  </div>
+</div>
+

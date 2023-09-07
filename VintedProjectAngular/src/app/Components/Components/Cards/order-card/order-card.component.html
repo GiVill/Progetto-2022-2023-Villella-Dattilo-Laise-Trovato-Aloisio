@@ -1,0 +1,28 @@
+<div>
+  <div>
+    <img style=" max-height: 180px;" src="assets/resources/Order.png" (click)="onImageClick()" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
+  </div>
+  <div style="padding-left: 2%;">
+    <div class="product-card">
+      <!-- Visualizza i dettagli del prodotto -->
+      <h3 style="color: black">Data: {{ order!.date}}</h3>
+      <p style="max-width: 250px; color: black">Totale: {{ order!.total}}€</p>
+      <p  style="color: black">Pagamento: {{order.paymentMethod}}</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- Finestra modale ordini -->
+<div class="orders-modal" *ngIf="OrderModal" (click)="closeOrderModal($event)">
+<div class="content" style="margin-top: 30px">
+  <div style="max-height: 700px;">
+    <div class="header">
+      <h2 class="font">Dettagli ordine:</h2>
+    </div>
+      <app-order [myOrder]="order" ></app-order>
+    </div>
+  </div>
+</div>
+
+

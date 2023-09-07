@@ -1,0 +1,14 @@
+img {
+  cursor: pointer;
+}
+.remove-button {
+  background-color: darkred;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-family: Maison Neue;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+  cursor: pointer;
+}

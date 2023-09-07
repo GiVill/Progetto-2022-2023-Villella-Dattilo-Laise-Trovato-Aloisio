@@ -1,0 +1,24 @@
+<div  class="content-container product-card" >
+  <div>
+    <img  style=" max-height: 120px;"[src]="product?.imageName ? 'https://localhost:8010/vintedProject-api/v1/images/' + product?.imageName : 'assets/resources/vestito.jpg'">
+  </div>
+  <div style="padding-left: 2%;">
+    <div class="">
+      <h4 style=""> {{product?.title}}</h4>
+      <div style="display: flex; align-content: center">
+      <p>La tua offerta: {{ offer?.price}}€ </p>
+      </div>
+        <p>Prezzo originale: {{ product?.price}}€ </p>
+
+      <div style="display: flex; align-content: center">
+    </div>
+      <p>Stato: {{ offer?.status}}</p>
+    </div>
+  </div>
+  <div *ngIf="refused">
+  <p style="color: red"> OFFERTA RIFIUTATA</p>
+  </div>
+  <button *ngIf="!accepted && !refused" class="button" (click)="deleteOffer()" > ELIMINA OFFERTA </button>
+  <button *ngIf="accepted" class="button" (click)="createOrder()"  style="background-color: #007b0f"> PAGA ORA </button>
+</div>
+

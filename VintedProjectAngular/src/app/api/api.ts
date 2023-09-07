@@ -1,0 +1,17 @@
+export * from './auth.service';
+import { AuthService } from './auth.service';
+export * from './chat.service';
+import { ChatService } from './chat.service';
+export * from './image.service';
+import { ImageService } from './image.service';
+export * from './insertion.service';
+import { InsertionService } from './insertion.service';
+export * from './offer.service';
+import { OfferService } from './offer.service';
+export * from './order.service';
+import { OrderService } from './order.service';
+export * from './payment.service';
+import { PaymentService } from './payment.service';
+export * from './user.service';
+import { UserService } from './user.service';
+export const APIS = [AuthService, ChatService, ImageService, InsertionService, OfferService, OrderService, PaymentService, UserService];

@@ -1,0 +1,138 @@
+<div class="admin-dashboard">
+  <h1>Admin Dashboard</h1>
+
+  <div class="cards-container">
+    <div class="card">
+      <div class="card-header">
+        <h2>Actions</h2>
+      </div>
+      <div class="card-body">
+        <button class="action-button" (click)="getAllByUserId()">Get all Insertion from User</button>
+        <hr style=" bottom: 22%; left: 20px; right: 20px; border: none; border-top: 1px solid #ccc;">
+        <button class="action-button" (click)="getOrderById()">Get All Order from User</button>
+        <hr style=" bottom: 22%; left: 20px; right: 20px; border: none; border-top: 1px solid #ccc;">
+        <button class="action-button" (click)="getAllOffer()">Get Offer from User</button>
+
+      </div>
+    </div>
+    <div class="card card-large">
+      <div class="card-header">
+        <h2>Input Fields</h2>
+      </div>
+      <div class="card-body">
+
+        <div class="input-field" *ngIf="activeButton === 'getAllByUserId'">
+          <label for="userId">User ID:</label>
+          <input type="text"  [(ngModel)]="userId">
+          <label>User Email:</label>
+          <input type="text"  [(ngModel)]="userEmail">
+        </div>
+
+        <div class="input-field" *ngIf="activeButton === 'getOrderById'">
+          <label>User ID:</label>
+          <input type="text"  [(ngModel)]="userId">
+          <label>User Email:</label>
+          <input type="text"  [(ngModel)]="userEmail">
+        </div>
+
+
+        <div class="input-field" *ngIf="activeButton === 'getAllOffer'">
+          <label for="userId">User ID:</label>
+          <input type="number" id="userId" [(ngModel)]="userId">
+          <label for="page">Insertion ID:</label>
+          <input type="text" id="page" [(ngModel)]="insertionId">
+        </div>
+        <button class="search-button" (click)="action()">Search</button>
+      </div>
+    </div>
+
+
+  <div class="table-container"  *ngIf="activeButton === 'getAllByUserId'">
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Titolo</th>
+        <th>Descrizione</th>
+        <th>Prezzo</th>
+        <th>Elimina</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngIf="activeButton === 'getAllByUserId'">
+        <tr *ngFor="let insertion of insertionDtoArray?.content">
+          <td>{{ insertion.id }}</td>
+          <td>{{ insertion.title }}</td>
+          <td>{{ insertion.description }}</td>
+          <td>{{ insertion.price }}€</td>
+          <td > <button (click)="actionDeleteBasicInsertion(insertion.id)"> X </button> </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+    <div class="table-container"  *ngIf="activeButton === 'getOrderById'">
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Data</th>
+          <th>Prodotti</th>
+          <th>Totale</th>
+          <th>Elimina</th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        <ng-container *ngIf="activeButton === 'getOrderById'">
+          <tr *ngFor="let order of orderDtoArray?.content">
+            <td>{{ order.id}}</td>
+            <td>{{ order.date }}</td>
+            <td>{{ order.insertionIdList }}</td>
+            <td>{{ order.total }}€</td>
+            <td > <button (click)="actionDeleteOrder(order.id)"> X </button> </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+
+      <div class="table-container"  *ngIf="activeButton === 'getAllOffer'">
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Offerta</th>
+          <th>Stato</th>
+          <th>Utente Che ha effettuato l'offerta</th>
+          <th>Elimina</th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+
+      <ng-container *ngIf="activeButton === 'getAllOffer'">
+        <tr *ngFor="let offer of offerDtoArray">
+          <td>{{ offer.id}}</td>
+          <td>{{ offer.price }}</td>
+          <td>{{ offer.status }}</td>
+          <td>{{ offer.userId }}€</td>
+          <td > <button (click)="actionDeleteOrder(offerId)"> X </button> </td>
+        </tr>
+      </ng-container>
+      </tbody>
+      </table>
+
+
+
+      <div class="pagination">
+      <!-- Add pagination logic here -->
+    </div>
+  </div>
+</div>
+</div>
+

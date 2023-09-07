@@ -1,0 +1,109 @@
+.titleDiv{
+  color: rgb(6, 6, 7);
+  width: 15%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  height: auto;
+}
+
+ul {
+  position: relative;
+  z-index: 9999;
+}
+
+.mainDiv{
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  height: 70px;
+}
+
+.searchDiv{
+  height: auto;
+  width: 50%;
+}
+
+.searchDiv input{
+  width: 90%;
+}
+
+.secondDiv{
+  justify-content: space-between;
+  background-color: #0d9263;
+}
+
+.spacer{
+
+  flex: 1 1 auto;
+}
+
+div#hormenu {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+}
+
+div#hormenu ul{
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+div#hormenu li{
+
+  float:left;
+  margin: 0;
+  padding: 0;
+  color:black;
+}
+
+div#hormenu a{
+  display: block;
+  padding: 5px;
+  color: #000;
+  text-decoration: none;
+}
+
+div#hormenu a:hover{
+  background-color: #000033;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+div#hormenu li ul{
+  display: none
+}
+
+div#hormenu li:hover ul{
+  display: block;
+  position: absolute;
+  z-index:1;
+
+  padding: 0;
+  margin: 0 0 0 -1px;
+  border:1px solid black;
+  background: white;
+}
+
+div#hormenu li li {
+  border:none;
+  width:150px;
+}
+
+div#hormenu li li a {
+  padding:2px 2px 2px 10px;
+}
+
+mat-raised-button{
+  margin-top: 5px
+}
+
+
+
+
+
+
+
+

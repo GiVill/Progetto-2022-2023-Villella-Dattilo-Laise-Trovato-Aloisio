@@ -1,0 +1,65 @@
+<div class="mainDiv">
+  <span class="spacer"></span>
+  <div class="titleDiv" style="margin-right: 15px; min-width: 250px">
+    <img routerLink="" src="../../../../assets/resources/ocarina-shop-logo.png" style="width: 240px; margin: 2px; cursor: pointer">
+  </div>
+  <span class="spacer"></span>
+      <div style="background-color: transparent; width: 100%; display: flex; flex-wrap: wrap;">
+        <div style="margin-top: 8px; margin-left: 10px; margin-right: 10px"> <!-- div della ricerca categorie -->
+          <div id="hormenu"><!-- div che contiene il menu -->
+            <ul> <!-- lista principale: definisce il menu nella sua interezza -->
+              <li>
+                <button mat-raised-button href="#" style="height: 55px" (click)="showMenu()" (mouseover)="showMenu()" >Categorie</button> <!-- primo list-item, prima voce del menu -->
+                <ul *ngIf="showSubMenu" style="width: 300px; background-color: white"> <!-- Lista annidata: voci del sotto-menu -->
+                  <li><a  [routerLink]="['/category' , 'ELETTRONICA']">Elettronica</a></li>
+                  <li><a  [routerLink]="['/category' , 'COLLEZIONI']">Collezioni</a></li>
+                  <li><a  [routerLink]="['/category' , 'ABBIGLIAMENTO']">Abbigliamento</a></li>
+                  <li><a  [routerLink]="['/category' , 'BARCHE']">Barche</a></li>
+                  <li><a  [routerLink]="['/category' , 'SPORT']">Sport</a></li>
+                  <li><a  [routerLink]="['/category' , 'ALTRO']">Altro</a></li>
+                </ul> <!-- Fine del sotto-menu -->
+              </li> <!-- Chiudo il list-item -->
+              <!--qui altri list-item -->
+            </ul>
+          </div>
+        </div>
+
+        <mat-form-field style="margin-top:8px; margin-right: 10px; flex-grow: 1; width: 50%; color: #0d9263">
+          <input #searchkeyword matInput name="Ricerca" id="searchKey" placeholder="Ricerca prodotto" (keyup)="redirectToSearch(searchkeyword.value)">
+          <button mat-button matSuffix (click)="redirectToSearch(searchkeyword.value)">
+
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <span style="margin: 7%"></span>
+
+      <span class="spacer"></span>
+  <span style="margin-top: 15px" *ngIf="logStringResult !== 'Login'">{{ logStringResult }}</span>
+  <div style="display: flex; height: auto;"> <!--div bottoni iscrizione/accesso e inserisci inserzione-->
+    <button mat-raised-button style="background-color: #0d9263; margin-top: 8px; margin-left: 10px; margin-right: 10px" [routerLink]="['/myprofile']" *ngIf="getUserString() !== 'Login'">Profilo</button>
+    <button mat-raised-button style="background-color: #0d9263; margin-top: 8px; margin-left: 10px; margin-right: 10px" [routerLink]="['/chat']" *ngIf="getUserString() !== 'Login'">Messaggi</button>
+    <button mat-raised-button style="background-color: #0d9263; margin-top: 8px; margin-left: 10px; margin-right: 10px" (click)="logout()" *ngIf="getUserString() !== 'Login'">Esci</button>
+    <button mat-raised-button style="background-color: #0d9263; margin-top: 8px; margin-left: 10px; margin-right: 10px" [routerLink]="['/login']" *ngIf="getUserString() === 'Login'">Iscriviti/Accedi</button>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-raised-button style="background-color: #4aba91; margin-top: 8px; margin-left: 10px; margin-right: 10px" [routerLink]="['/newinsertion']">Crea inserzione</button>
+    <span style="flex: 1 1 auto;"></span>
+  </div>
+  <span class="spacer"></span>
+</div>
+
+<div class="secondDiv">
+  <div>
+    <button mat-button [routerLink]="['/category' , 'UOMO']">Uomo</button>
+    <button mat-button [routerLink]="['/category' , 'DONNA']">Donna</button>
+    <button mat-button [routerLink]="['/category' , 'BAMBINO']">Bambino</button>
+    <button mat-button *ngIf="isAdmin" [routerLink]="['/dash']" >Amministazione</button>
+    <button mat-button [routerLink]="['/cart']">Accesso rapido al carrello</button>
+  </div>
+</div>
+
+
+
+<router-outlet></router-outlet>
+
+
