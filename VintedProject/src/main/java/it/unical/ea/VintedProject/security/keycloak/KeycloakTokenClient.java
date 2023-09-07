@@ -69,7 +69,6 @@ public class KeycloakTokenClient {
             return tokenDto;
         } else {
             System.out.println("error while retrieving the token from keycloak!");
-            //TODO:gestire errore
             throw new RuntimeException(messageLang.getMessage("keycloak.token.error"));
         }
     }
@@ -80,7 +79,6 @@ public class KeycloakTokenClient {
     }
 
     public TokenDto userRegister(NewUserDto newUserDto){
-        //TODO: registrazione utente su keycloak
         if(addUserOnKeyCloak(newUserDto)){
             return getToken(newUserDto.getNickname(),newUserDto.getPassword());
         }
@@ -114,7 +112,6 @@ public class KeycloakTokenClient {
             return tokenDto;
         } else {
             System.out.println("error while retrieving the token from keycloak!");
-            //TODO:gestire errore
             throw new RuntimeException(messageLang.getMessage("keycloak.token.error"));
         }
     }
@@ -162,7 +159,7 @@ public class KeycloakTokenClient {
 
             Response response = usersResource.create(userRepresentation);
 
-            System.out.printf("Repsonse: %s %s%n", response.getStatus(), response.getStatusInfo());
+            System.out.printf("Response: %s %s%n", response.getStatus(), response.getStatusInfo());
 
             System.out.println(response.getLocation());
             String userId = CreatedResponseUtil.getCreatedId(response);
