@@ -44,24 +44,8 @@ export class LoginComponent implements OnInit{
     addressCap: 0,
 
   };
-  private configuration: Configuration ={
-    accessToken: "",
-    apiKeys: {},
-    basePath: "",
-    password: "",
-    username: "",
-    withCredentials: false,
-    isJsonMime(mime: string): boolean {
-      return false;
-    },
-    selectHeaderAccept(accepts: string[]): string | undefined {
-      return undefined;
-    },
-    selectHeaderContentType(contentTypes: string[]): string | undefined {
-      return undefined;
-    }
 
-  };
+
 
 
 
@@ -99,7 +83,6 @@ export class LoginComponent implements OnInit{
           }
           this.cookiesService.checkUserCookie();
           this.User.getUserString();
-          this.configuration.accessToken=this.cookiesService.getTokent;
           this.router.navigate(['/']);
         }
       },
@@ -129,6 +112,7 @@ export class LoginComponent implements OnInit{
   }
 
   signUp(): void {
+    if (this.isRegistrationFormValid()){
     this.authService.signUp(this.newUser).subscribe(
       () => {
         this.snackBar.open('Registrazione completata con successo!', 'OK');
@@ -140,7 +124,12 @@ export class LoginComponent implements OnInit{
         }
       }
     );
-  }
+  }else {
+      this.snackBar.open('Compila tutti i campi ed assicurati che la password abbia una lettera maiuscola ed un numero.', 'OK');
+    }
+
+  this.snackBar.open('Errore registrazione, riprova più tardi!', 'OK');
+}
 
   isLoginFormValid(): boolean {
     if (this.login.email.length==0 || this.login.password.length==0){
@@ -150,14 +139,25 @@ export class LoginComponent implements OnInit{
   }
 
   isRegistrationFormValid(): boolean {
-    if (this.newUser.email!.length==0 ||
-        this.newUser.password?.length==0 ||
-        this.passwordCheck.length==0){
+    if (
+      this.newUser.email!.length === 0 ||
+      this.newUser.password?.length === 0 ||
+      this.passwordCheck.length === 0
+    ) {
       return false;
     }
+
+    if (this.newUser.password!.length < 8) {
+      return false;
+    }
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)/;
+    if (!passwordRegex.test(this.newUser.password)) {
+      return false;
+    }
+
     return true;
   }
-
 
 
 
