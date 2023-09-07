@@ -80,7 +80,7 @@ fun SetupNavGraph(
             OfferActivity(offerViewModel)
         }
         composable(route = ScreenController.Feedback.route){
-            FeedbackActivity()
+            FeedbackActivity(application)
         }
         composable(route = ScreenController.Login.route){
             LoginActivity(navController, userViewModel, loginRegistrationViewModel, application)

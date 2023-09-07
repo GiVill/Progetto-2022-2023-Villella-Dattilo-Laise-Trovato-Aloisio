@@ -102,17 +102,6 @@ fun ListOffers(offer : BuyingOfferDto,offerViewModel: OfferViewModel) {
                     Text(
                         text = statusText
                     )
-                    if(offer.status == BuyingOfferDto.Status.PENDING) {
-                        Button(onClick = {
-                            Log.i("OFFER",offer.toString())
-                            offerViewModel.deleteOffer(offer)
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "Close Icon"
-                            )
-                        }
-                    }
                 }
             }
         }
