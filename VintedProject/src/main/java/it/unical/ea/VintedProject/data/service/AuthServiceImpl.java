@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.data.service;
 
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.config.newsletter.EmailSender;
 import it.unical.ea.VintedProject.data.dao.UserDao;
 import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.AuthService;
@@ -22,6 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
+    private final EmailSender emailSender;
     private final ModelMapper modelMapper;
     private final UserDao userDao;
     private final KeycloakTokenClient keycloakTokenClient;
@@ -36,6 +38,7 @@ public class AuthServiceImpl implements AuthService {
             System.out.println("ENTRATO "+user.toString());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.save(user);
+            emailSender.sendSimpleEmail(user.getEmail(),"Ocarina Coders", "Benvenuto in Ocarina Shop!");
             return modelMapper.map(user, UserDto.class);
         }
         throw new EntityNotFoundException("non sono riuscito a fare la registrazione. PS: Questo messaggio non è stato internazionalizzato ed esploderà tra 3...2...1... papà");

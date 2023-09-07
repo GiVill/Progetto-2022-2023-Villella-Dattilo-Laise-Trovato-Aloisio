@@ -1,6 +1,7 @@
 package it.unical.ea.VintedProject.data.service;
 
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.config.newsletter.EmailSender;
 import it.unical.ea.VintedProject.core.detail.LoggedUserDetail;
 import it.unical.ea.VintedProject.data.dao.ChatDao;
 import it.unical.ea.VintedProject.data.dao.ChatMessageDao;
@@ -26,6 +27,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ChatMessageServiceImpl implements ChatMessageService {
 
+    private final EmailSender emailSender;
     private final ChatDao chatDao;
     private final ChatMessageDao chatMessageDao;
     private final UserDao userDao;
@@ -171,6 +173,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             chatMessageDao.save(chatMessage);
             System.out.println(chat);
             System.out.println(chatMessage);
+            emailSender.sendSimpleEmail(user2.getEmail(),"Ocarina Coders","Hai una nuova chat!");
 
         } else {
 

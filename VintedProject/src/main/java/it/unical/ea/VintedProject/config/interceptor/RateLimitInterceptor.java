@@ -17,7 +17,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
     private final PricingPlanService pricingPlanService;
     private final MessageLang messageLang;
 
-    private static final boolean PREVENT_ATTACK_DDOS = false; //TODO: Andrebbe messa a true
+    private static final boolean PREVENT_ATTACK_DDOS = true; //TODO: Andrebbe messa a true
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

@@ -1,11 +1,13 @@
 package it.unical.ea.VintedProject.data.service;
 
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.config.newsletter.EmailSender;
 import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
 import it.unical.ea.VintedProject.data.dao.BuyingOfferDao;
 import it.unical.ea.VintedProject.data.entities.BasicInsertion;
 import it.unical.ea.VintedProject.data.entities.BuyingOffer;
+import it.unical.ea.VintedProject.data.entities.User;
 import it.unical.ea.VintedProject.data.service.interfaces.BasicInsertionService;
 import it.unical.ea.VintedProject.data.service.interfaces.BuyingOfferService;
 import it.unical.ea.VintedProject.dto.BuyingOfferDto;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BuyingOfferServiceImpl implements BuyingOfferService {
 
+    private final EmailSender emailSender;
     private final ModelMapper modelMapper;
     private final BuyingOfferDao buyingOfferDao;
     private final BasicInsertionDao insertionDao;
@@ -97,6 +100,8 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
         }
         if(loggedUserMethod.getLoggedUserId().equals(insertion.get().getUser().getId())){
             BuyingOffer buyingOffer = modelMapper.map(buyingOfferDto,BuyingOffer.class);
+            User u = insertion.get().getUser();
+            emailSender.sendSimpleEmail(u.getEmail(), "Ocarina Coders", "L'offerta per l'articolo "+ insertion.get().getTitle()+" è stata accettata!");
             buyingOfferDao.save(buyingOffer);
         }
         else {
@@ -111,6 +116,8 @@ public class BuyingOfferServiceImpl implements BuyingOfferService {
         if(loggedUserMethod.getLoggedUserId().equals(insertion.get().getUser().getId())){
             BuyingOffer buyingOffer = modelMapper.map(buyingOfferDto,BuyingOffer.class);
             buyingOffer.setStatus(Status.REFUSED);
+            User u = insertion.get().getUser();
+            emailSender.sendSimpleEmail(u.getEmail(), "Ocarina Coders", "L'offerta per l'articolo "+ insertion.get().getTitle()+" è stata rifiutata!");
             buyingOfferDao.save(buyingOffer);
         }
         else {

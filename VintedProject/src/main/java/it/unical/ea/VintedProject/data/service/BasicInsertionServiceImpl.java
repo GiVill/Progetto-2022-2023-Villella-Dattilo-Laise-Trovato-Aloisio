@@ -2,6 +2,7 @@ package it.unical.ea.VintedProject.data.service;
 
 import com.nimbusds.jose.JOSEException;
 import it.unical.ea.VintedProject.config.i18n.MessageLang;
+import it.unical.ea.VintedProject.config.newsletter.EmailSender;
 import it.unical.ea.VintedProject.core.detail.LoggedUserMethod;
 import it.unical.ea.VintedProject.data.dao.BasicInsertionDao;
 import it.unical.ea.VintedProject.data.dao.OrderDao;
