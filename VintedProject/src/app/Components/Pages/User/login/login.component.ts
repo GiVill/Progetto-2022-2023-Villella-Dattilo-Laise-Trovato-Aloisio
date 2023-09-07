@@ -84,17 +84,17 @@ export class LoginComponent implements OnInit{
         if (!userCookie) {
           // Salva le informazioni dell'utente nei cookie
           if (response.userDto!.id != null) {
-          this.cookieService.set('userId', response.userDto!.id.toString(), 1, '/', '', true, 'Lax');}
+          this.cookieService.set('userId', response.userDto!.id.toString(), 1);}
           if (response.userDto!.email != null) {
-            this.cookieService.set('userEmail', response.userDto!.email, 1, '/',  '', true, 'Lax');}
+            this.cookieService.set('userEmail', response.userDto!.email, 1);}
           if (response.userDto!.addressCity != null) {
-            this.cookieService.set('userCity', response.userDto!.addressCity, 1, '/',  '', true, 'Lax');}
-          this.cookieService.set('userFirstName', response.userDto!.firstName, 1, '/',  '', true, 'Lax');
-          this.cookieService.set('userLastName', response.userDto!.lastName, 1, '/' , '', true, 'Lax');
+            this.cookieService.set('userCity', response.userDto!.addressCity, 1);}
+          this.cookieService.set('userFirstName', response.userDto!.firstName, 1);
+          this.cookieService.set('userLastName', response.userDto!.lastName, 1);
           if (response.accessToken != null) {
-            this.cookieService.set('jwtToken', response.accessToken, 1, '/', '', true, 'Lax');
+            this.cookieService.set('jwtToken', response.accessToken, 1);
             if (response.refreshToken != null) {
-              this.cookieService.set('refreshToken', response.refreshToken, 1, '/', '', true, 'Lax');
+              this.cookieService.set('refreshToken', response.refreshToken, 1,);
             }
           }
           this.cookiesService.checkUserCookie();
