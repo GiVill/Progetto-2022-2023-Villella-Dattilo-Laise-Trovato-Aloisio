@@ -11,6 +11,9 @@ import com.example.vintedandroid.swagger.client.apis.ChatApi
 import com.example.vintedandroid.swagger.client.apis.OfferApi
 import com.example.vintedandroid.swagger.client.models.ChatDto
 import androidx.compose.runtime.State
+import com.example.vintedandroid.swagger.client.apis.ChatMessageApi
+import com.example.vintedandroid.swagger.client.models.NewChatDto
+import com.example.vintedandroid.swagger.client.models.NewMessageDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -29,6 +32,17 @@ class ChatViewModel(application: Application, userViewModel: UserViewModel) : Vi
         Log.i("ChatViewModel::class", "allChatUser: $chats")
         return chats
         //TODO Da fare. Bisogna prendere l'id dell'utente loggato ed inviarlo all'endpoint ChatApi().allChatUser(id)
-
     }
+
+
+    fun NewChat(newChatDto: NewChatDto) {
+
+        try {
+            ChatApi().newChat(newChatDto)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
 }

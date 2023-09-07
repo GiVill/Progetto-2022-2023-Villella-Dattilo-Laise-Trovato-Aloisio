@@ -42,9 +42,9 @@ class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject
                 "/v1/chat/message/{chatId}".replace("{" + "chatId" + "}", "$chatId")
         )
 
-
+        ConfigureAuthorizationBearer(localVariableConfig)
         val response = request<kotlin.Array<ChatMessage>>(
-                localVariableConfig
+                localVariableConfig,
         )
 
         return when (response.responseType) {
@@ -73,7 +73,7 @@ class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject
                 localVariableConfig, localVariableBody
         )
 
-        Log.i("dsda", response.toString())
+
         return when (response.responseType) {
             ResponseType.Success -> TODO()
             ResponseType.Informational -> TODO()

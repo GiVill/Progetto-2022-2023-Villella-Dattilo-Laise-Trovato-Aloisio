@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.example.vintedandroid.model.AppDatabase
 import com.example.vintedandroid.model.LoggedUserDetails
 import com.example.vintedandroid.model.dto.UserDatabaseDto
+import com.example.vintedandroid.swagger.client.apis.UserApi
+import com.example.vintedandroid.swagger.client.models.UserDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -36,6 +38,10 @@ class UserViewModel(application: Application) :ViewModel() {
     fun getAllUserFromRoomDatabase(): Flow<UserDatabaseDto?> {
         Log.i("UserViewModel::class", "getAllUserFromRoomDatabase()")
         return AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getSingleUserFlow()
+    }
+
+    fun getUserById(DIOBESTIA: Long): UserDto {
+        return UserApi().getUserDtoById(DIOBESTIA)
     }
 
     fun deleteUser(user : UserDatabaseDto){

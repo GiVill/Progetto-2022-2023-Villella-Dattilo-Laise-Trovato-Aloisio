@@ -42,7 +42,7 @@ fun SetupNavGraph(
     orderViewModel: OrderViewModel,
     addViewModel: AddViewModel,
     myInsertionViewModel: MyInsertionViewModel,
-    ChatMessageViewModel: ChatMessageViewModel, ) {
+    chatMessageViewModel: ChatMessageViewModel, ) {
 
     val insertionApi = InsertionApi()
 
@@ -89,7 +89,7 @@ fun SetupNavGraph(
             RegistrationActivity(navController, loginRegistrationViewModel)
         }
         composable(route = ScreenController.Product.route){
-            ProductActivity(searchedProduct,itemsInCart, homeViewModel, productViewModel, application)
+            ProductActivity(searchedProduct,itemsInCart, homeViewModel, productViewModel, application, userViewModel, chatViewModel)
         }
         composable(route = ScreenController.UpdatePassword.route){
             UpdatePasswordActivity(updatePasswordViewModel, application)
@@ -102,7 +102,7 @@ fun SetupNavGraph(
         }
         composable(route = ScreenController.ChatMessage.route + "/{chatId}") { backStackEntry ->
             val chatId = backStackEntry.arguments?.getString("chatId")
-            ChatMessageActivity(chatId, ChatMessageViewModel, navController)
+            ChatMessageActivity(chatId, chatMessageViewModel, navController)
         }
 
 

@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -42,11 +44,16 @@ fun ChatActivity( chatViewModel: ChatViewModel,  navController: NavHostControlle
     //var allChat = chatViewModel.getAllChat()
 
     //val allChat: State<Array<ChatDto>?> = chatViewModel.getAllChat()!!.collectAsState(initial = null)
-    val chatFromDB: Array<ChatDto>? = chatViewModel.getAllChat()!!
-
+    val chatFromDB: Array<ChatDto>? = try {
+        chatViewModel.getAllChat()
+    } catch (e: Exception) {
+        null
+    }
     Box() {
         Row() {
-            Column(modifier = Modifier.fillMaxSize()) {
+            Column(modifier =
+            Modifier.fillMaxSize()
+                .verticalScroll(rememberScrollState())) {
                 chatFromDB?.forEach { chat ->
                     if (!chat.insertionTitle.isNullOrEmpty()) {
                         ClickableText(

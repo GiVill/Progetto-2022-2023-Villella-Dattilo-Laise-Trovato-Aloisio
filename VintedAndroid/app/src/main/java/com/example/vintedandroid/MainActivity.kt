@@ -103,7 +103,7 @@ class MainActivity : ComponentActivity() {
                                 orderViewModel = OrderViewModel(application),
                                 addViewModel = AddViewModel(application),
                                 myInsertionViewModel = MyInsertionViewModel(application),
-                                ChatMessageViewModel = ChatMessageViewModel(application)
+                                chatMessageViewModel = ChatMessageViewModel(application),
                             )
                             getToken(application) { logged ->
                                 if (logged != null) {

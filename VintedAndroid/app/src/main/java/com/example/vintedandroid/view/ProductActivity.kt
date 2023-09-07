@@ -46,19 +46,27 @@ import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.example.vintedandroid.R
 import com.example.vintedandroid.model.LoggedUserDetails
+import com.example.vintedandroid.swagger.client.apis.UserApi
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 import com.example.vintedandroid.swagger.client.models.BuyingOfferDto
+import com.example.vintedandroid.swagger.client.models.NewChatDto
+import com.example.vintedandroid.swagger.client.models.NewMessageDto
+import com.example.vintedandroid.swagger.client.models.UserDto
 import com.example.vintedandroid.view.config.PersonalizedAsyncImage
 import com.example.vintedandroid.view.config.createPersonalizedTextfield
+import com.example.vintedandroid.viewmodel.ChatMessageViewModel
+import com.example.vintedandroid.viewmodel.ChatViewModel
 import com.example.vintedandroid.viewmodel.HomeViewModel
 import com.example.vintedandroid.viewmodel.ProductViewModel
+import com.example.vintedandroid.viewmodel.UserViewModel
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun ProductActivity(searchedProduct: MutableState<BasicInsertionDto>, itemsInCart: MutableList<BasicInsertionDto?>, homeViewModel: HomeViewModel, productViewModel: ProductViewModel, application: Context) {
+fun ProductActivity(searchedProduct: MutableState<BasicInsertionDto>, itemsInCart: MutableList<BasicInsertionDto?>, homeViewModel: HomeViewModel, productViewModel: ProductViewModel, application: Context,userViewModel: UserViewModel , chatViewModel: ChatViewModel ) {
 
     var showMakeOfferDialog by remember { mutableStateOf(false) }
     var showContactVendorDialog by remember { mutableStateOf(false) }
+
 
     Card(
         modifier = Modifier
@@ -82,7 +90,9 @@ fun ProductActivity(searchedProduct: MutableState<BasicInsertionDto>, itemsInCar
                     homeViewModel = homeViewModel,
                     itemsInCart = itemsInCart,
                     productViewModel = productViewModel,
-                    application = application
+                    application = application,
+                    userViewModel = userViewModel ,
+                    chatViewModel = chatViewModel
                 )
             }
             else{
@@ -154,7 +164,8 @@ fun makeOfferActivity(onDismiss: () -> Unit, basicInsertionDto: BasicInsertionDt
 }
 
 @Composable
-fun contactVendor(onDismiss: () -> Unit,searchedProduct: BasicInsertionDto, productViewModel: ProductViewModel, application: Context) {
+fun contactVendor(onDismiss: () -> Unit,searchedProduct: BasicInsertionDto, productViewModel: ProductViewModel, application: Context, userViewModel: UserViewModel , chatViewModel: ChatViewModel) {
+
 
     val messageField = remember { mutableStateOf(TextFieldValue()) }
     val messageRegex = "^\\s+\$".toRegex()
@@ -175,7 +186,19 @@ fun contactVendor(onDismiss: () -> Unit,searchedProduct: BasicInsertionDto, prod
 
                 Button(
                     onClick = {
-                        productViewModel.sendMessageToVendor(searchedProduct, messageField.value.text)
+                        var user : UserDto = userViewModel.getUserById(searchedProduct.userId!!)
+
+                        var newChatDto = NewChatDto (
+                            sender = LoggedUserDetails.getInstance().getCurrentUser().id,
+                            message =messageField.value.text,
+                            reciver= searchedProduct.userId,
+                            insertionId= searchedProduct.id,
+                            user1NameLastname= LoggedUserDetails.getInstance().getCurrentUser().firstName + " " +LoggedUserDetails.getInstance().getCurrentUser().lastName,
+                            user2NameLastname= user.firstName + " " + user.lastName,
+                            insertionTitle= searchedProduct.title,
+                        )
+
+                        chatViewModel.NewChat(newChatDto)
                         Toast.makeText(application.applicationContext, "Message Sended", Toast.LENGTH_SHORT).show()
                         onDismiss()
 
@@ -188,7 +211,7 @@ fun contactVendor(onDismiss: () -> Unit,searchedProduct: BasicInsertionDto, prod
 }
 
 @Composable
-fun PublicItemCard(searchedProduct: MutableState<BasicInsertionDto>, homeViewModel: HomeViewModel, itemsInCart: MutableList<BasicInsertionDto?>, productViewModel: ProductViewModel, application: Context) {
+fun PublicItemCard(searchedProduct: MutableState<BasicInsertionDto>, homeViewModel: HomeViewModel, itemsInCart: MutableList<BasicInsertionDto?>, productViewModel: ProductViewModel, application: Context, userViewModel: UserViewModel , chatViewModel: ChatViewModel) {
 
     var showMakeOfferDialog by remember { mutableStateOf(false) }
     var showContactVendorDialog by remember { mutableStateOf(false) }
@@ -222,7 +245,7 @@ fun PublicItemCard(searchedProduct: MutableState<BasicInsertionDto>, homeViewMod
         makeOfferActivity(onDismiss = { showMakeOfferDialog = false }, searchedProduct.value, productViewModel, application)
     }
     if(showContactVendorDialog){
-        contactVendor(onDismiss = { showContactVendorDialog = false }, searchedProduct.value, productViewModel, application)
+        contactVendor(onDismiss = { showContactVendorDialog = false }, searchedProduct.value, productViewModel, application , userViewModel, chatViewModel )
     }
 
 }

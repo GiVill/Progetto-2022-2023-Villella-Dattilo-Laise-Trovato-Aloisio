@@ -11,6 +11,8 @@
  */
 package com.example.vintedandroid.swagger.client.models
 
+import com.example.vintedandroid.model.LoggedUserDetails
+
 
 /**
  * 
@@ -24,6 +26,7 @@ data class NewMessageDto (
     val sender: kotlin.Long? = null,
     val reciver: kotlin.Long? = null,
     val message: kotlin.String? = null,
-    val chatId: kotlin.Long? = null
-) {
+    val chatId: kotlin.Long? = null,
+
+    ) {
 }

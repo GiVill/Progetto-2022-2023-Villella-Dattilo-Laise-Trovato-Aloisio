@@ -25,6 +25,7 @@ import com.example.vintedandroid.swagger.client.infrastructure.Success
 import com.example.vintedandroid.swagger.client.models.ChatDto
 
 import com.example.vintedandroid.swagger.client.infrastructure.*
+import com.example.vintedandroid.swagger.client.models.NewChatDto
 import com.example.vintedandroid.viewmodel.TokenViewModel
 import kotlinx.coroutines.flow.Flow
 
@@ -54,4 +55,32 @@ class ChatApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject
             ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
         }
     }
+
+
+    /**
+     *
+     *
+     * @param body
+     * @return kotlin.String
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun newChat(body: NewChatDto): kotlin.String {
+        val localVariableBody: kotlin.Any? = body
+        val localVariableConfig = RequestConfig(
+            RequestMethod.POST,
+            "/v1/chat/newchat"
+        )
+        val response = request<kotlin.String>(
+            localVariableConfig, localVariableBody
+        )
+
+        return when (response.responseType) {
+            ResponseType.Success -> (response as Success<*>).data as kotlin.String
+            ResponseType.Informational -> TODO()
+            ResponseType.Redirection -> TODO()
+            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
+        }
+    }
+
 }
