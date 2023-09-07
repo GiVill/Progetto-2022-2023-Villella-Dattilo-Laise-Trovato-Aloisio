@@ -16,7 +16,7 @@
     </div>
   </div>
   <div *ngIf="refused">
-  <p> OFFERTA RIFIUTATA</p>
+  <p style="color: red"> OFFERTA RIFIUTATA</p>
   </div>
   <button *ngIf="!accepted && !refused" class="button" (click)="deleteOffer()" > ELIMINA OFFERTA </button>
   <button *ngIf="accepted" class="button" (click)="createOrder()"  style="background-color: #007b0f"> PAGA ORA </button>

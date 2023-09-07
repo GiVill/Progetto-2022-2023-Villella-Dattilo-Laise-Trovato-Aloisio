@@ -962,10 +962,10 @@ export class InsertionService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
-        if (this.CookiesService.getTokent()) {
+        if (this.configuration.accessToken) {
             const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.CookiesService.getTokent()
-                : this.CookiesService.getTokent();
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
