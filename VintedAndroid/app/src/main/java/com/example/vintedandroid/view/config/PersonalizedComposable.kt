@@ -149,14 +149,9 @@ fun createPersonalizedTextfieldPassword(textField: MutableState<TextFieldValue>,
         ),
         keyboardActions = KeyboardActions(
             onDone = {
-                // When "Done" action is triggered (e.g., user presses "Done" on keyboard)
-                // Perform the validation and inform the caller
-                Log.i("A normale", "$isValid, $onValidationStatusChange")
 
                 isValid = passwordRegex.matches(textField.value.text)
                 onValidationStatusChange(isValid)
-
-                Log.i("AA", "$isValid, $onValidationStatusChange")
 
                 // Clear focus to dismiss the keyboard
                 focusRequester.freeFocus()

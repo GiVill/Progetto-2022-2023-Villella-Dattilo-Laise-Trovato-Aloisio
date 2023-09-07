@@ -40,8 +40,8 @@ class UserViewModel(application: Application) :ViewModel() {
         return AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getSingleUserFlow()
     }
 
-    fun getUserById(DIOBESTIA: Long): UserDto {
-        return UserApi().getUserDtoById(DIOBESTIA)
+    fun getUserById(id: Long): UserDto {
+        return UserApi().getUserDtoById(id)
     }
 
     fun deleteUser(user : UserDatabaseDto){

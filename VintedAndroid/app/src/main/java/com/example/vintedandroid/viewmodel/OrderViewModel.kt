@@ -8,7 +8,7 @@ import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 import com.example.vintedandroid.swagger.client.models.PageOrderDto
 import kotlinx.coroutines.flow.Flow
 
-class OrderViewModel(application: Application) : ViewModel() {
+class OrderViewModel() : ViewModel() {
 
     fun getOrders(page: Int): PageOrderDto {
         return OrderApi().getUserOrders(page)

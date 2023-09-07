@@ -64,7 +64,6 @@ class MainActivity : ComponentActivity() {
                 StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitNetwork().build())
 
                 if (internetChecker(application.applicationContext)) {
-                    //Toast.makeText(this, "Connected to internet", Toast.LENGTH_SHORT).show()
 
                     val navController = rememberNavController()
 
@@ -78,7 +77,6 @@ class MainActivity : ComponentActivity() {
 
                             val chatId = getToken(application) { logged ->
                                 if (logged != null) {
-                                    //TODO Refresh Token
                                     LoggedUserDetails.getInstance().setCurrentUser(logged)
                                     Log.i("MainActivity::class", "${LoggedUserDetails.getInstance().getCurrentUser()}")
                                 }
@@ -96,18 +94,17 @@ class MainActivity : ComponentActivity() {
                                 userViewModel = UserViewModel(application),
                                 cartViewModel = CartViewModel(application),
                                 loginRegistrationViewModel = LoginRegistrationViewModel(application),
-                                updatePasswordViewModel = UpdatePasswordViewModel(application),
-                                offerViewModel = OfferViewModel(application),
+                                updatePasswordViewModel = UpdatePasswordViewModel(),
+                                offerViewModel = OfferViewModel(),
                                 productViewModel = ProductViewModel(application,),
-                                chatViewModel = ChatViewModel(application, userViewModel = UserViewModel(application = application)),
-                                orderViewModel = OrderViewModel(application),
+                                chatViewModel = ChatViewModel(),
+                                orderViewModel = OrderViewModel(),
                                 addViewModel = AddViewModel(application),
-                                myInsertionViewModel = MyInsertionViewModel(application),
+                                myInsertionViewModel = MyInsertionViewModel(),
                                 chatMessageViewModel = ChatMessageViewModel(application),
                             )
                             getToken(application) { logged ->
                                 if (logged != null) {
-                                    //TODO Refresh Token
                                     LoggedUserDetails.getInstance().setCurrentUser(logged)
                                     Log.i("MainActivity::class", "${LoggedUserDetails.getInstance().getCurrentUser()}")
                                 }
@@ -130,26 +127,6 @@ fun ApplicationTopBar(searchText: MutableState<String>, navController: NavHostCo
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val topBarHandler by remember(currentBackStackEntry) { derivedStateOf{navController.currentBackStackEntry?.destination?.route == ScreenController.Search.route} }
 
-    //var text by remember { mutableStateOf("") }
-    /*
-    var active by remember { mutableStateOf(false) }
-    var searchHistory = remember{ mutableStateListOf("ciao", "ciao2") }
-
-    var searchResults by remember { mutableStateOf(PageBasicInsertionDto()) }
-    val coroutineScope = rememberCoroutineScope()
-    val insertionApi = InsertionApi()
-    var searchedProduct = remember {
-        mutableStateOf(
-            BasicInsertionDto(1L,"null", Float.MIN_VALUE,null,null,null,null,null,"",
-                BasicInsertionDto.Brand.ADIDAS,
-                BasicInsertionDto.Category.ABBIGLIAMENTO, 2L)
-        )
-
-    }
-
-     */
-
-
     TopAppBar(
         title = {
             if(!topBarHandler) {
@@ -170,8 +147,6 @@ fun ApplicationTopBar(searchText: MutableState<String>, navController: NavHostCo
         },
         actions = {
             if(topBarHandler) {
-                //navController.popBackStack(); navController.navigate("search")
-
             TextField(
                 value = searchText.value,
                 onValueChange = { searchText.value = it; },
@@ -186,75 +161,57 @@ fun ApplicationTopBar(searchText: MutableState<String>, navController: NavHostCo
         }
     )
 
-    /*
-
-    TopBar del professore
-
-    //val currentBackStackEntry by navHostController.currentBackStackEntryAsState()
-    //val showBackIcon by remember(currentBackStackEntry) { derivedStateOf { navHostController.previousBackStackEntry != null } }
-
-
-    TopAppBar(title = { Text(stringResource(R.string.app_name)) },
-        navigationIcon = {
-            if (showBackIcon) {
-                IconButton(onClick = { navHostController.popBackStack() }) {
-                    Icon(
-                        Icons.Filled.KeyboardArrowLeft,
-                        contentDescription = stringResource(R.string.app_name)
-                    )
-                }
-            }
-        },
-        actions = {
-            androidx.compose.material3.IconButton(onClick = {}) {
-                androidx.compose.material3.Icon(
-                    Icons.Filled.Settings,
-                    contentDescription = stringResource(R.string.app_name)
-                )
-            }
-        }
-    )
-
-     */
-        
 }
 
 
 @Composable
-fun ApplicationBottomBar(navController: NavHostController) {//,selectedIndex: MutableState<Int>
-
-    // TUTTI i navController.popBackStack(); ANDREBBERO gestiti diversamente, per ora sono ni
+fun ApplicationBottomBar(navController: NavHostController) {
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     BottomAppBar {
-
         BottomNavigation {
             BottomNavigationItem(
-                selected = true,
-                onClick = { navController.popBackStack(); navController.navigate("home") },
-                icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                label = { Text(text = "Navigate") }
+                selected = currentRoute == ScreenController.Home.route,
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate(ScreenController.Home.route)
+                },
+                icon = { Icon(Icons.Default.Home, contentDescription = ScreenController.Home.route) },
+                label = { Text(text = "Home") }
             )
             BottomNavigationItem(
-                selected = false,
-                onClick = { navController.popBackStack(); navController.navigate("search") }, //navController.navigate("search")
-                icon = { Icon(Icons.Default.Search, contentDescription = "search") },
+                selected = currentRoute == ScreenController.Search.route,
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate(ScreenController.Search.route)
+                },
+                icon = { Icon(Icons.Default.Search, contentDescription = ScreenController.Search.route) },
                 label = { Text(text = "Search") }
             )
             BottomNavigationItem(
-                selected = false,
-                onClick = { navController.popBackStack(); navController.navigate("add") }, //navController.navigate("add")
-                icon = { Icon(Icons.Default.AddCircle, contentDescription = "add_circle") },
+                selected = currentRoute == ScreenController.Add.route,
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate(ScreenController.Add.route)
+                },
+                icon = { Icon(Icons.Default.AddCircle, contentDescription = ScreenController.Add.route) },
                 label = { Text(text = "Add") }
             )
             BottomNavigationItem(
-                selected = false,
-                onClick = { navController.popBackStack(); navController.navigate("bottom-bar-profile") }, //navController.navigate("profile")
-                icon = { Icon(Icons.Default.AccountCircle, contentDescription = "add_circle") },
+                selected = currentRoute == ScreenController.BottomBarProfile.route,
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate(ScreenController.BottomBarProfile.route)
+                },
+                icon = { Icon(Icons.Default.AccountCircle, contentDescription = ScreenController.BottomBarProfile.route) },
                 label = { Text(text = "Profile") }
             )
             BottomNavigationItem(
-                selected = false,
-                onClick = { navController.popBackStack(); navController.navigate("cart") },
+                selected = currentRoute == ScreenController.Cart.route,
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate(ScreenController.Cart.route)
+                },
                 icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Cart") },
                 label = { Text(text = "Cart") }
             )
@@ -262,16 +219,10 @@ fun ApplicationBottomBar(navController: NavHostController) {//,selectedIndex: Mu
     }
 }
 
+
 private fun getToken(application: Context, callback: (UserDatabaseDto?) -> Unit) {
     CoroutineScope(Dispatchers.IO).launch {
         val loggedUser = AppDatabase.getInstance(context = application.applicationContext).userDatabaseDao().getSingleUser()
         callback(loggedUser)
-    }
-}
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    VintedAndroidTheme {
-        //MainScreen()
     }
 }

@@ -41,7 +41,7 @@ import com.example.vintedandroid.viewmodel.UserViewModel
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun LoginActivity(navController: NavHostController, userViewModel: UserViewModel, loginRegistrationViewModel: LoginRegistrationViewModel, application: Context) {
+fun LoginActivity(navController: NavHostController, loginRegistrationViewModel: LoginRegistrationViewModel, application: Context) {
 
     val emailField = remember { mutableStateOf(TextFieldValue()) }
     val emailRegex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9]+\\.)+[A-Za-z]{2,4}\$".toRegex()
@@ -57,10 +57,6 @@ fun LoginActivity(navController: NavHostController, userViewModel: UserViewModel
         .fillMaxSize()
         .padding(16.dp),
         contentAlignment = Alignment.Center) {
-
-        //if(isLoaded.value){
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //if(userFromDB.isEmpty() ) {
 
         if(LoggedUserDetails.getInstance().getCurrentUser().id == null){
             Log.i("LoginActivity", "No user is logged")
@@ -88,19 +84,12 @@ fun LoginActivity(navController: NavHostController, userViewModel: UserViewModel
                     createPersonalizedTextfield(textField = emailField, name = stringResource(R.string.email), icon = Icons.Default.Email, emailRegex)
                     createPersonalizedTextfieldPassword(textField = passwordField){ regexValidation ->
                         isValid = regexValidation
-                        Log.i("a", "${passwordField.value.text} , $regexValidation")
                     }
 
                     loginButton(navController = navController, email = emailField.value.text, password = passwordField.value.text, loginUnsuccessful = loginUnsuccessful, loginRegistrationViewModel = loginRegistrationViewModel, isValid = isValid, application = application)
                     goToRegistrationButton(navController = navController)
 
                 }
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //}else{
-                //navController.popBackStack()
-                //navController.navigate(ScreenController.Home.route)
-            //}
-        //}
     }else{
         Log.i("LoginActivity", "A user is logged")
             navController.popBackStack()
@@ -109,7 +98,6 @@ fun LoginActivity(navController: NavHostController, userViewModel: UserViewModel
     }
 }
 
-//TODO Controllare che funzioni tutto correttamente
 @SuppressLint("SuspiciousIndentation")
 @Composable
 private fun loginButton(navController: NavHostController, email: String, password: String, loginUnsuccessful: MutableState<Boolean>, loginRegistrationViewModel: LoginRegistrationViewModel, isValid: Boolean, application: Context){

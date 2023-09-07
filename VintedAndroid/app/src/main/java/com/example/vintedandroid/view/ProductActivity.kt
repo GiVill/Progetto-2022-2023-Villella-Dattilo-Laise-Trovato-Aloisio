@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
@@ -64,16 +65,12 @@ import com.example.vintedandroid.viewmodel.UserViewModel
 @Composable
 fun ProductActivity(searchedProduct: MutableState<BasicInsertionDto>, itemsInCart: MutableList<BasicInsertionDto?>, homeViewModel: HomeViewModel, productViewModel: ProductViewModel, application: Context,userViewModel: UserViewModel , chatViewModel: ChatViewModel ) {
 
-    var showMakeOfferDialog by remember { mutableStateOf(false) }
-    var showContactVendorDialog by remember { mutableStateOf(false) }
-
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
@@ -81,22 +78,28 @@ fun ProductActivity(searchedProduct: MutableState<BasicInsertionDto>, itemsInCar
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            //PersonalizedAsyncImage(imageName = searchedProduct.value.imageName, subject = "HomeActivity::class")
-
-            if(!searchedProduct.value.userId.equals(LoggedUserDetails.getInstance().getCurrentUser().id)){
-                PublicItemCard(
-                    searchedProduct = searchedProduct,
-                    homeViewModel = homeViewModel,
-                    itemsInCart = itemsInCart,
-                    productViewModel = productViewModel,
-                    application = application,
-                    userViewModel = userViewModel ,
-                    chatViewModel = chatViewModel
+            item {
+                PersonalizedAsyncImage(
+                    imageName = searchedProduct.value.imageName,
+                    subject = "HomeActivity::class"
                 )
-            }
-            else{
-                PrivateItemCard(searchedProduct, productViewModel)
+
+                if (!searchedProduct.value.userId.equals(
+                        LoggedUserDetails.getInstance().getCurrentUser().id
+                    )
+                ) {
+                    PublicItemCard(
+                        searchedProduct = searchedProduct,
+                        homeViewModel = homeViewModel,
+                        itemsInCart = itemsInCart,
+                        productViewModel = productViewModel,
+                        application = application,
+                        userViewModel = userViewModel,
+                        chatViewModel = chatViewModel
+                    )
+                } else {
+                    PrivateItemCard(searchedProduct, productViewModel)
+                }
             }
         }
     }
@@ -221,7 +224,7 @@ fun PublicItemCard(searchedProduct: MutableState<BasicInsertionDto>, homeViewMod
     Button(
         onClick = {
             homeViewModel.insertBasicInsertionDtoOnCartDto(item= searchedProduct.value, itemsInCart= itemsInCart) },
-        //modifier = Modifier.align(Alignment.CenterHorizontally)
+
     ) {
         Text(text = stringResource(R.string.add_cart))
     }
@@ -229,7 +232,7 @@ fun PublicItemCard(searchedProduct: MutableState<BasicInsertionDto>, homeViewMod
         onClick = {
             showContactVendorDialog = true
         },
-        //modifier = Modifier.align(Alignment.CenterHorizontally)
+
     ){
         Text(text = stringResource(R.string.contact_vendor)+ "(Da testare)")
     }
@@ -237,7 +240,7 @@ fun PublicItemCard(searchedProduct: MutableState<BasicInsertionDto>, homeViewMod
         onClick = {
             showMakeOfferDialog = true
         },
-        //modifier = Modifier.align(Alignment.CenterHorizontally)
+
     ){
         Text(text = stringResource(R.string.offer))
     }
@@ -266,13 +269,12 @@ fun PrivateItemCard(searchedProduct: MutableState<BasicInsertionDto>, productVie
     {
         if (allOffers != null) {
             for (offer in allOffers) {
-                Log.i("offer", "${offer}")
 
                 val statusColor = when (offer.status) {
                     BuyingOfferDto.Status.PENDING -> Color.Magenta
                     BuyingOfferDto.Status.APPROVED -> Color.Green
                     BuyingOfferDto.Status.REFUSED -> Color.Red
-                    else -> Color.Black // Colore predefinito per gli altri stati
+                    else -> Color.Black
                 }
 
                 Card(
@@ -280,8 +282,7 @@ fun PrivateItemCard(searchedProduct: MutableState<BasicInsertionDto>, productVie
                         .fillMaxWidth()){
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        //verticalAlignment = Alignment.CenterVertically, // Allinea verticalmente gli elementi
-                        horizontalArrangement = Arrangement.SpaceBetween // Spaziatura tra gli elementi orizzontali
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ){
                         Column {
                             Text(text = stringResource(R.string.price) +" ${offer.price} $")
@@ -338,14 +339,3 @@ fun PrivateItemCard(searchedProduct: MutableState<BasicInsertionDto>, productVie
         }
     }
 }
-
-/*
-@Preview
-@Composable
-fun ProductScreenPreview() {
-    var searchedProduct = remember {
-        mutableStateOf(BasicInsertionDto(1L,"null", Float.MIN_VALUE,null,null,null,null,null,"",BasicInsertionDto.Brand.ADIDAS,BasicInsertionDto.Category.ABBIGLIAMENTO, 2L))
-    }
-    ProductScreen(searchedProduct)
-}
- */

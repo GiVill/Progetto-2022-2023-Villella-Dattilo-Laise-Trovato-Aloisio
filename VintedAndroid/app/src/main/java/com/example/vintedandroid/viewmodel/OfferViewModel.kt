@@ -9,8 +9,8 @@ import com.example.vintedandroid.swagger.client.apis.OfferApi
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 import com.example.vintedandroid.swagger.client.models.BuyingOfferDto
 
-class OfferViewModel(application: Application) : ViewModel() {
-    private val application = application
+class OfferViewModel() : ViewModel() {
+
     private val insertionApi = InsertionApi()
 
     fun getOffers(): Array<BuyingOfferDto>{
@@ -26,9 +26,7 @@ class OfferViewModel(application: Application) : ViewModel() {
     fun deleteOffer(buyingOfferDto: BuyingOfferDto){
 
         buyingOfferDto.status = BuyingOfferDto.Status.PENDING
-        //TODO Da controllare
         Log.i("OfferViewModel", "deleteOffer: $buyingOfferDto")
-        Log.i("sdfs", "${buyingOfferDto.status}")
         OfferApi().userDeleteOffer(buyingOfferDto)
     }
 }

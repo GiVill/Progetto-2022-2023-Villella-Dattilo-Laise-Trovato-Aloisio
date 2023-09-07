@@ -164,14 +164,3 @@ private fun noUserLoggedIn(navController: NavController){
     }
 }
 
-/*
-@Preview(showBackground = true)
-@Composable
-fun BottomBarProfilePreview() {
-
-    val navController = rememberNavController()
-
-    val user = UserDto(UUID.randomUUID().toString(),"ciao","Boh","ciaoBoh")
-    //BottomBarProfile(navController, user)
-}
- */

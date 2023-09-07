@@ -42,7 +42,7 @@ fun OfferActivity(offerViewModel: OfferViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
-                    .clickable(onClick = { /* Open item details activity */ }),
+                    .clickable(onClick = {  }),
                 elevation = 4.dp
             ) {
                 Column(
@@ -77,17 +77,17 @@ fun ListOffers(offer : BuyingOfferDto,offerViewModel: OfferViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(6.dp)
-                .clickable(onClick = { /* Open item details activity */ }),
-            //elevation = 4.dp
+                .clickable(onClick = {  }),
+
         ){
             Column {
                 Text(insertion.title, modifier = Modifier.align(CenterHorizontally))
                 Divider()
-                //PersonalizedAsyncImage(imageName = insertion.imageName, subject = "Insertion Image")
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically, // Allinea verticalmente gli elementi
-                    horizontalArrangement = Arrangement.SpaceBetween // Spaziatura tra gli elementi orizzontali
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(stringResource(R.string.price)+" "+offer.price+"$")
                     val statusText = buildAnnotatedString {
@@ -114,7 +114,7 @@ fun NoOffers() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable(onClick = { /* Open item details activity */ }),
+            .clickable(onClick = {  }),
         elevation = 4.dp
     ) {
         Column(

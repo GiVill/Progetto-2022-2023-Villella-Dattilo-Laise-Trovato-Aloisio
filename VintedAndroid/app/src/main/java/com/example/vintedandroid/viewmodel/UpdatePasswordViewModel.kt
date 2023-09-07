@@ -4,9 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import com.example.vintedandroid.swagger.client.apis.UserApi
 
-class UpdatePasswordViewModel(application: Application) : ViewModel() {
-
-    private val application = application
+class UpdatePasswordViewModel() : ViewModel() {
 
     fun updatePassword(newPassword: String, newPassword2: String): Boolean {
 

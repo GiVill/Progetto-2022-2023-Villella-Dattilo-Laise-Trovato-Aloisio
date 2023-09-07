@@ -9,7 +9,7 @@ import com.example.vintedandroid.swagger.client.apis.InsertionApi
 import com.example.vintedandroid.swagger.client.models.BasicInsertionDto
 import com.example.vintedandroid.swagger.client.models.PageBasicInsertionDto
 
-class MyInsertionViewModel(application: Application) : ViewModel() {
+class MyInsertionViewModel() : ViewModel() {
 
     private val insertions : SnapshotStateList<BasicInsertionDto> = mutableStateListOf()
 

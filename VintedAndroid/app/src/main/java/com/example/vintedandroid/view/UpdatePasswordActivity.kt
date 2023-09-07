@@ -34,10 +34,7 @@ fun UpdatePasswordActivity(updatePasswordViewModel: UpdatePasswordViewModel, app
 
     var passwordField = remember { mutableStateOf(TextFieldValue()) }
     var passwordField2 = remember { mutableStateOf(TextFieldValue()) }
-    //var passwordRegex = ".{8,}".toRegex()
-    //var passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}\$".toRegex()
     var passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d).{8,}\$".toRegex()
-
 
     var isValid by remember { mutableStateOf(false) }
     var isValidSecond by remember { mutableStateOf(false) }
@@ -86,13 +83,12 @@ fun UpdatePasswordActivity(updatePasswordViewModel: UpdatePasswordViewModel, app
                         }
                     }
                     else{
-                        //TODO da aggiustare il messaggio
                         Toast.makeText(application.applicationContext, "The Password should be of at least 8 character, at least one letter and at least one digit", Toast.LENGTH_LONG).show()
                     }
                 },
                     modifier = Modifier
                         .padding(8.dp)) {
-                    Text(text = stringResource(R.string.send_new_password)+" (Da testare)")
+                    Text(text = stringResource(R.string.send_new_password))
                 }
             }
         }

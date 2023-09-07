@@ -23,6 +23,6 @@ data class UserDatabaseDto (
     @ColumnInfo(name="address_state")val addressState: kotlin.String? = null,
     @ColumnInfo(name="address_region")val addressRegion: kotlin.String? = null,
     @ColumnInfo(name="access_token")val accessToken: kotlin.String? = null,
-    @ColumnInfo(name="refresh_token")val refreshToken: kotlin.String? = null //TODO Ricordati di implementarlo
+    @ColumnInfo(name="refresh_token")val refreshToken: kotlin.String? = null
 
 )

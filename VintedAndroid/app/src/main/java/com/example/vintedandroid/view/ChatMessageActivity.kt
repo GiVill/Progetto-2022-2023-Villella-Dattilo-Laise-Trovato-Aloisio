@@ -27,15 +27,14 @@ import kotlinx.coroutines.delay
 @Composable
 fun ChatMessageActivity(
     chatId: String?,
-    chatMessageViewModel: ChatMessageViewModel,
-    navController: NavHostController,
+    chatMessageViewModel: ChatMessageViewModel
 ) {
     var reciver: Long = 0
 
-    // Create a state to hold the list of messages
+
     val messagesState = remember { mutableStateOf<Array<ChatMessage>?>(null) }
 
-    // Use LaunchedEffect to fetch messages every 3 seconds
+
     LaunchedEffect(Unit) {
         while (true) {
             try {
@@ -44,10 +43,10 @@ fun ChatMessageActivity(
                     messagesState.value = messages
                 }
             } catch (e: Exception) {
-                // Handle exceptions here if needed
+
             }
 
-            // Delay for 3 seconds before fetching messages again
+
             delay(3000)
         }
     }
@@ -57,9 +56,8 @@ fun ChatMessageActivity(
             .fillMaxSize()
             .padding(bottom = 85.dp)
     ) {
-        // Content goes here
 
-        // Display messages using messagesState.value
+
         messagesState.value?.let { messages ->
             Column(
                 modifier = Modifier
@@ -125,7 +123,6 @@ fun ChatMessageActivity(
 
     ) {
 
-        // TextField e IconButton fissi sul margine inferiore
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -148,14 +145,13 @@ fun ChatMessageActivity(
                     onValueChange = { newText ->
                         newMessageText = newText
                     },
-                    placeholder = { Text("Scrivi un messaggio...") },
+                    placeholder = { Text("Write a message...") },
                     singleLine = true,
                     textStyle = TextStyle(color = Color.White)
                 )
 
                 IconButton(
                     onClick = {
-                        // Qui gestisci l'invio del messaggio
                         if (newMessageText.isNotBlank()) {
                             if (chatId != null) {
                                 chatMessageViewModel.sendMessage(
@@ -170,7 +166,7 @@ fun ChatMessageActivity(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Send,
-                        contentDescription = "Invia"
+                        contentDescription = "Send"
                     )
                 }
             }

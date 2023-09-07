@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CartDao {
-    //TODO
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(insertion: CartDto)

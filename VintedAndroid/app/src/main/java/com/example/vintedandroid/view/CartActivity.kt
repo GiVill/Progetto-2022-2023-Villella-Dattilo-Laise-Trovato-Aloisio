@@ -39,8 +39,6 @@ import com.example.vintedandroid.viewmodel.CartViewModel
 @Composable
 fun CartActivity(cartViewModel: CartViewModel) {
 
-    //var isLoaded by remember { mutableStateOf(false) }
-
     val cartItemsState: MutableList<CartDto> by cartViewModel.getAll().collectAsState(initial = mutableListOf())
 
     ListOfItem(cartItemsState = cartItemsState, cartViewModel = cartViewModel)
@@ -48,7 +46,7 @@ fun CartActivity(cartViewModel: CartViewModel) {
 
 @Composable
 fun ListOfItem(cartItemsState: MutableList<CartDto>, cartViewModel: CartViewModel) {
-    //if(isLoaded){
+
     val radioOptions = listOf(Order.PaymentMethod.PAYPAL, Order.PaymentMethod.CARD, Order.PaymentMethod.MARK)
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
 
@@ -82,7 +80,7 @@ fun ListOfItem(cartItemsState: MutableList<CartDto>, cartViewModel: CartViewMode
                         ) {
                             RadioButton(
                                 selected = (text == selectedOption),
-                                onClick = null // null recommended for accessibility with screenreaders
+                                onClick = null
                             )
                             Text(
                                 text = text.toString(),
@@ -102,7 +100,6 @@ fun ListOfItem(cartItemsState: MutableList<CartDto>, cartViewModel: CartViewMode
                     if (newOrder != null) {
                         cartViewModel.createOrder(newOrder)
                     }
-                    //Toast.makeText(application.applicationContext, "Offert Sended", Toast.LENGTH_SHORT).show()
                 }) {
                     Text(stringResource(R.string.create_order))
                 }
@@ -111,10 +108,6 @@ fun ListOfItem(cartItemsState: MutableList<CartDto>, cartViewModel: CartViewMode
         } else {
             NoItemsInCart()
         }
-    //}else{
-    //    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-    //}
-
 }
 
 @Composable
@@ -123,7 +116,7 @@ fun ItemsInCart(item : CartDto, cartViewModel: CartViewModel) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable(onClick = { /* Open item details activity */ }),
+            .clickable(onClick = {  }),
         elevation = 4.dp
     ) {
         Column(
@@ -149,7 +142,7 @@ fun NoItemsInCart() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable(onClick = { /* Open item details activity */ }),
+            .clickable(onClick = {  }),
         elevation = 4.dp
     ) {
         Column(

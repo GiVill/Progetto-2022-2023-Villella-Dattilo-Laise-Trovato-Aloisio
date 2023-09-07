@@ -73,13 +73,6 @@ fun OrderActivity(orderViewModel: OrderViewModel) {
     }
 }
 
-/*
- CircularProgressIndicator(
-            modifier = Modifier
-                .size(50.dp)
-        )
- */
-
 @Composable
 fun ListOrder(item: OrderDto, orderViewModel: OrderViewModel) {
 
@@ -98,8 +91,8 @@ fun ListOrder(item: OrderDto, orderViewModel: OrderViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(40.dp),
-                verticalAlignment = Alignment.CenterVertically, // Allinea verticalmente gli elementi
-                horizontalArrangement = Arrangement.SpaceBetween // Spaziatura tra gli elementi orizzontali
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(item.id.toString())
                 Text(item.paymentMethod.toString())
@@ -157,12 +150,3 @@ fun PopupDialogOrder(onDismiss: () -> Unit, orderViewModel: OrderViewModel, inse
         }
     }
 }
-
-/*
-@Preview
-@Composable
-fun OrderScreenPreview() {
-    OrderActivity()
-}
-
- */

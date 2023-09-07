@@ -19,9 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class ChatViewModel(application: Application, userViewModel: UserViewModel) : ViewModel(){
-    private val application = application
-    private val userViewModel = userViewModel
+class ChatViewModel() : ViewModel(){
 
     fun getAllChat():  Array<ChatDto>?{
         val chats = LoggedUserDetails.getInstance().getCurrentUser().id?.let {
@@ -31,7 +29,6 @@ class ChatViewModel(application: Application, userViewModel: UserViewModel) : Vi
         }
         Log.i("ChatViewModel::class", "allChatUser: $chats")
         return chats
-        //TODO Da fare. Bisogna prendere l'id dell'utente loggato ed inviarlo all'endpoint ChatApi().allChatUser(id)
     }
 
 

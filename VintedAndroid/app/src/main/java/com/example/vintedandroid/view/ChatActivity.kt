@@ -40,10 +40,6 @@ import com.example.vintedandroid.viewmodel.ChatViewModel
 fun ChatActivity( chatViewModel: ChatViewModel,  navController: NavHostController) {
 
 
-    //    val userFromDB1: State<UserDatabaseDto?> = userViewModel.getAllUserFromRoomDatabase().collectAsState(initial = null)
-    //var allChat = chatViewModel.getAllChat()
-
-    //val allChat: State<Array<ChatDto>?> = chatViewModel.getAllChat()!!.collectAsState(initial = null)
     val chatFromDB: Array<ChatDto>? = try {
         chatViewModel.getAllChat()
     } catch (e: Exception) {
