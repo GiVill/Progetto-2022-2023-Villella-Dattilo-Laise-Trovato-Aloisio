@@ -166,25 +166,18 @@ public class KeycloakTokenClient {
 
             System.out.printf("User created with userId: %s%n", userId);
 
-            // Define password credential
             CredentialRepresentation passwordCred = new CredentialRepresentation();
             passwordCred.setTemporary(false);
             passwordCred.setType(CredentialRepresentation.PASSWORD);
             passwordCred.setValue(newUserDto.getPassword());
-            //System.out.println(passwordCred);
-            //System.out.println(userRepresentation);
 
             UserResource userResource = usersResource.get(userId);
 
-            // Set password credential
             userResource.resetPassword(passwordCred);
 
-            // Get realm role "app_user" (requires view-realm role)
             RoleRepresentation appUserRole = realmResource.roles()//
                     .get("app_admin").toRepresentation();
 
-
-            // Assign realm role tester to user
             userResource.roles().realmLevel() //
                     .add(Arrays.asList(appUserRole));
 

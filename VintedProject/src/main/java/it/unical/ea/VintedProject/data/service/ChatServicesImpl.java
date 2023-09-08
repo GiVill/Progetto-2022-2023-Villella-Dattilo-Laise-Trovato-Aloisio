@@ -25,7 +25,6 @@ public class ChatServicesImpl implements ChatService {
 
     private final ChatDao chatDao;
     private final ChatMessageService chatMessageService;
-    private final UserDao userDao;
     private final MessageLang messageLang;
     private final ModelMapper modelMapper;
     private final LoggedUserMethod loggedUserMethod;

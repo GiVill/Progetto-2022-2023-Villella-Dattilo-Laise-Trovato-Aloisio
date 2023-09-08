@@ -22,7 +22,6 @@ import java.util.List;
 public class ChatController {
 
         private final ChatService chatService;
-        private final ChatMessageService chatMessageService;
 
         @GetMapping("/chat/user/{id}")
         public ResponseEntity<List<ChatDto>> allChatUser(@PathVariable("id")Long id){

@@ -27,13 +27,11 @@ public class OrderController {
     }
 
     @GetMapping("/admin/orders/{userId}/{page}")
-    //@PreAuthorize("hasRole('<admin')")
     public ResponseEntity<Page<OrderDto>> getOrderDtoByIdPagedAdmin(@PathVariable("userId") Long UserId, @PathVariable("page") int page) {
         return ResponseEntity.ok(orderService.getOrderDtoByIdAdminPaged(UserId, page));
     }
 
     @GetMapping("/admin/orders/email/{userEmail}/{page}")
-    //@PreAuthorize("hasRole('<admin')")
     public ResponseEntity<Page<OrderDto>> getOrderDtoByIdByEmailPagedAdmin(@PathVariable("userEmail") String email, @PathVariable("page") int page) {
         return ResponseEntity.ok(orderService.getOrderByIdAdminByEmail(email, page));
     }
@@ -73,7 +71,6 @@ public class OrderController {
     }
 
     @DeleteMapping("/orders")
-    //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<Void> deleteOrder(@RequestBody OrderDto order) {
         // Delete an Order using the ID.
         // No Throw, No Token
@@ -84,7 +81,6 @@ public class OrderController {
 
     @GetMapping("/orders/user/{page}")
     public ResponseEntity<Page<OrderDto>> getUserOrders(@PathVariable("page") int page){
-        // Check the token, if ok: get OrderDto (as Paged) using the id of the user
         Long userId = loggedUserMethod.getLoggedUserId();
         return ResponseEntity.ok(orderService.getOrderDtoByUserIdPaged(userId, page));
     }

@@ -20,7 +20,6 @@ public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
 
-
     @PostMapping("/message/insert")
     public ResponseEntity<String> insertMessage(@RequestBody NewMessageDto newMessageDto){
         chatMessageService.insertMessageChat(newMessageDto);

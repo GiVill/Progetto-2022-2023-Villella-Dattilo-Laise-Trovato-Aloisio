@@ -20,17 +20,10 @@ import javax.ws.rs.BadRequestException;
 import java.io.File;
 import java.util.Optional;
 
-//Dao Notation:
-//DAO (JPA): find, delete
-//DAO (Service): get, update, delete
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ImageServiceImpl implements ImageService {
-
-
-    //TODO: MESSAGGI DI ERRORE
 
     private final UserDao userDao;
     private final BasicInsertionService insertionService;
@@ -45,7 +38,7 @@ public class ImageServiceImpl implements ImageService {
         // Costruisci il percorso completo del file utilizzando il filepath ricevuto
         String fullPath = relativePathToUploads + imagePath;
 
-        // Crea una risorsa File System utilizzando il percorso completo del file
+        // Crea file utilizzando il percorso completo del file
         Resource resource = new FileSystemResource(fullPath);
 
         if(resource.exists()){
@@ -65,7 +58,7 @@ public class ImageServiceImpl implements ImageService {
             }
 
             if(u.getImageName() != null) {                                  //If the User has already a photo
-                String oldFilePath = realPathToUploads + u.getImageName();  //"\\"+
+                String oldFilePath = realPathToUploads + u.getImageName();
                 File fileToDelete = new File(oldFilePath);                  //Go to the path the old photo
                 if (fileToDelete.exists()) {                                //Check if the photo exists
                     if (fileToDelete.delete()) {                            //delete old photo
@@ -75,7 +68,7 @@ public class ImageServiceImpl implements ImageService {
             }
 
             String orgName = FileUtil.assignProgressiveName(img);
-            String filePath = realPathToUploads + orgName; //"\\"+
+            String filePath = realPathToUploads + orgName;
 
             File dest = new File(filePath);
             img.transferTo(dest);
@@ -103,7 +96,7 @@ public class ImageServiceImpl implements ImageService {
             }
 
             String orgName = FileUtil.assignProgressiveName(img);
-            String filePath = realPathToUploads + orgName; //"\\"+
+            String filePath = realPathToUploads + orgName;
 
             File dest = new File(filePath);
             img.transferTo(dest);

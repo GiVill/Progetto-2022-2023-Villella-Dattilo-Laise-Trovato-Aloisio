@@ -11,7 +11,6 @@ enum PricingPlan {
     FREE (Bandwidth.classic(10, Refill.intervally(10, Duration.ofHours(1)))),
     BASIC (Bandwidth.classic(40, Refill.intervally(40, Duration.ofHours(1)))),
     PROFESSIONAL (Bandwidth.classic(100, Refill.intervally(100, Duration.ofHours(1))));
-    //..
 
     Bandwidth limit;
 

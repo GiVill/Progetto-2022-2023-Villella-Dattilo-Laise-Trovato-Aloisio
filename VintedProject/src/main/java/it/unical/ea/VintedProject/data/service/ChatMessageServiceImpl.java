@@ -29,7 +29,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     private final EmailSender emailSender;
     private final ChatDao chatDao;
     private final ChatMessageDao chatMessageDao;
-    private final UserDao userDao;
     private final MessageLang messageLang;
     private final UserService userService;
     private final BasicInsertionService basicInsertionService;

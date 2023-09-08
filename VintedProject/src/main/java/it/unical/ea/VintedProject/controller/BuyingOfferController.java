@@ -34,7 +34,6 @@ public class BuyingOfferController {
 
 
     @GetMapping("/admin/offers")
-    //@PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<List<BuyingOfferDto>> getAll() {
         authentication.getName();
         // find all BuyingOffers, return all as List.
@@ -67,7 +66,6 @@ public class BuyingOfferController {
     }
 
     @GetMapping("/admin/offers/{offerId}")
-    //@PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<BuyingOfferDto> getById(@PathVariable("offerId") Long OfferId){
         return ResponseEntity.ok(buyingOfferService.getOfferById(OfferId));
     }
