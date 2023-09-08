@@ -10,7 +10,7 @@ Prima di avviare il progetto:
    - Utilizzare l'immagine Docker disponibile su Docker Hub: `docker pull firstorm9/keycloak_dev:latest`.
    - Avviare sulla porta `8090`
 
-2. Avviare il database Postgres. Nel progetto VintedProject (back-end), troverai il file *docker-compose.yml*. Eseguire il comando `docker-compose up` oppure utilizzare 
+2. Avviare il database Postgres. Nel progetto VintedProject (back-end), troverai il file *docker-compose.yml*. Eseguire il comando `docker-compose up` oppure utilizzare eventuali plugin
 
 3. Avviare il progetto principale. Dopo averlo completamente avviato commentare la linea `createDB` (verso la fine della classe `DbGenerator`).
 
