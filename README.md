@@ -1,24 +1,38 @@
-# VintedProject
-Progetto Enterprise Applications
+# VintedProject - Enterprise Applications
 
-Queste informazioni sono state prese da:
-https://docs.google.com/document/d/1l0aFImp-B2k86NPvOtUwYKG4Q1Mpg0P5oQYBxwfS-JI/edit
+## Informazioni Importanti
 
-| Vanno fatte per forza                                                                       | Fatti/Non fatti          |
-|---------------------------------------------------------------------------------------------|--------------------------|
-|Uso di Spring per la creazione di API REST.                                                  | <ul><li>- [x] </li> |
-|Uso di JPA per la gestione del mapping su database.                                          | <ul><li>- [x] </li> |
-|Meccanismi di autenticazione/autorizzazione: JWT o OpenID Connect/OAuth2.                    | <ul><li>- [x] </li> |
-|Implementazione di un sito web per la connessione all’applicazione.                          | <ul><li>- [ ] </li> |
-|Implementazione di un client mobile usando Android.                                          | <ul><li>- [ ] </li> |
-|Implementazione di capabilities per consentire l’accesso ai prodotti nascosti degli utenti.  | <ul><li>- [ ] </li> |
+#### Back-end
 
+Prima di avviare il progetto:
 
-| Bonus                                                              | Fatti/Non fatti          |
-|--------------------------------------------------------------------|--------------------------|
-|Uso di un’architettura a microservizi.                              | <ul><li>- [ ] </li> |
-|Rate limiting per le API REST (es. utilizzando Resilience4J).       | <ul><li>- [x] </li> |
-|Uso di HTTPS per le API REST.                                       | <ul><li>- [x] </li> |
-|Creare la documentazione delle API REST (es. utilizzando Swagger).  | <ul><li>- [x] </li> |
-|Testing per le API REST.                                            | <ul><li>- [ ] </li> |
-|Implementazione di un custom authorization server.                  | <ul><li>- [ ] </li> |
+1. Scaricare ed avviare Keycloak.
+   - Utilizzare l'immagine Docker disponibile su Docker Hub: `docker pull firstorm9/keycloak_dev:latest`.
+   - Avviare sulla porta `8090`
+
+2. Avviare il database Postgres. Nel progetto VintedProject (back-end), troverai il file *docker-compose.yml*. Eseguire il comando `docker-compose up` oppure utilizzare 
+
+3. Avviare il progetto principale. Dopo averlo completamente avviato commentare la linea `createDB` (verso la fine della classe `DbGenerator`).
+
+#### Angular
+
+Per il progetto Angular:
+
+1. Installare le dipendenze npm:
+   - Tramite `npm install`. Eventualmente utlizzare `--force` in caso d'errore
+
+#### Android
+
+Per il progetto Android:
+
+1. Installare le dipendeze gradle
+
+2. Impostare il corretto path per l'SDK (può essere modificato nel local.properties)
+
+## Informazioni Genenerali:
+
+Nella cartella VintedProject è presente il progetto Back-end in Java
+
+Nella cartella VintedProjectAngular è presente il progetto Front-end per l'applicazione Web
+
+Nella cartella VintedAndroid è presente il progetto Front-end per Android
