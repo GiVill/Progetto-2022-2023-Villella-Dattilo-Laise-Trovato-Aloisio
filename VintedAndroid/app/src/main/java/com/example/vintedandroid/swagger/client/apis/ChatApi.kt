@@ -43,6 +43,9 @@ class ChatApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject
                 RequestMethod.GET,
                 "/v1/chat/user/{id}".replace("{" + "id" + "}", "$id")
         )
+
+
+        ConfigureAuthorizationBearer(localVariableConfig)
         val response = request<kotlin.Array<ChatDto>>(
                 localVariableConfig
         )
@@ -70,6 +73,9 @@ class ChatApi(basePath: kotlin.String = "https://192.168.1.90:8010/vintedProject
             RequestMethod.POST,
             "/v1/chat/newchat"
         )
+
+
+        ConfigureAuthorizationBearer(localVariableConfig)
         val response = request<kotlin.String>(
             localVariableConfig, localVariableBody
         )

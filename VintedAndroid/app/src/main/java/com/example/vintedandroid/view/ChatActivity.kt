@@ -42,9 +42,11 @@ fun ChatActivity( chatViewModel: ChatViewModel,  navController: NavHostControlle
 
     val chatFromDB: Array<ChatDto>? = try {
         chatViewModel.getAllChat()
+
     } catch (e: Exception) {
         null
     }
+    Log.i("dsd", chatFromDB.toString())
     Box() {
         Row() {
             Column(modifier =

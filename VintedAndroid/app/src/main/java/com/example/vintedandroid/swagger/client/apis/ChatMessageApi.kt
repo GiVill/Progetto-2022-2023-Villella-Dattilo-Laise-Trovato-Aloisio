@@ -42,6 +42,7 @@ class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject
                 "/v1/chat/message/{chatId}".replace("{" + "chatId" + "}", "$chatId")
         )
 
+
         ConfigureAuthorizationBearer(localVariableConfig)
         val response = request<kotlin.Array<ChatMessage>>(
                 localVariableConfig,
@@ -69,6 +70,8 @@ class ChatMessageApi(basePath: String = "https://192.168.1.90:8010/vintedProject
                 "/v1/message/insert"
         )
 
+
+        ConfigureAuthorizationBearer(localVariableConfig)
         val response = request<kotlin.String>(
                 localVariableConfig, localVariableBody
         )
