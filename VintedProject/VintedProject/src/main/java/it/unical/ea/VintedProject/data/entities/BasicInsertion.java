@@ -25,6 +25,8 @@ import java.util.Set;
 public class BasicInsertion {
 
     @Id
+    //Abbiamo lasciato GenerationType.IDENTITY per non avere problemi nel dbgenerator
+    //Andrebbe cambiato con GenerationType.UUID
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "ID")
     private Long id;

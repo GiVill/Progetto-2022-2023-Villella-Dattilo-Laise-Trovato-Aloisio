@@ -169,7 +169,7 @@ public class DbGenerator implements ApplicationRunner {
     private void insertUser(String nickName,String firstName, String lastName,String email,String password,
                             String phoneNumber,String role) {
 
-        Address address = new Address("Ria Roma","6","Napoli","880434","Italy","Campania");
+        Address address = new Address("Via Roma","6","Napoli","880434","Italy","Campania");
         User user = new User();
         user.setNickname(nickName);
         user.setFirstName(firstName);
