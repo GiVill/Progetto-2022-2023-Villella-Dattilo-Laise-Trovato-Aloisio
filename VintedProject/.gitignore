@@ -1,0 +1,10 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/.idea
+#/dbdata
+/VintedProject/.idea
+/VintedProject/pom.xml
+/VintedProject/hsql-db
+/VintedProject/src/main/resources/dbdata/*
+/VintedProject/target/*

@@ -2,6 +2,7 @@ package com.example.vintedandroid.viewmodel
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -45,7 +46,9 @@ class HomeViewModel(application: Application) : ViewModel() {
                 }
                 Log.i("HomeViewModel::class", "Item added on DB!")
             }
+            Toast.makeText(application.applicationContext, "Item Added on Cart", Toast.LENGTH_SHORT).show()
         } else {
+            Toast.makeText(application.applicationContext, "You already have the item in the cart", Toast.LENGTH_SHORT).show()
             Log.i("HomeViewModel::class", "Cannot add the item because is already in the cart!")
         }
     }

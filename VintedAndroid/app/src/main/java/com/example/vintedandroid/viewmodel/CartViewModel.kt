@@ -43,7 +43,7 @@ class CartViewModel(application: Application) : ViewModel() {
             deleteAll()
             Toast.makeText(application.applicationContext, "Order Created", Toast.LENGTH_SHORT).show()
         } else{
-            Toast.makeText(application.applicationContext, "ERROR!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(application.applicationContext, "Error while creating the order!", Toast.LENGTH_SHORT).show()
         }
     }
 

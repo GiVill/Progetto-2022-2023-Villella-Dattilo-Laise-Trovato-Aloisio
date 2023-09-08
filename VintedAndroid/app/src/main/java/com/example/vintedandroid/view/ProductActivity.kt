@@ -234,7 +234,7 @@ fun PublicItemCard(searchedProduct: MutableState<BasicInsertionDto>, homeViewMod
         },
 
     ){
-        Text(text = stringResource(R.string.contact_vendor)+ "(Da testare)")
+        Text(text = stringResource(R.string.contact_vendor))
     }
     Button(
         onClick = {
