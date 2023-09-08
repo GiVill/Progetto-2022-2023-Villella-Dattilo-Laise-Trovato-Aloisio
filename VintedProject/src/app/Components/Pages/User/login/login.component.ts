@@ -112,7 +112,7 @@ export class LoginComponent implements OnInit{
   }
 
   signUp(): void {
-    if (this.isRegistrationFormValid()){
+    if (this.checkPass()){
     this.authService.signUp(this.newUser).subscribe(
       () => {
         this.snackBar.open('Registrazione completata con successo!', 'OK');
@@ -125,10 +125,9 @@ export class LoginComponent implements OnInit{
       }
     );
   }else {
-      this.snackBar.open('Compila tutti i campi ed assicurati che la password abbia una lettera maiuscola ed un numero.', 'OK');
+      this.snackBar.open('Compila tutti i campi ed assicurati che la password abbia una lettera maiuscola, un numero e che sia lunga almeno 8 caratteri.', 'OK');
     }
 
-  this.snackBar.open('Errore registrazione, riprova più tardi!', 'OK');
 }
 
   isLoginFormValid(): boolean {
@@ -138,21 +137,24 @@ export class LoginComponent implements OnInit{
     return true;
   }
 
+  checkPass(){
+
+    if (this.newUser.password!.length < 8) {
+      return false;
+    }
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)/;
+    if (!passwordRegex.test(this.newUser.password)) {
+      return false;
+    }
+    return true
+  }
+
   isRegistrationFormValid(): boolean {
     if (
       this.newUser.email!.length === 0 ||
       this.newUser.password?.length === 0 ||
       this.passwordCheck.length === 0
     ) {
-      return false;
-    }
-
-    if (this.newUser.password!.length < 8) {
-      return false;
-    }
-
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)/;
-    if (!passwordRegex.test(this.newUser.password)) {
       return false;
     }
 
