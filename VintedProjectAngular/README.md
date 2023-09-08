@@ -1,2 +1,0 @@
-# VintedProject
-Progetto Enterprise Applications
