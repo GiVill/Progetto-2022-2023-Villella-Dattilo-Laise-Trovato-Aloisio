@@ -124,28 +124,7 @@ fun ItemCart(item: BasicInsertionDto, itemsInCart: MutableList<BasicInsertionDto
                     }) {
                         Text(text = stringResource(R.string.add_cart))
                     }
-                    if (showDialog) {
-                        PopupDialog(onDismiss = { showDialog = false }) {
-                            Text("${item.title} added in cart!")
-                        }
-                    }
                 }
         }
     }
-}
-
-@Composable
-fun PopupDialog(onDismiss: () -> Unit, content: @Composable () -> Unit) {
-    Dialog(onDismissRequest = { onDismiss() }) {
-        Box(
-            modifier = Modifier
-                .padding(16.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(MaterialTheme.colors.surface)
-                .fillMaxWidth()
-                .wrapContentHeight()
-        ) {
-            content()
-            }
-        }
 }
