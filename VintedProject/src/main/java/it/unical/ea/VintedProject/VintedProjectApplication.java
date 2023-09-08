@@ -4,11 +4,13 @@ package it.unical.ea.VintedProject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
 
 
 @SpringBootApplication
 @ServletComponentScan
+@EnableCaching
 public class VintedProjectApplication {
 
 	public static void main(String[] args) {

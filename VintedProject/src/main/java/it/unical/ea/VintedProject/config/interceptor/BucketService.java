@@ -1,13 +1,16 @@
 package it.unical.ea.VintedProject.config.interceptor;
 
+import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
+import io.github.bucket4j.Refill;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-class PricingPlanService {
+class BucketService {
 
     private final Map<String, Bucket> cache = new ConcurrentHashMap<>();
 
@@ -17,11 +20,10 @@ class PricingPlanService {
 
     private Bucket newBucket(String apiKey) {
 
-        //Qui viene passata una stringa presa dall'header HTTP (vedi RateLimiterInterceptor, il preHandle)
-        PricingPlan pricingPlan = PricingPlan.resolvePlanFromApiKey(apiKey); //Il resolvePlanFromApiKey collega ad una stringa un relativo Bucket
+        Bandwidth bandwidth = Bandwidth.classic(15, Refill.intervally(10, Duration.ofSeconds(100)));
 
         return Bucket.builder()
-            .addLimit(pricingPlan.getLimit())
+            .addLimit(bandwidth)
             .build();
     }
 }

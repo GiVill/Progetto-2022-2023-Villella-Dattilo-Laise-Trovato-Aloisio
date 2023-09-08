@@ -61,14 +61,13 @@ public class GlobalExceptionHandler {
         return errorResponse(req, messageLang.getMessage("image.dimension.upload.exceeded") );
     }
 
-    /*
-    Non necessaria
+    //413
     @ExceptionHandler(MultipartException.class)
     @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
     public ServiceError handleMultipartException(WebRequest req, MultipartException ex) {
         return errorResponse(req, messageLang.getMessage("image.dimension.download.limit"));
     }
-     */
+
 
     private ServiceError errorResponse (WebRequest req, String message) {
         HttpServletRequest httpreq = (HttpServletRequest) req.resolveReference("request");

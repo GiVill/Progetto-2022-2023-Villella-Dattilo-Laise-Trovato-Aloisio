@@ -43,7 +43,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     @Override
     public void update(ChatMessage chatMessage) {
-        //da vedere se serve
+
     }
 
     @Override
