@@ -16,6 +16,8 @@ import java.util.List;
 })
 public class Chat {
     @Id
+    //Abbiamo lasciato GenerationType.IDENTITY per non avere problemi nel dbgenerator
+    //Andrebbe cambiato con GenerationType.UUID
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="ID")
     private Long id;

@@ -180,7 +180,7 @@ public class DbGenerator implements ApplicationRunner {
         user.setAddress(address);
         user.setRole(Role.valueOf(role));
 
-        keycloakTokenClient.userRegister(modelMapper.map(user, NewUserDto.class));
+        //keycloakTokenClient.userRegister(modelMapper.map(user, NewUserDto.class));
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -233,6 +233,6 @@ public class DbGenerator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-      //createDb();
+      createDb();
     }
 }
