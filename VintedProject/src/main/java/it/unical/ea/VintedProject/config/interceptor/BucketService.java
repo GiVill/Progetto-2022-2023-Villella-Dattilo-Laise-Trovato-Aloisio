@@ -20,7 +20,7 @@ class BucketService {
 
     private Bucket newBucket(String apiKey) {
 
-        Bandwidth bandwidth = Bandwidth.classic(15, Refill.intervally(10, Duration.ofSeconds(100)));
+        Bandwidth bandwidth = Bandwidth.classic(255, Refill.intervally(10, Duration.ofSeconds(60))); //RATE LIMITER LIMIT
 
         return Bucket.builder()
             .addLimit(bandwidth)

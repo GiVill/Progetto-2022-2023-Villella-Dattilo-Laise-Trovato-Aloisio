@@ -4,9 +4,7 @@ import it.unical.ea.VintedProject.data.dao.ChatDao;
 import it.unical.ea.VintedProject.data.entities.*;
 import it.unical.ea.VintedProject.data.service.interfaces.*;
 import it.unical.ea.VintedProject.dto.NewUserDto;
-import it.unical.ea.VintedProject.dto.enumeration.PaymentMethod;
-import it.unical.ea.VintedProject.dto.enumeration.Role;
-import it.unical.ea.VintedProject.dto.enumeration.Status;
+import it.unical.ea.VintedProject.dto.enumeration.*;
 import it.unical.ea.VintedProject.security.keycloak.KeycloakTokenClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
@@ -32,11 +30,16 @@ public class DbGenerator implements ApplicationRunner {
 
     private final PasswordEncoder passwordEncoder;
     private final KeycloakTokenClient keycloakTokenClient;
+    private final AuthService authService;
     private final ModelMapper modelMapper;
 
 
     @Value("classpath:data/users.csv")
     private Resource usersRes;
+
+    /*
+    @Value("classpath:data/payments.csv")
+    private Resource paymentsRes;*/
 
     @Value("classpath:data/orders.csv")
     private Resource ordersRes;
@@ -71,15 +74,21 @@ public class DbGenerator implements ApplicationRunner {
             CSVParser ordersCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(ordersRes.getInputStream()));
             for (CSVRecord record : ordersCsv) {
-                insertOrder(record.get(0), record.get(1),record.get(2),record.get(3));
+                insertOrder(record.get(0), record.get(1),record.get(2),record.get(3) ,record.get(4));
             }
 
             CSVParser insertionsCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(insertionsRes.getInputStream()));
             for (CSVRecord record : insertionsCsv) {
-                insertInsertion(record.get(0), record.get(1), record.get(2), record.get(3),record.get(4), record.get(5),record.get(6),record.get(7));
+                insertInsertion(record.get(0), record.get(1), record.get(2), record.get(3),record.get(4), record.get(5),record.get(6),record.get(7),record.get(8),record.get(9));
             }
 
+
+           /* CSVParser paymentsCsv = CSVFormat.DEFAULT.withDelimiter(';')
+                    .parse(new InputStreamReader(paymentsRes.getInputStream()));
+            for (CSVRecord record : paymentsCsv) {
+                insertPayment(record.get(0), record.get(1));
+            }*/
 
             CSVParser buyingoffertsCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(buyingoffertsRes.getInputStream()));
@@ -90,6 +99,8 @@ public class DbGenerator implements ApplicationRunner {
             CSVParser chatCsv = CSVFormat.DEFAULT.withDelimiter(';')
                     .parse(new InputStreamReader(chatRes.getInputStream()));
             for (CSVRecord record : chatCsv) {
+                //System.out.println(record.get(0)+ record.get(1) +record.get(2)+ record.get(3));
+                //insertChat(userService.getUserById(Long.valueOf(record.get(0))), userService.getUserById(Long.valueOf(record.get(1))), record.get(2), record.get(3));
                 insertChat(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4));
             }
 
@@ -114,7 +125,7 @@ public class DbGenerator implements ApplicationRunner {
     }
 
     private void insertInsertion(String title, String price, String creationDate, String description,
-                                 String isPro, String idUser, String idOrder, String available) {
+                                 String isPriv, String idUser, String available, String category, String brand, String imageName ) {
 
         BasicInsertion basicInsertion = new BasicInsertion();
         basicInsertion.setTitle(title);
@@ -122,23 +133,39 @@ public class DbGenerator implements ApplicationRunner {
         basicInsertion.setCreationDate(LocalDate.parse(creationDate));
         basicInsertion.setDescription(description);
         basicInsertion.setUser(userService.getUserById(Long.valueOf(idUser)));
-        basicInsertion.setIsPrivate(Boolean.valueOf(isPro));
-        basicInsertion.setOrder(orderService.getById(Long.valueOf(idOrder)));
+        basicInsertion.setIsPrivate(Boolean.valueOf(isPriv));;
         basicInsertion.setAvailable(Boolean.valueOf(available));
+        basicInsertion.setCategory(Category.valueOf(category));
+        basicInsertion.setBrand(Brand.valueOf(brand));
+        if (!imageName.isEmpty())
+         basicInsertion.setImageName(imageName);
 
         insertionService.save(basicInsertion);
     }
 
-    private void insertOrder(String localDate, String idUser, String status, String paypal) {
+    private void insertOrder(String localDate, String idUser, String status, String paypal, String total) {
         Order order = new Order();
         order.setDate(LocalDate.parse(localDate));
         order.setUser(userService.getUserById(Long.valueOf(idUser)));
         order.setStatus(Status.valueOf(status));
         order.setPaymentMethod(PaymentMethod.valueOf(paypal));
+        order.setTotal(Float.valueOf(total));
+
 
         orderService.save(order);
 
     }
+/*
+    private void insertPayment(String idOrder, String idUser) {
+        Payment payment = new Payment();
+        payment.setPaymentMethod(PaymentMethod.PAYPAL);
+        payment.setStatus(Status.PENDING);
+        payment.setOrder(orderService.findById(Long.valueOf(idOrder)));
+        payment.setUser(userService.getUserById(Long.valueOf(idUser)));
+
+        paymentService.save(payment);
+    }
+*/
     private void insertUser(String nickName,String firstName, String lastName,String email,String password,
                             String phoneNumber,String role) {
 
