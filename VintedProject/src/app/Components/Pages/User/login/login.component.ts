@@ -45,6 +45,24 @@ export class LoginComponent implements OnInit{
 
   };
 
+  private configuration: Configuration = {
+    accessToken: "",
+    apiKeys: {},
+    basePath: "",
+    password: "",
+    username: "",
+    withCredentials: false,
+    isJsonMime(mime: string): boolean {
+      return false;
+    },
+    selectHeaderAccept(accepts: string[]): string | undefined {
+      return undefined;
+    },
+    selectHeaderContentType(contentTypes: string[]): string | undefined {
+      return undefined;
+    }
+  }
+
 
 
 
@@ -83,6 +101,7 @@ export class LoginComponent implements OnInit{
           }
           this.cookiesService.checkUserCookie();
           this.User.getUserString();
+          this.configuration.accessToken=this.cookiesService.getTokent();
           this.router.navigate(['/']);
         }
       },

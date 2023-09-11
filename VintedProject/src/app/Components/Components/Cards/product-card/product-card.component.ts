@@ -63,9 +63,10 @@ export class ProductCardComponent implements OnInit{
       if (error.status == 200){
         this.snackBar.open("Codice copiato nella clipboard.", "OK")
         this.clipboardService.copyFromContent("localhost:4200/private/"+String(error.error.text))
-      }
+      }else {
         this.snackBar.open("Errore nella generazione del codice.", "RIPROVA")
-      })
+      }
+    })
   }
 
   share8766(){
@@ -77,8 +78,9 @@ export class ProductCardComponent implements OnInit{
         if (error.status == 200){
           this.snackBar.open("Codice copiato nella clipboard.", "OK")
           this.clipboardService.copyFromContent("localhost:4200/private/"+String(error.error.text))
+        }else {
+          this.snackBar.open("Errore nella generazione del codice.", "RIPROVA")
         }
-        this.snackBar.open("Errore nella generazione del codice.", "RIPROVA")
       })
   }
 
